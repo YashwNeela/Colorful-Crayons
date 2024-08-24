@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 namespace TMKOC.Colorful_Crayons
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManager : Singleton<LevelManager>
     {
+
+        public TextMeshProUGUI m_LevelText;
         [SerializeField] private GameObject[] levels; // Array to hold all levels
         private int currentLevelIndex = 0;
 
@@ -15,11 +18,7 @@ namespace TMKOC.Colorful_Crayons
         {
             gameManager = FindObjectOfType<Gamemanager>();
 
-            // Ensure only the first level is active at the start
-            for (int i = 0; i < levels.Length; i++)
-            {
-                levels[i].SetActive(i == 0);
-            }
+        
         }
 
         public void CompleteLevel()
@@ -63,6 +62,8 @@ namespace TMKOC.Colorful_Crayons
                 // Activate the requested level
                 currentLevelIndex = levelIndex;
                 levels[currentLevelIndex].SetActive(true);
+
+                m_LevelText.text = "Level " + (currentLevelIndex + 1).ToString();
             }
         }
     }

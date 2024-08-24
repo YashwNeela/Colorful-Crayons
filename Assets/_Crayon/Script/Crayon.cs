@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TMKOC.Colorful_Crayons
 {
-    public class Crayon : MonoBehaviour
+    public class Crayon : Collectible
     {
         [SerializeField] private Color m_Color;
         [SerializeField] private CrayonColor m_CrayonColor;
@@ -11,19 +11,14 @@ namespace TMKOC.Colorful_Crayons
         public Color Color => m_Color;
 
         private Renderer m_Renderer;
-        private CrayonBox currentBox;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             m_Renderer = GetComponent<Renderer>();
             SetBoxColor(m_Color);
+            
 
-            // Subscribe to the OnDragEnd event
-            var draggable = GetComponent<Draggable>();
-            if (draggable != null)
-            {
-                draggable.OnDragEnd += HandleDragEnd;
-            }
         }
 
         private void SetBoxColor(Color color)
@@ -33,28 +28,47 @@ namespace TMKOC.Colorful_Crayons
 
         private void OnTriggerEnter(Collider other)
         {
-            CrayonBox crayonBox = other.GetComponent<CrayonBox>();
-            if (crayonBox != null && crayonBox.CrayonColor == this.CrayonColor)
+            CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
+            if (collectorBox != null)
             {
-                currentBox = crayonBox;
+                if (collectorBox.CrayonColor == this.CrayonColor)
+                {
+                    currentCollector = collectorBox;
+                }
+                else
+                    m_IsTryingToPlaceWrong = true;
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            CrayonBox crayonBox = other.GetComponent<CrayonBox>();
-            if (crayonBox != null && crayonBox == currentBox)
+            CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
+            if (collectorBox != null)
             {
-                currentBox = null;
+                if(collectorBox == currentCollector)
+                    currentCollector = null;
+
+                m_IsTryingToPlaceWrong = false;
+               
             }
         }
 
-        private void HandleDragEnd()
+        
+        void OnTriggerStay(Collider other)
         {
-            if (currentBox != null)
-            {
-                currentBox.SnapCrayonToBox(this);
-            }
+            
         }
+
+        protected override void PlaceCorrectly()
+        {
+            Gamemanager.Instance.RightAnswer();
+        }
+
+        protected override void PlaceInCorrectly()
+        {
+            Gamemanager.Instance.WrongAnswer();
+        }
+
+
     }
 }
