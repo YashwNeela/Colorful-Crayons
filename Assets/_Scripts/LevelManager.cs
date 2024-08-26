@@ -68,7 +68,7 @@ namespace TMKOC.Colorful_Crayons
                 currentLevelIndex = levelIndex;
                 levels[currentLevelIndex].gameObject.SetActive(true);
 
-                m_LevelText.text = "Level " + (currentLevelIndex + 1).ToString();
+                m_LevelText.text =  (currentLevelIndex + 1).ToString() + "/" + MaxLevels.ToString();
             }
         }
 
