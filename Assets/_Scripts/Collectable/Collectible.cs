@@ -14,6 +14,10 @@ namespace TMKOC.Colorful_Crayons
 
         protected ObjectReseter m_ObjectReseter;
 
+        protected bool m_IsPlaced = false;
+
+        protected Draggable draggable;
+
         protected virtual void OnEnable()
         {
             Gamemanager.OnGameRestart += OnGameRestart;
@@ -22,6 +26,7 @@ namespace TMKOC.Colorful_Crayons
         private void OnGameRestart()
         {
             m_ObjectReseter.ResetObject();
+            Reset();
         }
 
         protected virtual void OnDisable()
@@ -34,12 +39,27 @@ namespace TMKOC.Colorful_Crayons
         protected virtual void Awake()
         {
             // Subscribe to the OnDragEnd event
-            var draggable = GetComponent<Draggable>();
+            draggable = GetComponent<Draggable>();
             m_ObjectReseter = GetComponent<ObjectReseter>();
             if (draggable != null)
             {
                 draggable.OnDragEnd += HandleDragEnd;
             }
+        }
+
+        protected virtual void OnTriggerEnter(Collider other)
+        {
+            Collector collector = other.GetComponent<Collector>();
+            if(collector != null && !m_IsPlaced && draggable.IsDragging)
+                collector.OnCollectibleEntered(this);
+        }
+
+        protected virtual void OnTriggerExit(Collider other)
+        {
+
+            Collector collector = other.GetComponent<Collector>();
+            if(collector != null && !m_IsPlaced)
+                collector.OnCollectibleExited(this);
         }
 
         protected virtual void HandleDragEnd()
@@ -50,19 +70,22 @@ namespace TMKOC.Colorful_Crayons
                 OnPlacedCorrectly();
             }
             else if(m_IsTryingToPlaceWrong)
-                OnPlacedInCorrectly();
+                PlaceInCorrectly();
             
             m_IsTryingToPlaceWrong = false;
                 
         }
 
-        protected abstract void OnPlacedCorrectly();
+        protected virtual void OnPlacedCorrectly()
+        {
+            m_IsPlaced = true;
+        }
 
-        protected abstract void OnPlacedInCorrectly();
+        protected virtual void PlaceInCorrectly(){}
 
         protected void Reset()
         {
-
+            m_IsPlaced = false;
         }
     }
 }

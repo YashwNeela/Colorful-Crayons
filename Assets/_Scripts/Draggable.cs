@@ -7,7 +7,13 @@ namespace TMKOC.Colorful_Crayons
     {
         private Camera m_Camera;
         private Rigidbody m_Rigidbody;
-        private bool isDragging = false;
+        private bool m_isDragging = false;
+
+        private bool m_hasDragStarted = false;
+
+        public bool HasDragStarted => m_hasDragStarted;
+
+        public bool IsDragging => m_isDragging;
         private float m_ZPosition;
 
         public event Action OnDragEnd; // Event to notify when dragging ends
@@ -27,12 +33,13 @@ namespace TMKOC.Colorful_Crayons
             {
                 m_Rigidbody.isKinematic = true;
             }
-            isDragging = true;
+            m_isDragging = true;
+            m_hasDragStarted = true;
         }
 
         void OnMouseDrag()
         {
-            if (isDragging)
+            if (m_isDragging)
             {
                 Vector3 mousePosition = Input.mousePosition;
                 mousePosition.z = m_Camera.WorldToScreenPoint(transform.position).z;
@@ -44,7 +51,9 @@ namespace TMKOC.Colorful_Crayons
 
         void OnMouseUp()
         {
-            isDragging = false;
+            m_isDragging = false;
+            m_hasDragStarted = false;
+
             if (m_Rigidbody != null)
             {
                 m_Rigidbody.isKinematic = false;

@@ -26,8 +26,9 @@ namespace TMKOC.Colorful_Crayons
             m_Renderer.material.color = color;
         }
 
-        private void OnTriggerEnter(Collider other)
+        protected override void OnTriggerEnter(Collider other)
         {
+            base.OnTriggerEnter(other);
             CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
             if (collectorBox != null)
             {
@@ -40,8 +41,9 @@ namespace TMKOC.Colorful_Crayons
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        protected override void OnTriggerExit(Collider other)
         {
+            base.OnTriggerExit(other);
             CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
             if (collectorBox != null)
             {
@@ -61,13 +63,17 @@ namespace TMKOC.Colorful_Crayons
 
         protected override void OnPlacedCorrectly()
         {
+            base.OnPlacedCorrectly();
             Gamemanager.Instance.RightAnswer();
         }
 
-        protected override void OnPlacedInCorrectly()
+        protected override void PlaceInCorrectly()
         {
+            base.PlaceInCorrectly();
             Gamemanager.Instance.WrongAnswer();
         }
+
+        
 
 
     }

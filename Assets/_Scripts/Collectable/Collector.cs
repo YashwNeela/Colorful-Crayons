@@ -8,7 +8,7 @@ namespace TMKOC.Colorful_Crayons
 {
     public abstract class Collector : MonoBehaviour
     {
-        [SerializeField] private SnapPoint[] snapPoints;
+        [SerializeField] protected SnapPoint[] snapPoints;
 
         [SerializeField] protected int collectedItems;
 
@@ -31,7 +31,7 @@ namespace TMKOC.Colorful_Crayons
         /// <summary>
         /// This function is called when the behaviour becomes disabled or inactive.
         /// </summary>
-        void OnDisable()
+       protected virtual void OnDisable()
         {
             Gamemanager.OnGameStart -= OnGameStart;
             
@@ -53,13 +53,23 @@ namespace TMKOC.Colorful_Crayons
                     collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
                     collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
                     snapPoint.IsOccupied = true;
-                    OnItemCollected();
+                    OnItemCollected(snapPoint);
                     break;
                 }
             }
         }
 
-        protected void OnItemCollected()
+        public virtual void OnCollectibleEntered(Collectible collectible)
+        {
+
+        }
+
+        public virtual void OnCollectibleExited(Collectible collectible)
+        {
+
+        }
+
+        protected virtual void OnItemCollected(SnapPoint snapPoint)
         {
             collectedItems++;
             OnItemCollectedAction?.Invoke();

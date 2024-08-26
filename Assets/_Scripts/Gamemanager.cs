@@ -41,6 +41,8 @@ namespace TMKOC.Colorful_Crayons
 
         [SerializeField] private TextMeshProUGUI m_CurrentScoreText;
 
+        public static UnityAction OnWrongAnswerAction;
+
         public void RightAnswer()
         {
             SetScore(m_CurrentScore+1);
@@ -52,6 +54,7 @@ namespace TMKOC.Colorful_Crayons
             if (m_RemaningLives - 1 >= 0)
             {
                 SetRemainingLives(m_RemaningLives - 1);
+                OnWrongAnswerAction?.Invoke();
                 if (m_RemaningLives <= 0)
                 {
                     GameOver();

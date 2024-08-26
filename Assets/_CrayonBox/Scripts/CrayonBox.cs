@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 
@@ -24,6 +26,12 @@ namespace TMKOC.Colorful_Crayons
 
         private Renderer m_Renderer;
 
+        [SerializeField] private StarCollectorParticleImage m_StartCollector;
+
+        [SerializeField] private DOTweenAnimation m_OnCrayonEnteredAnimation;
+
+    
+
         protected override void Awake()
         {
             base.Awake();
@@ -31,10 +39,61 @@ namespace TMKOC.Colorful_Crayons
             SetBoxColor(m_BoxColor);
         }
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+          //  Gamemanager.OnWrongAnswerAction += OnWrongAnswer;
+        }
+
+        private void OnWrongAnswer()
+        {
+           // m_OnCrayonEnteredAnimation.DOPlayBackwards();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+           // Gamemanager.OnWrongAnswerAction -= OnWrongAnswer;
+        }
+
+
+
         private void SetBoxColor(Color color)
         {
             m_Renderer.material.color = color;
         }
+
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
+
+        protected override void OnItemCollected(SnapPoint snapPoint)
+        {
+            base.OnItemCollected(snapPoint);
+            m_StartCollector.SetEmitter(snapPoint.transform);
+            m_StartCollector.PlayParticle();
+            
+                m_OnCrayonEnteredAnimation.DOPlayBackwards(); 
+        }
+
+        public override void OnCollectibleEntered(Collectible collectible)
+        {
+            base.OnCollectibleEntered(collectible);
+            Debug.Log("Collectible entered");
+            //m_OnCrayonEnteredAnimation.autoGenerate = true;
+                m_OnCrayonEnteredAnimation.DOPlay();
+        }
+
+        public override void OnCollectibleExited(Collectible collectible)
+        {
+            base.OnCollectibleExited(collectible);
+            Debug.Log("Collectible Exited");
+          
+                m_OnCrayonEnteredAnimation.DOPlayBackwards(); 
+
+        }
+
+      
     }
 
 
