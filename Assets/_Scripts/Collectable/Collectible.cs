@@ -47,18 +47,18 @@ namespace TMKOC.Colorful_Crayons
             if (currentCollector != null)
             {
                 currentCollector.SnapCollectibleToCollector(this);
-                PlaceCorrectly();
+                OnPlacedCorrectly();
             }
             else if(m_IsTryingToPlaceWrong)
-                PlaceInCorrectly();
+                OnPlacedInCorrectly();
             
             m_IsTryingToPlaceWrong = false;
                 
         }
 
-        protected abstract void PlaceCorrectly();
+        protected abstract void OnPlacedCorrectly();
 
-        protected abstract void PlaceInCorrectly();
+        protected abstract void OnPlacedInCorrectly();
 
         protected void Reset()
         {

@@ -20,6 +20,8 @@ namespace TMKOC.Colorful_Crayons
 
         void OnMouseDown()
         {
+            if(Gamemanager.Instance.CurrentGameState != GameState.Playing)
+                return;
             m_ZPosition = transform.position.z;
             if (m_Rigidbody != null)
             {

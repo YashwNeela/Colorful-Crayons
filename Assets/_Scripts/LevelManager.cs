@@ -7,10 +7,15 @@ namespace TMKOC.Colorful_Crayons
 {
     public class LevelManager : Singleton<LevelManager>
     {
-
         public TextMeshProUGUI m_LevelText;
-        [SerializeField] private GameObject[] levels; // Array to hold all levels
+        [SerializeField] private List<GameObject> levels; // Array to hold all levels
+
+        public int MaxLevels => levels.Count;
         private int currentLevelIndex = 0;
+
+        public int CurrentLevelIndex => currentLevelIndex;
+
+    
 
         private Gamemanager gameManager;
 
@@ -24,16 +29,16 @@ namespace TMKOC.Colorful_Crayons
         public void CompleteLevel()
         {
             // Deactivate the current level
-            levels[currentLevelIndex].SetActive(false);
+            levels[currentLevelIndex].gameObject.SetActive(false);
 
             // Increment level index
             currentLevelIndex++;
 
             // Check if there are more levels
-            if (currentLevelIndex < levels.Length)
+            if (currentLevelIndex < levels.Count)
             {
                 // Activate the next level
-                levels[currentLevelIndex].SetActive(true);
+                levels[currentLevelIndex].gameObject.SetActive(true);
             }
             else
             {
@@ -45,26 +50,28 @@ namespace TMKOC.Colorful_Crayons
         public void RestartLevel()
         {
             // Reset the current level (useful if the player fails and needs to retry)
-            levels[currentLevelIndex].SetActive(false);
-            levels[currentLevelIndex].SetActive(true);
+            levels[currentLevelIndex].gameObject.SetActive(false);
+           levels[currentLevelIndex].gameObject.SetActive(true);
         }
 
         public void LoadLevel(int levelIndex)
         {
-            if (levelIndex >= 0 && levelIndex < levels.Length)
+            if (levelIndex >= 0 && levelIndex < levels.Count)
             {
                 // Deactivate all levels
                 foreach (var level in levels)
                 {
-                    level.SetActive(false);
+                    level.gameObject.SetActive(false);
                 }
 
                 // Activate the requested level
                 currentLevelIndex = levelIndex;
-                levels[currentLevelIndex].SetActive(true);
+                levels[currentLevelIndex].gameObject.SetActive(true);
 
                 m_LevelText.text = "Level " + (currentLevelIndex + 1).ToString();
             }
         }
+
+        
     }
 }

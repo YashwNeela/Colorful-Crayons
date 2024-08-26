@@ -12,11 +12,10 @@ namespace TMKOC.Colorful_Crayons
 
         [SerializeField] protected int collectedItems;
 
-       [SerializeField] protected int itemsToCollect;
-
         public UnityAction OnItemCollectedAction;
 
         protected Collider m_Collider;
+
 
         protected virtual void OnEnable() 
         {
@@ -69,6 +68,11 @@ namespace TMKOC.Colorful_Crayons
         protected virtual void EnableCollider()
         {
             m_Collider.enabled = true;
+        }
+
+        public virtual int GetMaxSnapPoints()
+        {
+            return snapPoints.Length;
         }
     }
 }

@@ -20,18 +20,38 @@ public class LevelCompletedPopup : MonoBehaviour
     {
         Gamemanager.OnGameStart += OnGameStart;
         Gamemanager.OnGameLoose += OnGameLoose;
+        Gamemanager.OnGameWin += OnGameWin;
+        Gamemanager.OnGameCompleted += OnGameCompleted;
+
     }
 
-    private void OnGameLoose()
+    private void OnGameCompleted()
     {
-        SetData("No lives Remaning", Gamemanager.Instance.GameRestart, "Restart Level");
-        ShowPopup();
+         ResetData();
+        HidePopup();
     }
 
     void OnDisable() 
     {
         Gamemanager.OnGameStart -= OnGameStart;
         Gamemanager.OnGameLoose -= OnGameLoose;
+        Gamemanager.OnGameWin -= OnGameWin;
+        Gamemanager.OnGameCompleted -= OnGameCompleted;
+
+
+    }
+
+    private void OnGameWin()
+    {
+        SetData("Level Completed", Gamemanager.Instance.LoadNextLevel, "Next Level");
+        ShowPopup();
+        
+    }
+
+    private void OnGameLoose()
+    {
+        SetData("No lives Remaning", Gamemanager.Instance.GameRestart, "Restart Level");
+        ShowPopup();
     }
 
     private void OnGameStart()

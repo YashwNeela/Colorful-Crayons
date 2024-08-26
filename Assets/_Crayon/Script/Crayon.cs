@@ -17,7 +17,7 @@ namespace TMKOC.Colorful_Crayons
             base.Awake();
             m_Renderer = GetComponent<Renderer>();
             SetBoxColor(m_Color);
-            
+
 
         }
 
@@ -59,12 +59,12 @@ namespace TMKOC.Colorful_Crayons
             
         }
 
-        protected override void PlaceCorrectly()
+        protected override void OnPlacedCorrectly()
         {
             Gamemanager.Instance.RightAnswer();
         }
 
-        protected override void PlaceInCorrectly()
+        protected override void OnPlacedInCorrectly()
         {
             Gamemanager.Instance.WrongAnswer();
         }

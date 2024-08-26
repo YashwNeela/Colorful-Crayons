@@ -15,7 +15,8 @@ namespace TMKOC.Colorful_Crayons
         GameOver,
         Restart,
         Win,
-        Loose
+        Loose,
+        Completed
     }
 
 
@@ -75,7 +76,7 @@ namespace TMKOC.Colorful_Crayons
 
         #region  Game States
 
-        protected GameState m_CurrentGameState;
+        [SerializeField] protected GameState m_CurrentGameState;
 
         public GameState CurrentGameState => m_CurrentGameState;
         public static UnityAction OnGameWin;
@@ -92,22 +93,30 @@ namespace TMKOC.Colorful_Crayons
 
         public static UnityAction OnGameRestart;
 
+        public static UnityAction OnGameCompleted;
 
-        public virtual void GameStart()
+
+        public static UnityAction OnLoadNextLevel;
+
+
+        public virtual void GameStart(int level)
         {
+            m_CurrentGameState = GameState.Start;
             SetRemainingLives(m_MaxLives);
             SetScore(0);
-
-            LevelManager.Instance.LoadLevel(0);
-            m_CurrentGameState = GameState.Start;
+            LevelManager.Instance.LoadLevel(level);
             OnGameStart?.Invoke();
+
+            GamePlaying();
+
+            
         }
 
         public virtual void GameRestart()
         {
             m_CurrentGameState = GameState.Restart;
             OnGameRestart?.Invoke();
-            GameStart();
+            GameStart(LevelManager.Instance.CurrentLevelIndex);
         }
 
         public virtual void GamePlaying()
@@ -134,8 +143,13 @@ namespace TMKOC.Colorful_Crayons
         public virtual void GameWin()
         {
             m_CurrentGameState = GameState.Win;
-
             OnGameWin?.Invoke();
+
+            if(LevelManager.Instance.CurrentLevelIndex + 1 >= LevelManager.Instance.MaxLevels)
+            {
+                GameCompleted();
+                return;
+            }
         }
 
         public virtual void GameLoose()
@@ -145,11 +159,24 @@ namespace TMKOC.Colorful_Crayons
             OnGameLoose?.Invoke();
         }
 
+        public virtual void LoadNextLevel()
+        {
+            GameStart(LevelManager.Instance.CurrentLevelIndex + 1);
+            OnLoadNextLevel?.Invoke();
+
+        }
+
+        public virtual void GameCompleted()
+        {
+            m_CurrentGameState = GameState.Completed;
+            OnGameCompleted?.Invoke();
+        }
+
         #endregion
 
         public void Start()
         {
-            GameStart();
+            GameStart(0);
         }
 
 
