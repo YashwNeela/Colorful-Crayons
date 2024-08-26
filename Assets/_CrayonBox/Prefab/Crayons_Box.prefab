@@ -101,9 +101,11 @@ MonoBehaviour:
   snapPoints:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   collectedItems: 0
-  m_BoxColor: {r: 1, g: 0, b: 0.019788265, a: 1}
-  m_CrayonColor: 0
+  m_BoxColor: {r: 0.3050177, g: 1, b: 0, a: 1}
+  m_CrayonColor: 2
   m_StartCollector: {fileID: 0}
   m_OnCrayonEnteredAnimation: {fileID: 4083201745304827173}
 --- !u!65 &8088231948428118868
@@ -125,8 +127,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.054216456, y: 0.100307025, z: 0.049519643}
-  m_Center: {x: -0.0000000027651859, y: -0.045014855, z: 0.07075705}
+  m_Size: {x: 0.054216456, y: 0.100307025, z: 0.10027609}
+  m_Center: {x: -0.000000002785078, y: -0.045014847, z: 0.07556561}
 --- !u!114 &4083201745304827173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +173,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4083201745304827173}
         m_TargetAssemblyTypeName: DG.Tweening.DOTweenAnimation, Assembly-CSharp-firstpass
-        m_MethodName: DORewind
+        m_MethodName: RecreateTween
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -225,7 +227,7 @@ MonoBehaviour:
   animationType: 5
   targetType: 11
   forcedTargetType: 0
-  autoPlay: 1
+  autoPlay: 0
   useTargetAsV3: 0
   endValueFloat: 10
   endValueV3: {x: 0, y: 0, z: 0}

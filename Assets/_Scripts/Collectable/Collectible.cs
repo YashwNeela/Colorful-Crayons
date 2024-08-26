@@ -8,7 +8,9 @@ namespace TMKOC.Colorful_Crayons
 {
     public abstract class Collectible : MonoBehaviour
     {
-        protected Collector currentCollector;
+        protected Collector m_ValidCollector;
+
+        protected Collector m_CurrentCollector;
 
         protected bool m_IsTryingToPlaceWrong;
 
@@ -49,28 +51,27 @@ namespace TMKOC.Colorful_Crayons
 
         protected virtual void OnTriggerEnter(Collider other)
         {
-            Collector collector = other.GetComponent<Collector>();
-            if(collector != null && !m_IsPlaced && draggable.IsDragging)
-                collector.OnCollectibleEntered(this);
+            m_CurrentCollector = other.GetComponent<Collector>();
+            if(m_CurrentCollector != null && !m_IsPlaced && draggable.IsDragging)
+                m_CurrentCollector.OnCollectibleEntered(this);
         }
 
         protected virtual void OnTriggerExit(Collider other)
         {
-
-            Collector collector = other.GetComponent<Collector>();
-            if(collector != null && !m_IsPlaced)
-                collector.OnCollectibleExited(this);
+            m_CurrentCollector = other.GetComponent<Collector>();
+            if(m_CurrentCollector != null && !m_IsPlaced && draggable.IsDragging)
+                m_CurrentCollector.OnCollectibleExited(this);
         }
 
         protected virtual void HandleDragEnd()
         {
-            if (currentCollector != null)
+            if (m_ValidCollector != null)
             {
-                currentCollector.SnapCollectibleToCollector(this);
+                m_ValidCollector.SnapCollectibleToCollector(this);
                 OnPlacedCorrectly();
             }
             else if(m_IsTryingToPlaceWrong)
-                PlaceInCorrectly();
+                PlaceInCorrectly(m_CurrentCollector);
             
             m_IsTryingToPlaceWrong = false;
                 
@@ -81,7 +82,10 @@ namespace TMKOC.Colorful_Crayons
             m_IsPlaced = true;
         }
 
-        protected virtual void PlaceInCorrectly(){}
+        protected virtual void PlaceInCorrectly(Collector collector)
+        {
+            collector.OnWrongItemTriedToCollect();
+        }
 
         protected void Reset()
         {

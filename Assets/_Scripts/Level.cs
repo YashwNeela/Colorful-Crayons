@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -24,11 +25,19 @@ namespace TMKOC.Colorful_Crayons
         void OnEnable()
         {
             SubscribeToOnItemCollectedAction();
+            Gamemanager.OnGameRestart += OnGameRestart;
+        }
+
+        private void OnGameRestart()
+        {
+            m_CurrentScore = 0;
         }
 
         void OnDisable()
         {
             UnSubscribeToOnItemCollectedAction();
+            Gamemanager.OnGameRestart -= OnGameRestart;
+
         }
         
         private void SetScoreRequiredToCompleteTheLevel()

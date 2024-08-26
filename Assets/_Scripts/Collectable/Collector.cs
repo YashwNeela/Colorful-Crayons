@@ -75,6 +75,11 @@ namespace TMKOC.Colorful_Crayons
             OnItemCollectedAction?.Invoke();
         }
 
+        public virtual void OnWrongItemTriedToCollect()
+        {
+
+        }
+
         protected virtual void EnableCollider()
         {
             m_Collider.enabled = true;

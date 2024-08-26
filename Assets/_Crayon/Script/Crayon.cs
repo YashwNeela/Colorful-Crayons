@@ -34,7 +34,7 @@ namespace TMKOC.Colorful_Crayons
             {
                 if (collectorBox.CrayonColor == this.CrayonColor)
                 {
-                    currentCollector = collectorBox;
+                    m_ValidCollector = collectorBox;
                 }
                 else
                     m_IsTryingToPlaceWrong = true;
@@ -47,8 +47,8 @@ namespace TMKOC.Colorful_Crayons
             CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
             if (collectorBox != null)
             {
-                if(collectorBox == currentCollector)
-                    currentCollector = null;
+                if(collectorBox == m_ValidCollector)
+                    m_ValidCollector = null;
 
                 m_IsTryingToPlaceWrong = false;
                
@@ -67,9 +67,9 @@ namespace TMKOC.Colorful_Crayons
             Gamemanager.Instance.RightAnswer();
         }
 
-        protected override void PlaceInCorrectly()
+        protected override void PlaceInCorrectly(Collector collector)
         {
-            base.PlaceInCorrectly();
+            base.PlaceInCorrectly(collector);
             Gamemanager.Instance.WrongAnswer();
         }
 

@@ -72,24 +72,33 @@ namespace TMKOC.Colorful_Crayons
             base.OnItemCollected(snapPoint);
             m_StartCollector.SetEmitter(snapPoint.transform);
             m_StartCollector.PlayParticle();
-            
-                m_OnCrayonEnteredAnimation.DOPlayBackwards(); 
+            m_OnCrayonEnteredAnimation.DOPlayBackwards(); 
+        }
+
+        public override void OnWrongItemTriedToCollect()
+        {
+            base.OnWrongItemTriedToCollect();
+            Debug.Log("wrong Item");
+
+            m_OnCrayonEnteredAnimation.DOPlayBackwards(); 
         }
 
         public override void OnCollectibleEntered(Collectible collectible)
         {
             base.OnCollectibleEntered(collectible);
             Debug.Log("Collectible entered");
+            
             //m_OnCrayonEnteredAnimation.autoGenerate = true;
                 m_OnCrayonEnteredAnimation.DOPlay();
+             
         }
 
         public override void OnCollectibleExited(Collectible collectible)
         {
             base.OnCollectibleExited(collectible);
             Debug.Log("Collectible Exited");
-          
-                m_OnCrayonEnteredAnimation.DOPlayBackwards(); 
+             m_OnCrayonEnteredAnimation.DOComplete();
+            m_OnCrayonEnteredAnimation.DOPlayBackwards(); 
 
         }
 
