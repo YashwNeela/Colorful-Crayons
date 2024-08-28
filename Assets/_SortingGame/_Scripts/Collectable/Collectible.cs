@@ -92,6 +92,7 @@ namespace TMKOC.Sorting
         {
             if(collector != null)
                 collector.OnWrongItemTriedToCollect();
+           
         }
 
         protected void Reset()
