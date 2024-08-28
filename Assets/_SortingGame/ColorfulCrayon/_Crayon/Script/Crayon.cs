@@ -33,7 +33,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
             CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
             if (collectorBox != null)
             {
-                if (collectorBox.CrayonColor == this.CrayonColor)
+                if (collectorBox.CrayonColor.HasFlag(this.CrayonColor))
                 {
                     m_ValidCollector = collectorBox;
                 }
@@ -65,7 +65,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
             CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
             if (collectorBox != null)
             {
-                if (collectorBox.CrayonColor != this.CrayonColor)
+                if (!collectorBox.CrayonColor.HasFlag(this.CrayonColor))
                     m_IsTryingToPlaceWrong = true;
 
             }

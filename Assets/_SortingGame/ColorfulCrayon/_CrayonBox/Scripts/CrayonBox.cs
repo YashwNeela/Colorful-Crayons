@@ -22,7 +22,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
     public class CrayonBox : Collector
     {
-        [SerializeField] private Color m_BoxColor;
+        [SerializeField] private Color m_BoxColor1, m_BoxColor2;
         [SerializeField] private CrayonColor m_CrayonColor;
 
         public CrayonColor CrayonColor => m_CrayonColor;
@@ -31,7 +31,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private StarCollectorParticleImage m_StartCollector;
 
-        [SerializeField] private DOTweenAnimation m_OnCrayonEnteredAnimation;
+         private DOTweenAnimation m_OnCrayonEnteredAnimation;
 
     
 
@@ -40,7 +40,8 @@ namespace TMKOC.Sorting.ColorfulCrayons
             base.Awake();
             m_Renderer = GetComponent<Renderer>();
             m_StartCollector = FindAnyObjectByType<StarCollectorParticleImage>();
-            SetBoxColor(m_BoxColor);
+            m_OnCrayonEnteredAnimation = GetComponent<DOTweenAnimation>();
+            SetBoxColor(m_BoxColor1, m_BoxColor2);
         }
 
         protected override void OnEnable()
@@ -72,9 +73,12 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
 
 
-        private void SetBoxColor(Color color)
+        private void SetBoxColor(Color color1, Color color2)
         {
-            m_Renderer.material.color = color;
+            m_Renderer.materials[0].color = color1;
+            m_Renderer.materials[1].color = color2;
+
+
         }
 
         /// <summary>
@@ -102,7 +106,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
             base.OnCollectibleEntered(collectible);
             Debug.Log("Collectible entered");
             //m_OnCrayonEnteredAnimation.autoGenerate = true;
-                m_OnCrayonEnteredAnimation.DOPlayForward();
+            m_OnCrayonEnteredAnimation.DOPlayForward();
              
         }
 
