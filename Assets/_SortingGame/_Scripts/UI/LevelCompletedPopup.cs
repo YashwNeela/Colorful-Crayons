@@ -43,7 +43,6 @@ public class LevelCompletedPopup : MonoBehaviour
 
     private void OnGameWin()
     {
-        CloudUI.Instance.PlayColoudEnterAnimation();
        // SetData("Level Completed", Gamemanager.Instance.LoadNextLevel, "Next Level");
         //ShowPopup();
         

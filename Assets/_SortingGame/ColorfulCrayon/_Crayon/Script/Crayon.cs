@@ -57,9 +57,18 @@ namespace TMKOC.Sorting.ColorfulCrayons
         }
 
         
-        void OnTriggerStay(Collider other)
+
+        
+        protected override void OnTriggerStay(Collider other)
         {
-            
+            base.OnTriggerStay(other);
+            CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
+            if (collectorBox != null)
+            {
+                if (collectorBox.CrayonColor != this.CrayonColor)
+                    m_IsTryingToPlaceWrong = true;
+
+            }
         }
 
         protected override void OnPlacedCorrectly()

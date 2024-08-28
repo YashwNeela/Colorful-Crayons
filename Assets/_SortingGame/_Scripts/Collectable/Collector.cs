@@ -50,11 +50,12 @@ namespace TMKOC.Sorting
 
         private void OnDraggingStaticAction()
         {
-            EnableCollider();
+           // EnableCollider();
         }
         private void OnDragEndStaticAction()
         {
             DisableCollider();
+           // Invoke(nameof(DisableCollider),1f);
         }
 
         private void OnGameStart()

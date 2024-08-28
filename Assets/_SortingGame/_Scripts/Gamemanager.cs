@@ -159,6 +159,10 @@ namespace TMKOC.Sorting
             {
                 GameCompleted();
                 return;
+            }else
+            {
+                CloudUI.Instance.PlayColoudEnterAnimation();
+
             }
         }
 

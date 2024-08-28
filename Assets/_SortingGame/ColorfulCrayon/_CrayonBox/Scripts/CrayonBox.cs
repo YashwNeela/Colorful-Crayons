@@ -49,12 +49,14 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void OnRightAnswerAction()
         {
-            //m_OnCrayonEnteredAnimation.DOComplete();
+            m_OnCrayonEnteredAnimation.DOComplete();
+            m_OnCrayonEnteredAnimation.DOPlayBackwards();
+
         }
 
         private void OnWrongAnswer()
         {
-           // m_OnCrayonEnteredAnimation.DOComplete();
+            m_OnCrayonEnteredAnimation.DOComplete();
             m_OnCrayonEnteredAnimation.DOPlayBackwards();
         }
 

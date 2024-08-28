@@ -56,6 +56,12 @@ namespace TMKOC.Sorting
                 m_CurrentCollector.OnCollectibleEntered(this);
         }
 
+        protected virtual void OnTriggerStay(Collider other)
+        {
+            
+
+        }
+
         protected virtual void OnTriggerExit(Collider other)
         {
             m_CurrentCollector = other.GetComponent<Collector>();
