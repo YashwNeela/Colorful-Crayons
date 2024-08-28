@@ -73,13 +73,12 @@ namespace TMKOC.Sorting
         {
             if (m_ValidCollector != null)
             {
-                m_ValidCollector.SnapCollectibleToCollector(this);
-                OnPlacedCorrectly();
+                m_ValidCollector.SnapCollectibleToCollector(this,()=> OnPlacedCorrectly());
             }
             else if(m_IsTryingToPlaceWrong)
                 PlaceInCorrectly(m_CurrentCollector);
             
-            m_IsTryingToPlaceWrong = false;
+            m_IsTryingToPlaceWrong = true;
                 
         }
 

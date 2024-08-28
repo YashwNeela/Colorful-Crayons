@@ -68,7 +68,7 @@ namespace TMKOC.Sorting
             m_Collider = GetComponent<Collider>();
         }
 
-        public virtual void SnapCollectibleToCollector(Collectible collectible)
+        public virtual void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
             foreach (var snapPoint in snapPoints)
             {
@@ -80,6 +80,7 @@ namespace TMKOC.Sorting
                     collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
                     snapPoint.IsOccupied = true;
                     OnItemCollected(snapPoint);
+                    PlacedCorrectly?.Invoke();
                     break;
                 }
             }

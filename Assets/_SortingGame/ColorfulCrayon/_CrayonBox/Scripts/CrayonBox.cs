@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using TMKOC.Sorting;
+using UnityEngine.Windows;
 
 
 namespace TMKOC.Sorting.ColorfulCrayons
@@ -119,21 +120,29 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         }
 
-        public override void SnapCollectibleToCollector(Collectible collectible)
+        public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
             foreach (var snapPoint in snapPoints)
             {
-                if (!snapPoint.IsOccupied)
+                CrayonSnapPoint crayonSnapPoint = snapPoint as CrayonSnapPoint;
+
+                if (crayonSnapPoint.CrayonColor == (collectible as Crayon).CrayonColor &&
+                 !crayonSnapPoint.IsOccupied)
                 {
-                    if((snapPoint as CrayonSnapPoint).CrayonColor == (collectible as Crayon).CrayonColor){
+                    
                     // collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
                     collectible.transform.parent = snapPoint.transform; // Change parent first
                     collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
                     collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
                     snapPoint.IsOccupied = true;
                     OnItemCollected(snapPoint);
+                    PlacedCorrectly?.Invoke();
                     break;
-                    }
+                
+                }else
+                {
+                    m_OnCrayonEnteredAnimation.DOComplete();
+                    m_OnCrayonEnteredAnimation.DOPlayBackwards(); 
                 }
             }
         }
