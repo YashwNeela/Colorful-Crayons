@@ -27,7 +27,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private Renderer m_Renderer;
 
-        [SerializeField] private StarCollectorParticleImage m_StartCollector;
+        private StarCollectorParticleImage m_StartCollector;
 
         [SerializeField] private DOTweenAnimation m_OnCrayonEnteredAnimation;
 
@@ -37,6 +37,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
         {
             base.Awake();
             m_Renderer = GetComponent<Renderer>();
+            m_StartCollector = FindAnyObjectByType<StarCollectorParticleImage>();
             SetBoxColor(m_BoxColor);
         }
 
