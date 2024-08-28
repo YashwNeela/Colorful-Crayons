@@ -14,9 +14,17 @@ namespace TMKOC.Colorful_Crayons
         public bool HasDragStarted => m_hasDragStarted;
         public bool IsDragging => m_isDragging;
 
+        public event Action OnDragStarted;
+
+        public static event Action OnDragStartedStaticAction;
+        public event Action OnDragging;
+
+        public static event Action OnDraggingStaticAction;
         public event Action OnDragEnd; // Event to notify when dragging ends
 
-        public Collider m_Collider;
+        public static event Action OnDragEndStaticAction;
+
+        private Collider m_Collider;
 
         // Ground level Y position
         public float GroundLevel = 0.0f;
@@ -41,6 +49,9 @@ namespace TMKOC.Colorful_Crayons
             }
             m_isDragging = true;
             m_hasDragStarted = true;
+
+            OnDragStarted?.Invoke();
+            OnDragStartedStaticAction?.Invoke();
         }
 
         void OnMouseDrag()
@@ -59,6 +70,9 @@ namespace TMKOC.Colorful_Crayons
                 }
 
                 transform.position = worldPosition;
+
+                OnDragging?.Invoke();
+                OnDraggingStaticAction?.Invoke();
             }
         }
 
@@ -76,6 +90,7 @@ namespace TMKOC.Colorful_Crayons
 
             // Trigger the drag end event
             OnDragEnd?.Invoke();
+            OnDragEndStaticAction?.Invoke();
         }
 
         public void HandleRigidbodyKinematic(bool value)
