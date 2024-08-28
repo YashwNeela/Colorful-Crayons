@@ -8,14 +8,16 @@ using TMKOC.Sorting;
 
 namespace TMKOC.Sorting.ColorfulCrayons
 {
+    [Flags]
     public enum CrayonColor
     {
-        Red,
-        Yellow,
+        None = 0,
+        Red = 1<<0,
+        Yellow = 1<<1,
 
-        Green,
+        Green = 1<<2,
 
-        Blue
+        Blue = 1<<3
     }
 
     public class CrayonBox : Collector
