@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 using UnityEngine.UI;
+using AssetKits.ParticleImage;
+using DG.Tweening;
 
 namespace TMKOC.Sorting
 {
@@ -23,6 +25,8 @@ namespace TMKOC.Sorting
     public class Gamemanager : Singleton<Gamemanager>
     {
         protected LevelManager m_LevelManager;
+
+        public DOTweenAnimation m_CameraShakeDotweenAnimation;
 
         #region  Lives
         [SerializeField] private int m_MaxLives;
@@ -55,6 +59,7 @@ namespace TMKOC.Sorting
 
             if (m_RemaningLives - 1 >= 0)
             {
+                m_CameraShakeDotweenAnimation.DOPlay();
                 SetRemainingLives(m_RemaningLives - 1);
                 OnWrongAnswerAction?.Invoke();
                 if (m_RemaningLives <= 0)
