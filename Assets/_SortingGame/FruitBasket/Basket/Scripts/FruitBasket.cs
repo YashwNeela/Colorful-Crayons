@@ -86,7 +86,7 @@ namespace TMKOC.Sorting.FruitSorting
                 selectedColors.Add(ColorCodes.blue);
             }
 
-            m_Renderer.materials[0].color = selectedColors[0];
+            m_Renderer.materials[1].color = selectedColors[0];
         }
 
         protected override void OnItemCollected(SnapPoint snapPoint)
