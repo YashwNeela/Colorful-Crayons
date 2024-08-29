@@ -7,6 +7,8 @@ namespace TMKOC.Sorting
     {
         private Camera m_Camera;
         private Rigidbody m_Rigidbody;
+
+        public bool m_CanDrag;
         private bool m_isDragging = false;
         private bool m_hasDragStarted = false;
         private float m_ZPosition;
@@ -35,12 +37,12 @@ namespace TMKOC.Sorting
         void Update()
         {
             // Check for mouse button down to start dragging
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && m_CanDrag)
             {
                 StartDragging();
             }
             // Handle the dragging when the mouse is held down
-            if (m_isDragging)
+            if (m_isDragging && m_CanDrag)
             {
                 DragObject();
             }

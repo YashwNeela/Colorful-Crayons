@@ -23,6 +23,12 @@ namespace TMKOC.Sorting
         protected virtual void OnEnable()
         {
             Gamemanager.OnGameRestart += OnGameRestart;
+            Gamemanager.OnGameStart += OnGameStart;
+        }
+
+        private void OnGameStart()
+        {
+            draggable.m_CanDrag = true;
         }
 
         private void OnGameRestart()
@@ -34,6 +40,7 @@ namespace TMKOC.Sorting
         protected virtual void OnDisable()
         {
             Gamemanager.OnGameRestart -= OnGameRestart;
+            Gamemanager.OnGameStart -= OnGameStart;
 
         }
 
@@ -85,18 +92,22 @@ namespace TMKOC.Sorting
         protected virtual void OnPlacedCorrectly()
         {
             m_IsPlaced = true;
+            draggable.m_CanDrag = false;
         }
 
         protected virtual void PlaceInCorrectly(Collector collector)
         {
             if(collector != null)
                 collector.OnWrongItemTriedToCollect();
+            draggable.m_CanDrag = true;
+            
            
         }
 
         protected void Reset()
         {
             m_IsPlaced = false;
+            draggable.m_CanDrag = true;
         }
     }
 }
