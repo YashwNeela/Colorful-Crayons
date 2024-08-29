@@ -28,7 +28,7 @@ namespace TMKOC.Sorting.FruitSorting
             FruitBasket collectorBox = other.GetComponent<Collector>() as FruitBasket;
             if (collectorBox != null)
             {
-                if (collectorBox.BasketType.HasFlag(this.BasketType))
+                if (BasketType.HasFlag(collectorBox.BasketType))
                 {
                     m_ValidCollector = collectorBox;
                 }
@@ -57,7 +57,7 @@ namespace TMKOC.Sorting.FruitSorting
             FruitBasket collectorBox = other.GetComponent<Collector>() as FruitBasket;
             if (collectorBox != null)
             {
-                if (!collectorBox.BasketType.HasFlag(this.BasketType))
+                if (!BasketType.HasFlag(collectorBox.BasketType))
                     m_IsTryingToPlaceWrong = true;
 
             }
