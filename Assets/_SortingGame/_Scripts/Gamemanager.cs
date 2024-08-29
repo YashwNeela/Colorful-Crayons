@@ -26,6 +26,10 @@ namespace TMKOC.Sorting
     {
         protected LevelManager m_LevelManager;
 
+        public bool testLevel;
+
+        public int levelNumber;
+
         public DOTweenAnimation m_CameraShakeDotweenAnimation;
 
         #region  Lives
@@ -190,7 +194,12 @@ namespace TMKOC.Sorting
 
         public void Start()
         {
-            GameStart(0);
+            if(testLevel)
+            {
+            GameStart(levelNumber);
+
+            }else
+                GameStart(0);
         }
 
 

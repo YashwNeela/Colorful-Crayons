@@ -18,14 +18,35 @@ namespace TMKOC.Sorting.ColorfulCrayons
         {
             base.Awake();
             m_Renderer = GetComponent<Renderer>();
-            SetBoxColor(m_Color);
+            SetBoxColor(m_CrayonColor);
 
 
         }
 
-        private void SetBoxColor(Color color)
+        private void SetBoxColor(CrayonColor crayonColor)
         {
-            m_Renderer.materials[m_MaterialIndex].color = color;
+            if (crayonColor.HasFlag(CrayonColor.Red))
+            {
+                m_Renderer.materials[m_MaterialIndex].color = Color.red;
+                
+            }
+            if (crayonColor.HasFlag(CrayonColor.Yellow))
+            {
+                m_Renderer.materials[m_MaterialIndex].color = Color.yellow;
+
+               
+            }
+            if (crayonColor.HasFlag(CrayonColor.Green))
+            {
+                m_Renderer.materials[m_MaterialIndex].color = Color.green;
+                
+            }
+            if (crayonColor.HasFlag(CrayonColor.Blue))
+            {
+                m_Renderer.materials[m_MaterialIndex].color = Color.blue;
+               
+            }
+            
         }
 
         protected override void OnTriggerEnter(Collider other)
