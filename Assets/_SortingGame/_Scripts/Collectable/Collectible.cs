@@ -78,7 +78,7 @@ namespace TMKOC.Sorting
             else if(m_IsTryingToPlaceWrong)
                 PlaceInCorrectly(m_CurrentCollector);
             
-            m_IsTryingToPlaceWrong = true;
+            m_IsTryingToPlaceWrong = false;
                 
         }
 

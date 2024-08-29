@@ -73,7 +73,7 @@ Transform:
   m_GameObject: {fileID: 211396803224183334}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.01872, y: 0.99399996, z: 3.4827201}
+  m_LocalPosition: {x: 0.01872, y: 0.88, z: 3.4827201}
   m_LocalScale: {x: 0.42193744, y: 0.8, z: 0.077053286}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CrayonColor: 1
+  m_CrayonColor: 4
 --- !u!1 &1316913495897774212
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 5560969053478476683}
   - component: {fileID: 6439785102374341639}
   - component: {fileID: 5321764201700386027}
+  - component: {fileID: 1489530364002279639}
   m_Layer: 0
   m_Name: Crayons_Box 2
   m_TagString: Untagged
@@ -348,8 +349,8 @@ MonoBehaviour:
   - {fileID: 2713722233176962079}
   collectedItems: 0
   m_BoxColor1: {r: 0.05724919, g: 1, b: 0, a: 1}
-  m_BoxColor2: {r: 1, g: 0, b: 0, a: 1}
-  m_CrayonColor: 5
+  m_BoxColor2: {r: 0.05882353, g: 1, b: 0, a: 1}
+  m_CrayonColor: 4
 --- !u!114 &6439785102374341639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,6 +492,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.4216433, y: 8.379734, z: 13.371508}
   m_Center: {x: -0.00000029802322, y: 3.7599432, z: 6.171906}
+--- !u!64 &1489530364002279639
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316913495897774212}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 9a836e1b65d68441587cae9864b4fbbc, type: 3}
 --- !u!1 &1885711051388723817
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,8 +540,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7185538461838291023}
   - {fileID: 5265884922755829519}
@@ -605,7 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CrayonColor: 1
+  m_CrayonColor: 4
 --- !u!1 &8773734939719269066
 GameObject:
   m_ObjectHideFlags: 0

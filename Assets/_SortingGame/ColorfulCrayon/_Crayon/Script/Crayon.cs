@@ -12,6 +12,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
         public Color Color => m_Color;
 
         private Renderer m_Renderer;
+        [SerializeField] private int m_MaterialIndex;
 
         protected override void Awake()
         {
@@ -24,7 +25,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void SetBoxColor(Color color)
         {
-            m_Renderer.material.color = color;
+            m_Renderer.materials[m_MaterialIndex].color = color;
         }
 
         protected override void OnTriggerEnter(Collider other)
