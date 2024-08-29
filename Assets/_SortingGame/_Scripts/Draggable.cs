@@ -15,18 +15,14 @@ namespace TMKOC.Sorting
         public bool IsDragging => m_isDragging;
 
         public event Action OnDragStarted;
-
         public static event Action OnDragStartedStaticAction;
         public event Action OnDragging;
-
         public static event Action OnDraggingStaticAction;
         public event Action OnDragEnd; // Event to notify when dragging ends
-
         public static event Action OnDragEndStaticAction;
+        
 
         private Collider m_Collider;
-
-        // Ground level Y position
         public float GroundLevel = 0.0f;
 
         void Awake()
@@ -36,52 +32,72 @@ namespace TMKOC.Sorting
             m_Collider = GetComponent<Collider>();
         }
 
-        void OnMouseDown()
+        void Update()
         {
-            if (Gamemanager.Instance.CurrentGameState != GameState.Playing)
-                return;
-
-            m_ZPosition = transform.position.z;
-            m_Collider.isTrigger = true;
-            if (m_Rigidbody != null)
+            // Check for mouse button down to start dragging
+            if (Input.GetMouseButtonDown(0))
             {
-                m_Rigidbody.isKinematic = true;
+                StartDragging();
             }
-            m_isDragging = true;
-            m_hasDragStarted = true;
-
-            OnDragStarted?.Invoke();
-            OnDragStartedStaticAction?.Invoke();
-        }
-
-        void OnMouseDrag()
-        {
+            // Handle the dragging when the mouse is held down
             if (m_isDragging)
             {
-                Vector3 mousePosition = Input.mousePosition;
-                mousePosition.z = m_Camera.WorldToScreenPoint(transform.position).z;
-                Vector3 worldPosition = m_Camera.ScreenToWorldPoint(mousePosition);
-                worldPosition.z = m_ZPosition;
-
-                // Ensure the object doesn't go below the ground level
-                if (worldPosition.y < GroundLevel)
-                {
-                    worldPosition.y = GroundLevel;
-                }
-
-                transform.position = worldPosition;
-
-                OnDragging?.Invoke();
-                OnDraggingStaticAction?.Invoke();
+                DragObject();
+            }
+            // Check for mouse button up to stop dragging
+            if (m_isDragging && Input.GetMouseButtonUp(0))
+            {
+                StopDragging();
             }
         }
 
-        void OnMouseUp()
+        private void StartDragging()
+        {
+            // Raycast to detect if the mouse is over this object
+            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider == m_Collider)
+            {
+                if (Gamemanager.Instance.CurrentGameState != GameState.Playing)
+                    return;
+
+                m_ZPosition = transform.position.z;
+                m_Collider.isTrigger = true;
+                if (m_Rigidbody != null)
+                {
+                    m_Rigidbody.isKinematic = true;
+                }
+                m_isDragging = true;
+                m_hasDragStarted = true;
+
+                OnDragStarted?.Invoke();
+                OnDragStartedStaticAction?.Invoke();
+            }
+        }
+
+        private void DragObject()
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = m_Camera.WorldToScreenPoint(transform.position).z;
+            Vector3 worldPosition = m_Camera.ScreenToWorldPoint(mousePosition);
+            worldPosition.z = m_ZPosition;
+
+            // Ensure the object doesn't go below the ground level
+            if (worldPosition.y < GroundLevel)
+            {
+                worldPosition.y = GroundLevel;
+            }
+
+            transform.position = worldPosition;
+
+            OnDragging?.Invoke();
+            OnDraggingStaticAction?.Invoke();
+        }
+
+        private void StopDragging()
         {
             m_isDragging = false;
             m_hasDragStarted = false;
             m_Collider.isTrigger = false;
-
 
             if (m_Rigidbody != null)
             {
