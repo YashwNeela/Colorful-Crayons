@@ -17,9 +17,6 @@ namespace TMKOC.Sorting.FruitSorting
         {
             base.Awake();
             m_Renderer = GetComponent<Renderer>();
-
-
-
         }
 
         protected override void OnTriggerEnter(Collider other)
