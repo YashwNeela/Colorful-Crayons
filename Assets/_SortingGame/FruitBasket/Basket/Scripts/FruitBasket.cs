@@ -20,6 +20,8 @@ namespace TMKOC.Sorting.FruitSorting
 
 
     }
+
+    
     public class FruitBasket : Collector
     {
         [SerializeField] private BasketType m_BasketType;
@@ -31,6 +33,8 @@ namespace TMKOC.Sorting.FruitSorting
         private StarCollectorParticleImage m_StartCollector;
 
         private DOTweenAnimation m_OnBasketEnteredAnimation;
+
+        public List<Sprite> m_LableTextures;
 
         protected override void Awake()
         {
