@@ -82,14 +82,16 @@ namespace TMKOC.Sorting.FruitSorting
             {
                 selectedColors.Add(ColorCodes.yellow);
             }
-            if (basketType.HasFlag(BasketType.Green))
+            if (basketType.HasFlag(BasketType.Green) || basketType.HasFlag(BasketType.WaterMelon))
             {
                 selectedColors.Add(ColorCodes.green);
             }
             if (basketType.HasFlag(BasketType.Orange))
             {
-                selectedColors.Add(ColorCodes.blue);
+                selectedColors.Add(ColorCodes.orange);
             }
+
+            
 
             m_Renderer.materials[1].color = selectedColors[0];
         }
