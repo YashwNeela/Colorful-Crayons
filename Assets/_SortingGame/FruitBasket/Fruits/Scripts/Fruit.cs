@@ -23,15 +23,28 @@ namespace TMKOC.Sorting.FruitSorting
         {
             base.OnTriggerEnter(other);
             FruitBasket collectorBox = other.GetComponent<Collector>() as FruitBasket;
+
             if (collectorBox != null)
             {
-                if (BasketType.HasFlag(collectorBox.BasketType))
+                // Check if the collector box can accept this fruit based on the flags
+                if (CanFruitBePutInBasket(collectorBox.BasketType, m_BasketType))
                 {
-                    m_ValidCollector = collectorBox;
+                    m_ValidCollector = collectorBox; // Valid collector found
+                    m_IsTryingToPlaceWrong = false;  // Reset the flag for placing wrong
                 }
                 else
-                    m_IsTryingToPlaceWrong = true;
+                {
+                    m_IsTryingToPlaceWrong = true;  // Set the flag for wrong placement
+                    m_ValidCollector = null;        // Reset valid collector as it's incorrect
+                }
             }
+        }
+
+        // Method to check if a fruit can be put in a basket based on flags
+        private bool CanFruitBePutInBasket(BasketType basketType, BasketType fruitType)
+        {
+            // Check if the basket type has all the required flags of the fruit type
+             return (basketType & fruitType) != 0;
         }
 
         protected override void OnTriggerExit(Collider other)
@@ -52,11 +65,15 @@ namespace TMKOC.Sorting.FruitSorting
         {
             base.OnTriggerStay(other);
             FruitBasket collectorBox = other.GetComponent<Collector>() as FruitBasket;
+
             if (collectorBox != null)
             {
-                if (!BasketType.HasFlag(collectorBox.BasketType))
-                    m_IsTryingToPlaceWrong = true;
-
+                // Use CanFruitBePutInBasket method to check if the basket can accept the fruit
+                if (!CanFruitBePutInBasket(collectorBox.BasketType, m_BasketType))
+                {
+                    m_IsTryingToPlaceWrong = true;  // Set the flag for wrong placement
+                }
+                
             }
         }
 
