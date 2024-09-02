@@ -44,6 +44,11 @@ namespace TMKOC.Sorting.FruitSorting
         [SerializeField] private FruitBasketLableSO m_FruitBasketLableSO;
 
         [SerializeField] private List<SnapPointData> m_SnapPointData;
+
+        [SerializeField] private ParticleSystem m_FruitCollectParticleEffect;
+
+        [SerializeField] Vector3 m_LevelCompletedBlastOffset;
+        [SerializeField] private ParticleSystem m_LevelCompletedBlast;
         //public List<Sprite> m_LableTextures;
 
         protected override void Awake()
@@ -63,6 +68,23 @@ namespace TMKOC.Sorting.FruitSorting
             base.OnEnable();
             Gamemanager.OnRightAnswerAction += OnRightAnswerAction;
             Gamemanager.OnWrongAnswerAction += OnWrongAnswer;
+            Gamemanager.OnGameWin += OnGameWin;
+           
+        }
+        private void PlayLevelCompletedBlast()
+        {
+            ParticleSystem p = Instantiate(m_LevelCompletedBlast);
+            p.transform.position = transform.position + m_LevelCompletedBlastOffset;
+
+            p.Play();
+            Gamemanager.Instance.LoadNextLevel();
+
+
+        }
+
+        private void OnGameWin()
+        {
+            Invoke(nameof(PlayLevelCompletedBlast),3);
         }
 
         protected override void OnDisable()
@@ -70,6 +92,10 @@ namespace TMKOC.Sorting.FruitSorting
             base.OnDisable();
             Gamemanager.OnRightAnswerAction -= OnRightAnswerAction;
             Gamemanager.OnWrongAnswerAction -= OnWrongAnswer;
+            Gamemanager.OnGameWin -= OnGameWin;
+
+            
+
         }
 
         private void OnRightAnswerAction()
@@ -404,6 +430,9 @@ namespace TMKOC.Sorting.FruitSorting
                     snapPoint.IsOccupied = true;
                     OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
+
+                    m_FruitCollectParticleEffect.transform.position = snapPoint.transform.position;
+                    m_FruitCollectParticleEffect.Play();
                     break;
                 }
                 else

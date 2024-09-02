@@ -93,6 +93,8 @@ namespace TMKOC.Sorting
         [SerializeField] protected GameState m_CurrentGameState;
 
         public GameState CurrentGameState => m_CurrentGameState;
+
+        public bool m_PlayCloudTransition;
         public static UnityAction OnGameWin;
 
         public static UnityAction OnGameLoose;
@@ -165,7 +167,12 @@ namespace TMKOC.Sorting
                 return;
             }else
             {
-                CloudUI.Instance.PlayColoudEnterAnimation();
+                if (m_PlayCloudTransition)
+                {
+                    CloudUI.Instance.PlayColoudEnterAnimation();
+                }
+                else
+                ConfettiUI.Instance.PlayParticle();
 
             }
         }
@@ -177,11 +184,17 @@ namespace TMKOC.Sorting
             OnGameLoose?.Invoke();
         }
 
-        public virtual void LoadNextLevel()
+        public virtual void LoadNextLevel(float delay = 0)
         {
+            StartCoroutine(Co_LoadNextLevel(delay));
+
+        }
+
+        private IEnumerator Co_LoadNextLevel(float delay)
+        {
+            yield return new WaitForSeconds(delay);
             GameStart(LevelManager.Instance.CurrentLevelIndex + 1);
             OnLoadNextLevel?.Invoke();
-
         }
 
         public virtual void GameCompleted()
