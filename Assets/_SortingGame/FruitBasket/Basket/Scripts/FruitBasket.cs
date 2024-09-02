@@ -25,7 +25,8 @@ namespace TMKOC.Sorting.FruitSorting
     [System.Serializable]
     public struct SnapPointData
     {
-        public GameObject m_SmallBox;
+        public GameObject SmallBox;
+        public BasketType basketType;
         public List<SnapPoint> snapPoints;
     }
 
@@ -96,7 +97,27 @@ namespace TMKOC.Sorting.FruitSorting
                 {
                     SnapPoint s = m_SnapPointData[i].snapPoints[j];
                     (s as FruitSnapPoint).SetBasketType(basketType);
-                    m_SnapPointData[i].m_SmallBox.gameObject.GetComponent<Renderer>().materials[1].color = ColorCodes.red;
+                    m_SnapPointData[i].SmallBox.gameObject.GetComponent<Renderer>().materials[1].color = ColorCodes.red;
+                }
+            }
+        }
+
+        private void SetSmallBoxTexture(int count, Sprite texture, BasketType basketType)
+        {
+            if (count > m_SnapPointData.Count)
+            {
+                Debug.LogError("Count is greater than Small box list");
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                for (int j = 0; j < m_SnapPointData[i].snapPoints.Count; j++)
+                {
+                    SnapPoint s = m_SnapPointData[i].snapPoints[j];
+                    (s as FruitSnapPoint).SetBasketType(basketType);
+                    m_SnapPointData[i].SmallBox.gameObject.GetComponent<Renderer>().materials[1].color = Color.white;
+                    m_SnapPointData[i].SmallBox.gameObject.GetComponent<Renderer>().materials[1].mainTexture = texture.texture;
+
                 }
             }
         }
@@ -187,85 +208,83 @@ namespace TMKOC.Sorting.FruitSorting
                 #region SingleTexture
                 // Add cases for each fruit basket
                 case BasketType.Chery:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Chery];
-                    m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Chery], basketType);
                     break;
 
                 case BasketType.Tomato:
-                     sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Tomato];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Tomato], basketType);
+
                     break;
 
                 case BasketType.BeetRoot:
-                   sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.BeetRoot];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.BeetRoot], basketType);
+
                     break;
 
                 case BasketType.Apple:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Apple];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Apple], basketType);
+
 
                     break;
 
                 case BasketType.Banana:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Banana];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Banana], basketType);
+
 
                     break;
 
                 case BasketType.StarFruit:
-                   sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.StarFruit];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.StarFruit], basketType);
+
                     break;
 
                 case BasketType.Mango:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Mango];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Mango], basketType);
+
                     break;
 
                 case BasketType.WaterMelon:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.WaterMelon];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.WaterMelon], basketType);
+
                     break;
 
                 case BasketType.Pear:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Pear];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Pear], basketType);
+
                     break;
 
                 case BasketType.Papaya:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Papaya];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Papaya], basketType);
+
                     break;
 
                 case BasketType.Apricot:
-                   sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Apricot];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Apricot], basketType);
+
                     break;
 
                 case BasketType.GrapeFruit:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.GrapeFruit];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.GrapeFruit], basketType);
+
                     break;
 
                 case BasketType.Guava:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Guava];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Guava], basketType);
+
                     break;
 
                 case BasketType.OrangeFruit:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.OrangeFruit];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.OrangeFruit], basketType);
+
                     break;
 
                 case BasketType.Avacado:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Avacado];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.Avacado], basketType);
+
                     break;
 
                 case BasketType.GreenApple:
-                    sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.GreenApple];
-                     m_Renderer.materials[1].mainTexture = sprite.texture;
+                    SetSmallBoxTexture(m_SnapPointData.Count, m_FruitBasketLableSO.BasketLableTextures[BasketType.GreenApple], basketType);
                     break;
                 #endregion
 
@@ -342,7 +361,7 @@ namespace TMKOC.Sorting.FruitSorting
                     if (CanFruitBePutInBasket(fruitSnapPoint.BasketType, f) &&
                     !fruitSnapPoint.IsOccupied)
                     {
-                        currentSelectedSmallBoxAnimation = m_SnapPointData[i].m_SmallBox.GetComponent<DOTweenAnimation>();
+                        currentSelectedSmallBoxAnimation = m_SnapPointData[i].SmallBox.GetComponent<DOTweenAnimation>();
                         currentSelectedSmallBoxAnimation.DOComplete();
                         currentSelectedSmallBoxAnimation.DOPlayForward();
                         hasToEnd = true;
