@@ -9,5 +9,10 @@ namespace TMKOC.Sorting.FruitSorting
         [SerializeField] private BasketType m_BasketType;
 
         public BasketType BasketType => m_BasketType;
+
+        public void SetBasketType(BasketType type)
+        {
+            m_BasketType = type;
+        }
     }
 }

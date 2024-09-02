@@ -22,6 +22,13 @@ namespace TMKOC.Sorting.FruitSorting
 
     }
 
+    [System.Serializable]
+    public struct SnapPointData
+    {
+        public GameObject m_SmallBox;
+        public List<SnapPoint> snapPoints;
+    }
+
 
     public class FruitBasket : Collector
     {
@@ -33,9 +40,9 @@ namespace TMKOC.Sorting.FruitSorting
 
         private StarCollectorParticleImage m_StartCollector;
 
-        private DOTweenAnimation m_OnBasketEnteredAnimation;
-
         [SerializeField] private FruitBasketLableSO m_FruitBasketLableSO;
+
+        [SerializeField] private List<SnapPointData> m_SnapPointData;
         //public List<Sprite> m_LableTextures;
 
         protected override void Awake()
@@ -43,10 +50,11 @@ namespace TMKOC.Sorting.FruitSorting
             base.Awake();
             m_Renderer = GetComponent<Renderer>();
             m_StartCollector = FindAnyObjectByType<StarCollectorParticleImage>();
-            m_OnBasketEnteredAnimation = GetComponent<DOTweenAnimation>();
+            
 
             // Set the colors of the box based on the selected CrayonColor flags
             SetBoxColorsBasedOnEnum(m_BasketType);
+            SetSnapPoints();
         }
 
         protected override void OnEnable()
@@ -65,16 +73,57 @@ namespace TMKOC.Sorting.FruitSorting
 
         private void OnRightAnswerAction()
         {
-            m_OnBasketEnteredAnimation.DOComplete();
-            m_OnBasketEnteredAnimation.DOPlayBackwards();
+            currentSelectedSmallBoxAnimation.DOComplete();
+            currentSelectedSmallBoxAnimation.DOPlayBackwards();
         }
 
         private void OnWrongAnswer()
         {
-            m_OnBasketEnteredAnimation.DOComplete();
-            m_OnBasketEnteredAnimation.DOPlayBackwards();
+            currentSelectedSmallBoxAnimation.DOComplete();
+            currentSelectedSmallBoxAnimation.DOPlayBackwards();
         }
 
+        private void SetSmallBoxColor(int count, Color color, BasketType basketType)
+        {
+            if (count > m_SnapPointData.Count)
+            {
+                Debug.LogError("Count is greater than Small box list");
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                for (int j = 0; j < m_SnapPointData[i].snapPoints.Count; j++)
+                {
+                    SnapPoint s = m_SnapPointData[i].snapPoints[j];
+                    (s as FruitSnapPoint).SetBasketType(basketType);
+                    m_SnapPointData[i].m_SmallBox.gameObject.GetComponent<Renderer>().materials[1].color = ColorCodes.red;
+                }
+            }
+        }
+
+        /// <summary>
+        /// This is kind of overriding the snappoint vairable list in parent class
+        /// </summary>
+
+        private void SetSnapPoints()
+        {
+            List<SnapPoint> tempSnapPoint = new List<SnapPoint>();
+            for (int i = 0; i < m_SnapPointData.Count; i++)
+            {
+                for (int j = 0; j < m_SnapPointData[i].snapPoints.Count; j++)
+                {
+                    tempSnapPoint.Add(m_SnapPointData[i].snapPoints[j]);
+                }
+            }
+
+            //Parent variable
+            snapPoints = new SnapPoint[tempSnapPoint.Count];
+
+            for (int i = 0; i < tempSnapPoint.Count; i++)
+            {
+                snapPoints[i] = tempSnapPoint[i];
+            }
+        }
 
 
         private void SetBoxColorsBasedOnEnum(BasketType basketType)
@@ -117,19 +166,20 @@ namespace TMKOC.Sorting.FruitSorting
                     break;
 
                 case BasketType.Red:
-                    m_Renderer.materials[1].color = ColorCodes.red;
+                    SetSmallBoxColor(m_SnapPointData.Count, ColorCodes.red,basketType);
                     break;
 
                 case BasketType.Yellow:
-                    m_Renderer.materials[1].color = ColorCodes.yellow;
+                    SetSmallBoxColor(m_SnapPointData.Count, ColorCodes.yellow, basketType);
+
                     break;
 
                 case BasketType.Green:
-                    m_Renderer.materials[1].color = ColorCodes.green;
+                    SetSmallBoxColor(m_SnapPointData.Count, ColorCodes.green, basketType);
                     break;
 
                 case BasketType.Orange:
-                    m_Renderer.materials[1].color = ColorCodes.orange;
+                    SetSmallBoxColor(m_SnapPointData.Count, ColorCodes.orange, basketType);
                     break;
 
                 #endregion
@@ -263,48 +313,94 @@ namespace TMKOC.Sorting.FruitSorting
             base.OnItemCollected(snapPoint);
             m_StartCollector.SetEmitter(snapPoint.transform);
             m_StartCollector.PlayParticle();
-            m_OnBasketEnteredAnimation.DOPlayBackwards();
+            currentSelectedSmallBoxAnimation.DOPlayBackwards();
         }
 
         public override void OnWrongItemTriedToCollect()
         {
             base.OnWrongItemTriedToCollect();
             Debug.Log("wrong Item");
-            m_OnBasketEnteredAnimation.DOPlayBackwards();
+            currentSelectedSmallBoxAnimation.DOPlayBackwards();
         }
+
+        DOTweenAnimation currentSelectedSmallBoxAnimation;
 
         public override void OnCollectibleEntered(Collectible collectible)
         {
             base.OnCollectibleEntered(collectible);
             Debug.Log("Collectible entered");
-            m_OnBasketEnteredAnimation.DOPlayForward();
+            bool hasToEnd = false;
+            for (int i = 0; i < m_SnapPointData.Count; i++)
+            {
+                if (hasToEnd)
+                    break;
+                for (int j = 0; j < m_SnapPointData[i].snapPoints.Count; j++)
+                {
+                    FruitSnapPoint fruitSnapPoint = m_SnapPointData[i].snapPoints[j] as FruitSnapPoint;
+                    BasketType f = (collectible as Fruit).BasketType;
+
+                    if (CanFruitBePutInBasket(fruitSnapPoint.BasketType, f) &&
+                    !fruitSnapPoint.IsOccupied)
+                    {
+                        currentSelectedSmallBoxAnimation = m_SnapPointData[i].m_SmallBox.GetComponent<DOTweenAnimation>();
+                        currentSelectedSmallBoxAnimation.DOComplete();
+                        currentSelectedSmallBoxAnimation.DOPlayForward();
+                        hasToEnd = true;
+                        break;
+
+                    }
+
+
+                }
+            }
+     
+           // m_OnBasketEnteredAnimation.DOPlayForward();
         }
 
         public override void OnCollectibleExited(Collectible collectible)
         {
             base.OnCollectibleExited(collectible);
             Debug.Log("Collectible Exited");
-            m_OnBasketEnteredAnimation.DOComplete();
-            m_OnBasketEnteredAnimation.DOPlayBackwards();
+            currentSelectedSmallBoxAnimation.DOComplete();
+            currentSelectedSmallBoxAnimation.DOPlayBackwards();
         }
 
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
+            
             foreach (var snapPoint in snapPoints)
             {
-                if (!snapPoint.IsOccupied)
+                FruitSnapPoint fruitSnapPoint = snapPoint as FruitSnapPoint;
+                BasketType f = (collectible as Fruit).BasketType;
+                //  basketType & fruitType
+                // bool y = fruitSnapPoint.BasketType & (collectible as Fruit).BasketType;
+
+                if (CanFruitBePutInBasket(fruitSnapPoint.BasketType, f) &&
+                    !fruitSnapPoint.IsOccupied)
                 {
-                    // collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
-                    collectible.transform.parent = snapPoint.transform; // Change parent first
-                    collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
-                                                                        //  collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
+                    collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
+                    collectible.transform.parent = snapPoint.transform;
+                    collectible.transform.localPosition = Vector3.zero;
+                    collectible.transform.localRotation = Quaternion.identity;
                     snapPoint.IsOccupied = true;
                     OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
                     break;
                 }
+                else
+                {
+                    currentSelectedSmallBoxAnimation.DOComplete();
+                    currentSelectedSmallBoxAnimation.DOPlayBackwards();
+                }
             }
         }
+
+        private bool CanFruitBePutInBasket(BasketType basketType, BasketType fruitType)
+        {
+            // Check if the basket type has all the required flags of the fruit type
+            return (basketType & fruitType) != 0;
+        }
+
 
     }
 }
