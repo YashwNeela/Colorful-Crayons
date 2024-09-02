@@ -22,6 +22,7 @@ namespace TMKOC.Sorting {
         private void Start()
         {
             SetAudioLanguage(AudioLanguage.Hindi);
+            PlayBackgroundAudio();
         }
 
         private void SetAudioLanguage(AudioLanguage audioLanguage)
@@ -30,6 +31,7 @@ namespace TMKOC.Sorting {
             PlayBackgroundAudio();
         }
 
+        
         public void PlayIntroSfx(bool overridePreviousClips = false)
         {
             if (m_SFXAudioSource.isPlaying)
