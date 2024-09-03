@@ -49,6 +49,11 @@ namespace TMKOC.Sorting
 
         [SerializeField] private TextMeshProUGUI m_CurrentScoreText;
 
+        [SerializeField] Vector3 m_LevelCompletedBlastOffset;
+        [SerializeField] private ParticleSystem m_LevelCompletedBlast;
+
+        [SerializeField] private Transform m_LevelCompleteBlastParent;
+
         public static UnityAction OnRightAnswerAction;
         public static UnityAction OnWrongAnswerAction;
 
@@ -172,9 +177,23 @@ namespace TMKOC.Sorting
                     CloudUI.Instance.PlayColoudEnterAnimation();
                 }
                 else
-                ConfettiUI.Instance.PlayParticle();
+                {
+                    ConfettiUI.Instance.PlayParticle();
+                    Invoke(nameof(PlayLevelCompletedBlast),2);
+                }
 
             }
+        }
+
+        private void PlayLevelCompletedBlast()
+        {
+            ParticleSystem p = Instantiate(m_LevelCompletedBlast);
+            p.transform.position = m_LevelCompleteBlastParent.position + m_LevelCompletedBlastOffset;
+
+            p.Play();
+            Gamemanager.Instance.LoadNextLevel();
+
+
         }
 
         public virtual void GameLoose()

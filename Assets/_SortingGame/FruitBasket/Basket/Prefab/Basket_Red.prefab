@@ -264,7 +264,6 @@ MonoBehaviour:
   m_FruitBasketLableSO: {fileID: 0}
   m_SnapPointData: []
   m_FruitCollectParticleEffect: {fileID: 0}
-  m_LevelCompletedBlast: {fileID: 0}
 --- !u!65 &8519298574006091370
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -415,7 +414,7 @@ GameObject:
   m_Layer: 0
   m_Name: Basket
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -621,24 +620,7 @@ MonoBehaviour:
     snapPoints:
     - {fileID: 8595565714725615459}
     - {fileID: 7324002299317375238}
-  - SmallBox: {fileID: 785845583270903595}
-    basketType: 1
-    snapPoints:
-    - {fileID: 561172552491965672}
-    - {fileID: 280723213377108732}
-  - SmallBox: {fileID: 666271336633481348}
-    basketType: 1
-    snapPoints:
-    - {fileID: 3418511373568963003}
-    - {fileID: 3962275510543140806}
-  - SmallBox: {fileID: 8628361157640218929}
-    basketType: 1
-    snapPoints:
-    - {fileID: 3229161872682902360}
-    - {fileID: 4741884183579823897}
   m_FruitCollectParticleEffect: {fileID: 0}
-  m_LevelCompletedBlast: {fileID: 9039337427773863475, guid: ea97bab797b774b96bf73eb6d620e4f6,
-    type: 3}
 --- !u!65 &6239715134777400351
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -658,8 +640,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 14.359653, y: 22.948828, z: 83.24835}
-  m_Center: {x: 0, y: 15.575312, z: 36.475086}
+  m_Size: {x: 6.0230904, y: 2.364688, z: 83.24835}
+  m_Center: {x: -0.047517218, y: 9.659603, z: 36.475086}
 --- !u!1 &3922165429889557998
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3155491023213419753
 Transform:
   m_ObjectHideFlags: 0
@@ -1065,7 +1047,7 @@ PrefabInstance:
     - target: {fileID: 2379147885611498055, guid: d980c0baa43bc411d9f40f04644c8d2e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.1000001
+      value: -0.14
       objectReference: {fileID: 0}
     - target: {fileID: 2379147885611498055, guid: d980c0baa43bc411d9f40f04644c8d2e,
         type: 3}
@@ -1213,7 +1195,7 @@ PrefabInstance:
     - target: {fileID: 3048865243641864445, guid: d980c0baa43bc411d9f40f04644c8d2e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1231,12 +1213,6 @@ PrefabInstance:
 --- !u!4 &120527126445925777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2379147885611498055, guid: d980c0baa43bc411d9f40f04644c8d2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 2353232707164905430}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &785845583270903595 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3048865243641864445, guid: d980c0baa43bc411d9f40f04644c8d2e,
     type: 3}
   m_PrefabInstance: {fileID: 2353232707164905430}
   m_PrefabAsset: {fileID: 0}
@@ -1303,6 +1279,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Small_Box (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3048865243641864445, guid: d980c0baa43bc411d9f40f04644c8d2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1322,12 +1303,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2553730694192748665}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &666271336633481348 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3048865243641864445, guid: d980c0baa43bc411d9f40f04644c8d2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 2553730694192748665}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6769374281452390860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1339,7 +1314,7 @@ PrefabInstance:
     - target: {fileID: 2379147885611498055, guid: d980c0baa43bc411d9f40f04644c8d2e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.0000005
+      value: -0.28
       objectReference: {fileID: 0}
     - target: {fileID: 2379147885611498055, guid: d980c0baa43bc411d9f40f04644c8d2e,
         type: 3}
@@ -1391,6 +1366,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Small_Box (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3048865243641864445, guid: d980c0baa43bc411d9f40f04644c8d2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1404,12 +1384,6 @@ PrefabInstance:
       addedObject: {fileID: 2039950339822721524}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d980c0baa43bc411d9f40f04644c8d2e, type: 3}
---- !u!1 &8628361157640218929 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3048865243641864445, guid: d980c0baa43bc411d9f40f04644c8d2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 6769374281452390860}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9004323407325311883 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2379147885611498055, guid: d980c0baa43bc411d9f40f04644c8d2e,

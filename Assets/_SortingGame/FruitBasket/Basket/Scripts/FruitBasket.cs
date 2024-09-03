@@ -47,8 +47,7 @@ namespace TMKOC.Sorting.FruitSorting
 
         [SerializeField] private ParticleSystem m_FruitCollectParticleEffect;
 
-        [SerializeField] Vector3 m_LevelCompletedBlastOffset;
-        [SerializeField] private ParticleSystem m_LevelCompletedBlast;
+        
         //public List<Sprite> m_LableTextures;
 
         protected override void Awake()
@@ -71,20 +70,11 @@ namespace TMKOC.Sorting.FruitSorting
             Gamemanager.OnGameWin += OnGameWin;
            
         }
-        private void PlayLevelCompletedBlast()
-        {
-            ParticleSystem p = Instantiate(m_LevelCompletedBlast);
-            p.transform.position = transform.position + m_LevelCompletedBlastOffset;
-
-            p.Play();
-            Gamemanager.Instance.LoadNextLevel();
-
-
-        }
+        
 
         private void OnGameWin()
         {
-            Invoke(nameof(PlayLevelCompletedBlast),3);
+            //Invoke(nameof(PlayLevelCompletedBlast),3);
         }
 
         protected override void OnDisable()
