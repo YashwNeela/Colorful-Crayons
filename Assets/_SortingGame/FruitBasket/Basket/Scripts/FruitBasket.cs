@@ -37,6 +37,17 @@ namespace TMKOC.Sorting.FruitSorting
 
         public BasketType BasketType => m_BasketType;
 
+        //Only for Editor script to generate level
+
+        public void SetBasketType(BasketType basketType)
+        {
+            m_BasketType = basketType;
+            SnapPointData snapPointData = m_SnapPointData[0];
+            snapPointData.basketType = basketType;
+            m_SnapPointData[0] = snapPointData;
+           
+        }
+
         private Renderer m_Renderer;
 
         private StarCollectorParticleImage m_StartCollector;
@@ -45,7 +56,9 @@ namespace TMKOC.Sorting.FruitSorting
 
         [SerializeField] private List<SnapPointData> m_SnapPointData;
 
-        [SerializeField] private ParticleSystem m_FruitCollectParticleEffect;
+        public List<SnapPointData> SnapPointData => m_SnapPointData;
+
+        [SerializeField] public ParticleSystem m_FruitCollectParticleEffect;
 
         
         //public List<Sprite> m_LableTextures;
@@ -90,14 +103,20 @@ namespace TMKOC.Sorting.FruitSorting
 
         private void OnRightAnswerAction()
         {
+            if(currentSelectedSmallBoxAnimation != null){
+
             currentSelectedSmallBoxAnimation.DOComplete();
             currentSelectedSmallBoxAnimation.DOPlayBackwards();
+            }
         }
 
         private void OnWrongAnswer()
         {
+            if(currentSelectedSmallBoxAnimation != null){
+
             currentSelectedSmallBoxAnimation.DOComplete();
             currentSelectedSmallBoxAnimation.DOPlayBackwards();
+            }
         }
 
         private void SetSmallBoxColor(int count, Color color, BasketType basketType)
@@ -113,7 +132,7 @@ namespace TMKOC.Sorting.FruitSorting
                 {
                     SnapPoint s = m_SnapPointData[i].snapPoints[j];
                     (s as FruitSnapPoint).SetBasketType(basketType);
-                    m_SnapPointData[i].SmallBox.gameObject.GetComponent<Renderer>().materials[1].color = ColorCodes.red;
+                    m_SnapPointData[i].SmallBox.gameObject.GetComponent<Renderer>().materials[1].color = color;
                 }
             }
         }
@@ -348,14 +367,20 @@ namespace TMKOC.Sorting.FruitSorting
             base.OnItemCollected(snapPoint);
             m_StartCollector.SetEmitter(snapPoint.transform);
             m_StartCollector.PlayParticle();
+            if(currentSelectedSmallBoxAnimation != null){
+
             currentSelectedSmallBoxAnimation.DOPlayBackwards();
+            }
         }
 
         public override void OnWrongItemTriedToCollect()
         {
             base.OnWrongItemTriedToCollect();
             Debug.Log("wrong Item");
+            if(currentSelectedSmallBoxAnimation != null){
+
             currentSelectedSmallBoxAnimation.DOPlayBackwards();
+            }
         }
 
         DOTweenAnimation currentSelectedSmallBoxAnimation;
@@ -396,8 +421,10 @@ namespace TMKOC.Sorting.FruitSorting
         {
             base.OnCollectibleExited(collectible);
             Debug.Log("Collectible Exited");
+            if(currentSelectedSmallBoxAnimation != null){
             currentSelectedSmallBoxAnimation.DOComplete();
             currentSelectedSmallBoxAnimation.DOPlayBackwards();
+            }
         }
 
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)

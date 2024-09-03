@@ -59,6 +59,7 @@ namespace TMKOC.Sorting
         protected virtual void OnTriggerEnter(Collider other)
         {
             m_CurrentCollector = other.GetComponent<Collector>();
+            Debug.Log("Trigger Entered");
             if(m_CurrentCollector != null && !m_IsPlaced && draggable.IsDragging)
                 m_CurrentCollector.OnCollectibleEntered(this);
         }

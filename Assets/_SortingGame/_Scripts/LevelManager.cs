@@ -10,6 +10,10 @@ namespace TMKOC.Sorting
         public TextMeshProUGUI m_LevelText;
         [SerializeField] private List<GameObject> levels; // Array to hold all levels
 
+       
+
+
+
         public int MaxLevels => levels.Count;
         private int currentLevelIndex = 0;
 
