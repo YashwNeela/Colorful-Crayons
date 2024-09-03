@@ -8697,6 +8697,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 431715434}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &432731405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 432731407}
+  - component: {fileID: 432731406}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &432731406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432731405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8afc99527922266448762a05a4465ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGet: 0
+  gameId: 1
+  GetAuth: 
+--- !u!4 &432731407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432731405}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &434012964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18879,12 +18926,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f330083d4978f4fc8b209896fd67df0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_LevelManager: {fileID: 2116294047}
+  GAMEID: 54
   testLevel: 0
-  levelNumber: 18
+  levelNumber: 0
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
   m_MaxLives: 5
   m_RemaningLivesText: {fileID: 547800514}
   m_CurrentScoreText: {fileID: 795046606}
+  m_LevelCompletedBlastOffset: {x: 0, y: 0, z: 0}
+  m_LevelCompletedBlast: {fileID: 0}
+  m_LevelCompleteBlastParent: {fileID: 0}
   m_CurrentGameState: 0
   m_PlayCloudTransition: 1
 --- !u!4 &1033244711
@@ -40355,3 +40407,4 @@ SceneRoots:
   - {fileID: 3957112341757298856}
   - {fileID: 1533521854}
   - {fileID: 576725820}
+  - {fileID: 432731407}

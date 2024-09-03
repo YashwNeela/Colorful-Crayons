@@ -11,6 +11,7 @@ namespace TMKOC.Sorting
 {
     public enum GameState
     {
+        FirstTimeGameStart,
         Start,
         Playing,
         Paused,
@@ -24,7 +25,13 @@ namespace TMKOC.Sorting
 
     public class Gamemanager : Singleton<Gamemanager>
     {
-        protected LevelManager m_LevelManager;
+        [SerializeField] protected LevelManager m_LevelManager;
+
+        protected DataManager dataManager;
+
+        public DataManager DataManager => dataManager;
+
+        public int GAMEID;
 
         public bool testLevel;
 
@@ -59,7 +66,7 @@ namespace TMKOC.Sorting
 
         public void RightAnswer()
         {
-            SetScore(m_CurrentScore+1);
+            SetScore(m_CurrentScore + 1);
             OnRightAnswerAction?.Invoke();
         }
 
@@ -100,6 +107,8 @@ namespace TMKOC.Sorting
         public GameState CurrentGameState => m_CurrentGameState;
 
         public bool m_PlayCloudTransition;
+
+        public static UnityAction FirstTimeGameStartAction;
         public static UnityAction OnGameWin;
 
         public static UnityAction OnGameLoose;
@@ -119,7 +128,30 @@ namespace TMKOC.Sorting
 
         public static UnityAction OnLoadNextLevel;
 
+        public virtual void FirstTimeGameStart()
+        {
+            if (!testLevel)
+            {
+                dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
+                dataManager.FetchData(() =>
+                {
+                    GameStart(dataManager.StudentGameData.data.completedLevel);
+                });
+            }
+            else
+            {
+                GameStart(levelNumber);
+            }
 
+            FirstTimeGameStartAction?.Invoke();
+        }
+
+        private void OnApplicationQuit() {
+            dataManager.SendData(()=>
+            {
+
+            });
+        }
         public virtual void GameStart(int level)
         {
             m_CurrentGameState = GameState.Start;
@@ -130,7 +162,7 @@ namespace TMKOC.Sorting
 
             GamePlaying();
 
-            
+
         }
 
         public virtual void GameRestart()
@@ -166,12 +198,14 @@ namespace TMKOC.Sorting
             m_CurrentGameState = GameState.Win;
             OnGameWin?.Invoke();
 
-            if(LevelManager.Instance.CurrentLevelIndex + 1 >= LevelManager.Instance.MaxLevels)
+            if (LevelManager.Instance.CurrentLevelIndex + 1 >= LevelManager.Instance.MaxLevels)
             {
                 GameCompleted();
                 return;
-            }else
+            }
+            else
             {
+                dataManager.OnLevelCompleted();
                 if (m_PlayCloudTransition)
                 {
                     CloudUI.Instance.PlayColoudEnterAnimation();
@@ -179,7 +213,7 @@ namespace TMKOC.Sorting
                 else
                 {
                     ConfettiUI.Instance.PlayParticle();
-                    Invoke(nameof(PlayLevelCompletedBlast),2);
+                    Invoke(nameof(PlayLevelCompletedBlast), 2);
                 }
 
             }
@@ -219,6 +253,8 @@ namespace TMKOC.Sorting
         public virtual void GameCompleted()
         {
             m_CurrentGameState = GameState.Completed;
+            dataManager.OnGameCompleted();
+            
             OnGameCompleted?.Invoke();
         }
 
@@ -226,12 +262,14 @@ namespace TMKOC.Sorting
 
         public void Start()
         {
-            if(testLevel)
-            {
-            GameStart(levelNumber);
+            FirstTimeGameStart();
+        }
 
-            }else
-                GameStart(0);
+         private void Update() {
+            if(Input.GetKeyDown(KeyCode.P))
+            {
+                dataManager.SendData();
+            }
         }
 
 
