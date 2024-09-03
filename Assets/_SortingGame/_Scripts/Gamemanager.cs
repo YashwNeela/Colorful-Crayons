@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using AssetKits.ParticleImage;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 namespace TMKOC.Sorting
 {
@@ -130,18 +131,17 @@ namespace TMKOC.Sorting
 
         public virtual void FirstTimeGameStart()
         {
-            if (!testLevel)
-            {
-                dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
-                dataManager.FetchData(() =>
+            dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
+            dataManager.FetchData(() =>
                 {
                     GameStart(dataManager.StudentGameData.data.completedLevel);
                 });
-            }
-            else
+            if (testLevel)
             {
                 GameStart(levelNumber);
+                
             }
+            
 
             FirstTimeGameStartAction?.Invoke();
         }
@@ -243,12 +243,43 @@ namespace TMKOC.Sorting
 
         }
 
+        #region GoBackToPlaySchool
+        public virtual void GoBackToPlayschool()
+        {
+            Debug.Log("Go back to playschool");
+            dataManager.SendData(()=>
+            {
+                LoadSceneToMainMenu();
+            });
+        }
+
+        public void LoadSceneToMainMenu()
+        {
+            StartCoroutine(DelayHomeButton());
+        }
+
+        IEnumerator DelayHomeButton()
+        {
+            if (AssetBundleLoading.instance != null)
+            {
+                AssetBundleLoading.instance.UnloadBundle();
+            }
+            yield return new WaitForSeconds(0.1f);
+            SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
+            Resources.UnloadUnusedAssets();
+            dataManager.SendData();
+            print("SENT");
+            Destroy(gameObject);
+        }
+
         private IEnumerator Co_LoadNextLevel(float delay)
         {
             yield return new WaitForSeconds(delay);
             GameStart(LevelManager.Instance.CurrentLevelIndex + 1);
             OnLoadNextLevel?.Invoke();
         }
+
+        #endregion
 
         public virtual void GameCompleted()
         {

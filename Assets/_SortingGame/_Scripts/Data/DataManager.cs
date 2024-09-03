@@ -68,7 +68,7 @@ public class DataManager
        // Debug.Log("Max Level is" + studentGameData.totalLevel);
         
         StudentGameProgressApi.Instance.AddStudentByGameId(TMKOCPlaySchoolConstants.currentStudentName,
-                   star, studentGameData.data.completedLevel, studentGameData.data.totalLevel, studentGameData.data.attempts, currentSesstionTime, 10,54,
+                   star, studentGameData.data.completedLevel, studentGameData.data.totalLevel, studentGameData.data.attempts, currentSesstionTime, 10,studentGameData.data.id,
                     () =>
                    {
                        Debug.Log("Data sent Successfully");
@@ -79,6 +79,12 @@ public class DataManager
     public void OnLevelCompleted()
     {
         studentGameData.data.completedLevel++;
+    }
+
+    public void OnDecrementLevel()
+    {
+        studentGameData.data.completedLevel--;
+
     }
 
     /// <summary>

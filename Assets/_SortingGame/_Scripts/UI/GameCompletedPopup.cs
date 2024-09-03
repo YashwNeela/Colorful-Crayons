@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 namespace TMKOC.Sorting
 {
@@ -72,6 +73,15 @@ namespace TMKOC.Sorting
             m_GameCompletedText.text = "";
             m_GameCompletedButton.onClick.RemoveAllListeners();
             m_GameCompletedButtonText.text = ""; // Assuming you want to set the button text as well
+        }
+
+        public void OnHomeButtonClicked()
+        {
+            Gamemanager.Instance.GoBackToPlayschool();
+        }
+        public void OnRetry()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
