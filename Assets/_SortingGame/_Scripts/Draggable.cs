@@ -25,6 +25,10 @@ namespace TMKOC.Sorting
         
 
         private Collider m_Collider;
+        public float screenLeft = 0.0f;
+        public float screenRight = 0.0f;
+
+
         public float GroundLevel = 0.0f;
 
         void Awake()
@@ -87,6 +91,16 @@ namespace TMKOC.Sorting
             if (worldPosition.y < GroundLevel)
             {
                 worldPosition.y = GroundLevel;
+            }
+
+            if(worldPosition.x<screenLeft)
+            {
+                worldPosition.x = screenLeft;
+            }
+
+            if(worldPosition.x>screenRight)
+            {
+                worldPosition.x = screenRight;
             }
 
             transform.position = worldPosition;
