@@ -204,8 +204,8 @@ namespace TMKOC.Sorting.FruitSorting
             //     selectedColors.Add(ColorCodes.orange);
             // }
 
-            Sprite sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Chery];
-            m_Renderer.materials[1].mainTexture = null;
+           Sprite sprite = m_FruitBasketLableSO.BasketLableTextures[BasketType.Chery];
+           m_Renderer.materials[1].mainTexture = null;
             // if (basketType.HasFlag(BasketType.Apple) && basketType.HasFlag(BasketType.Banana))
             // {
             //     sprite = m_FruitBasketLableSO.BasketLableTextures[basketType];
@@ -213,6 +213,7 @@ namespace TMKOC.Sorting.FruitSorting
             // }
 
            // m_Renderer.materials[1].color = selectedColors[0];
+                     //   m_Renderer.materials[1].mainTexture = m_FruitBasketLableSO.BasketLableTextures[BasketType.StarFruit].texture;
             
             switch (basketType)
             {
@@ -357,6 +358,19 @@ namespace TMKOC.Sorting.FruitSorting
                          sprite = m_FruitBasketLableSO.BasketLableTextures[m_BasketType];
                         m_Renderer.materials[1].mainTexture = sprite.texture;
                     }
+                    if (basketType.HasFlag(BasketType.Orange) && basketType.HasFlag(BasketType.Apple))
+                    {
+                        //m_Renderer.materials[1].mainTexture = m_FruitBasketLableSO.appleAndOrange.texture;
+                         var combinedKey = BasketType.Orange | BasketType.Apple;
+                        if (m_FruitBasketLableSO.BasketLableTextures.TryGetValue(combinedKey, out Sprite sprite1)){
+
+                         sprite = sprite1;
+                        SetSmallBoxTexture(m_SnapPointData.Count, sprite, basketType);
+
+                        }
+                    }
+
+                    
                     break;
                 #endregion
             }

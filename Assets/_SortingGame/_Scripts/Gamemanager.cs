@@ -131,11 +131,11 @@ namespace TMKOC.Sorting
 
         public virtual void FirstTimeGameStart()
         {
-            dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
-            dataManager.FetchData(() =>
-                {
-                    GameStart(dataManager.StudentGameData.data.completedLevel);
-                });
+             dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
+            // dataManager.FetchData(() =>
+            //     {
+            //         GameStart(dataManager.StudentGameData.data.completedLevel);
+            //     });
             if (testLevel)
             {
                 GameStart(levelNumber);

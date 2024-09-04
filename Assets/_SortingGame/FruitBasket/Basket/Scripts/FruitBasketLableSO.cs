@@ -15,6 +15,8 @@ public class FruitBasketLableSO : SerializedScriptableObject
 
     [HideInInspector]
     public Dictionary<BasketType,Sprite> BasketLableTextures => m_BasketLableTextures;
+
+    public Sprite appleAndOrange;
     
 }
 

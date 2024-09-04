@@ -74,7 +74,7 @@ public class FruitBasketLevelGenerator : LevelGenerator
             for(int i = 0;i< collectibles.Count;i++)
             {
                 Fruit f = collectibles[i] as Fruit;
-                if(f.BasketType.HasFlag(leveData.basketType))
+                if(CanFruitBePutInBasket(f.BasketType,leveData.basketType))
                 {
                     validFruits.Add(collectibles[i]);
                 }
@@ -91,6 +91,12 @@ public class FruitBasketLevelGenerator : LevelGenerator
             }
             
             #endregion
+        }
+
+        private bool CanFruitBePutInBasket(BasketType basketType, BasketType fruitType)
+        {
+            // Check if the basket type has all the required flags of the fruit type
+            return (basketType & fruitType) != 0;
         }
 
         
