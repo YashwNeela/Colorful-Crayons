@@ -25,6 +25,7 @@ public class FruitBasketLevelGenerator : LevelGenerator
             if(collectorSpawnIndex >= collectorSpawnPoints.Count)
             {
                 Debug.LogError("Collector spawn Index out of bound");
+                Debug.Log("yash");
                 return;
             }
 
