@@ -34,7 +34,7 @@ public class DataManager
         {
             Debug.Log("Data fetched from backend");
             // StudentGameData.Data tempData = StudentGameProgressApi.Instance.CurrentGameData.data;
-            previousSessionTime = studentGameData.data.timeSpentInSeconds;
+            previousSessionTime = StudentGameProgressApi.Instance.CurrentGameData.data.timeSpentInSeconds;
             studentGameData.data.attempts = StudentGameProgressApi.Instance.CurrentGameData.data.attempts;
             studentGameData.data.completedLevel = StudentGameProgressApi.Instance.CurrentGameData.data.completedLevel;
             successCallback?.Invoke();
@@ -45,7 +45,7 @@ public class DataManager
              {
                  Debug.Log("Data fetched from backend");
                  // StudentGameData.Data tempData = StudentGameProgressApi.Instance.CurrentGameData.data;
-                 previousSessionTime = studentGameData.data.timeSpentInSeconds;
+                 previousSessionTime = StudentGameProgressApi.Instance.CurrentGameData.data.timeSpentInSeconds;
                  studentGameData.data.attempts = StudentGameProgressApi.Instance.CurrentGameData.data.attempts;
                  studentGameData.data.completedLevel = StudentGameProgressApi.Instance.CurrentGameData.data.completedLevel;
                  successCallback?.Invoke();
@@ -58,10 +58,10 @@ public class DataManager
         if (isTesting)
             return;
         int star = StudentGameProgressApi.Instance.CalculateStars(studentGameData.data.completedLevel, studentGameData.data.totalLevel);
-        if(studentGameData.data.attempts >= 1)
+        if (studentGameData.data.attempts >= 1)
             star = 5;
         long currentSesstionTime = StudentGameProgressApi.Instance.EndGame(startGameTime);
-        currentSesstionTime += studentGameData.data.timeSpentInSeconds;
+        currentSesstionTime += previousSessionTime;
         // Debug.Log("Max Level is" + studentGameData.totalLevel);
 #if PLAYSCHOOL_MAIN
         StudentGameProgressApi.Instance.AddStudentByGameId(PlayerPrefs.GetString(TMKOCPlaySchoolConstants.currentStudentPlaying),
@@ -109,8 +109,6 @@ public class DataManager
     {
         studentGameData.data.totalLevel = maxLevels;
     }
-
-
 }
 
 
