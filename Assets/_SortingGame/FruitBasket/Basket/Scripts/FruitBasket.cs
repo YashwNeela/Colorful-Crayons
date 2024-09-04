@@ -78,8 +78,8 @@ namespace TMKOC.Sorting.FruitSorting
         protected override void OnEnable()
         {
             base.OnEnable();
-            Gamemanager.OnRightAnswerAction += OnRightAnswerAction;
-            Gamemanager.OnWrongAnswerAction += OnWrongAnswer;
+           // Gamemanager.OnRightAnswerAction += OnRightAnswerAction;
+           // Gamemanager.OnWrongAnswerAction += OnWrongAnswer;
             Gamemanager.OnGameWin += OnGameWin;
            
         }
@@ -93,8 +93,8 @@ namespace TMKOC.Sorting.FruitSorting
         protected override void OnDisable()
         {
             base.OnDisable();
-            Gamemanager.OnRightAnswerAction -= OnRightAnswerAction;
-            Gamemanager.OnWrongAnswerAction -= OnWrongAnswer;
+            //Gamemanager.OnRightAnswerAction -= OnRightAnswerAction;
+          //  Gamemanager.OnWrongAnswerAction -= OnWrongAnswer;
             Gamemanager.OnGameWin -= OnGameWin;
 
             
@@ -425,6 +425,8 @@ namespace TMKOC.Sorting.FruitSorting
             currentSelectedSmallBoxAnimation.DOComplete();
             currentSelectedSmallBoxAnimation.DOPlayBackwards();
             }
+
+            currentSelectedSmallBoxAnimation = null;
         }
 
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
@@ -454,8 +456,10 @@ namespace TMKOC.Sorting.FruitSorting
                 }
                 else
                 {
+                    if(currentSelectedSmallBoxAnimation != null){
                     currentSelectedSmallBoxAnimation.DOComplete();
                     currentSelectedSmallBoxAnimation.DOPlayBackwards();
+                    }
                 }
             }
         }

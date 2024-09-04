@@ -19,11 +19,12 @@ namespace TMKOC.Sorting
         void Awake()
         {
             m_Collectors =GetComponentsInChildren<Collector>();
-            SetScoreRequiredToCompleteTheLevel();
+             Invoke(nameof(SetScoreRequiredToCompleteTheLevel),2);
         }
 
         void OnEnable()
         {
+           
             SubscribeToOnItemCollectedAction();
             Gamemanager.OnGameRestart += OnGameRestart;
         }

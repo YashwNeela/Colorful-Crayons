@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 namespace TMKOC.Sorting.FruitSorting{
@@ -16,7 +17,7 @@ public class FruitBasketLevelGenerator : LevelGenerator
 
         public ParticleSystem starExplosionParticleEffect;
         [Button]
-        public virtual void GenerateLevel(int collectorSpawnIndex = 0)
+        public virtual void GenerateLevel(int levelNumber,int collectorSpawnIndex = 0)
         {
             if(levels == null)
                 levels = new List<GameObject>();
@@ -27,22 +28,23 @@ public class FruitBasketLevelGenerator : LevelGenerator
             }
 
             #region  Level gameobject
-            GameObject tempLevel = transform.Find("Level" + levels.Count + 1).gameObject;
+            
+             Transform tempLevel = transform.Find("Level0" + levelNumber );
             GameObject levelGo;
             if(tempLevel == null){
-            levelGo = new GameObject("Level" + levels.Count + 1);
+            levelGo = new GameObject("Level0" + levelNumber);
             levelGo.transform.parent = transform;
             levelGo.transform.position = Vector3.zero;
             levelGo.AddComponent<Level>();
             levels.Add(levelGo);
             }else
             {
-                levelGo = tempLevel;
+                levelGo = tempLevel.gameObject;
             }
             #endregion
 
             #region Collector
-            GameObject collector = Instantiate(collectorPrefab);
+            GameObject collector = PrefabUtility.InstantiatePrefab(collectorPrefab) as GameObject;
             collector.transform.parent = levelGo.transform;
 
             
@@ -82,7 +84,7 @@ public class FruitBasketLevelGenerator : LevelGenerator
             for(int i = 0;i<numberOfFruitsToSpawn;i++)
             {
                 Fruit fruitToSpawn = validFruits[Random.Range(0,validFruits.Count)] as Fruit;
-                GameObject f = Instantiate(fruitToSpawn.gameObject);
+                GameObject f = PrefabUtility.InstantiatePrefab(fruitToSpawn.gameObject) as GameObject;
                 f.transform.parent = fruitParent.transform;
 
                 f.transform.position = collectibleSpawnPoints[Random.Range(0,collectibleSpawnPoints.Count)].transform.position;
