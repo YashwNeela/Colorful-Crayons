@@ -62,6 +62,8 @@ public class DataManager
         if(isTesting)
             return;
         int star = StudentGameProgressApi.Instance.CalculateStars(studentGameData.data.completedLevel, studentGameData.data.totalLevel);
+        if(studentGameData.data.attempts >= 1)
+            star = 5;
         long currentSesstionTime = StudentGameProgressApi.Instance.EndGame(startGameTime);
         currentSesstionTime += studentGameData.data.timeSpentInSeconds;
 
