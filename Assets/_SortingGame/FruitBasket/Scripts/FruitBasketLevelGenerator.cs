@@ -13,6 +13,7 @@ namespace TMKOC.Sorting.FruitSorting{
     }
 public class FruitBasketLevelGenerator : LevelGenerator
 {
+    #if UNITY_EDITOR
         public FruitBasketLevelGeneratorData leveData;
 
         public ParticleSystem starExplosionParticleEffect;
@@ -99,6 +100,6 @@ public class FruitBasketLevelGenerator : LevelGenerator
             return (basketType & fruitType) != 0;
         }
 
-        
+        #endif
 }
 }
