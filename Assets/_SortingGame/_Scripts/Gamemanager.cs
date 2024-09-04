@@ -295,6 +295,7 @@ namespace TMKOC.Sorting
         public virtual void GameCompleted()
         {
             m_CurrentGameState = GameState.Completed;
+           dataManager.SetCompletedLevel(dataManager.StudentGameData.data.totalLevel);
             dataManager.OnGameCompleted();
             
             OnGameCompleted?.Invoke();
