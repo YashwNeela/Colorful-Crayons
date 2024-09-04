@@ -121,6 +121,8 @@ namespace TMKOC.Sorting.FruitSorting
 
         private void SetSmallBoxColor(int count, Color color, BasketType basketType)
         {
+            List<BasketType> individualFlags = GetIndividualFlags(basketType);
+
             if (count > m_SnapPointData.Count)
             {
                 Debug.LogError("Count is greater than Small box list");
@@ -131,7 +133,14 @@ namespace TMKOC.Sorting.FruitSorting
                 for (int j = 0; j < m_SnapPointData[i].snapPoints.Count; j++)
                 {
                     SnapPoint s = m_SnapPointData[i].snapPoints[j];
+                    if(individualFlags.Count == 1){
+                    
                     (s as FruitSnapPoint).SetBasketType(basketType);
+                    }else
+                    {
+                        (s as FruitSnapPoint).SetBasketType(individualFlags[j]);
+                        
+                    }
                     m_SnapPointData[i].SmallBox.gameObject.GetComponent<Renderer>().materials[1].color = color;
                 }
             }
@@ -139,6 +148,7 @@ namespace TMKOC.Sorting.FruitSorting
 
         private void SetSmallBoxTexture(int count, Sprite texture, BasketType basketType)
         {
+            List<BasketType> individualFlags = GetIndividualFlags(basketType);
             if (count > m_SnapPointData.Count)
             {
                 Debug.LogError("Count is greater than Small box list");
@@ -149,13 +159,41 @@ namespace TMKOC.Sorting.FruitSorting
                 for (int j = 0; j < m_SnapPointData[i].snapPoints.Count; j++)
                 {
                     SnapPoint s = m_SnapPointData[i].snapPoints[j];
+                    if(individualFlags.Count == 1){
+                    
                     (s as FruitSnapPoint).SetBasketType(basketType);
+                    }else
+                    {
+                        (s as FruitSnapPoint).SetBasketType(individualFlags[j]);
+                        
+                    }
                     m_SnapPointData[i].SmallBox.gameObject.GetComponent<Renderer>().materials[1].color = Color.white;
                     m_SnapPointData[i].SmallBox.gameObject.GetComponent<Renderer>().materials[1].mainTexture = texture.texture;
 
                 }
             }
         }
+
+        // Method to extract individual flags from a combined enum value
+    public static List<BasketType> GetIndividualFlags(BasketType combinedFlags)
+    {
+        List<BasketType> individualFlags = new List<BasketType>();
+
+        foreach (BasketType flag in Enum.GetValues(typeof(BasketType)))
+        {
+            // Skip the 'None' flag or any combined flags
+            if (flag != BasketType.None && combinedFlags.HasFlag(flag))
+            {
+                individualFlags.Add(flag);
+            }
+        }
+        for(int i = 0;i<individualFlags.Count;i++)
+        {
+            Debug.Log("Falg is " + individualFlags[i].ToString());
+        }
+
+        return individualFlags;
+    }
 
         /// <summary>
         /// This is kind of overriding the snappoint vairable list in parent class
@@ -358,10 +396,45 @@ namespace TMKOC.Sorting.FruitSorting
                          sprite = m_FruitBasketLableSO.BasketLableTextures[m_BasketType];
                         m_Renderer.materials[1].mainTexture = sprite.texture;
                     }
-                    if (basketType.HasFlag(BasketType.Orange) && basketType.HasFlag(BasketType.Apple))
+                    if (basketType.HasFlag(BasketType.OrangeFruit) && basketType.HasFlag(BasketType.Apple))
                     {
                         //m_Renderer.materials[1].mainTexture = m_FruitBasketLableSO.appleAndOrange.texture;
-                         var combinedKey = BasketType.Orange | BasketType.Apple;
+                         var combinedKey = BasketType.OrangeFruit | BasketType.Apple;
+                        if (m_FruitBasketLableSO.BasketLableTextures.TryGetValue(combinedKey, out Sprite sprite1)){
+
+                         sprite = sprite1;
+                        SetSmallBoxTexture(m_SnapPointData.Count, sprite, basketType);
+
+                        }
+                    }
+
+                    if (basketType.HasFlag(BasketType.Apple) && basketType.HasFlag(BasketType.Avacado))
+                    {
+                        //m_Renderer.materials[1].mainTexture = m_FruitBasketLableSO.appleAndOrange.texture;
+                         var combinedKey = BasketType.Apple | BasketType.Avacado;
+                        if (m_FruitBasketLableSO.BasketLableTextures.TryGetValue(combinedKey, out Sprite sprite1)){
+
+                         sprite = sprite1;
+                        SetSmallBoxTexture(m_SnapPointData.Count, sprite, basketType);
+
+                        }
+                    }
+                    if (basketType.HasFlag(BasketType.Mango) && basketType.HasFlag(BasketType.WaterMelon))
+                    {
+                        //m_Renderer.materials[1].mainTexture = m_FruitBasketLableSO.appleAndOrange.texture;
+                         var combinedKey = BasketType.Mango | BasketType.WaterMelon;
+                        if (m_FruitBasketLableSO.BasketLableTextures.TryGetValue(combinedKey, out Sprite sprite1)){
+
+                         sprite = sprite1;
+                        SetSmallBoxTexture(m_SnapPointData.Count, sprite, basketType);
+
+                        }
+                    }
+
+                    if (basketType.HasFlag(BasketType.WaterMelon) && basketType.HasFlag(BasketType.Papaya))
+                    {
+                        //m_Renderer.materials[1].mainTexture = m_FruitBasketLableSO.appleAndOrange.texture;
+                         var combinedKey = BasketType.WaterMelon | BasketType.Papaya;
                         if (m_FruitBasketLableSO.BasketLableTextures.TryGetValue(combinedKey, out Sprite sprite1)){
 
                          sprite = sprite1;

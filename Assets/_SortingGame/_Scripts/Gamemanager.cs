@@ -20,7 +20,9 @@ namespace TMKOC.Sorting
         Restart,
         Win,
         Loose,
-        Completed
+        Completed,
+
+        Replay
     }
 
 
@@ -129,13 +131,16 @@ namespace TMKOC.Sorting
 
         public static UnityAction OnLoadNextLevel;
 
+        public static UnityAction OnGameReplay;
+
         public virtual void FirstTimeGameStart()
         {
              dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
-            // dataManager.FetchData(() =>
-            //     {
-            //         GameStart(dataManager.StudentGameData.data.completedLevel);
-            //     });
+             if(!testLevel)
+            dataManager.FetchData(() =>
+                {
+                    GameStart(dataManager.StudentGameData.data.completedLevel);
+                });
             if (testLevel)
             {
                 GameStart(levelNumber);
@@ -225,7 +230,7 @@ namespace TMKOC.Sorting
             p.transform.position = m_LevelCompleteBlastParent.position + m_LevelCompletedBlastOffset;
 
             p.Play();
-            Gamemanager.Instance.LoadNextLevel();
+            Gamemanager.Instance.LoadNextLevel(LevelManager.Instance.CurrentLevelIndex + 1);
 
 
         }
@@ -237,10 +242,16 @@ namespace TMKOC.Sorting
             OnGameLoose?.Invoke();
         }
 
-        public virtual void LoadNextLevel(float delay = 0)
+        public virtual void LoadNextLevel(int levelNo,float delay = 0)
         {
-            StartCoroutine(Co_LoadNextLevel(delay));
+            StartCoroutine(Co_LoadNextLevel(levelNo,delay));
 
+        }
+
+        public virtual void ReplayGame()
+        {
+            OnGameReplay?.Invoke();
+            LoadNextLevel(0);
         }
 
         #region GoBackToPlaySchool
@@ -272,10 +283,10 @@ namespace TMKOC.Sorting
             Destroy(gameObject);
         }
 
-        private IEnumerator Co_LoadNextLevel(float delay)
+        private IEnumerator Co_LoadNextLevel(int levelNo,float delay)
         {
             yield return new WaitForSeconds(delay);
-            GameStart(LevelManager.Instance.CurrentLevelIndex + 1);
+            GameStart(levelNo);
             OnLoadNextLevel?.Invoke();
         }
 

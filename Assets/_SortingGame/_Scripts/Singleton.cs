@@ -6,6 +6,7 @@ namespace TMKOC.Sorting
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
+        [SerializeField] protected bool m_ShouldDestroyOnLoad = false;
         private static T _instance;
 
         public static T Instance
@@ -21,7 +22,7 @@ namespace TMKOC.Sorting
                         GameObject singletonObject = new GameObject();
                         _instance = singletonObject.AddComponent<T>();
                         singletonObject.name = typeof(T).ToString() + " (Singleton)";
-
+                        
                         DontDestroyOnLoad(singletonObject);
                     }
                 }
@@ -35,7 +36,8 @@ namespace TMKOC.Sorting
             if (_instance == null)
             {
                 _instance = this as T;
-                DontDestroyOnLoad(gameObject);
+                if(!m_ShouldDestroyOnLoad)
+                    DontDestroyOnLoad(gameObject);
             }
             else if (_instance != this)
             {
