@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-namespace TMKOC.Sorting.FruitSorting
+namespace TMKOC.Sorting.ToySorting
 {
     [Flags]
     public enum ToyType
     {
         None = 0,
-        Red = 1 << 0,
-        Yellow = 1 << 1,
-        Green = 1 << 2,
-        Orange = 1 << 3,
+        Ball = 1 << 0,
+        Bats = 1 << 1,
+        Teddy = 1 << 2,
+        BaseBall = 1 << 3,
 
-        Chery = 1<<4, Tomato = 1<<5, BeetRoot = 1<<6, Apple = 1<<7, Banana = 1<<8, StarFruit = 1<<9, Mango = 1<<10, WaterMelon = 1<<11, Pear = 1<<12,
-        Papaya = 1<<13, Apricot = 1<<14, GrapeFruit = 1<<15, Guava = 1<<16, OrangeFruit = 1<<17, Avacado = 1<<18, GreenApple = 1<<19
+        BeachBall = 1<<4, FootBall = 1<<5, SoocerBall = 1<<6, TenisBall = 1<<7, VollyBall = 1<<8, BaseBallbat = 1<<9, Batmintan = 1<<10, CricketBat = 1<<11, HockeyStick = 1<<12,
+        TableTennisBat = 1<<13
 
 
     }
@@ -76,19 +76,19 @@ public class ToyBox : Collector
             List<Color> selectedColors = new List<Color>();
 
             // Check each flag and add corresponding colors from ColorCodes
-            if (toyType.HasFlag(ToyType.Red))
+            if (toyType.HasFlag(ToyType.None))
             {
                 selectedColors.Add(ColorCodes.red);
             }
-            if (toyType.HasFlag(ToyType.Yellow))
+            if (toyType.HasFlag(ToyType.None))
             {
                 selectedColors.Add(ColorCodes.yellow);
             }
-            if (toyType.HasFlag(ToyType.Green) || toyType.HasFlag(BasketType.WaterMelon))
+            if (toyType.HasFlag(ToyType.None) || toyType.HasFlag(ToyType.None))
             {
                 selectedColors.Add(ColorCodes.green);
             }
-            if (toyType.HasFlag(ToyType.Orange))
+            if (toyType.HasFlag(ToyType.None))
             {
                 selectedColors.Add(ColorCodes.orange);
             }

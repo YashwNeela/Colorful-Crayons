@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TMKOC.Sorting.FruitSorting
+namespace TMKOC.Sorting.ToySorting
 {
 public class ToySnapPoint : SnapPoint
 {
