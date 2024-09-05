@@ -130,20 +130,34 @@ public class ToyBox : Collector
 
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
-            foreach (var snapPoint in snapPoints)
+             foreach (var snapPoint in snapPoints)
             {
-                if (!snapPoint.IsOccupied)
+                ToySnapPoint toySnapPoint = snapPoint as ToySnapPoint;
+                ToyType f = (collectible as Toy).ToyType;
+                //  basketType & fruitType
+                // bool y = fruitSnapPoint.BasketType & (collectible as Fruit).BasketType;
+
+                if (CanToyBePutInToyBox(toySnapPoint.ToyType, f) &&
+                    !toySnapPoint.IsOccupied)
                 {
-                    // collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
-                    collectible.transform.parent = snapPoint.transform; // Change parent first
-                    collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
-                  //  collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
+                    collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
+                    collectible.transform.parent = snapPoint.transform;
+                    collectible.transform.localPosition = Vector3.zero;
+                    collectible.transform.localRotation = Quaternion.identity;
                     snapPoint.IsOccupied = true;
                     OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
+
                     break;
                 }
+              
             }
+        }
+
+        private bool CanToyBePutInToyBox(ToyType toyBoxType, ToyType toyType)
+        {
+            // Check if the basket type has all the required flags of the fruit type
+            return (toyBoxType & toyType) != 0;
         }
 }
 }
