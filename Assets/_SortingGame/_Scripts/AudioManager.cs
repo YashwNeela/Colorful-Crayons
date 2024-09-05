@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace TMKOC.Sorting {
+namespace TMKOC.Sorting
+{
     public enum AudioLanguage
     {
         None,
@@ -11,9 +12,9 @@ namespace TMKOC.Sorting {
         Hindi
     }
 
-    public class AudioManager :SerializedSingleton<AudioManager>
+    public class AudioManager : SerializedSingleton<AudioManager>
     {
-
+        [SerializeField] protected AudioLanguage m_CurretAudioLanguage;
         [SerializeField] protected Dictionary<AudioLanguage, AudioLocalizationSO> audioSO;
         protected AudioLocalizationSO m_CurrentLocalizedAudio;
         [SerializeField] protected AudioSource m_BackGroundAudioSource;
@@ -23,10 +24,22 @@ namespace TMKOC.Sorting {
 
         protected virtual void OnEnable()
         {
+            Gamemanager.OnFirstTimeGameStartAction += OnFirstTimeGameStart;
+            Gamemanager.OnGameStart += OnGameStart;
             Gamemanager.OnGameWin += OnGameWin;
             Gamemanager.OnGameLoose += OnGameLoose;
             Gamemanager.OnRightAnswerAction += OnRightAnswer;
             Gamemanager.OnWrongAnswerAction += OnWrongAnswer;
+        }
+
+        private void OnGameStart()
+        {
+            PlayLevelStartSfx();
+        }
+
+        private void OnFirstTimeGameStart()
+        {
+            PlayIntroSfx();
         }
 
         protected virtual void OnWrongAnswer()
@@ -46,12 +59,17 @@ namespace TMKOC.Sorting {
 
         protected virtual void OnDisable()
         {
+            Gamemanager.OnFirstTimeGameStartAction -= OnFirstTimeGameStart;
+            Gamemanager.OnGameStart -= OnGameStart;
+
             Gamemanager.OnGameWin -= OnGameWin;
             Gamemanager.OnGameLoose -= OnGameLoose;
             Gamemanager.OnRightAnswerAction -= OnRightAnswer;
             Gamemanager.OnWrongAnswerAction -= OnWrongAnswer;
 
         }
+
+
 
         protected virtual void OnGameWin()
         {
@@ -60,7 +78,23 @@ namespace TMKOC.Sorting {
 
         protected virtual void Start()
         {
-            SetAudioLanguage(AudioLanguage.Hindi);
+            #if PLAYSCHOOL_MAIN
+            switch (PlayerPrefs.SetString("PlaySchoolLanguage" , currntLanguage);)
+            {
+                case "English":
+                SetAudioLanguage(AudioLanguage.English);
+                break;
+                case "Hindi":
+                SetAudioLanguage(AudioLanguage.Hindi);
+                break;
+                default:
+                SetAudioLanguage(AudioLanguage.English);
+                break;
+            }
+            #else
+                SetAudioLanguage(m_CurretAudioLanguage);
+            #endif
+
             PlayBackgroundAudio();
         }
 
@@ -70,7 +104,7 @@ namespace TMKOC.Sorting {
             PlayBackgroundAudio();
         }
 
-        
+
         public virtual void PlayIntroSfx(bool overridePreviousClips = false)
         {
             if (m_SFXAudioSource.isPlaying)
@@ -80,13 +114,25 @@ namespace TMKOC.Sorting {
             m_SFXAudioSource.Play();
         }
 
+        public virtual void PlayLevelStartSfx(bool overridePreviousClips = false)
+        {
+            if (m_SFXAudioSource.isPlaying)
+                return;
+
+            if (Random.Range(0f, 1f) < 0.5f)
+            {
+                m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelStart[Random.Range(0, m_CurrentLocalizedAudio.levelStart.Count)];
+                m_SFXAudioSource.Play();
+            }
+        }
+
         public virtual void PlayLevelCompleteSfx(bool overridePreviousClips = false)
         {
             if (m_SFXAudioSource.isPlaying && !overridePreviousClips)
                 return;
             else if (overridePreviousClips && m_SFXAudioSource.isPlaying)
                 m_SFXAudioSource.Stop();
-                
+
 
             m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[Random.Range(0, m_CurrentLocalizedAudio.levelComplete.Count)];
             m_SFXAudioSource.Play();
@@ -157,7 +203,7 @@ namespace TMKOC.Sorting {
             m_ExtraAudioSource.Play();
         }
 
-        
+
 
 
     }

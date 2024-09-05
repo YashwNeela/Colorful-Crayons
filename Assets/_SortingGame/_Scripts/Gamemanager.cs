@@ -111,7 +111,7 @@ namespace TMKOC.Sorting
 
         public bool m_PlayCloudTransition;
 
-        public static UnityAction FirstTimeGameStartAction;
+        public static UnityAction OnFirstTimeGameStartAction;
         public static UnityAction OnGameWin;
 
         public static UnityAction OnGameLoose;
@@ -148,7 +148,7 @@ namespace TMKOC.Sorting
             }
             
 
-            FirstTimeGameStartAction?.Invoke();
+            OnFirstTimeGameStartAction?.Invoke();
         }
 
         private void OnApplicationQuit() {
