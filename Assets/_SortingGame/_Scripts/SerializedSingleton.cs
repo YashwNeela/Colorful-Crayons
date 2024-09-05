@@ -6,6 +6,7 @@ namespace TMKOC.Sorting
 {
     public class SerializedSingleton<T> : SerializedMonoBehaviour where T : SerializedMonoBehaviour
     {
+        [SerializeField] protected bool m_ShouldDestroyOnLoad = false;
         private static T _instance;
 
         public static T Instance
@@ -35,7 +36,8 @@ namespace TMKOC.Sorting
             if (_instance == null)
             {
                 _instance = this as T;
-                DontDestroyOnLoad(gameObject);
+                if(!m_ShouldDestroyOnLoad)
+                    DontDestroyOnLoad(gameObject);
             }
             else if (_instance != this)
             {

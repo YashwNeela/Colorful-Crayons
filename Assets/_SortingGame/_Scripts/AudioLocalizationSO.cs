@@ -7,11 +7,11 @@ namespace TMKOC.Sorting
 {
     [CreateAssetMenu(fileName = "LocalizedAudio", menuName = "ScriptableObject/LocalizedAudio")]
 
-    public class AudioLocalizationSO : ScriptableObject
+    public class AudioLocalizationSO : SerializedScriptableObject
     {
         public AudioLanguage audioLanguage;
 
-        public List<AudioClip> intro, background, levelComplete, levelFail, gameComplete, retry;
+        public List<AudioClip> intro, background, levelComplete, levelFail, gameComplete, retry, rightAnswer, wrongAnswer;
 
        
     }

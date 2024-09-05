@@ -109,6 +109,11 @@ public class DataManager
     {
         studentGameData.data.totalLevel = maxLevels;
     }
+
+    public void GoBackToPlaySchool()
+    {
+        
+    }
 }
 
 

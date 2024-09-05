@@ -44,9 +44,16 @@ namespace TMKOC.Sorting.ColorfulCrayons
             if (crayonColor.HasFlag(CrayonColor.Blue))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.blue;
-               
+              
             }
             
+        }
+
+        protected override void HandleDragStart()
+        {
+            base.HandleDragStart();
+            CrayonSortingAudioManager Instance = (CrayonSortingAudioManager.Instance as CrayonSortingAudioManager);
+            Instance.PlayColorNameAudio(m_CrayonColor);
         }
 
         protected override void OnTriggerEnter(Collider other)

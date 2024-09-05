@@ -52,6 +52,7 @@ namespace TMKOC.Sorting
             m_ObjectReseter = GetComponent<ObjectReseter>();
             if (draggable != null)
             {
+                draggable.OnDragStarted += HandleDragStart;
                 draggable.OnDragEnd += HandleDragEnd;
             }
         }
@@ -88,6 +89,11 @@ namespace TMKOC.Sorting
             
             m_IsTryingToPlaceWrong = false;
                 
+        }
+
+        protected virtual void HandleDragStart()
+        {
+            
         }
 
         protected virtual void OnPlacedCorrectly()
