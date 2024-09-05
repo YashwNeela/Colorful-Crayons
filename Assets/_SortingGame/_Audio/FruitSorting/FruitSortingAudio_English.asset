@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2f3fd61d07e4a5cb1a42e77de42e19, type: 3}
+  m_Name: FruitSortingAudio_English
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 8300000, guid: c2573f77afebd4ec691f25c3ba56f513, type: 3}
+    - {fileID: 8300000, guid: b783a1642760b4b63a7cbc7dce3c68bd, type: 3}
+    - {fileID: 8300000, guid: dbdc7e51519374807b11d623e98906b5, type: 3}
+    - {fileID: 8300000, guid: 7134421c4340c4b7788e1dbe6bd96050, type: 3}
+    - {fileID: 8300000, guid: 5dd15f9d3d44f414eb7ea046ebd24f76, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: fruitNameDict
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[TMKOC.Sorting.FruitSorting.BasketType,
+        Assembly-CSharp],[UnityEngine.AudioClip, UnityEngine.AudioModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.Sorting.FruitSorting.BasketType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 128
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 256
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8192
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2048
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1024
+    - Name: $v
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  audioLanguage: 1
+  intro:
+  - {fileID: 8300000, guid: d22af6d06be1c4acab3e6d8142d19844, type: 3}
+  background:
+  - {fileID: 8300000, guid: 564b21d5d20404f28ad5f2e72a1dff42, type: 3}
+  levelStart:
+  - {fileID: 8300000, guid: 44a703fce849b43a289d696df4bf9108, type: 3}
+  levelComplete:
+  - {fileID: 8300000, guid: 65d0ca11cb34844609ed419504f7fcd1, type: 3}
+  - {fileID: 8300000, guid: e3e9b56d1e4424e2d9cdc851dd8dc79a, type: 3}
+  - {fileID: 8300000, guid: 560cae880480b46468c0a53475f33ae1, type: 3}
+  - {fileID: 8300000, guid: 8c5f615e81cef44db85097b4fdae6962, type: 3}
+  - {fileID: 8300000, guid: 864dc3e0f7ce94bcd882bf2a4e602f10, type: 3}
+  - {fileID: 8300000, guid: 62c7145e503924b8a86b879f0b61331d, type: 3}
+  - {fileID: 8300000, guid: c2d170c4cc05941f79587f68156667bd, type: 3}
+  - {fileID: 8300000, guid: 356e018fd2e004aa4b72f6292ad6c501, type: 3}
+  - {fileID: 8300000, guid: c5811b46671194badb8d36e8f0a679a7, type: 3}
+  levelFail:
+  - {fileID: 8300000, guid: c61c68834e6024e0fb966f24e1599380, type: 3}
+  - {fileID: 8300000, guid: a5394ef32b7ab4d59bc834f118bd4203, type: 3}
+  - {fileID: 8300000, guid: 1b476b348f7c345bc859007a4705f872, type: 3}
+  - {fileID: 8300000, guid: acc1ade140df548a68769ba8a45e1bc1, type: 3}
+  gameComplete: []
+  retry: []
+  rightAnswer:
+  - {fileID: 8300000, guid: e7dda7c1641d14ffdaa8a741e3141711, type: 3}
+  wrongAnswer:
+  - {fileID: 8300000, guid: 57ab060f0725648a6b771d6f4b853640, type: 3}
