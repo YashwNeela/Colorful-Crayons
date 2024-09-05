@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace TMKOC.Sorting.FruitSorting
@@ -18,6 +19,49 @@ namespace TMKOC.Sorting.FruitSorting
             base.Awake();
             m_Renderer = GetComponent<Renderer>();
         }
+
+        protected override void HandleDragStart()
+        {
+            base.HandleDragStart();
+            FruitSortingAudioManager instance = FruitSortingAudioManager.Instance as FruitSortingAudioManager;
+            switch(m_BasketType)
+            {
+                case BasketType.Chery:
+                break;
+                case BasketType.Tomato:
+                break;
+                case BasketType.BeetRoot:
+                break;
+                case BasketType.Apple:
+                break;
+                case BasketType.Banana:
+                break;
+                case BasketType.StarFruit:
+                break;
+                case BasketType.Mango:
+                break;
+                case BasketType.WaterMelon:
+                break;
+                case BasketType.Pear:
+                break;
+                case BasketType.Papaya:
+                break;
+                case BasketType.Apricot:
+                break;
+                case BasketType.GrapeFruit:
+                break;
+                case BasketType.Guava:
+                break;
+                case BasketType.OrangeFruit:
+                break;
+                case BasketType.Avacado:
+                break;
+                case BasketType.GreenApple:
+                break;
+            }
+
+        }
+
 
         protected override void OnTriggerEnter(Collider other)
         {
