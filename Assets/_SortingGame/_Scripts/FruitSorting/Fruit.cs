@@ -23,42 +23,74 @@ namespace TMKOC.Sorting.FruitSorting
         protected override void HandleDragStart()
         {
             base.HandleDragStart();
-            FruitSortingAudioManager instance = FruitSortingAudioManager.Instance as FruitSortingAudioManager;
-            switch(m_BasketType)
+                FruitSortingAudioManager Instance = FruitSortingAudioManager.Instance as FruitSortingAudioManager;
+
+            if(m_BasketType.HasFlag(BasketType.Chery))
             {
-                case BasketType.Chery:
-                break;
-                case BasketType.Tomato:
-                break;
-                case BasketType.BeetRoot:
-                break;
-                case BasketType.Apple:
-                break;
-                case BasketType.Banana:
-                break;
-                case BasketType.StarFruit:
-                break;
-                case BasketType.Mango:
-                break;
-                case BasketType.WaterMelon:
-                break;
-                case BasketType.Pear:
-                break;
-                case BasketType.Papaya:
-                break;
-                case BasketType.Apricot:
-                break;
-                case BasketType.GrapeFruit:
-                break;
-                case BasketType.Guava:
-                break;
-                case BasketType.OrangeFruit:
-                break;
-                case BasketType.Avacado:
-                break;
-                case BasketType.GreenApple:
-                break;
+                Instance.PlayFruitNameAudio(BasketType.Chery);
+            }else if(m_BasketType.HasFlag(BasketType.Tomato))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Tomato);
+
+            }else if(m_BasketType.HasFlag(BasketType.BeetRoot))
+            {
+                Instance.PlayFruitNameAudio(BasketType.BeetRoot);
+
+            }else if(m_BasketType.HasFlag(BasketType.Apple))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Apple);
+
+            }else if(m_BasketType.HasFlag(BasketType.Banana))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Banana);
+
+            }else if(m_BasketType.HasFlag(BasketType.StarFruit))
+            {
+                Instance.PlayFruitNameAudio(BasketType.StarFruit);
+
+            }else if(m_BasketType.HasFlag(BasketType.Mango))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Mango);
+
+            }else if(m_BasketType.HasFlag(BasketType.WaterMelon))
+            {
+                Instance.PlayFruitNameAudio(BasketType.WaterMelon);
+
+            }else if(m_BasketType.HasFlag(BasketType.Pear))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Pear);
+
+            }else if(m_BasketType.HasFlag(BasketType.Papaya))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Papaya);
+
+            }else if(m_BasketType.HasFlag(BasketType.Apricot))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Apricot);
+
+            }else if(m_BasketType.HasFlag(BasketType.GrapeFruit))
+            {
+                Instance.PlayFruitNameAudio(BasketType.GrapeFruit);
+
+            }else if(m_BasketType.HasFlag(BasketType.Guava))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Guava);
+
+            }else if(m_BasketType.HasFlag(BasketType.OrangeFruit))
+            {
+                Instance.PlayFruitNameAudio(BasketType.OrangeFruit);
+
+            }else if(m_BasketType.HasFlag(BasketType.Avacado))
+            {
+                Instance.PlayFruitNameAudio(BasketType.Avacado);
+
+            }else if(m_BasketType.HasFlag(BasketType.GreenApple))
+            {
+                Instance.PlayFruitNameAudio(BasketType.GreenApple);
+
             }
+
+           
 
         }
 
