@@ -16,7 +16,8 @@ namespace TMKOC.Sorting.ToySorting
         BaseBall = 1 << 3,
 
         BeachBall = 1<<4, FootBall = 1<<5, SoocerBall = 1<<6, TenisBall = 1<<7, VollyBall = 1<<8, BaseBallbat = 1<<9, Batmintan = 1<<10, CricketBat = 1<<11, HockeyStick = 1<<12,
-        TableTennisBat = 1<<13
+        TableTennisBat = 1<<13, Teddy1Blue = 1<<14, Teddy1Green = 1<<15, Teddy1Pink = 1<<16, Teddy1Red = 1<<17, Teddy1Yellow = 1<<18, Teddy2Blue = 1<<19, Teddy2Green = 1<<20, Teddy2Pink = 1<<21, Teddy2Red = 1<<22, Teddy2Yellow = 1<<23,
+        Teddy3Blue = 1<<24, Teddy3Green = 1<<25, Teddy3Pink = 1<<26, Teddy3Red = 1<<27, Teddy3Yellow = 1<<28
 
 
     }
@@ -30,6 +31,8 @@ public class ToyBox : Collector
 
     private StarCollectorParticleImage m_StartCollector;
 
+    [SerializeField] private ToyBoxLableSO m_ToyBoxLableSO;
+
     private DOTweenAnimation m_OnToyBoxEnteredAnimation;
 
     
@@ -41,7 +44,7 @@ public class ToyBox : Collector
             m_OnToyBoxEnteredAnimation = GetComponent<DOTweenAnimation>();
 
             // Set the colors of the box based on the selected CrayonColor flags
-            SetBoxColorsBasedOnEnum(m_ToyType);
+            SetToyBoxTextures(m_ToyType);
         }
 
         protected override void OnEnable()
@@ -71,31 +74,11 @@ public class ToyBox : Collector
         }
 
         
-         private void SetBoxColorsBasedOnEnum(ToyType toyType)
+         private void SetToyBoxTextures(ToyType toyType)
         {
-            List<Color> selectedColors = new List<Color>();
 
-            // Check each flag and add corresponding colors from ColorCodes
-            if (toyType.HasFlag(ToyType.None))
-            {
-                selectedColors.Add(ColorCodes.red);
-            }
-            if (toyType.HasFlag(ToyType.None))
-            {
-                selectedColors.Add(ColorCodes.yellow);
-            }
-            if (toyType.HasFlag(ToyType.None) || toyType.HasFlag(ToyType.None))
-            {
-                selectedColors.Add(ColorCodes.green);
-            }
-            if (toyType.HasFlag(ToyType.None))
-            {
-                selectedColors.Add(ColorCodes.orange);
-            }
 
-            
-
-            m_Renderer.materials[1].color = selectedColors[0];
+            m_Renderer.materials[1].mainTexture = m_ToyBoxLableSO.ToyBoxLableTextures[toyType].texture;
         }
     
         protected override void OnItemCollected(SnapPoint snapPoint)

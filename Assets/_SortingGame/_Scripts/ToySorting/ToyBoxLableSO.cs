@@ -6,8 +6,8 @@ using Sirenix.OdinInspector;
 namespace TMKOC.Sorting.ToySorting
 {
 
-    [CreateAssetMenu(fileName = "ToySortingLable", menuName = "ScriptableObject/ToySorting/ToySortingLable")]
-    public class ToySortingLableSO : SerializedScriptableObject
+    [CreateAssetMenu(fileName = "ToyBoxLable", menuName = "ScriptableObject/ToySorting/ToyBoxLable")]
+    public class ToyBoxLableSO : SerializedScriptableObject
     {
         [SerializeField]
         private Dictionary<ToyType, Sprite> m_ToyBoxLableTextures;

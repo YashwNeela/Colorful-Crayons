@@ -13,13 +13,13 @@ public class StudentGameProgressApi : MonoBehaviour
 
     public bool isGet;
 
-    public int gameId =1;
+    public int gameId = 1;
 
     public string GetAuth;
 
     private void Awake()
     {
-        GetAuth = TMKOCPlaySchoolConstants.GetAuthToken;
+   
 
         if (Instance == null)
         {
@@ -35,6 +35,11 @@ public class StudentGameProgressApi : MonoBehaviour
     void Start()
     {
 
+        if (!PlayerPrefs.HasKey(TMKOCPlaySchoolConstants.LastAttendanceKey))
+        {
+            // Set the key to yesterday's date
+            PlayerPrefs.SetString(TMKOCPlaySchoolConstants.LastAttendanceKey, DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd"));
+        }
 
         //if (isGet) 
         //{
@@ -47,11 +52,13 @@ public class StudentGameProgressApi : MonoBehaviour
         //    AddStudentIsPlayingLevel("TestName", gameId);
         //}
         //StartCoroutine(AddStudentAttendance("TestName2" , true));
+
+        GetAuth = PlayerPrefs.GetString(TMKOCPlaySchoolConstants.AuthorizationToken);
     }
     public void SetGameData(StudentGameData data)
     {
         CurrentGameData = data;
-    
+
     }
 
     public void SetGameTestData(StudentTestGameData data)
@@ -64,31 +71,31 @@ public class StudentGameProgressApi : MonoBehaviour
         //Debug.Log("asljidjc " + CalculateStars(CurrentGameData.data.completedLevel, CurrentGameData.data.totalLevel));
 
     }
- 
+
     public void GetStudentByGameId(string StudentName, int GameId, Action status)
     {
-        StartCoroutine(GetStudentGameByIdApi(StudentName, GameId,status));
-     
+        StartCoroutine(GetStudentGameByIdApi(StudentName, GameId, status));
+
     }
 
     public void AddStudentByGameId(string StudentName, int stars, int completedLevel, int totalLevel, int attempts, long timeSpentInSeconds, int score, int GameId, Action callback
         )
     {
         //TestName
-        StartCoroutine(AddStudentGameByIdApi(StudentName, stars, completedLevel, totalLevel, attempts, timeSpentInSeconds, score, GameId,callback));
-       
-    } 
-    public void GetStudentByTestsId(string StudentName , int TestId)
+        StartCoroutine(AddStudentGameByIdApi(StudentName, stars, completedLevel, totalLevel, attempts, timeSpentInSeconds, score, GameId, callback));
+
+    }
+    public void GetStudentByTestsId(string StudentName, int TestId, Action callback)
     {
         //TestName
-        StartCoroutine(GetStudentTestById(StudentName, TestId));
+        StartCoroutine(GetStudentTestById(StudentName, TestId,callback));
 
     }
 
     public void AddStudentByTestsId(string StudentName, int stars, int medal, int scores, int attempts, int totalQuestions, int streak, long timeSpentInSeconds, int TestId, Action callback)
     {
         //TestName
-        StartCoroutine(AddStudentTestById(StudentName, stars,  medal,  scores, attempts,  totalQuestions,  streak,  timeSpentInSeconds, TestId , callback));
+        StartCoroutine(AddStudentTestById(StudentName, stars, medal, scores, attempts, totalQuestions, streak, timeSpentInSeconds, TestId, callback));
 
     }
     private float startTime;
@@ -108,11 +115,11 @@ public class StudentGameProgressApi : MonoBehaviour
         else if (percentage <= 40) return 2;
         else if (percentage <= 60) return 3;
         else if (percentage <= 80) return 4;
-        else if(percentage == 100) return 5;
+        else if (percentage == 100) return 5;
 
         return 4;
     }
-    IEnumerator AddStudentGameByIdApi(string StudentName, int stars , int completedLevel , int totalLevel , int attempts , long timeSpentInSeconds , int score , int GameId, Action callback)
+    IEnumerator AddStudentGameByIdApi(string StudentName, int stars, int completedLevel, int totalLevel, int attempts, long timeSpentInSeconds, int score, int GameId, Action callback)
     {
         //todo off the api
         WWWForm form = new WWWForm();
@@ -139,15 +146,19 @@ public class StudentGameProgressApi : MonoBehaviour
                 var jsonResponse = request.downloadHandler.text;
                 Debug.Log(jsonResponse);
                 callback?.Invoke();
+
+                CheckAndMarkAttendance(StudentName);
             }
         }
     }
 
     IEnumerator GetStudentGameByIdApi(string StudentName, int id, Action status)
     {
-       // yield return new WaitForSeconds(1);
+        // yield return new WaitForSeconds(1);
         WWWForm form = new WWWForm();
         form.AddField("StudentName", StudentName);
+
+        Debug.Log("Student Na, " + StudentName);
         form.AddField("GameId", id.ToString());
         using (UnityWebRequest request = UnityWebRequest.Post(Constants.GetDataStudentGameById, form))
         {
@@ -164,18 +175,39 @@ public class StudentGameProgressApi : MonoBehaviour
                 Debug.Log(jsonResponse + " get");
                 StudentGameData studentGameData = JsonUtility.FromJson<StudentGameData>(jsonResponse);
 
-                
-                    SetGameData(studentGameData);
-                    status?.Invoke();
-                
+
+                SetGameData(studentGameData);
+                status?.Invoke();
+
 
                 Debug.Log(jsonResponse);
+
             }
         }
     }
 
+    private void CheckAndMarkAttendance(string studentName)
+    {
+        DateTime today = DateTime.Now;
+        TimeSpan timeSpan = today.Date - DateTime.Parse(PlayerPrefs.GetString(TMKOCPlaySchoolConstants.LastAttendanceKey, DateTime.Now.ToString())).Date;
 
-    IEnumerator AddStudentTestById(string StudentName, int stars, int medal, int scores, int attempts, int totalQuestions , int streak, long timeSpentInSeconds, int TestId, Action callback)
+        Debug.Log(" time span " + timeSpan.Days);
+        Debug.Log(" time span today  " + today + "  " + PlayerPrefs.GetString(TMKOCPlaySchoolConstants.LastAttendanceKey));
+        if (timeSpan.Days >= 1)
+        {
+            Debug.Log("Marking attendance for today");
+            PlayerPrefs.SetString(TMKOCPlaySchoolConstants.LastAttendanceKey, DateTime.Now.ToString());
+            StartCoroutine(AddStudentAttendance(studentName, true));
+        }
+        else
+        {
+            Debug.Log("Attendance already marked for today");
+        }
+
+    }
+
+
+    IEnumerator AddStudentTestById(string StudentName, int stars, int medal, int scores, int attempts, int totalQuestions, int streak, long timeSpentInSeconds, int TestId, Action callback)
     {
 
         WWWForm form = new WWWForm();
@@ -211,9 +243,9 @@ public class StudentGameProgressApi : MonoBehaviour
         }
     }
 
-    IEnumerator GetStudentTestById(string StudentName, int testId)
+    IEnumerator GetStudentTestById(string StudentName, int testId, Action callback)
     {
-       
+
         WWWForm form = new WWWForm();
         form.AddField("StudentName", StudentName);
         form.AddField("TestId", testId.ToString());
@@ -237,6 +269,8 @@ public class StudentGameProgressApi : MonoBehaviour
                     SetGameTestData(studentTestGameData);
                 }
 
+                callback?.Invoke();
+
 
             }
         }
@@ -245,7 +279,7 @@ public class StudentGameProgressApi : MonoBehaviour
 
 
 
-    IEnumerator AddStudentAttendance(string StudentName, bool IsPresent) 
+     public   IEnumerator AddStudentAttendance(string StudentName, bool IsPresent)
     {
         yield return new WaitForSeconds(1);
         WWWForm form = new WWWForm();
@@ -291,7 +325,7 @@ public class StudentGameData
         public DateTime updatedAt;
         public bool isDeleted;
 
-       
+
 
         public bool IsTimeSpentValid(int gameTime)
         {
