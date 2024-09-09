@@ -123,7 +123,7 @@ public class ToyBox : Collector
                 if (CanToyBePutInToyBox(toySnapPoint.ToyType, f) &&
                     !toySnapPoint.IsOccupied)
                 {
-                    collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
+                    collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(false);
                     collectible.transform.parent = snapPoint.transform;
                     collectible.transform.localPosition = Vector3.zero;
                     collectible.transform.localRotation = Quaternion.identity;

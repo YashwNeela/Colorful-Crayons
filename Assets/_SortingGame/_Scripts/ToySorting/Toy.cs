@@ -10,7 +10,7 @@ public class Toy : Collectible
 
         public ToyType ToyType => m_ToyType;
 
-        private Renderer m_Renderer;
+        protected Renderer m_Renderer;
 
         protected override void Awake()
         {
