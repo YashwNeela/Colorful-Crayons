@@ -126,7 +126,7 @@ public class ToyBox : Collector
                     collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(false);
                     collectible.transform.parent = snapPoint.transform;
                     collectible.transform.localPosition = Vector3.zero;
-                    collectible.transform.localRotation = Quaternion.identity;
+                 //   collectible.transform.localRotation = Quaternion.identity;
                     snapPoint.IsOccupied = true;
                     OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
