@@ -53,7 +53,11 @@ public class StudentGameProgressApi : MonoBehaviour
         //}
         //StartCoroutine(AddStudentAttendance("TestName2" , true));
 
+#if PLAYSCHOOL_MAIN
         GetAuth = PlayerPrefs.GetString(TMKOCPlaySchoolConstants.AuthorizationToken);
+#else
+      GetAuth =  TMKOCPlaySchoolConstants.AuthorizationToken;
+        #endif
     }
     public void SetGameData(StudentGameData data)
     {
