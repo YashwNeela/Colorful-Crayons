@@ -8,6 +8,7 @@ using AssetKits.ParticleImage;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
+using System;
 
 namespace TMKOC.Sorting
 {
@@ -138,7 +139,6 @@ namespace TMKOC.Sorting
 
         public virtual void FirstTimeGameStart()
         {
-             dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
              if(!testLevel)
             dataManager.FetchData(() =>
                 {
@@ -307,9 +307,34 @@ namespace TMKOC.Sorting
 
         #endregion
 
-        public void Start()
+        protected override void Awake()
+        {
+            base.Awake();
+             dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
+        }
+        /// <summary>
+        /// This function is called when the object becomes enabled and active.
+        /// </summary>
+        void OnEnable()
+        {
+            DataManager.OnDataManagerInitialized += OnDataManagerInitialized;
+        }
+
+        private void OnDisable() {
+            DataManager.OnDataManagerInitialized -= OnDataManagerInitialized;
+            
+        }
+
+        private void OnDataManagerInitialized()
         {
             FirstTimeGameStart();
+        }
+
+
+
+        public void Start()
+        {
+          
         }
 
          private void Update() {

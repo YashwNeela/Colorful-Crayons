@@ -15,16 +15,35 @@ public class DataManager
     float startGameTime;
     public float StartGameTime => startGameTime;
     public bool isTesting;
-    public DataManager() { }
+
+    public static Action OnDataManagerInitialized;
+    public DataManager() 
+    {
+        StudentGameProgressApi.OnStudentAPIInitialized += OnStudentAPIInitialized;
+
+     }
     public DataManager(int GameId, float startGameTime, int maxLevel, bool isTesting)
     {
         studentGameData = new StudentGameData();
         studentGameData.data = new StudentGameData.Data();
+        StudentGameProgressApi.OnStudentAPIInitialized += OnStudentAPIInitialized;
+
         studentGameData.data.id = GameId;
         this.startGameTime = startGameTime;
         studentGameData.data.totalLevel = maxLevel;
         this.isTesting = false;
         Debug.Log("Max Level is" + studentGameData.data.totalLevel);
+    }
+
+    ~DataManager()
+    {
+        StudentGameProgressApi.OnStudentAPIInitialized -= OnStudentAPIInitialized;
+
+    }
+
+    private void OnStudentAPIInitialized()
+    {
+      OnDataManagerInitialized?.Invoke();
     }
 
     #region GameData

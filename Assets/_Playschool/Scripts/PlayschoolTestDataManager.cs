@@ -13,13 +13,24 @@ public class PlayschoolTestDataManager
 
     private int GameId;
 
+    public static Action OnTestDataManagerInitialized;
+
+
     public PlayschoolTestDataManager()
     {
+        StudentGameProgressApi.OnStudentAPIInitialized += OnStudentAPIInitialized;
 
+    }
+
+    private void OnStudentAPIInitialized()
+    {
+      OnTestDataManagerInitialized?.Invoke();
+        
     }
 
     public PlayschoolTestDataManager(int GameId, int maxTextQuestions, bool isTesting)
     {
+        StudentGameProgressApi.OnStudentAPIInitialized += OnStudentAPIInitialized;
         this.isTesting = isTesting;
         m_TotalQuestions = maxTextQuestions;
         this.GameId = GameId;
@@ -28,6 +39,7 @@ public class PlayschoolTestDataManager
 
     ~PlayschoolTestDataManager()
     {
+        StudentGameProgressApi.OnStudentAPIInitialized -= OnStudentAPIInitialized;
 
     }
 

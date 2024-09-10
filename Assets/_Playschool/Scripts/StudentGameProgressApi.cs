@@ -10,6 +10,8 @@ public class StudentGameProgressApi : MonoBehaviour
     public StudentGameData CurrentGameData { get; private set; }
     public StudentTestGameData CurrentGameTestData { get; private set; }
 
+    public static Action OnStudentAPIInitialized;
+
 
     public bool isGet;
 
@@ -19,7 +21,7 @@ public class StudentGameProgressApi : MonoBehaviour
 
     private void Awake()
     {
-   
+
 
         if (Instance == null)
         {
@@ -55,9 +57,12 @@ public class StudentGameProgressApi : MonoBehaviour
 
 #if PLAYSCHOOL_MAIN
         GetAuth = PlayerPrefs.GetString(TMKOCPlaySchoolConstants.AuthorizationToken);
+        OnStudentAPIInitialized?.Invoke();
 #else
-      GetAuth =  TMKOCPlaySchoolConstants.AuthorizationToken;
-        #endif
+        GetAuth = TMKOCPlaySchoolConstants.AuthorizationToken;
+        OnStudentAPIInitialized?.Invoke();
+
+#endif
     }
     public void SetGameData(StudentGameData data)
     {
@@ -92,7 +97,7 @@ public class StudentGameProgressApi : MonoBehaviour
     public void GetStudentByTestsId(string StudentName, int TestId, Action callback)
     {
         //TestName
-        StartCoroutine(GetStudentTestById(StudentName, TestId,callback));
+        StartCoroutine(GetStudentTestById(StudentName, TestId, callback));
 
     }
 
@@ -138,6 +143,7 @@ public class StudentGameProgressApi : MonoBehaviour
 
         using (UnityWebRequest request = UnityWebRequest.Post(Constants.AddDataStudentGameById, form))
         {
+            print(GetAuth);
             request.SetRequestHeader("Authorization", "Bearer " + GetAuth);
             yield return request.SendWebRequest();
 
@@ -164,6 +170,7 @@ public class StudentGameProgressApi : MonoBehaviour
 
         Debug.Log("Student Na, " + StudentName);
         form.AddField("GameId", id.ToString());
+        print(GetAuth);
         using (UnityWebRequest request = UnityWebRequest.Post(Constants.GetDataStudentGameById, form))
         {
             request.SetRequestHeader("Authorization", "Bearer " + GetAuth);
@@ -283,7 +290,7 @@ public class StudentGameProgressApi : MonoBehaviour
 
 
 
-     public   IEnumerator AddStudentAttendance(string StudentName, bool IsPresent)
+    public IEnumerator AddStudentAttendance(string StudentName, bool IsPresent)
     {
         yield return new WaitForSeconds(1);
         WWWForm form = new WWWForm();
