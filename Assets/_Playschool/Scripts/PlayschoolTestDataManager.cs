@@ -6,13 +6,10 @@ using System;
 
 public class PlayschoolTestDataManager
 {
-    private int m_MaxTestQuestions;
+    private int m_TotalQuestions;
     private bool isTesting;
 
-    public int MaxTestQuestions => m_MaxTestQuestions;
-
-    StudentTestGameData studentTestGameData;
-    public StudentTestGameData StudentTestData => studentTestGameData;
+    public int TotalQuestions => m_TotalQuestions;
 
     private int GameId;
 
@@ -24,7 +21,7 @@ public class PlayschoolTestDataManager
     public PlayschoolTestDataManager(int GameId, int maxTextQuestions, bool isTesting)
     {
         this.isTesting = isTesting;
-        m_MaxTestQuestions = maxTextQuestions;
+        m_TotalQuestions = maxTextQuestions;
         this.GameId = GameId;
 
     }
@@ -38,7 +35,7 @@ public class PlayschoolTestDataManager
 
     public int GetStarsBasedOnAttempt(int attemptNumber, int questionRight)
     {
-        float percentage = ((float)questionRight / m_MaxTestQuestions) * 100;
+        float percentage = ((float)questionRight / m_TotalQuestions) * 100;
 
         switch (attemptNumber)
         {
@@ -83,7 +80,7 @@ public class PlayschoolTestDataManager
 
     public int GetMedalsBasedOnAttempt(int attemptNumber, int questionRight)
     {
-        float percentage = ((float)questionRight / m_MaxTestQuestions) * 100;
+        float percentage = ((float)questionRight / m_TotalQuestions) * 100;
 
         switch (attemptNumber)
         {
@@ -126,9 +123,16 @@ public class PlayschoolTestDataManager
         return -1;
     }
 
-    public float GetScore(int attemptNumber, int questionRight)
+    public int GetScore(int questionRight)
     {
-        return ((float)questionRight / m_MaxTestQuestions) * 100;
+        int percentage = (questionRight / m_TotalQuestions) * 100;
+        if(percentage > StudentGameProgressApi.Instance.CurrentGameTestData.data.scores)
+        {
+            return percentage;
+        }else
+        {
+         return   StudentGameProgressApi.Instance.CurrentGameTestData.data.scores;
+        }
     }
 
     #endregion
@@ -151,7 +155,6 @@ public class PlayschoolTestDataManager
                  {
                      Debug.Log("Test Data Fetched from backend");
                      // StudentGameData.Data tempData = StudentGameProgressApi.Instance.CurrentGameData.data;
-                     studentTestGameData = StudentGameProgressApi.Instance.CurrentGameTestData;
                      successCallback?.Invoke();
                  });
 
@@ -160,7 +163,7 @@ public class PlayschoolTestDataManager
 
 
 
-    public void SendTestData(Action successCallback)
+    public void SendTestData(int attemptNumber,int correctAnswer, Action successCallback)
     {
         if (isTesting)
             return;
@@ -171,9 +174,9 @@ public class PlayschoolTestDataManager
         studentName = TMKOCPlaySchoolConstants.currentStudentName;
 
 #endif
-        StudentGameProgressApi.Instance.AddStudentByTestsId(studentName, studentTestGameData.data.stars, studentTestGameData.data.earnedMedal, studentTestGameData.data.scores,
-        studentTestGameData.data.attempts, studentTestGameData.data.totalQuestions, studentTestGameData.data.streak,
-        studentTestGameData.data.timeSpentInSeconds, studentTestGameData.data.testId,
+        StudentGameProgressApi.Instance.AddStudentByTestsId(studentName, GetStarsBasedOnAttempt(attemptNumber, correctAnswer), GetMedalsBasedOnAttempt(attemptNumber,correctAnswer), GetScore(correctAnswer),
+        attemptNumber, m_TotalQuestions, 99,
+        100, GameId,
         () =>
         {
             Debug.Log("Test Data Send successfully");
