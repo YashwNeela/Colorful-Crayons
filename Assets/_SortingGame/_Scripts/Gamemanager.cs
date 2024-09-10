@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using AssetKits.ParticleImage;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Sirenix.OdinInspector;
 
 namespace TMKOC.Sorting
 {
@@ -66,6 +67,8 @@ namespace TMKOC.Sorting
 
         public static UnityAction OnRightAnswerAction;
         public static UnityAction OnWrongAnswerAction;
+
+        PlayschoolTestDataManager m_TestData;
 
         public void RightAnswer()
         {
