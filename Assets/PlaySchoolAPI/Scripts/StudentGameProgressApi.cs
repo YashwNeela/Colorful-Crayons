@@ -278,6 +278,10 @@ public class StudentGameProgressApi : MonoBehaviour
                 if (studentTestGameData.status)
                 {
                     SetGameTestData(studentTestGameData);
+                }else
+                {
+                    CurrentGameData = new StudentGameData();
+                    CurrentGameData.data = new StudentGameData.Data();
                 }
 
                 callback?.Invoke();

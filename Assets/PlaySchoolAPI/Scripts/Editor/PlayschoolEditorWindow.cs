@@ -25,7 +25,7 @@ public class PlayschoolEditorWindow : EditorWindow
         inputText = System.IO.Path.GetDirectoryName(Application.dataPath);
 
         // Load an image from the Resources folder (or any other path)
-        image = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/_Playschool/Images/myImage.jpg", typeof(Texture2D));
+        image = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/PlaySchoolAPI/Images/myImage.jpg", typeof(Texture2D));
 
         // Load developer's photo from the Resources folder (or any other path)
         developerPhoto = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Resources/developerPhoto.jpg", typeof(Texture2D));
