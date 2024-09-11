@@ -9,6 +9,7 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 using System;
+using System.Diagnostics;
 
 namespace TMKOC.Sorting
 {
@@ -70,6 +71,14 @@ namespace TMKOC.Sorting
         public static UnityAction OnWrongAnswerAction;
 
         PlayschoolTestDataManager m_TestData;
+
+        [Button]
+        public void OpenTerminal()
+        {
+             string targetDirectory = "/Users/yash/Desktop/YashWUnityProjects/Colorful-Crayons";
+            
+            Process.Start("open", $"-a Terminal {targetDirectory}");
+        }
 
         public void RightAnswer()
         {
@@ -261,7 +270,7 @@ namespace TMKOC.Sorting
         #region GoBackToPlaySchool
         public virtual void GoBackToPlayschool()
         {
-            Debug.Log("Go back to playschool");
+           UnityEngine.Debug.Log("Go back to playschool");
             dataManager.SendData(()=>
             {
                 LoadSceneToMainMenu();
