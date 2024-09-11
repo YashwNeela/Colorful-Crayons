@@ -146,10 +146,15 @@ public class PlayschoolTestDataManager
         }
     }
 
+    public int GetCurrentAttempt()
+    {
+        return StudentGameProgressApi.Instance.CurrentGameTestData.data.attempts;
+    }
+
     #endregion
 
     #region  TestData
-    public void FetchTestData(Action successCallback)
+    public void FetchTestData(Action successCallback = null)
     {
         if (isTesting)
             return;
@@ -174,7 +179,7 @@ public class PlayschoolTestDataManager
 
 
 
-    public void SendTestData(int attemptNumber,int correctAnswer, Action successCallback)
+    public void SendTestData(int correctAnswer, Action successCallback = null)
     {
         if (isTesting)
             return;
@@ -185,8 +190,8 @@ public class PlayschoolTestDataManager
         studentName = TMKOCPlaySchoolConstants.currentStudentName;
 
 #endif
-        StudentGameProgressApi.Instance.AddStudentByTestsId(studentName, GetStarsBasedOnAttempt(attemptNumber, correctAnswer), GetMedalsBasedOnAttempt(attemptNumber,correctAnswer), GetScore(correctAnswer),
-        attemptNumber, m_TotalQuestions, 99,
+        StudentGameProgressApi.Instance.AddStudentByTestsId(studentName, GetStarsBasedOnAttempt(GetCurrentAttempt(), correctAnswer), GetMedalsBasedOnAttempt(GetCurrentAttempt(),correctAnswer), GetScore(correctAnswer),
+        GetCurrentAttempt()+1, m_TotalQuestions, 99,
         100, GameId,
         () =>
         {
