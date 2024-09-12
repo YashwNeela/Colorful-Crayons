@@ -18,6 +18,8 @@ public class PlayschoolEditorWindow : EditorWindow
         GetWindow<PlayschoolEditorWindow>("Custom Window");
     }
 
+    
+
     // Create the GUI for the window
     private void OnEnable()
     {
@@ -65,7 +67,7 @@ public class PlayschoolEditorWindow : EditorWindow
         EditorGUILayout.LabelField("Project Path:", inputText);
 
         // Add a button, and perform action when clicked
-        if (GUILayout.Button("Submit"))
+        if (GUILayout.Button("Pull PlayShool API"))
         {
             
             // Determine the platform and run the appropriate command
@@ -84,6 +86,33 @@ public class PlayschoolEditorWindow : EditorWindow
             #endif
 
             UnityEngine.Debug.Log("Command executed for platform.");
+        }
+
+        if(GUILayout.Button("Sorting"))
+        {
+              // Git commands to execute sequentially for sparse checkout and update
+        string submodulePath = "Assets/Colorful-Crayons";  // Update with your submodule path
+        string sparseCheckoutPath = "_SortingGame/_Scripts/";  // Update with your folder path
+        string commands = $"cd \"{submodulePath}\" && " +
+                          "git config core.sparseCheckout true && " +
+                          $"echo \"{sparseCheckoutPath}\" > .git/info/sparse-checkout && " +
+                          "git fetch origin && " +
+                          "git pull origin main && " +
+                          "git read-tree -mu HEAD";
+
+        // Determine the platform and run the appropriate command
+        #if UNITY_EDITOR_WIN
+        // Windows
+        string fullCommand = $"/k cd /d \"{inputText}\" && {commands}";
+        Process.Start("cmd.exe", fullCommand);
+        #elif UNITY_EDITOR_OSX
+        // macOS
+        string fullCommand = $"cd \"{inputText}\"; {commands}";
+        string terminalCommand = $"/bin/zsh -c \"{fullCommand}\"";
+        Process.Start("open", $"-a Terminal \"{terminalCommand}\"");
+        #endif
+
+        UnityEngine.Debug.Log("Sparse checkout commands executed for the platform.");
         }
     }
 }
