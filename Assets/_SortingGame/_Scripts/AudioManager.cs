@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-//Sun sun k dikha
+//Sun lia
 namespace TMKOC.Sorting
 {
     public enum AudioLanguage
