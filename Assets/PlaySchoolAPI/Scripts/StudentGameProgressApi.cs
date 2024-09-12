@@ -12,6 +12,10 @@ public class StudentGameProgressApi : MonoBehaviour
 
     public static Action OnStudentAPIInitialized;
 
+    private bool isInitialized;
+
+    public bool IsInitialized => isInitialized;
+
 
     public bool isGet;
 
@@ -58,9 +62,11 @@ public class StudentGameProgressApi : MonoBehaviour
 #if PLAYSCHOOL_MAIN
         GetAuth = PlayerPrefs.GetString(TMKOCPlaySchoolConstants.AuthorizationToken);
         OnStudentAPIInitialized?.Invoke();
+        isInitialized = true;
 #else
         GetAuth = TMKOCPlaySchoolConstants.AuthorizationToken;
         OnStudentAPIInitialized?.Invoke();
+        isInitialized = true;
 
 #endif
     }
