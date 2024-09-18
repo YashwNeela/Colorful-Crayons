@@ -10,38 +10,38 @@ namespace TMKOC.Sorting
 {
     public class Level : MonoBehaviour
     {
-        private int m_ScoreRequiredToCompleteTheLevel;
+        protected int m_ScoreRequiredToCompleteTheLevel;
 
         public int m_CurrentScore;
 
         private Collector[] m_Collectors;
 
-        void Awake()
+        protected virtual void Awake()
         {
             m_Collectors =GetComponentsInChildren<Collector>();
              Invoke(nameof(SetScoreRequiredToCompleteTheLevel),2);
         }
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
            
             SubscribeToOnItemCollectedAction();
             Gamemanager.OnGameRestart += OnGameRestart;
         }
 
-        private void OnGameRestart()
+        protected virtual void OnGameRestart()
         {
             m_CurrentScore = 0;
         }
 
-        void OnDisable()
+        protected virtual void OnDisable()
         {
             UnSubscribeToOnItemCollectedAction();
             Gamemanager.OnGameRestart -= OnGameRestart;
 
         }
         
-        private void SetScoreRequiredToCompleteTheLevel()
+        protected virtual void SetScoreRequiredToCompleteTheLevel()
         {
             for(int i = 0 ;i<m_Collectors.Length;i++)
             {
@@ -49,7 +49,7 @@ namespace TMKOC.Sorting
             }
         }
 
-        private void SubscribeToOnItemCollectedAction()
+        protected virtual void SubscribeToOnItemCollectedAction()
         {
             for(int i = 0 ;i<m_Collectors.Length;i++)
             {
@@ -57,7 +57,7 @@ namespace TMKOC.Sorting
             }
         }
 
-        private void UnSubscribeToOnItemCollectedAction()
+        protected virtual void UnSubscribeToOnItemCollectedAction()
         {
             for(int i = 0 ;i<m_Collectors.Length;i++)
             {
@@ -65,7 +65,7 @@ namespace TMKOC.Sorting
             }
         }
 
-        private void OnItemCollected()
+        protected virtual void OnItemCollected()
         {
             m_CurrentScore++;
             if(m_CurrentScore >= m_ScoreRequiredToCompleteTheLevel){

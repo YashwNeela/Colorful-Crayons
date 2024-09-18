@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TMKOC.Sorting{
-public class HUDUI : MonoBehaviour
+namespace TMKOC.Sorting
 {
-    
-
-    public void OnBackButtonClicked()
+    public class HUDUI : MonoBehaviour
     {
-        Gamemanager.Instance.GoBackToPlayschool();
+        public void OnBackButtonClicked()
+        {
+            Gamemanager.Instance.GoBackToPlayschool();
+        }
+
+        public void LevelCompleteCheck()
+        {
+            Gamemanager.Instance.LevelCompleteCheck();
+        }
     }
-}
 }

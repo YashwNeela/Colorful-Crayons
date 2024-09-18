@@ -5,14 +5,14 @@ namespace TMKOC.Sorting.ColorfulCrayons
 {
     public class Crayon : Collectible
     {
-        [SerializeField] private Color m_Color;
-        [SerializeField] private CrayonColor m_CrayonColor;
+        [SerializeField] protected Color m_Color;
+        [SerializeField] protected CrayonColor m_CrayonColor;
 
         public CrayonColor CrayonColor => m_CrayonColor;
         public Color Color => m_Color;
 
-        private Renderer m_Renderer;
-        [SerializeField] private int m_MaterialIndex;
+        protected Renderer m_Renderer;
+        [SerializeField] protected int m_MaterialIndex;
 
         protected override void Awake()
         {
@@ -23,7 +23,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         }
 
-        private void SetBoxColor(CrayonColor crayonColor)
+        protected virtual void SetBoxColor(CrayonColor crayonColor)
         {
             if (crayonColor.HasFlag(CrayonColor.Red))
             {
