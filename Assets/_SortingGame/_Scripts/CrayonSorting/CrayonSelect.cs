@@ -8,7 +8,8 @@ namespace TMKOC.Sorting.ColorfulCrayons
 {
     public class CrayonSelect : Crayon
     {
-        public Action OnCrayonSelected, OnCrayonDeselected;
+        public Action<CrayonColor> OnCrayonSelected;
+        public Action<CrayonColor> OnCrayonDeselected;
 
        [SerializeField] private bool m_IsSelected;
 
@@ -69,13 +70,13 @@ namespace TMKOC.Sorting.ColorfulCrayons
         private void CrayonSelected()
         {
             m_SelectedSequence.PlayForward();
-            OnCrayonSelected?.Invoke();
+            OnCrayonSelected?.Invoke(m_CrayonColor);
         }
 
         private void CrayonDeselected()
         {
             m_SelectedSequence.PlayBackwards();
-            OnCrayonDeselected?.Invoke();
+            OnCrayonDeselected?.Invoke(m_CrayonColor);
         }
 
         protected override void OnTriggerEnter(Collider other)

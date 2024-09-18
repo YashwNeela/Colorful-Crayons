@@ -8,6 +8,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 {
     public class LevelCrayonSelect : Level
     {
+        [SerializeField] private CrayonColor m_CrayonColor; 
         [SerializeField] private new int m_ScoreRequiredToCompleteTheLevel;
 
         [SerializeField] List<CrayonSelect> m_CrayonSelectList;
@@ -35,7 +36,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void OnLevelCompleteCheck()
         {
-            if(m_CurrentScore >= m_ScoreRequiredToCompleteTheLevel){
+            if(m_CurrentScore == m_ScoreRequiredToCompleteTheLevel){
                 Gamemanager.Instance.GameOver();
                 Gamemanager.Instance.GameWin();
             }else
@@ -65,16 +66,18 @@ namespace TMKOC.Sorting.ColorfulCrayons
             }
         }
 
-        private void OnCrayonSelected()
+        private void OnCrayonSelected(CrayonColor crayonColor)
         {
-            base.m_CurrentScore++;
+            if(crayonColor == m_CrayonColor)
+                base.m_CurrentScore++;
 
           //  OnItemCollected();
         }
 
-         private void OnCrayonDeselected()
+         private void OnCrayonDeselected(CrayonColor crayonColor)
         {
-            base.m_CurrentScore--;
+            if(crayonColor == m_CrayonColor)
+                base.m_CurrentScore--;
         }
 
           private void OnGameStart()
