@@ -146,6 +146,8 @@ namespace TMKOC.Sorting
 
         public static UnityAction OnGameReplay;
 
+        public static UnityAction OnLevelCompleteCheck;
+
         public virtual void FirstTimeGameStart()
         {
              if(!testLevel)
@@ -168,6 +170,11 @@ namespace TMKOC.Sorting
             {
 
             });
+        }
+
+        public virtual void LevelCompleteCheck()
+        {
+            OnLevelCompleteCheck?.Invoke();
         }
         public virtual void GameStart(int level)
         {
