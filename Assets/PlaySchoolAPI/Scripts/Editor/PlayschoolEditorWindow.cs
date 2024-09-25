@@ -35,6 +35,14 @@ public class PlayschoolEditorWindow : EditorWindow
 
     private void OnGUI()
     {
+        CreditsImage();
+        PlaySchoolAPI();
+        SortingGameClone();
+        
+    }
+
+    void CreditsImage()
+    {
         // Add a "Developed by" label
         GUILayout.Label("Developed by:", EditorStyles.boldLabel);
 
@@ -60,6 +68,10 @@ public class PlayschoolEditorWindow : EditorWindow
         }
 
         GUILayout.Space(50);
+    }
+
+    void PlaySchoolAPI()
+    {
         // Add a label for the project location
         GUILayout.Label("Project Location", EditorStyles.boldLabel);
 
@@ -87,32 +99,27 @@ public class PlayschoolEditorWindow : EditorWindow
 
             UnityEngine.Debug.Log("Command executed for platform.");
         }
+    }
+    private string sortingClone_SH = System.IO.Path.GetDirectoryName(Application.dataPath) + "/PlaySchoolAPI/ShellScripts/SortingGame/SortingClone";
+    void SortingGameClone()
+    {
 
-        if(GUILayout.Button("Sorting"))
-        {
-              // Git commands to execute sequentially for sparse checkout and update
-        string submodulePath = "Assets/Colorful-Crayons";  // Update with your submodule path
-        string sparseCheckoutPath = "_SortingGame/_Scripts/";  // Update with your folder path
-        string commands = $"cd \"{submodulePath}\" && " +
-                          "git config core.sparseCheckout true && " +
-                          $"echo \"{sparseCheckoutPath}\" > .git/info/sparse-checkout && " +
-                          "git fetch origin && " +
-                          "git pull origin main && " +
-                          "git read-tree -mu HEAD";
+        EditorGUILayout.LabelField("Sorting Cline Path:", sortingClone_SH);
+        
+        if (GUILayout.Button("Clone Sorting Game")){
 
-        // Determine the platform and run the appropriate command
-        #if UNITY_EDITOR_WIN
-        // Windows
-        string fullCommand = $"/k cd /d \"{inputText}\" && {commands}";
-        Process.Start("cmd.exe", fullCommand);
-        #elif UNITY_EDITOR_OSX
-        // macOS
-        string fullCommand = $"cd \"{inputText}\"; {commands}";
-        string terminalCommand = $"/bin/zsh -c \"{fullCommand}\"";
-        Process.Start("open", $"-a Terminal \"{terminalCommand}\"");
-        #endif
-
-        UnityEngine.Debug.Log("Sparse checkout commands executed for the platform.");
+        string scriptssh = sortingClone_SH;
+        Process process= new Process();
+        process.StartInfo.FileName = "/bin/bash";
+        process.StartInfo.Arguments = $"\"{scriptssh}\"";
+        process.StartInfo.RedirectStandardOutput = true;
+        process.StartInfo.RedirectStandardError = true;
+        process.StartInfo.UseShellExecute = false;
+        process.Start();
+        string result = process.StandardOutput.ReadToEnd();
+        string error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
         }
+
     }
 }
