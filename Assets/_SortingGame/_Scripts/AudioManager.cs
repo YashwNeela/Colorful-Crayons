@@ -80,7 +80,7 @@ namespace TMKOC.Sorting
         protected virtual void Start()
         {
             #if PLAYSCHOOL_MAIN
-            switch (PlayerPrefs.SetString("PlaySchoolLanguage" , currntLanguage);)
+            switch (PlayerPrefs.SetString("PlaySchoolLanguage" , currntLanguage))
             {
                 case "English":
                 SetAudioLanguage(AudioLanguage.English);
