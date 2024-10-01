@@ -21,7 +21,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
              m_ObjectReseter = GetComponent<ObjectReseter>();
 
             m_SelectedSequence = DOTween.Sequence();
-            m_SelectedSequence.Append(transform.DOScale(new Vector3(1.2f,1.2f,1.2f),0.5f));
+            m_SelectedSequence.Append(transform.DOScale(new Vector3(transform.lossyScale.x * 1.2f,transform.lossyScale.y * 1.2f,transform.lossyScale.z * 1.2f),0.5f));
             m_SelectedSequence.SetAutoKill(false);
             m_SelectedSequence.Pause();
 
