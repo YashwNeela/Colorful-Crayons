@@ -38,7 +38,7 @@ namespace TMKOC.Sorting
             m_Collider = GetComponent<Collider>();
         }
 
-        void Update()
+        public virtual void Update()
         {
             // Check for mouse button down to start dragging
             if (Input.GetMouseButtonDown(0) && m_CanDrag)

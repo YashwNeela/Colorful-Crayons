@@ -25,23 +25,23 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         protected virtual void SetBoxColor(CrayonColor crayonColor)
         {
-            if (crayonColor.HasFlag(CrayonColor.Red))
+            if (crayonColor.HasFlag(CrayonColor.CrayonRed))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.red;
                 
             }
-            if (crayonColor.HasFlag(CrayonColor.Yellow))
+            if (crayonColor.HasFlag(CrayonColor.CrayonYellow))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.yellow;
 
                
             }
-            if (crayonColor.HasFlag(CrayonColor.Green))
+            if (crayonColor.HasFlag(CrayonColor.CrayonGreen))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.green;
                 
             }
-            if (crayonColor.HasFlag(CrayonColor.Blue))
+            if (crayonColor.HasFlag(CrayonColor.CrayonBlue))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.blue;
               

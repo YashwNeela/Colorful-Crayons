@@ -11,10 +11,15 @@ namespace TMKOC.Sorting.ColorfulCrayons
     public enum CrayonColor
     {
         None = 0,
-        Red = 1 << 0,
-        Yellow = 1 << 1,
-        Green = 1 << 2,
-        Blue = 1 << 3
+        CrayonRed = 1 << 0,
+        CrayonYellow = 1 << 1,
+        CrayonGreen = 1 << 2,
+        CrayonBlue = 1 << 3,
+
+        SketchpenRed = 1 << 4,
+        SketchpenYellow = 1 << 5,
+        SketchpenGreen = 1 << 6,
+        SketchpenBlue = 1 << 7
     }
 
     public class CrayonBox : Collector
@@ -70,19 +75,19 @@ namespace TMKOC.Sorting.ColorfulCrayons
             List<Color> selectedColors = new List<Color>();
 
             // Check each flag and add corresponding colors from ColorCodes
-            if (crayonColor.HasFlag(CrayonColor.Red))
+            if (crayonColor.HasFlag(CrayonColor.CrayonRed))
             {
                 selectedColors.Add(ColorCodes.red);
             }
-            if (crayonColor.HasFlag(CrayonColor.Yellow))
+            if (crayonColor.HasFlag(CrayonColor.CrayonYellow))
             {
                 selectedColors.Add(ColorCodes.yellow);
             }
-            if (crayonColor.HasFlag(CrayonColor.Green))
+            if (crayonColor.HasFlag(CrayonColor.CrayonGreen))
             {
                 selectedColors.Add(ColorCodes.green);
             }
-            if (crayonColor.HasFlag(CrayonColor.Blue))
+            if (crayonColor.HasFlag(CrayonColor.CrayonBlue))
             {
                 selectedColors.Add(ColorCodes.blue);
             }
