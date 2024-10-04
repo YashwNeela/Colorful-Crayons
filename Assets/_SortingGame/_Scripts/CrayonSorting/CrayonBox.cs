@@ -70,7 +70,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
         }
 
         // Sets the colors of the materials based on the CrayonColor enum flags
-        private void SetBoxColorsBasedOnEnum(CrayonColor crayonColor)
+        protected virtual void SetBoxColorsBasedOnEnum(CrayonColor crayonColor)
         {
             List<Color> selectedColors = new List<Color>();
 

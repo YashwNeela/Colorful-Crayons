@@ -9,22 +9,22 @@ namespace TMKOC.Sorting
         private Rigidbody m_Rigidbody;
 
         public bool m_CanDrag;
-        private bool m_isDragging = false;
-        private bool m_hasDragStarted = false;
+        protected bool m_isDragging = false;
+        protected bool m_hasDragStarted = false;
         private float m_ZPosition;
 
         public bool HasDragStarted => m_hasDragStarted;
         public bool IsDragging => m_isDragging;
 
-        public event Action OnDragStarted;
-        public static event Action OnDragStartedStaticAction;
-        public event Action OnDragging;
-        public static event Action OnDraggingStaticAction;
-        public event Action OnDragEnd; // Event to notify when dragging ends
-        public static event Action OnDragEndStaticAction;
-        
+        public Action OnDragStarted;
+        public static Action OnDragStartedStaticAction;
+        public Action OnDragging;
+        public static Action OnDraggingStaticAction;
+        public Action OnDragEnd; // Event to notify when dragging ends
+        public static Action OnDragEndStaticAction;
 
-        private Collider m_Collider;
+
+        protected Component m_Collider;
         public float screenLeft = 0.0f;
         public float screenRight = 0.0f;
 
@@ -36,6 +36,10 @@ namespace TMKOC.Sorting
             m_Camera = Camera.main;
             m_Rigidbody = GetComponent<Rigidbody>();
             m_Collider = GetComponent<Collider>();
+            if (m_Collider == null)
+            {
+                m_Collider = GetComponent<Collider2D>();
+            }
         }
 
         public virtual void Update()
@@ -67,7 +71,12 @@ namespace TMKOC.Sorting
                     return;
 
                 m_ZPosition = transform.position.z;
-                m_Collider.isTrigger = true;
+
+                if (m_Collider is Collider)
+                    ((Collider)m_Collider).isTrigger = true;
+                else if (m_Collider is Collider2D)
+                    ((Collider2D)m_Collider).isTrigger = true;
+
                 if (m_Rigidbody != null)
                 {
                     m_Rigidbody.isKinematic = true;
@@ -93,12 +102,12 @@ namespace TMKOC.Sorting
                 worldPosition.y = GroundLevel;
             }
 
-            if(worldPosition.x<screenLeft)
+            if (worldPosition.x < screenLeft)
             {
                 worldPosition.x = screenLeft;
             }
 
-            if(worldPosition.x>screenRight)
+            if (worldPosition.x > screenRight)
             {
                 worldPosition.x = screenRight;
             }
@@ -113,7 +122,11 @@ namespace TMKOC.Sorting
         {
             m_isDragging = false;
             m_hasDragStarted = false;
-            m_Collider.isTrigger = false;
+
+            if (m_Collider is Collider)
+                ((Collider)m_Collider).isTrigger = false;
+            else if (m_Collider is Collider2D)
+                ((Collider2D)m_Collider).isTrigger = false;
 
             if (m_Rigidbody != null)
             {

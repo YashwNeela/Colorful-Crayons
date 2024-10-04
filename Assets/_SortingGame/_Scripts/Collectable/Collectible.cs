@@ -59,7 +59,16 @@ namespace TMKOC.Sorting
 
         protected virtual void OnTriggerEnter(Collider other)
         {
-            m_CurrentCollector = other.GetComponent<Collector>();
+            HandleCollectorOnTriggerEnter(other);
+        }
+
+        protected virtual void HandleCollectorOnTriggerEnter(Component collider)
+        {
+            if(collider is Collider)
+                m_CurrentCollector = ((Collider)collider).GetComponent<Collector>();
+            else if(collider is Collider2D)
+                m_CurrentCollector = ((Collider2D)collider).GetComponent<Collector>();
+
             Debug.Log("Trigger Entered");
             if(m_CurrentCollector != null && !m_IsPlaced && draggable.IsDragging)
                 m_CurrentCollector.OnCollectibleEntered(this);
@@ -71,11 +80,26 @@ namespace TMKOC.Sorting
 
         }
 
+        protected virtual void HandleCollectorOnTriggerStay(Component collider)
+        {
+
+        }
+
         protected virtual void OnTriggerExit(Collider other)
         {
-            m_CurrentCollector = other.GetComponent<Collector>();
+            HandleCollectorOnTriggerExit(other);
+        }
+        protected virtual void HandleCollectorOnTriggerExit(Component collider)
+        {
+            Debug.Log("Trigger Exited");
+            if(collider is Collider)
+                m_CurrentCollector = ((Collider)collider).GetComponent<Collector>();
+            else if(collider is Collider2D)
+                m_CurrentCollector = ((Collider2D)collider).GetComponent<Collector>();
+            
             if(m_CurrentCollector != null && !m_IsPlaced && draggable.IsDragging)
                 m_CurrentCollector.OnCollectibleExited(this);
+
         }
 
         protected virtual void HandleDragEnd()

@@ -15,12 +15,22 @@ namespace TMKOC.Sorting
 
         public UnityAction OnItemCollectedAction;
 
-        protected Collider m_Collider;
+        protected Component m_Collider;
 
 
         protected virtual void OnEnable()
         {
-            m_Collider.enabled = false;
+            if (m_Collider is Collider)
+            {
+                // It's a 3D Collider
+                ((Collider)m_Collider).enabled = false;
+            }
+            else if (m_Collider is Collider2D)
+            {
+                // It's a 2D Collider
+                ((Collider2D)m_Collider).enabled = false;
+            }
+
             DisableCollider();
             Gamemanager.OnGameStart += OnGameStart;
             Draggable.OnDragStartedStaticAction += OnDragStartedStaticAction;
@@ -28,7 +38,7 @@ namespace TMKOC.Sorting
             Draggable.OnDragEndStaticAction += OnDragEndStaticAction;
         }
 
-        
+
 
 
         /// <summary>
@@ -51,22 +61,27 @@ namespace TMKOC.Sorting
 
         private void OnDraggingStaticAction()
         {
-           // EnableCollider();
+            // EnableCollider();
         }
         private void OnDragEndStaticAction()
         {
             DisableCollider();
-           // Invoke(nameof(DisableCollider),1f);
+            // Invoke(nameof(DisableCollider),1f);
         }
 
         private void OnGameStart()
         {
-            
+
         }
 
         protected virtual void Awake()
         {
             m_Collider = GetComponent<Collider>();
+
+            if (m_Collider == null)
+            {
+                m_Collider = GetComponent<Collider2D>();
+            }
         }
 
         public virtual void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
@@ -110,12 +125,32 @@ namespace TMKOC.Sorting
 
         protected virtual void EnableCollider()
         {
-            m_Collider.enabled = true;
+            if (m_Collider is Collider)
+            {
+                // It's a 3D Collider
+                ((Collider)m_Collider).enabled = true;
+            }
+            else if (m_Collider is Collider2D)
+            {
+                // It's a 2D Collider
+                ((Collider2D)m_Collider).enabled = true;
+            }
+
         }
 
         protected virtual void DisableCollider()
         {
-            m_Collider.enabled = false;
+            if (m_Collider is Collider)
+            {
+                // It's a 3D Collider
+                ((Collider)m_Collider).enabled = false;
+            }
+            else if (m_Collider is Collider2D)
+            {
+                // It's a 2D Collider
+                ((Collider2D)m_Collider).enabled = false;
+            }
+
 
         }
 
