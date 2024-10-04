@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -9,6 +10,23 @@ namespace TMKOC.Sorting
     {
         public Transform m_TipText;
         private bool m_IsShowingTip;
+
+        void OnEnable()
+        {
+            Gamemanager.OnGameStart += OnGameStart;
+        }
+
+        void OnDisable()
+        {
+            Gamemanager.OnGameStart -= OnGameStart;
+
+        }
+
+        private void OnGameStart()
+        {
+            ShowTip();
+        }
+
         public void OnBackButtonClicked()
         {
             Gamemanager.Instance.GoBackToPlayschool();

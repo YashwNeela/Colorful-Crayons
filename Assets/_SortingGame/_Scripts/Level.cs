@@ -16,6 +16,8 @@ namespace TMKOC.Sorting
 
         private Collector[] m_Collectors;
 
+        public string m_Tip;
+
         protected virtual void Awake()
         {
             m_Collectors =GetComponentsInChildren<Collector>();

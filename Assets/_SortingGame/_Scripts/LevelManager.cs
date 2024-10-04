@@ -8,6 +8,8 @@ namespace TMKOC.Sorting
     public class LevelManager : Singleton<LevelManager>
     {
         public TextMeshProUGUI m_LevelText;
+
+        public TextMeshProUGUI m_TipText;
         [SerializeField] private List<GameObject> levels; // Array to hold all levels
 
        
@@ -73,6 +75,7 @@ namespace TMKOC.Sorting
                 levels[currentLevelIndex].gameObject.SetActive(true);
 
                 m_LevelText.text =  (currentLevelIndex + 1).ToString() + "/" + MaxLevels.ToString();
+                m_TipText.text = levels[currentLevelIndex].GetComponent<Level>().m_Tip;
             }
         }
 
