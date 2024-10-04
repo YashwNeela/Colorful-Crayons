@@ -24,7 +24,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
     public class CrayonBox : Collector
     {
-        [SerializeField] private CrayonColor m_CrayonColor;
+        [SerializeField] protected CrayonColor m_CrayonColor;
 
         public CrayonColor CrayonColor => m_CrayonColor;
 
@@ -137,8 +137,11 @@ namespace TMKOC.Sorting.ColorfulCrayons
             m_OnCrayonEnteredAnimation.DOPlayBackwards();
         }
 
+       
+
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
+            Debug.Log("Crayon Box Snap");
             foreach (var snapPoint in snapPoints)
             {
                 CrayonSnapPoint crayonSnapPoint = snapPoint as CrayonSnapPoint;
@@ -149,6 +152,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
                     collectible.transform.parent = snapPoint.transform;
                     collectible.transform.localPosition = Vector3.zero;
                     collectible.transform.localRotation = Quaternion.identity;
+                    collectible.SetSnapPoint(snapPoint);
                     snapPoint.IsOccupied = true;
                     OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
@@ -160,6 +164,11 @@ namespace TMKOC.Sorting.ColorfulCrayons
                     m_OnCrayonEnteredAnimation.DOPlayBackwards();
                 }
             }
+        }
+
+        public virtual void SnapCollectibleToCollectorBase(Collectible collectible, Action PlacedCorrectly)
+        {
+            base.SnapCollectibleToCollector(collectible,PlacedCorrectly);
         }
     }
 }

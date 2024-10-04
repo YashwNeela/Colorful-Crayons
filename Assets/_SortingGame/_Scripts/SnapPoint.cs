@@ -31,5 +31,10 @@ namespace TMKOC.Sorting
             Gizmos.DrawWireSphere(transform.position, 0.1f);
         }
 
+        public void ResetSnapPoint()
+        {
+            IsOccupied= false;
+        }
+
     }
 }

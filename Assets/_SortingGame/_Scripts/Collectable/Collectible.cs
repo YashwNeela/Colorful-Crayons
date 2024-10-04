@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 
@@ -20,10 +21,19 @@ namespace TMKOC.Sorting
 
         protected Draggable draggable;
 
+        protected SnapPoint m_CurrentSnapPoint;
+
+        protected Transform m_DefaulParent;
+
+        protected Component m_Collider;
+
         protected virtual void OnEnable()
         {
             Gamemanager.OnGameRestart += OnGameRestart;
             Gamemanager.OnGameStart += OnGameStart;
+            Draggable.OnDragStartedStaticAction += OnDragStartedStaticAction;
+            Draggable.OnDraggingStaticAction += OnDraggingStaticAction;
+            Draggable.OnDragEndStaticAction += OnDragEndStaticAction;
         }
 
         private void OnGameStart()
@@ -41,12 +51,30 @@ namespace TMKOC.Sorting
         {
             Gamemanager.OnGameRestart -= OnGameRestart;
             Gamemanager.OnGameStart -= OnGameStart;
+            Draggable.OnDragStartedStaticAction += OnDragStartedStaticAction;
+            Draggable.OnDraggingStaticAction += OnDraggingStaticAction;
+            Draggable.OnDragEndStaticAction += OnDragEndStaticAction;
 
         }
 
+        protected virtual void OnDragEndStaticAction(Transform transform)
+        {
+            
+        }
+
+        protected virtual void OnDraggingStaticAction(Transform transform)
+        {
+            
+        }
+
+        protected virtual void OnDragStartedStaticAction(Transform transform)
+        {
+            
+        }
 
         protected virtual void Awake()
         {
+            m_DefaulParent = transform.parent;
             // Subscribe to the OnDragEnd event
             draggable = GetComponent<Draggable>();
             m_ObjectReseter = GetComponent<ObjectReseter>();
@@ -55,6 +83,11 @@ namespace TMKOC.Sorting
                 draggable.OnDragStarted += HandleDragStart;
                 draggable.OnDragEnd += HandleDragEnd;
             }
+
+            m_Collider = GetComponent<Collider>();
+
+            if(m_Collider == null)
+            m_Collider = GetComponent<Collider2D>();
         }
 
         protected virtual void OnTriggerEnter(Collider other)
@@ -76,7 +109,7 @@ namespace TMKOC.Sorting
 
         protected virtual void OnTriggerStay(Collider other)
         {
-            
+            HandleCollectorOnTriggerStay(other);
 
         }
 
@@ -139,6 +172,20 @@ namespace TMKOC.Sorting
         {
             m_IsPlaced = false;
             draggable.m_CanDrag = true;
+        }
+
+        public virtual void SetSnapPoint(SnapPoint snapPoint)
+        {
+            m_CurrentSnapPoint = snapPoint;
+        }
+
+        public virtual void RemoveFromSnapPoint()
+        {
+            transform.parent = m_DefaulParent;
+            if(m_CurrentSnapPoint != null)
+                m_CurrentSnapPoint.ResetSnapPoint();
+
+            Reset();
         }
     }
 }

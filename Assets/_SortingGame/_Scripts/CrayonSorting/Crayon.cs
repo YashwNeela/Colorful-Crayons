@@ -28,25 +28,25 @@ namespace TMKOC.Sorting.ColorfulCrayons
             if (crayonColor.HasFlag(CrayonColor.CrayonRed))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.red;
-                
+
             }
             if (crayonColor.HasFlag(CrayonColor.CrayonYellow))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.yellow;
 
-               
+
             }
             if (crayonColor.HasFlag(CrayonColor.CrayonGreen))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.green;
-                
+
             }
             if (crayonColor.HasFlag(CrayonColor.CrayonBlue))
             {
                 m_Renderer.materials[m_MaterialIndex].color = Color.blue;
-              
+
             }
-            
+
         }
 
         protected override void HandleDragStart()
@@ -60,11 +60,11 @@ namespace TMKOC.Sorting.ColorfulCrayons
         {
             base.HandleCollectorOnTriggerEnter(collider);
             CrayonBox collectorBox = null;
-            if(collider is Collider)
-                collectorBox = ((Collider) collider).GetComponent<Collector>() as CrayonBox;
-            else if(collider is Collider2D)
-                collectorBox = ((Collider2D) collider).GetComponent<Collector>() as CrayonBox;
-            
+            if (collider is Collider)
+                collectorBox = ((Collider)collider).GetComponent<Collector>() as CrayonBox;
+            else if (collider is Collider2D)
+                collectorBox = ((Collider2D)collider).GetComponent<Collector>() as CrayonBox;
+
             if (collectorBox != null)
             {
                 if (collectorBox.CrayonColor.HasFlag(this.CrayonColor))
@@ -81,28 +81,30 @@ namespace TMKOC.Sorting.ColorfulCrayons
         {
             base.HandleCollectorOnTriggerExit(collider);
             CrayonBox collectorBox = null;
-            if(collider is Collider)
-                collectorBox = ((Collider) collider).GetComponent<Collector>() as CrayonBox;
-            else if(collider is Collider2D)
-                collectorBox = ((Collider2D) collider).GetComponent<Collector>() as CrayonBox;
+            if (collider is Collider)
+                collectorBox = ((Collider)collider).GetComponent<Collector>() as CrayonBox;
+            else if (collider is Collider2D)
+                collectorBox = ((Collider2D)collider).GetComponent<Collector>() as CrayonBox;
 
             if (collectorBox != null)
             {
-                if(collectorBox == m_ValidCollector)
+                if (collectorBox == m_ValidCollector)
                     m_ValidCollector = null;
 
                 m_IsTryingToPlaceWrong = false;
-               
+
             }
         }
 
-
-
-
-        protected override void OnTriggerStay(Collider other)
+        protected override void HandleCollectorOnTriggerStay(Component collider)
         {
-            base.OnTriggerStay(other);
-            CrayonBox collectorBox = other.GetComponent<Collector>() as CrayonBox;
+            base.HandleCollectorOnTriggerStay(collider);
+            CrayonBox collectorBox = null;
+            if (collider is Collider)
+                collectorBox = ((Collider)collider).GetComponent<Collector>() as CrayonBox;
+            else if (collider is Collider2D)
+                collectorBox = ((Collider2D)collider).GetComponent<Collector>() as CrayonBox;
+
             if (collectorBox != null)
             {
                 if (!collectorBox.CrayonColor.HasFlag(this.CrayonColor))
@@ -123,7 +125,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
             Gamemanager.Instance.WrongAnswer();
         }
 
-        
+
 
 
     }

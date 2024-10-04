@@ -17,11 +17,11 @@ namespace TMKOC.Sorting
         public bool IsDragging => m_isDragging;
 
         public Action OnDragStarted;
-        public static Action OnDragStartedStaticAction;
+        public static Action<Transform> OnDragStartedStaticAction;
         public Action OnDragging;
-        public static Action OnDraggingStaticAction;
+        public static Action<Transform> OnDraggingStaticAction;
         public Action OnDragEnd; // Event to notify when dragging ends
-        public static Action OnDragEndStaticAction;
+        public static Action<Transform> OnDragEndStaticAction;
 
 
         protected Component m_Collider;
@@ -85,7 +85,7 @@ namespace TMKOC.Sorting
                 m_hasDragStarted = true;
 
                 OnDragStarted?.Invoke();
-                OnDragStartedStaticAction?.Invoke();
+                OnDragStartedStaticAction?.Invoke(transform);
             }
         }
 
@@ -115,7 +115,7 @@ namespace TMKOC.Sorting
             transform.position = worldPosition;
 
             OnDragging?.Invoke();
-            OnDraggingStaticAction?.Invoke();
+            OnDraggingStaticAction?.Invoke(transform);
         }
 
         private void StopDragging()
@@ -135,7 +135,7 @@ namespace TMKOC.Sorting
 
             // Trigger the drag end event
             OnDragEnd?.Invoke();
-            OnDragEndStaticAction?.Invoke();
+            OnDragEndStaticAction?.Invoke(transform);
         }
 
         public void HandleRigidbodyKinematic(bool value)

@@ -10,6 +10,8 @@ namespace TMKOC.Sorting
 
         private Vector3 offset;
 
+        
+
         public override void Update()
         {
             
@@ -35,7 +37,7 @@ namespace TMKOC.Sorting
 
 
             OnDragStarted?.Invoke();
-            OnDragStartedStaticAction?.Invoke();
+            OnDragStartedStaticAction?.Invoke(transform);
         }
 
         private void OnMouseDrag()
@@ -47,7 +49,7 @@ namespace TMKOC.Sorting
             transform.position = GetMouseWorldPosition() + offset;
 
             OnDragging?.Invoke();
-            OnDraggingStaticAction?.Invoke();
+            OnDraggingStaticAction?.Invoke(transform);
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace TMKOC.Sorting
                 ((Collider2D)m_Collider).isTrigger = false;
 
             OnDragEnd?.Invoke();
-            OnDragEndStaticAction?.Invoke();
+            OnDragEndStaticAction?.Invoke(transform);
         }
 
         private Vector3 GetMouseWorldPosition()

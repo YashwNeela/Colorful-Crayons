@@ -15,6 +15,8 @@ namespace TMKOC.Sorting
 
         public UnityAction OnItemCollectedAction;
 
+        public UnityAction OnItemRemovedAction;
+
         protected Component m_Collider;
 
 
@@ -54,16 +56,16 @@ namespace TMKOC.Sorting
 
         }
 
-        private void OnDragStartedStaticAction()
+        private void OnDragStartedStaticAction(Transform transform)
         {
             EnableCollider();
         }
 
-        private void OnDraggingStaticAction()
+        private void OnDraggingStaticAction(Transform transform)
         {
             // EnableCollider();
         }
-        private void OnDragEndStaticAction()
+        private void OnDragEndStaticAction(Transform transform)
         {
             DisableCollider();
             // Invoke(nameof(DisableCollider),1f);
@@ -71,8 +73,10 @@ namespace TMKOC.Sorting
 
         private void OnGameStart()
         {
-
+            collectedItems = 0;
         }
+
+        
 
         protected virtual void Awake()
         {
@@ -86,6 +90,8 @@ namespace TMKOC.Sorting
 
         public virtual void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
+            Debug.Log("Collector Box Snap");
+
             foreach (var snapPoint in snapPoints)
             {
                 if (!snapPoint.IsOccupied)
@@ -94,7 +100,9 @@ namespace TMKOC.Sorting
                     collectible.transform.parent = snapPoint.transform; // Change parent first
                     collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
                     collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
+                    
                     snapPoint.IsOccupied = true;
+                    collectible.SetSnapPoint(snapPoint);
                     OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
                     break;
@@ -109,13 +117,19 @@ namespace TMKOC.Sorting
 
         public virtual void OnCollectibleExited(Collectible collectible)
         {
-
+            
         }
 
         protected virtual void OnItemCollected(SnapPoint snapPoint)
         {
             collectedItems++;
             OnItemCollectedAction?.Invoke();
+        }
+
+        protected virtual void OnItemRemoved()
+        {
+            collectedItems--;
+            OnItemRemovedAction?.Invoke();
         }
 
         public virtual void OnWrongItemTriedToCollect()

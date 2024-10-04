@@ -27,7 +27,10 @@ namespace TMKOC.Sorting
            
             SubscribeToOnItemCollectedAction();
             Gamemanager.OnGameRestart += OnGameRestart;
+            Gamemanager.OnLevelCompleteCheck += OnLevelCompleteCheck;
         }
+
+        
 
         protected virtual void OnGameRestart()
         {
@@ -38,6 +41,8 @@ namespace TMKOC.Sorting
         {
             UnSubscribeToOnItemCollectedAction();
             Gamemanager.OnGameRestart -= OnGameRestart;
+            Gamemanager.OnLevelCompleteCheck -= OnLevelCompleteCheck;
+
 
         }
         
@@ -54,6 +59,7 @@ namespace TMKOC.Sorting
             for(int i = 0 ;i<m_Collectors.Length;i++)
             {
                 m_Collectors[i].OnItemCollectedAction += OnItemCollected;
+                m_Collectors[i].OnItemRemovedAction += OnItemRemoved;
             }
         }
 
@@ -62,15 +68,35 @@ namespace TMKOC.Sorting
             for(int i = 0 ;i<m_Collectors.Length;i++)
             {
                 m_Collectors[i].OnItemCollectedAction -= OnItemCollected;
+                m_Collectors[i].OnItemRemovedAction -= OnItemRemoved;
+
             }
         }
 
         protected virtual void OnItemCollected()
         {
             m_CurrentScore++;
-            if(m_CurrentScore >= m_ScoreRequiredToCompleteTheLevel){
+            // if(m_CurrentScore >= m_ScoreRequiredToCompleteTheLevel){
+            //     Gamemanager.Instance.GameOver();
+            //     Gamemanager.Instance.GameWin();
+            // }
+        }
+
+        protected virtual void OnItemRemoved()
+        {
+            m_CurrentScore--;
+
+        }
+
+        protected virtual void OnLevelCompleteCheck()
+        {
+            if(m_CurrentScore == m_ScoreRequiredToCompleteTheLevel){
                 Gamemanager.Instance.GameOver();
                 Gamemanager.Instance.GameWin();
+            }else
+            {
+                Gamemanager.Instance.GameOver();
+                Gamemanager.Instance.GameLoose();
             }
         }
     }

@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMKOC.Sorting;
 using TMKOC.Sorting.ColorfulCrayons;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Crayon2D : Crayon
 {
     [SerializeField] private SpriteRenderer m_CrayonColorSprite;
+
+    
 
     protected override void SetCrayonColor(CrayonColor crayonColor)
     {
@@ -33,9 +37,9 @@ public class Crayon2D : Crayon
 
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D other) 
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        HandleCollectorOnTriggerEnter(other);   
+        HandleCollectorOnTriggerEnter(other);
     }
 
     /// <summary>
@@ -48,8 +52,65 @@ public class Crayon2D : Crayon
         HandleCollectorOnTriggerStay(other);
     }
 
-    protected virtual void OnTriggerExit2D(Collider2D other) 
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
         HandleCollectorOnTriggerExit(other);
+    }
+
+    protected override void HandleCollectorOnTriggerExit(Component collider)
+    {
+        if(m_CurrentCollector != null && !m_IsPlaced && draggable.IsDragging)
+                m_CurrentCollector.OnCollectibleExited(this);
+
+        m_ValidCollector = null;
+        m_CurrentCollector = null;
+    }
+
+    protected override void OnPlacedCorrectly()
+    {
+
+    }
+
+    protected override void PlaceInCorrectly(Collector collector)
+    {
+    }
+
+    protected override void HandleDragEnd()
+    {
+        if (m_CurrentCollector != null)
+        {
+            if (m_ValidCollector != null){
+                
+                m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+            }
+            else
+            {
+                
+                m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
+            }
+
+        }
+    }
+
+    protected override void OnDragStartedStaticAction(Transform transform)
+    {
+        if(transform == this.transform)
+            return;
+
+       if(m_Collider is Collider)
+            ((Collider)m_Collider).enabled = false;
+        if(m_Collider is Collider2D)
+            ((Collider2D)m_Collider).enabled = false;
+    }
+
+    protected override void OnDragEndStaticAction(Transform transform)
+    {
+      if(transform == this.transform)
+            return;
+
+       if(m_Collider is Collider)
+            ((Collider)m_Collider).enabled = true;
+        if(m_Collider is Collider2D)
+            ((Collider2D)m_Collider).enabled = true;
     }
 }
