@@ -32,6 +32,7 @@ namespace TMKOC.Sorting
             }
             else
             {
+                m_CurrentCollectible = null;
                 IsOccupied = false;
             }
         }
@@ -46,6 +47,8 @@ namespace TMKOC.Sorting
             }
             else
             {
+                m_CurrentCollectible = null;
+ 
                 IsOccupied = false;
 
             }

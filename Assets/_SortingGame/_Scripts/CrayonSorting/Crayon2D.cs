@@ -80,17 +80,24 @@ public class Crayon2D : Crayon
 
     protected override void HandleDragEnd()
     {
+        if(m_IsPlacedInsideCollector)
+        {
+            draggable.ResetToStartDraggingValues();
+            return;
+        }
         if (m_CurrentCollector != null)
         {
             if (m_ValidCollector != null){
                 
-                m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                if((m_CurrentCollector as CrayonBox2D).CrayonColor.HasFlag(m_CrayonColor))
+                    m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                else
+                    m_CurrentCollector.SnapCollectibleToCollector(this, () => {
+                        PlaceInCorrectly(m_CurrentCollector);
+                        });
+
             }
-            else
-            {
-                
-                m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
-            }
+        
 
         }
     }

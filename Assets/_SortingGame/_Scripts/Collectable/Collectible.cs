@@ -32,9 +32,10 @@ namespace TMKOC.Sorting
         [SerializeField] protected Transform m_DefaulParent;
 
         [ShowIf("m_HasCustomSnapPoint")]
+        [SerializeField] protected bool m_CustomIsPlacedCorrectly;
         [SerializeField] protected bool m_IsPlacedCorrectly = false;
 
-        [SerializeField] protected bool m_HasCollectorTriggerExited;
+        protected bool m_IsPlacedInsideCollector = false;
 
         protected Component m_Collider;
 
@@ -54,9 +55,16 @@ namespace TMKOC.Sorting
 
             if(m_HasCustomSnapPoint)
             {
+                m_IsPlacedCorrectly = m_CustomIsPlacedCorrectly;
+                m_IsPlacedInsideCollector = true;
+
                 m_CurrentSnapPoint = m_CustomSnapPoint;
                 transform.position = m_CurrentSnapPoint.transform.position;
                 transform.rotation = m_CurrentSnapPoint.transform.rotation;
+            }else
+            {
+                m_IsPlacedCorrectly = false;
+                m_IsPlacedInsideCollector = false;
             }
         }
 
@@ -129,8 +137,6 @@ namespace TMKOC.Sorting
             if(m_CurrentCollector == null)
                 return; 
 
-            m_HasCollectorTriggerExited = false;
-
             Debug.Log("Trigger Entered");
             if(m_CurrentCollector != null && !m_IsPlacedCorrectly && draggable.IsDragging)
                 m_CurrentCollector.OnCollectibleEntered(this);
@@ -166,6 +172,7 @@ namespace TMKOC.Sorting
             if(m_CurrentCollector != null && draggable.IsDragging){
                 m_CurrentCollector.OnCollectibleExited(this);
                 m_IsPlacedCorrectly = false;
+                m_IsPlacedInsideCollector = false;
             }
             
         
@@ -176,7 +183,7 @@ namespace TMKOC.Sorting
 
         protected virtual void HandleDragEnd()
         {
-            if(m_IsPlacedCorrectly){
+            if(m_IsPlacedInsideCollector){
                 draggable.ResetToStartDraggingValues();
                 return;
             }
@@ -200,6 +207,7 @@ namespace TMKOC.Sorting
         protected virtual void OnPlacedCorrectly()
         {
             m_IsPlacedCorrectly = true;
+            m_IsPlacedInsideCollector = true;
            // draggable.m_CanDrag = false;
         }
 
@@ -209,7 +217,7 @@ namespace TMKOC.Sorting
                 collector.OnWrongItemTriedToCollect();
             draggable.m_CanDrag = true;
             m_IsPlacedCorrectly = false;
- 
+            m_IsPlacedInsideCollector = true;
             
            
         }

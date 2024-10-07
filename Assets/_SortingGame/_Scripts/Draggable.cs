@@ -74,30 +74,38 @@ namespace TMKOC.Sorting
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider == m_Collider)
             {
-                if (Gamemanager.Instance.CurrentGameState != GameState.Playing)
-                    return;
+
 
                 m_ZPosition = transform.position.z;
+                HandleStartDragging();
 
-                if (m_Collider is Collider)
-                    ((Collider)m_Collider).isTrigger = true;
-                else if (m_Collider is Collider2D)
-                    ((Collider2D)m_Collider).isTrigger = true;
 
-                if (m_Rigidbody != null)
-                {
-                    m_Rigidbody.isKinematic = true;
-                }
-                m_isDragging = true;
-                m_hasDragStarted = true;
-
-                m_DragStartPos = transform.position;
-                m_DragStartRotation = transform.rotation;
-                m_DragStartScale = transform.lossyScale;
-
-                OnDragStarted?.Invoke();
-                OnDragStartedStaticAction?.Invoke(transform);
             }
+        }
+
+        protected virtual void HandleStartDragging()
+        {
+            if (Gamemanager.Instance.CurrentGameState != GameState.Playing)
+                return;
+
+            if (m_Collider is Collider)
+                ((Collider)m_Collider).isTrigger = true;
+            else if (m_Collider is Collider2D)
+                ((Collider2D)m_Collider).isTrigger = true;
+
+            if (m_Rigidbody != null)
+            {
+                m_Rigidbody.isKinematic = true;
+            }
+            m_isDragging = true;
+            m_hasDragStarted = true;
+
+            m_DragStartPos = transform.position;
+            m_DragStartRotation = transform.rotation;
+            m_DragStartScale = transform.lossyScale;
+
+            OnDragStarted?.Invoke();
+            OnDragStartedStaticAction?.Invoke(transform);
         }
 
         public void ResetToStartDraggingValues()
@@ -137,6 +145,11 @@ namespace TMKOC.Sorting
         }
 
         private void StopDragging()
+        {
+            HandleStopDragging();
+        }
+
+        protected virtual void HandleStopDragging()
         {
             m_isDragging = false;
             m_hasDragStarted = false;

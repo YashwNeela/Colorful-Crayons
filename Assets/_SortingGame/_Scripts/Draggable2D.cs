@@ -22,22 +22,8 @@ namespace TMKOC.Sorting
             if(!m_CanDrag)
                 return;
 
-            if (Gamemanager.Instance.CurrentGameState != GameState.Playing)
-                    return;
-
-                if (m_Collider is Collider)
-                    ((Collider)m_Collider).isTrigger = true;
-                else if (m_Collider is Collider2D)
-                    ((Collider2D)m_Collider).isTrigger = true;
-            
-            // Calculate the offset between the object's position and the mouse position in world space
             offset = gameObject.transform.position - GetMouseWorldPosition();
-            m_isDragging = true;
-            m_hasDragStarted = true;
-
-
-            OnDragStarted?.Invoke();
-            OnDragStartedStaticAction?.Invoke(transform);
+            HandleStartDragging();
         }
 
         private void OnMouseDrag()
@@ -60,16 +46,7 @@ namespace TMKOC.Sorting
             if(!m_isDragging)
                 return;
 
-             m_isDragging = false;
-            m_hasDragStarted = false;
-
-            if (m_Collider is Collider)
-                ((Collider)m_Collider).isTrigger = false;
-            else if (m_Collider is Collider2D)
-                ((Collider2D)m_Collider).isTrigger = false;
-
-            OnDragEnd?.Invoke();
-            OnDragEndStaticAction?.Invoke(transform);
+             HandleStopDragging();
         }
 
         private Vector3 GetMouseWorldPosition()

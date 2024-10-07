@@ -12,7 +12,7 @@ namespace TMKOC.Sorting
     public class Level : MonoBehaviour
     {
         protected int m_ScoreRequiredToCompleteTheLevel;
-
+        
         public int m_CurrentScore;
 
         private Collector[] m_Collectors;

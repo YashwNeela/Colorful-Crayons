@@ -67,12 +67,13 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
             if (collectorBox != null)
             {
-                if (collectorBox.CrayonColor.HasFlag(this.CrayonColor))
-                {
-                    m_ValidCollector = collectorBox;
-                }
-                else
-                    m_IsTryingToPlaceWrong = true;
+                // if (collectorBox.CrayonColor.HasFlag(this.CrayonColor))
+                // {
+                //     m_ValidCollector = collectorBox;
+                // }
+                // else
+                //     m_IsTryingToPlaceWrong = true;
+                m_ValidCollector = collectorBox;
             }
 
         }
