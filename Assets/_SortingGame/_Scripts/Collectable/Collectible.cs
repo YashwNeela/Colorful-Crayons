@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 
 namespace TMKOC.Sorting
@@ -21,9 +22,15 @@ namespace TMKOC.Sorting
 
         protected Draggable draggable;
 
-        protected SnapPoint m_CurrentSnapPoint;
+        [SerializeField] protected bool m_HasCustomSnapPoint;
 
-        protected Transform m_DefaulParent;
+        [ShowIf("m_HasCustomSnapPoint")]
+        [SerializeField] protected SnapPoint m_CurrentSnapPoint;
+
+        [SerializeField] protected bool m_HasCustomDefaulParent;
+
+        [ShowIf("m_HasCustomDefaulParent")]
+        [SerializeField] protected Transform m_DefaulParent;
 
         protected Component m_Collider;
 
@@ -74,7 +81,9 @@ namespace TMKOC.Sorting
 
         protected virtual void Awake()
         {
-            m_DefaulParent = transform.parent;
+            if(!m_HasCustomDefaulParent)
+                m_DefaulParent = transform.parent;
+
             // Subscribe to the OnDragEnd event
             draggable = GetComponent<Draggable>();
             m_ObjectReseter = GetComponent<ObjectReseter>();

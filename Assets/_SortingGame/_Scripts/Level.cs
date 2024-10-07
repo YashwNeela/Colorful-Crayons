@@ -18,7 +18,10 @@ namespace TMKOC.Sorting
         private Collector[] m_Collectors;
 
         [SerializeField]
-        public UnityEvent PlayDotweenAnimation;
+        public UnityEvent onGameStart;
+
+        [SerializeField]
+        public UnityEvent onGameRestart;
 
         public string m_Tip;
 
@@ -39,12 +42,13 @@ namespace TMKOC.Sorting
 
         private void OnGameStart()
         {
-            PlayDotweenAnimation?.Invoke();
+            onGameStart?.Invoke();
         }
 
         protected virtual void OnGameRestart()
         {
             m_CurrentScore = 0;
+            onGameRestart?.Invoke();
         }
 
         protected virtual void OnDisable()
