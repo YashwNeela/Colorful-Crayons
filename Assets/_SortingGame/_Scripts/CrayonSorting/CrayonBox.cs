@@ -30,14 +30,14 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private Renderer m_Renderer;
         private StarCollectorParticleImage m_StartCollector;
-        private DOTweenAnimation m_OnCrayonEnteredAnimation;
+        [SerializeField] protected DOTweenAnimation m_OnCrayonEnteredAnimation;
 
         protected override void Awake()
         {
             base.Awake();
             m_Renderer = GetComponent<Renderer>();
             m_StartCollector = FindAnyObjectByType<StarCollectorParticleImage>();
-            m_OnCrayonEnteredAnimation = GetComponent<DOTweenAnimation>();
+           // m_OnCrayonEnteredAnimation = GetComponent<DOTweenAnimation>();
 
             // Set the colors of the box based on the selected CrayonColor flags
             SetBoxColorsBasedOnEnum(m_CrayonColor);
@@ -52,14 +52,14 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void OnRightAnswerAction()
         {
-            m_OnCrayonEnteredAnimation.DOComplete();
-            m_OnCrayonEnteredAnimation.DOPlayBackwards();
+          //  m_OnCrayonEnteredAnimation.DOComplete();
+           // m_OnCrayonEnteredAnimation.DOPlayBackwards();
         }
 
         private void OnWrongAnswer()
         {
-            m_OnCrayonEnteredAnimation.DOComplete();
-            m_OnCrayonEnteredAnimation.DOPlayBackwards();
+           // m_OnCrayonEnteredAnimation.DOComplete();
+           // m_OnCrayonEnteredAnimation.DOPlayBackwards();
         }
 
         protected override void OnDisable()
@@ -112,29 +112,29 @@ namespace TMKOC.Sorting.ColorfulCrayons
             base.OnItemCollected(snapPoint);
             m_StartCollector.SetEmitter(snapPoint.transform);
             m_StartCollector.PlayParticle();
-            m_OnCrayonEnteredAnimation.DOPlayBackwards();
+           // m_OnCrayonEnteredAnimation.DOPlayBackwards();
         }
 
         public override void OnWrongItemTriedToCollect()
         {
             base.OnWrongItemTriedToCollect();
             Debug.Log("wrong Item");
-            m_OnCrayonEnteredAnimation.DOPlayBackwards();
+          //  m_OnCrayonEnteredAnimation.DOPlayBackwards();
         }
 
         public override void OnCollectibleEntered(Collectible collectible)
         {
             base.OnCollectibleEntered(collectible);
             Debug.Log("Collectible entered");
-            m_OnCrayonEnteredAnimation.DOPlayForward();
+           // m_OnCrayonEnteredAnimation.DOPlayForward();
         }
 
         public override void OnCollectibleExited(Collectible collectible)
         {
             base.OnCollectibleExited(collectible);
             Debug.Log("Collectible Exited");
-            m_OnCrayonEnteredAnimation.DOComplete();
-            m_OnCrayonEnteredAnimation.DOPlayBackwards();
+           // m_OnCrayonEnteredAnimation.DOComplete();
+            //m_OnCrayonEnteredAnimation.DOPlayBackwards();
         }
 
        
@@ -160,8 +160,8 @@ namespace TMKOC.Sorting.ColorfulCrayons
                 }
                 else
                 {
-                    m_OnCrayonEnteredAnimation.DOComplete();
-                    m_OnCrayonEnteredAnimation.DOPlayBackwards();
+                   // m_OnCrayonEnteredAnimation.DOComplete();
+                    //m_OnCrayonEnteredAnimation.DOPlayBackwards();
                 }
             }
         }

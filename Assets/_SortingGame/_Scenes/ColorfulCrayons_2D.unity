@@ -1445,6 +1445,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &64728960
 PrefabInstance:
@@ -2831,6 +2834,7 @@ GameObject:
   - component: {fileID: 172176100}
   - component: {fileID: 172176099}
   - component: {fileID: 172176103}
+  - component: {fileID: 172176104}
   m_Layer: 0
   m_Name: CrayonBox_2D
   m_TagString: Untagged
@@ -2847,7 +2851,7 @@ Transform:
   m_GameObject: {fileID: 172176097}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 99, y: -423, z: 0}
+  m_LocalPosition: {x: 99, y: -918, z: 0}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -3079,8 +3083,129 @@ MonoBehaviour:
   - {fileID: 1051938923}
   collectedItems: 0
   m_CrayonColor: 1
+  m_OnCrayonEnteredAnimation: {fileID: 172176099}
   m_BoxSprite: {fileID: 172176102}
   m_CoverSprite: {fileID: 964720712}
+--- !u!114 &172176104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172176097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0390bd8b8ffd640b34fe25065ff1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateType: 0
+  isSpeedBased: 0
+  hasOnStart: 0
+  hasOnPlay: 0
+  hasOnUpdate: 0
+  hasOnStepComplete: 0
+  hasOnComplete: 1
+  hasOnTweenCreated: 0
+  hasOnRewind: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStepComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 964720713}
+        m_TargetAssemblyTypeName: DG.Tweening.DOTweenAnimation, Assembly-CSharp-firstpass
+        m_MethodName: DOPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTweenCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onRewind:
+    m_PersistentCalls:
+      m_Calls: []
+  targetIsSelf: 1
+  targetGO: {fileID: 0}
+  tweenTargetIsTargetGO: 1
+  delay: 1
+  duration: 1
+  easeType: 6
+  easeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loopType: 0
+  loops: 1
+  id: 
+  isRelative: 1
+  isFrom: 0
+  isIndependentUpdate: 0
+  autoKill: 0
+  autoGenerate: 1
+  isActive: 1
+  isValid: 1
+  target: {fileID: 172176098}
+  animationType: 2
+  targetType: 11
+  forcedTargetType: 0
+  autoPlay: 0
+  useTargetAsV3: 0
+  endValueFloat: 0
+  endValueV3: {x: 0, y: 500, z: 0}
+  endValueV2: {x: 0, y: 0}
+  endValueColor: {r: 1, g: 1, b: 1, a: 1}
+  endValueString: 
+  endValueRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  endValueTransform: {fileID: 0}
+  optionalBool0: 0
+  optionalBool1: 0
+  optionalFloat0: 0
+  optionalInt0: 0
+  optionalRotationMode: 0
+  optionalScrambleMode: 0
+  optionalShakeRandomnessMode: 0
+  optionalString: 
 --- !u!1001 &178544757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4012,6 +4137,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &219006924
 PrefabInstance:
@@ -4098,7 +4226,7 @@ PrefabInstance:
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 510
+      value: 434
       objectReference: {fileID: 0}
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
@@ -6465,6 +6593,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &312592232
 PrefabInstance:
@@ -8462,6 +8593,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &422310428
 PrefabInstance:
@@ -10636,6 +10770,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &519572943
 PrefabInstance:
@@ -11064,6 +11201,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &559217039
 PrefabInstance:
@@ -12129,6 +12269,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1 &610345600
 GameObject:
@@ -13529,7 +13672,7 @@ PrefabInstance:
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 415
+      value: 339
       objectReference: {fileID: 0}
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
@@ -13943,6 +14086,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &721501828
 PrefabInstance:
@@ -15568,6 +15714,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1 &843637478
 GameObject:
@@ -15651,6 +15800,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &845147283
 PrefabInstance:
@@ -18543,6 +18695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 964720711}
   - component: {fileID: 964720712}
+  - component: {fileID: 964720713}
   m_Layer: 0
   m_Name: CrayonBox_Cover_2D
   m_TagString: Untagged
@@ -18559,7 +18712,7 @@ Transform:
   m_GameObject: {fileID: 964720710}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.9, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -18618,6 +18771,114 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &964720713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964720710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0390bd8b8ffd640b34fe25065ff1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateType: 0
+  isSpeedBased: 0
+  hasOnStart: 0
+  hasOnPlay: 0
+  hasOnUpdate: 0
+  hasOnStepComplete: 0
+  hasOnComplete: 0
+  hasOnTweenCreated: 0
+  hasOnRewind: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStepComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onTweenCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onRewind:
+    m_PersistentCalls:
+      m_Calls: []
+  targetIsSelf: 1
+  targetGO: {fileID: 0}
+  tweenTargetIsTargetGO: 1
+  delay: 0
+  duration: 1
+  easeType: 6
+  easeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loopType: 0
+  loops: 1
+  id: 
+  isRelative: 1
+  isFrom: 0
+  isIndependentUpdate: 0
+  autoKill: 0
+  autoGenerate: 1
+  isActive: 1
+  isValid: 1
+  target: {fileID: 964720711}
+  animationType: 2
+  targetType: 11
+  forcedTargetType: 0
+  autoPlay: 0
+  useTargetAsV3: 0
+  endValueFloat: 0
+  endValueV3: {x: 0, y: -4, z: 0}
+  endValueV2: {x: 0, y: 0}
+  endValueColor: {r: 1, g: 1, b: 1, a: 1}
+  endValueString: 
+  endValueRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  endValueTransform: {fileID: 0}
+  optionalBool0: 0
+  optionalBool1: 0
+  optionalFloat0: 0
+  optionalInt0: 0
+  optionalRotationMode: 0
+  optionalScrambleMode: 0
+  optionalShakeRandomnessMode: 0
+  optionalString: 
 --- !u!1001 &970156925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19800,6 +20061,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &1000680549
 PrefabInstance:
@@ -19903,7 +20167,7 @@ PrefabInstance:
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -533
+      value: -151
       objectReference: {fileID: 0}
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
@@ -20609,6 +20873,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1 &1051938921
 GameObject:
@@ -21547,6 +21814,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &1085404183
 PrefabInstance:
@@ -22449,6 +22719,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: Select 3 Blue sketchpen
   m_CrayonColor: 8
   m_ScoreRequiredToCompleteTheLevel: 3
@@ -24845,6 +25118,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1 &1260817682
 GameObject:
@@ -25004,6 +25280,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 172176104}
+        m_TargetAssemblyTypeName: DG.Tweening.DOTweenAnimation, Assembly-CSharp-firstpass
+        m_MethodName: DOPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Tip: Put red crayons in Box
 --- !u!1001 &1274776057
 PrefabInstance:
@@ -25250,6 +25541,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &1282050062
 PrefabInstance:
@@ -27559,6 +27853,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1 &1418338431
 GameObject:
@@ -28122,6 +28419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &1471849748
 PrefabInstance:
@@ -29253,6 +29553,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1 &1517258273
 GameObject:
@@ -30752,6 +31055,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &1585336049
 PrefabInstance:
@@ -32701,6 +33007,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: 
 --- !u!1001 &1694898884
 PrefabInstance:
@@ -34855,6 +35164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  PlayDotweenAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   m_Tip: Select Red Crayons
   m_CrayonColor: 1
   m_ScoreRequiredToCompleteTheLevel: 4
@@ -43292,6 +43604,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _length
       value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 8858670874637214206, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 55
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

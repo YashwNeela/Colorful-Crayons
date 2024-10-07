@@ -34,17 +34,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
             UnSubScribeToCrayonSelectActions();
         }
 
-        private void OnLevelCompleteCheck()
-        {
-            if(m_CurrentScore == m_ScoreRequiredToCompleteTheLevel){
-                Gamemanager.Instance.GameOver();
-                Gamemanager.Instance.GameWin();
-            }else
-            {
-                Gamemanager.Instance.GameOver();
-                Gamemanager.Instance.GameLoose();
-            }
-        }
+        
 
         private void SubScribeToCrayonSelectActions()
         {

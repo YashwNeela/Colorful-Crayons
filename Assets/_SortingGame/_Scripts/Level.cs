@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 
@@ -16,6 +17,9 @@ namespace TMKOC.Sorting
 
         private Collector[] m_Collectors;
 
+        [SerializeField]
+        public UnityEvent PlayDotweenAnimation;
+
         public string m_Tip;
 
         protected virtual void Awake()
@@ -28,11 +32,15 @@ namespace TMKOC.Sorting
         {
            
             SubscribeToOnItemCollectedAction();
+            Gamemanager.OnGameStart += OnGameStart;
             Gamemanager.OnGameRestart += OnGameRestart;
             Gamemanager.OnLevelCompleteCheck += OnLevelCompleteCheck;
         }
 
-        
+        private void OnGameStart()
+        {
+            PlayDotweenAnimation?.Invoke();
+        }
 
         protected virtual void OnGameRestart()
         {
@@ -42,6 +50,8 @@ namespace TMKOC.Sorting
         protected virtual void OnDisable()
         {
             UnSubscribeToOnItemCollectedAction();
+            Gamemanager.OnGameStart -= OnGameStart;
+
             Gamemanager.OnGameRestart -= OnGameRestart;
             Gamemanager.OnLevelCompleteCheck -= OnLevelCompleteCheck;
 
