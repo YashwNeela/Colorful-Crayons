@@ -77,6 +77,11 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         }
 
+        protected virtual void BaseHandleCollectorOnTriggerExit(Component collider)
+        {
+            base.HandleCollectorOnTriggerExit(collider);
+        }
+
         protected override void HandleCollectorOnTriggerExit(Component collider)
         {
             base.HandleCollectorOnTriggerExit(collider);
@@ -119,12 +124,21 @@ namespace TMKOC.Sorting.ColorfulCrayons
             Gamemanager.Instance.RightAnswer();
         }
 
+        protected virtual void BaseOnPlacedCorrectly()
+        {
+            base.OnPlacedCorrectly();
+        }
+
         protected override void PlaceInCorrectly(Collector collector)
         {
             base.PlaceInCorrectly(collector);
             Gamemanager.Instance.WrongAnswer();
         }
 
+        protected virtual void BaseOnPlaceInCorrectly(Collector collector)
+        {
+            base.PlaceInCorrectly(collector);
+        }
 
 
 

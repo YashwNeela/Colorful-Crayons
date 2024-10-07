@@ -19,21 +19,23 @@ namespace TMKOC.Sorting
 
         protected Component m_Collider;
 
+        protected Level m_Level;
+
 
         protected virtual void OnEnable()
         {
-            if (m_Collider is Collider)
-            {
-                // It's a 3D Collider
-                ((Collider)m_Collider).enabled = false;
-            }
-            else if (m_Collider is Collider2D)
-            {
-                // It's a 2D Collider
-                ((Collider2D)m_Collider).enabled = false;
-            }
+            // if (m_Collider is Collider)
+            // {
+            //     // It's a 3D Collider
+            //     ((Collider)m_Collider).enabled = false;
+            // }
+            // else if (m_Collider is Collider2D)
+            // {
+            //     // It's a 2D Collider
+            //     ((Collider2D)m_Collider).enabled = false;
+            // }
 
-            DisableCollider();
+           // DisableCollider();
             Gamemanager.OnGameStart += OnGameStart;
             Draggable.OnDragStartedStaticAction += OnDragStartedStaticAction;
             Draggable.OnDraggingStaticAction += OnDraggingStaticAction;
@@ -58,7 +60,7 @@ namespace TMKOC.Sorting
 
         private void OnDragStartedStaticAction(Transform transform)
         {
-            EnableCollider();
+            //EnableCollider();
         }
 
         private void OnDraggingStaticAction(Transform transform)
@@ -67,13 +69,25 @@ namespace TMKOC.Sorting
         }
         private void OnDragEndStaticAction(Transform transform)
         {
-            DisableCollider();
+           // DisableCollider();
             // Invoke(nameof(DisableCollider),1f);
         }
 
         private void OnGameStart()
         {
+           Invoke(nameof(FetchCollectedItemCount),0.5f);
+            
+        }
+
+        private void FetchCollectedItemCount()
+        {
             collectedItems = 0;
+            for(int i = 0;i< snapPoints.Length;i++)
+            {
+                if(snapPoints[i].HasValidCollectible())
+                    collectedItems++;
+            }
+            m_Level.m_CurrentScore = collectedItems;
         }
 
         
@@ -81,7 +95,7 @@ namespace TMKOC.Sorting
         protected virtual void Awake()
         {
             m_Collider = GetComponent<Collider>();
-
+            m_Level = GetComponentInParent<Level>();
             if (m_Collider == null)
             {
                 m_Collider = GetComponent<Collider2D>();

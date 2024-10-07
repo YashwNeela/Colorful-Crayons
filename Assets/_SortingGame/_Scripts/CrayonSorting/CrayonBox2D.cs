@@ -47,9 +47,9 @@ public class CrayonBox2D : CrayonBox
                     collectible.transform.parent = snapPoint.transform; // Change parent first
                     collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
                     collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
-                    snapPoint.IsOccupied = true;
+                   // snapPoint.IsOccupied = true;
                     collectible.SetSnapPoint(snapPoint);
-
+                    
                     if(m_CrayonColor.HasFlag((collectible as Crayon).CrayonColor)){
                         OnItemCollected(snapPoint);
                         PlacedCorrectly?.Invoke();

@@ -59,7 +59,9 @@ public class Crayon2D : Crayon
 
     protected override void HandleCollectorOnTriggerExit(Component collider)
     {
-        if(m_CurrentCollector != null && !m_IsPlaced && draggable.IsDragging)
+        base.BaseHandleCollectorOnTriggerExit(collider);
+
+        if(m_CurrentCollector != null && !m_IsPlacedCorrectly && draggable.IsDragging)
                 m_CurrentCollector.OnCollectibleExited(this);
 
         m_ValidCollector = null;
@@ -68,11 +70,12 @@ public class Crayon2D : Crayon
 
     protected override void OnPlacedCorrectly()
     {
-
+        BaseOnPlacedCorrectly();
     }
 
     protected override void PlaceInCorrectly(Collector collector)
     {
+        BaseOnPlaceInCorrectly(collector);
     }
 
     protected override void HandleDragEnd()

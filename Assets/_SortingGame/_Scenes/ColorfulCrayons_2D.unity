@@ -1762,6 +1762,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOccupied: 1
+  m_HasCustomCollectible: 1
+  m_CustomCollectible: {fileID: 1948986939}
+  m_CurrentCollectible: {fileID: 0}
   m_CrayonColor: 1
 --- !u!1001 &79115791
 PrefabInstance:
@@ -4875,7 +4879,7 @@ PrefabInstance:
     - target: {fileID: 5532130640672474321, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7480,7 +7484,7 @@ MonoBehaviour:
   - {fileID: 691421630}
   - {fileID: 802417606}
   - {fileID: 363086851}
-  collectedItems: 1
+  collectedItems: 0
   m_CrayonColor: 1
   m_OnCrayonEnteredAnimation: {fileID: 333953569}
   m_BoxSprite: {fileID: 333953571}
@@ -7609,7 +7613,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: -1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -7921,6 +7925,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOccupied: 0
+  m_HasCustomCollectible: 0
+  m_CustomCollectible: {fileID: 0}
+  m_CurrentCollectible: {fileID: 0}
   m_CrayonColor: 1
 --- !u!1001 &366729824
 PrefabInstance:
@@ -14544,7 +14552,8 @@ Transform:
   m_LocalPosition: {x: -0.66, y: 0.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1588893895}
   m_Father: {fileID: 863121537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &691421630
@@ -14559,6 +14568,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOccupied: 1
+  m_HasCustomCollectible: 1
+  m_CustomCollectible: {fileID: 1588893896}
+  m_CurrentCollectible: {fileID: 0}
   m_CrayonColor: 1
 --- !u!1001 &691921491
 PrefabInstance:
@@ -15529,6 +15542,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOccupied: 0
+  m_HasCustomCollectible: 0
+  m_CustomCollectible: {fileID: 0}
+  m_CurrentCollectible: {fileID: 0}
   m_CrayonColor: 1
 --- !u!1001 &758815940
 PrefabInstance:
@@ -16049,13 +16066,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CurrentScore: 1
+  m_CurrentScore: 0
   onGameStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 333953567}
+        m_TargetAssemblyTypeName: DG.Tweening.DOTweenAnimation, Assembly-CSharp-firstpass
+        m_MethodName: DOPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onGameRestart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 333953567}
+        m_TargetAssemblyTypeName: DG.Tweening.DOTweenAnimation, Assembly-CSharp-firstpass
+        m_MethodName: DORewind
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 409987719}
+        m_TargetAssemblyTypeName: DG.Tweening.DOTweenAnimation, Assembly-CSharp-firstpass
+        m_MethodName: DORewind
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Tip: Put red crayons in Box
 --- !u!1001 &780244026
 PrefabInstance:
@@ -16335,7 +16388,8 @@ Transform:
   m_LocalPosition: {x: 0.65, y: 0.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1686366790}
   m_Father: {fileID: 863121537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &802417606
@@ -16350,6 +16404,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOccupied: 1
+  m_HasCustomCollectible: 1
+  m_CustomCollectible: {fileID: 1686366791}
+  m_CurrentCollectible: {fileID: 0}
   m_CrayonColor: 1
 --- !u!1 &808501890
 GameObject:
@@ -21716,7 +21774,7 @@ PrefabInstance:
     - target: {fileID: 5532130640672474321, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22080,6 +22138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOccupied: 0
+  m_HasCustomCollectible: 0
+  m_CustomCollectible: {fileID: 0}
+  m_CurrentCollectible: {fileID: 0}
   m_CrayonColor: 1
 --- !u!1001 &1052450563
 PrefabInstance:
@@ -25843,8 +25905,6 @@ Transform:
   - {fileID: 251735135}
   - {fileID: 1971976322}
   - {fileID: 1023128248}
-  - {fileID: 1686366790}
-  - {fileID: 1588893895}
   m_Father: {fileID: 777992218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1232795982
@@ -27927,6 +27987,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOccupied: 0
+  m_HasCustomCollectible: 0
+  m_CustomCollectible: {fileID: 0}
+  m_CurrentCollectible: {fileID: 0}
   m_CrayonColor: 1
 --- !u!1 &1344756695
 GameObject:
@@ -32538,17 +32602,32 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1224988799}
+    m_TransformParent: {fileID: 691421629}
     m_Modifications:
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2504
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2504
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2504
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -323
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -404.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
@@ -32598,12 +32677,37 @@ PrefabInstance:
     - target: {fileID: 5532130640672474321, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_IsPlaced
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_CrayonColor
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_DefaulParent
+      value: 
+      objectReference: {fileID: 1224988799}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_CustomSnapPoint
+      value: 
+      objectReference: {fileID: 691421630}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_HasCustomSnapPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_HasCustomDefaulParent
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32616,6 +32720,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1588893894}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1588893896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+    type: 3}
+  m_PrefabInstance: {fileID: 1588893894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b355a3dd2aea4645ad1087c3d77c2e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1590197833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34296,17 +34412,32 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1224988799}
+    m_TransformParent: {fileID: 802417605}
     m_Modifications:
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2504
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2504
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2504
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -408
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -404.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551270491200341933, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
@@ -34356,12 +34487,37 @@ PrefabInstance:
     - target: {fileID: 5532130640672474321, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_IsPlaced
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_CrayonColor
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_DefaulParent
+      value: 
+      objectReference: {fileID: 1224988799}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_CustomSnapPoint
+      value: 
+      objectReference: {fileID: 802417606}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_HasCustomSnapPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_HasCustomDefaulParent
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34374,6 +34530,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1686366789}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1686366791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+    type: 3}
+  m_PrefabInstance: {fileID: 1686366789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b355a3dd2aea4645ad1087c3d77c2e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1693632033
 GameObject:
   m_ObjectHideFlags: 0
@@ -38988,14 +39156,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
+      propertyPath: m_IsPlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
       propertyPath: m_DefaulParent
       value: 
       objectReference: {fileID: 1224988799}
     - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
+      propertyPath: m_CustomSnapPoint
+      value: 
+      objectReference: {fileID: 71432263}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
       propertyPath: m_CurrentSnapPoint
       value: 
       objectReference: {fileID: 71432263}
+    - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+        type: 3}
+      propertyPath: m_IsPlacedCorrectly
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_HasCustomSnapPoint
@@ -39017,6 +39200,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1948986937}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1948986939 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7020721268299154272, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
+    type: 3}
+  m_PrefabInstance: {fileID: 1948986937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b355a3dd2aea4645ad1087c3d77c2e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1950400135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39648,7 +39843,7 @@ PrefabInstance:
     - target: {fileID: 5532130640672474321, guid: d5d51f7bd36f4477e887ab3fdbfc2605,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40359,6 +40554,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c381c2999e9412bb577e8f63077c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOccupied: 0
+  m_HasCustomCollectible: 0
+  m_CustomCollectible: {fileID: 0}
+  m_CurrentCollectible: {fileID: 0}
   m_CrayonColor: 1
 --- !u!1001 &2022580819
 PrefabInstance:

@@ -31,6 +31,13 @@ namespace TMKOC.Sorting
 
         public float GroundLevel = 0.0f;
 
+        public Vector3 m_DragStartPos;
+
+        public Quaternion m_DragStartRotation;
+
+        public Vector3 m_DragStartScale;
+
+
         void Awake()
         {
             m_Camera = Camera.main;
@@ -84,9 +91,20 @@ namespace TMKOC.Sorting
                 m_isDragging = true;
                 m_hasDragStarted = true;
 
+                m_DragStartPos = transform.position;
+                m_DragStartRotation = transform.rotation;
+                m_DragStartScale = transform.lossyScale;
+
                 OnDragStarted?.Invoke();
                 OnDragStartedStaticAction?.Invoke(transform);
             }
+        }
+
+        public void ResetToStartDraggingValues()
+        {
+            transform.position = m_DragStartPos;
+            m_DragStartRotation = transform.rotation;
+            m_DragStartScale = transform.lossyScale;
         }
 
         private void DragObject()
