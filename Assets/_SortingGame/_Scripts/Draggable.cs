@@ -5,13 +5,13 @@ namespace TMKOC.Sorting
 {
     public class Draggable : MonoBehaviour
     {
-        private Camera m_Camera;
-        private Rigidbody m_Rigidbody;
+        protected Camera m_Camera;
+        protected Rigidbody m_Rigidbody;
 
         public bool m_CanDrag;
         protected bool m_isDragging = false;
         protected bool m_hasDragStarted = false;
-        private float m_ZPosition;
+        protected float m_ZPosition;
 
         public bool HasDragStarted => m_hasDragStarted;
         public bool IsDragging => m_isDragging;
@@ -68,7 +68,7 @@ namespace TMKOC.Sorting
             }
         }
 
-        private void StartDragging()
+        protected virtual void StartDragging()
         {
             // Raycast to detect if the mouse is over this object
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
@@ -115,7 +115,7 @@ namespace TMKOC.Sorting
             m_DragStartScale = transform.lossyScale;
         }
 
-        private void DragObject()
+        protected virtual void DragObject()
         {
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = m_Camera.WorldToScreenPoint(transform.position).z;
@@ -144,7 +144,7 @@ namespace TMKOC.Sorting
             OnDraggingStaticAction?.Invoke(transform);
         }
 
-        private void StopDragging()
+        protected virtual void StopDragging()
         {
             HandleStopDragging();
         }

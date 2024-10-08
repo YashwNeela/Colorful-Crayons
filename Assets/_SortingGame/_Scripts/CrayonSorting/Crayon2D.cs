@@ -61,9 +61,7 @@ public class Crayon2D : Crayon
     {
         base.BaseHandleCollectorOnTriggerExit(collider);
 
-        if(m_CurrentCollector != null && !m_IsPlacedCorrectly && draggable.IsDragging)
-                m_CurrentCollector.OnCollectibleExited(this);
-
+        
         m_ValidCollector = null;
         m_CurrentCollector = null;
     }
