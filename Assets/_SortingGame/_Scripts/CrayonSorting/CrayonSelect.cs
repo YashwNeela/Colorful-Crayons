@@ -8,6 +8,8 @@ namespace TMKOC.Sorting.ColorfulCrayons
 {
     public class CrayonSelect : Crayon
     {
+        [SerializeField] private SpriteRenderer m_CrayonColorSprite;
+
         public Action<CrayonColor> OnCrayonSelected;
         public Action<CrayonColor> OnCrayonDeselected;
 
@@ -24,8 +26,35 @@ namespace TMKOC.Sorting.ColorfulCrayons
             m_SelectedSequence.Append(transform.DOScale(new Vector3(transform.lossyScale.x * 1.2f,transform.lossyScale.y * 1.2f,transform.lossyScale.z * 1.2f),0.5f));
             m_SelectedSequence.SetAutoKill(false);
             m_SelectedSequence.Pause();
+            SetCrayonColor(m_CrayonColor);
 
         }
+
+        protected override void SetCrayonColor(CrayonColor crayonColor)
+    {
+        if (crayonColor.HasFlag(CrayonColor.CrayonRed) || crayonColor.HasFlag(CrayonColor.SketchpenRed))
+        {
+            m_CrayonColorSprite.color = Color.red;
+
+        }
+        if (crayonColor.HasFlag(CrayonColor.CrayonYellow) || crayonColor.HasFlag(CrayonColor.SketchpenYellow))
+        {
+            m_CrayonColorSprite.color = Color.yellow;
+
+
+        }
+        if (crayonColor.HasFlag(CrayonColor.CrayonGreen) || crayonColor.HasFlag(CrayonColor.SketchpenGreen))
+        {
+            m_CrayonColorSprite.color = Color.green;
+
+        }
+        if (crayonColor.HasFlag(CrayonColor.CrayonBlue) || crayonColor.HasFlag(CrayonColor.SketchpenBlue))
+        {
+            m_CrayonColorSprite.color = Color.blue;
+
+        }
+
+    }
 
         protected override void OnEnable()
         {
