@@ -110,8 +110,8 @@ namespace TMKOC.Sorting.ColorfulCrayons
         protected override void OnItemCollected(SnapPoint snapPoint)
         {
             base.OnItemCollected(snapPoint);
-            m_StartCollector.SetEmitter(snapPoint.transform);
-            m_StartCollector.PlayParticle();
+           // m_StartCollector.SetEmitter(snapPoint.transform);
+          //  m_StartCollector.PlayParticle();
            // m_OnCrayonEnteredAnimation.DOPlayBackwards();
         }
 

@@ -47,6 +47,7 @@ namespace TMKOC.Sorting
 
         protected virtual void OnGameRestart()
         {
+            
             m_CurrentScore = 0;
             onGameRestart?.Invoke();
         }

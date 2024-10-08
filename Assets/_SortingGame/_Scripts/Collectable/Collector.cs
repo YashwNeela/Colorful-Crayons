@@ -84,10 +84,12 @@ namespace TMKOC.Sorting
             collectedItems = 0;
             for(int i = 0;i< snapPoints.Length;i++)
             {
-                if(snapPoints[i].HasValidCollectible())
+                if(snapPoints[i].HasValidCollectible()){
                     collectedItems++;
+                    m_Level.m_CurrentScore ++;
+                }       
             }
-            m_Level.m_CurrentScore = collectedItems;
+            
         }
 
         

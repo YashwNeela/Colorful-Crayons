@@ -24,6 +24,7 @@ namespace TMKOC.Sorting
 
         private void OnGameStart()
         {
+            m_IsShowingTip = false;
             ShowTip();
         }
 
@@ -46,12 +47,12 @@ namespace TMKOC.Sorting
             }
             m_TipText.DOLocalMoveX(0f, .25f);
             m_IsShowingTip = true;
-            Invoke(nameof(CloseTip), 3f);
+            //Invoke(nameof(CloseTip), 3f);
         }
 
         public void CloseTip()
         {
-            m_TipText.DOLocalMoveX(445f, .25f);
+            m_TipText.DOLocalMoveX(473f, .25f);
             m_IsShowingTip = false;
 
         }
