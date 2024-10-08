@@ -50,8 +50,10 @@ public class CrayonBox2D : CrayonBox
                     snapPoint.IsOccupied = true;
                     collectible.SetSnapPoint(snapPoint);
                     
+                    if(m_CrayonColor.HasFlag((collectible as Crayon2D).CrayonColor)){
                         OnItemCollected(snapPoint);
                         PlacedCorrectly?.Invoke();
+                    }
                
                     break;
                 }
