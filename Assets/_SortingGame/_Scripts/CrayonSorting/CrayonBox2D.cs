@@ -7,32 +7,46 @@ using UnityEngine;
 
 public class CrayonBox2D : CrayonBox
 {
-    [SerializeField] private SpriteRenderer m_BoxSprite, m_CoverSprite;
+
+
+    [SerializeField] private SpriteRenderer[] m_BoxColorSprite;
     protected override void SetBoxColorsBasedOnEnum(CrayonColor crayonColor)
     {
-        if (crayonColor.HasFlag(CrayonColor.CrayonRed))
+        if (crayonColor.HasFlag(CrayonColor.CrayonRed) || crayonColor.HasFlag(CrayonColor.SketchpenRed))
         {
-            m_BoxSprite.color = Color.red;
-            m_CoverSprite.color = Color.red;
+            for(int i = 0;i< m_BoxColorSprite.Length;i++)
+            {
+                m_BoxColorSprite[i].color = Color.red;
+            }
+           
 
         }
-        if (crayonColor.HasFlag(CrayonColor.CrayonYellow))
+        if (crayonColor.HasFlag(CrayonColor.CrayonYellow) || crayonColor.HasFlag(CrayonColor.SketchpenYellow))
         {
-            m_BoxSprite.color = Color.yellow;
-            m_CoverSprite.color = Color.yellow;
+            for(int i = 0;i< m_BoxColorSprite.Length;i++)
+            {
+                m_BoxColorSprite[i].color = Color.yellow;
+            }
+            
 
 
         }
-        if (crayonColor.HasFlag(CrayonColor.CrayonGreen))
+        if (crayonColor.HasFlag(CrayonColor.CrayonGreen)|| crayonColor.HasFlag(CrayonColor.SketchpenGreen))
         {
-            m_BoxSprite.color = Color.green;
-            m_CoverSprite.color = Color.green;
+            for(int i = 0;i< m_BoxColorSprite.Length;i++)
+            {
+                m_BoxColorSprite[i].color = Color.green;
+            }
+            
 
         }
-        if (crayonColor.HasFlag(CrayonColor.CrayonBlue))
+        if (crayonColor.HasFlag(CrayonColor.CrayonBlue) || crayonColor.HasFlag(CrayonColor.SketchpenBlue))
         {
-            m_BoxSprite.color = Color.blue;
-            m_CoverSprite.color = Color.blue;
+            for(int i = 0;i< m_BoxColorSprite.Length;i++)
+            {
+                m_BoxColorSprite[i].color = Color.blue;
+            }
+            
 
         }
     }
