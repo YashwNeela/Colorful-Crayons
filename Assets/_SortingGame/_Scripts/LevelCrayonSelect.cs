@@ -58,16 +58,20 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void OnCrayonSelected(CrayonColor crayonColor)
         {
-            if(crayonColor == m_CrayonColor)
+            if(m_CrayonColor.HasFlag(crayonColor))
                 base.m_CurrentScore++;
+
 
           //  OnItemCollected();
         }
 
          private void OnCrayonDeselected(CrayonColor crayonColor)
         {
-            if(crayonColor == m_CrayonColor)
+            
+            if(m_CrayonColor.HasFlag(crayonColor))
                 base.m_CurrentScore--;
+
+            
         }
 
           private void OnGameStart()
