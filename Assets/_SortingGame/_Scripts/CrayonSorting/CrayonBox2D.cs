@@ -5,55 +5,55 @@ using TMKOC.Sorting;
 using TMKOC.Sorting.ColorfulCrayons;
 using UnityEngine;
 
-public class CrayonBox2D : CrayonBox
+namespace TMKOC.Sorting.ColorfulCrayons
 {
-
-
-    [SerializeField] private SpriteRenderer[] m_BoxColorSprite;
-    protected override void SetBoxColorsBasedOnEnum(CrayonColor crayonColor)
+    public class CrayonBox2D : CrayonBox
     {
-        if (crayonColor.HasFlag(CrayonColor.CrayonRed) || crayonColor.HasFlag(CrayonColor.SketchpenRed))
+        [SerializeField] private SpriteRenderer[] m_BoxColorSprite;
+        protected override void SetBoxColorsBasedOnEnum(CrayonColor crayonColor)
         {
-            for(int i = 0;i< m_BoxColorSprite.Length;i++)
+            if (crayonColor.HasFlag(CrayonColor.CrayonRed) || crayonColor.HasFlag(CrayonColor.SketchpenRed))
             {
-                m_BoxColorSprite[i].color = Color.red;
-            }
-           
+                for (int i = 0; i < m_BoxColorSprite.Length; i++)
+                {
+                    m_BoxColorSprite[i].color = Color.red;
+                }
 
+
+            }
+            if (crayonColor.HasFlag(CrayonColor.CrayonYellow) || crayonColor.HasFlag(CrayonColor.SketchpenYellow))
+            {
+                for (int i = 0; i < m_BoxColorSprite.Length; i++)
+                {
+                    m_BoxColorSprite[i].color = Color.yellow;
+                }
+
+
+
+            }
+            if (crayonColor.HasFlag(CrayonColor.CrayonGreen) || crayonColor.HasFlag(CrayonColor.SketchpenGreen))
+            {
+                for (int i = 0; i < m_BoxColorSprite.Length; i++)
+                {
+                    m_BoxColorSprite[i].color = Color.green;
+                }
+
+
+            }
+            if (crayonColor.HasFlag(CrayonColor.CrayonBlue) || crayonColor.HasFlag(CrayonColor.SketchpenBlue))
+            {
+                for (int i = 0; i < m_BoxColorSprite.Length; i++)
+                {
+                    m_BoxColorSprite[i].color = Color.blue;
+                }
+
+
+            }
         }
-        if (crayonColor.HasFlag(CrayonColor.CrayonYellow) || crayonColor.HasFlag(CrayonColor.SketchpenYellow))
+
+        public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
-            for(int i = 0;i< m_BoxColorSprite.Length;i++)
-            {
-                m_BoxColorSprite[i].color = Color.yellow;
-            }
-            
-
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonGreen)|| crayonColor.HasFlag(CrayonColor.SketchpenGreen))
-        {
-            for(int i = 0;i< m_BoxColorSprite.Length;i++)
-            {
-                m_BoxColorSprite[i].color = Color.green;
-            }
-            
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonBlue) || crayonColor.HasFlag(CrayonColor.SketchpenBlue))
-        {
-            for(int i = 0;i< m_BoxColorSprite.Length;i++)
-            {
-                m_BoxColorSprite[i].color = Color.blue;
-            }
-            
-
-        }
-    }
-
-    public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
-    {
-       foreach (var snapPoint in snapPoints)
+            foreach (var snapPoint in snapPoints)
             {
                 if (!snapPoint.IsOccupied)
                 {
@@ -63,25 +63,27 @@ public class CrayonBox2D : CrayonBox
                     collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
                     snapPoint.IsOccupied = true;
                     collectible.SetSnapPoint(snapPoint);
-                    
-                    if(m_CrayonColor.HasFlag((collectible as Crayon2D).CrayonColor)){
+
+                    if (m_CrayonColor.HasFlag((collectible as Crayon2D).CrayonColor))
+                    {
                         OnItemCollected(snapPoint);
                         PlacedCorrectly?.Invoke();
                     }
-               
+
                     break;
                 }
             }
-    }
-
-    public override void OnCollectibleExited(Collectible collectible)
-    {
-        collectible.RemoveFromSnapPoint();
-        if(m_CrayonColor.HasFlag((collectible as Crayon).CrayonColor))
-        {
-            if(collectedItems > 0)
-                OnItemRemoved();
         }
-    }
 
+        public override void OnCollectibleExited(Collectible collectible)
+        {
+            collectible.RemoveFromSnapPoint();
+            if (m_CrayonColor.HasFlag((collectible as Crayon).CrayonColor))
+            {
+                if (collectedItems > 0)
+                    OnItemRemoved();
+            }
+        }
+
+    }
 }

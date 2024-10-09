@@ -1,40 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMKOC.Sorting;
-using TMKOC.Sorting.ColorfulCrayons;
 using UnityEngine;
 
-public class Crayon2D : Crayon
+namespace TMKOC.Sorting.CarSorting
 {
-    [SerializeField] private SpriteRenderer m_CrayonColorSprite;
-
-    protected override void SetCrayonColor(CrayonColor crayonColor)
+    public class CarTire : Collectible
     {
-        if (crayonColor.HasFlag(CrayonColor.CrayonRed) || crayonColor.HasFlag(CrayonColor.SketchpenRed))
-        {
-            m_CrayonColorSprite.color = Color.red;
+        [SerializeField] private CarType m_CarType;
 
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonYellow) || crayonColor.HasFlag(CrayonColor.SketchpenYellow))
-        {
-            m_CrayonColorSprite.color = Color.yellow;
+        public CarType CarType => m_CarType;
 
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonGreen) || crayonColor.HasFlag(CrayonColor.SketchpenGreen))
-        {
-            m_CrayonColorSprite.color = Color.green;
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonBlue) || crayonColor.HasFlag(CrayonColor.SketchpenBlue))
-        {
-            m_CrayonColorSprite.color = Color.blue;
-
-        }
-
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D other)
+          protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         HandleCollectorOnTriggerEnter(other);
     }
@@ -48,6 +24,27 @@ public class Crayon2D : Crayon
     {
         HandleCollectorOnTriggerStay(other);
     }
+    protected override void HandleCollectorOnTriggerEnter(Component collider)
+        {
+            base.HandleCollectorOnTriggerEnter(collider);
+            Car collectorBox = null;
+            if (collider is Collider)
+                collectorBox = ((Collider)collider).GetComponent<Collector>() as Car;
+            else if (collider is Collider2D)
+                collectorBox = ((Collider2D)collider).GetComponent<Collector>() as Car;
+
+            if (collectorBox != null)
+            {
+                // if (collectorBox.CrayonColor.HasFlag(this.CrayonColor))
+                // {
+                //     m_ValidCollector = collectorBox;
+                // }
+                // else
+                //     m_IsTryingToPlaceWrong = true;
+                m_ValidCollector = collectorBox;
+            }
+
+        }
 
     protected virtual void OnTriggerExit2D(Collider2D other)
     {
@@ -56,7 +53,7 @@ public class Crayon2D : Crayon
 
     protected override void HandleCollectorOnTriggerExit(Component collider)
     {
-        base.BaseHandleCollectorOnTriggerExit(collider);
+        base.HandleCollectorOnTriggerExit(collider);
 
         
         m_ValidCollector = null;
@@ -65,12 +62,14 @@ public class Crayon2D : Crayon
 
     protected override void OnPlacedCorrectly()
     {
-        BaseOnPlacedCorrectly();
+        base.OnPlacedCorrectly();
+        
     }
 
     protected override void PlaceInCorrectly(Collector collector)
     {
-        BaseOnPlaceInCorrectly(collector);
+        base.PlaceInCorrectly(collector);
+        
     }
 
     protected override void HandleDragEnd()
@@ -84,7 +83,7 @@ public class Crayon2D : Crayon
         {
             if (m_ValidCollector != null){
                 
-                if((m_CurrentCollector as CrayonBox2D).CrayonColor.HasFlag(m_CrayonColor))
+                if((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
                     m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
                 else
                     m_CurrentCollector.SnapCollectibleToCollector(this, () => {});
@@ -116,5 +115,6 @@ public class Crayon2D : Crayon
             ((Collider)m_Collider).enabled = true;
         if(m_Collider is Collider2D)
             ((Collider2D)m_Collider).enabled = true;
+    }
     }
 }
