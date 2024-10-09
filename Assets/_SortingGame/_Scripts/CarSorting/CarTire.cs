@@ -43,7 +43,6 @@ namespace TMKOC.Sorting.CarSorting
                 //     m_IsTryingToPlaceWrong = true;
                 m_ValidCollector = collectorBox;
             }
-
         }
 
     protected virtual void OnTriggerExit2D(Collider2D other)
