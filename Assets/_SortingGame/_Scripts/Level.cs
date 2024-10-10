@@ -13,7 +13,7 @@ namespace TMKOC.Sorting
     {
         protected int m_ScoreRequiredToCompleteTheLevel;
         
-        public int m_CurrentScore;
+        public float m_CurrentScore;
 
         private Collector[] m_Collectors;
 

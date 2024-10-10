@@ -58,7 +58,7 @@ public class Crayon2D : Crayon
     {
         base.BaseHandleCollectorOnTriggerExit(collider);
 
-        
+
         m_ValidCollector = null;
         m_CurrentCollector = null;
     }
@@ -75,46 +75,57 @@ public class Crayon2D : Crayon
 
     protected override void HandleDragEnd()
     {
-        if(m_IsPlacedInsideCollector)
+        if (m_IsPlacedInsideCollector)
         {
             draggable.ResetToStartDraggingValues();
             return;
         }
         if (m_CurrentCollector != null)
         {
-            if (m_ValidCollector != null){
-                
-                if((m_CurrentCollector as CrayonBox2D).CrayonColor.HasFlag(m_CrayonColor))
-                    m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
-                else
-                    m_CurrentCollector.SnapCollectibleToCollector(this, () => {});
+            if (m_ValidCollector != null)
+            {
+
+                if (m_ValidCollector.IsSlotAvailable())
+                {
+                    if ((m_CurrentCollector as CrayonBox2D).CrayonColor.HasFlag(m_CrayonColor))
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                    else
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
                     PlaceInCorrectly(m_CurrentCollector);
+                }
+                else
+                {
+                    draggable.ResetToStartDraggingValues();
+
+                    m_ValidCollector = null;
+                    m_CurrentCollector = null;
+                }
 
             }
-        
+
 
         }
     }
 
     protected override void OnDragStartedStaticAction(Transform transform)
     {
-        if(transform == this.transform)
+        if (transform == this.transform)
             return;
 
-       if(m_Collider is Collider)
+        if (m_Collider is Collider)
             ((Collider)m_Collider).enabled = false;
-        if(m_Collider is Collider2D)
+        if (m_Collider is Collider2D)
             ((Collider2D)m_Collider).enabled = false;
     }
 
     protected override void OnDragEndStaticAction(Transform transform)
     {
-      if(transform == this.transform)
+        if (transform == this.transform)
             return;
 
-       if(m_Collider is Collider)
+        if (m_Collider is Collider)
             ((Collider)m_Collider).enabled = true;
-        if(m_Collider is Collider2D)
+        if (m_Collider is Collider2D)
             ((Collider2D)m_Collider).enabled = true;
     }
 }

@@ -60,6 +60,8 @@ namespace TMKOC.Sorting.ColorfulCrayons
         {
             if(m_CrayonColor.HasFlag(crayonColor))
                 base.m_CurrentScore++;
+            else
+                base.m_CurrentScore += 0.3f;
 
 
           //  OnItemCollected();
@@ -70,6 +72,9 @@ namespace TMKOC.Sorting.ColorfulCrayons
             
             if(m_CrayonColor.HasFlag(crayonColor))
                 base.m_CurrentScore--;
+            else
+                base.m_CurrentScore -= 0.3f;
+
 
             
         }
