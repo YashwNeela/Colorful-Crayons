@@ -48,7 +48,7 @@ namespace TMKOC.Sorting
             Draggable.OnDragEndStaticAction += OnDragEndStaticAction;
         }
 
-        private void OnGameStart()
+        protected virtual void OnGameStart()
         {
             draggable.m_CanDrag = true;
 
@@ -60,7 +60,9 @@ namespace TMKOC.Sorting
                 m_CurrentSnapPoint = m_CustomSnapPoint;
                 transform.position = m_CurrentSnapPoint.transform.position;
                 transform.rotation = m_CurrentSnapPoint.transform.rotation;
-            }else
+            }
+            
+            else
             {
                 m_IsPlacedCorrectly = false;
                 m_IsPlacedInsideCollector = false;
@@ -221,7 +223,7 @@ namespace TMKOC.Sorting
            
         }
 
-        protected void Reset()
+        protected virtual void Reset()
         {
             m_IsPlacedCorrectly = false;
             draggable.m_CanDrag = true;

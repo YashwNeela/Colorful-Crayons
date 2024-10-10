@@ -50,7 +50,7 @@ public class LevelCompletedPopup : MonoBehaviour
 
     private void OnGameLoose()
     {
-        SetData("No lives Remaning", Gamemanager.Instance.GameRestart, "Restart Level");
+        SetData("Oh no! Try Again!", Gamemanager.Instance.GameRestart, "Restart");
         ShowPopup();
     }
 
