@@ -31,12 +31,6 @@ namespace TMKOC.Sorting.FruitSorting2D
 
             if (collectorBox != null)
             {
-                // if (collectorBox.CrayonColor.HasFlag(this.CrayonColor))
-                // {
-                //     m_ValidCollector = collectorBox;
-                // }
-                // else
-                //     m_IsTryingToPlaceWrong = true;
                 m_ValidCollector = collectorBox;
             }
         }
