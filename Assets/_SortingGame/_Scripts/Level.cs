@@ -48,7 +48,7 @@ namespace TMKOC.Sorting
             Gamemanager.OnLevelCompleteCheck += OnLevelCompleteCheck;
         }
 
-        private void OnGameStart()
+        protected virtual void OnGameStart()
         {
             onGameStart?.Invoke();
         }
