@@ -233,7 +233,7 @@ namespace TMKOC.Sorting
                 dataManager.OnLevelCompleted();
                 if (m_PlayCloudTransition)
                 {
-                    CloudUI.Instance.PlayColoudEnterAnimation();
+                    //CloudUI.Instance.PlayColoudEnterAnimation();
                 }
                 else
                 {

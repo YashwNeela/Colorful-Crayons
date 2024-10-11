@@ -188,5 +188,15 @@ namespace TMKOC.Sorting
         {
             return snapPoints.Length;
         }
+
+        public virtual bool IsSlotAvailable()
+        {
+            for(int i = 0;i<snapPoints.Length;i++)
+            {
+                if(!snapPoints[i].IsOccupied)
+                    return true;
+            }
+            return false;
+        }
     }
 }

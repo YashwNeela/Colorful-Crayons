@@ -13,9 +13,13 @@ namespace TMKOC.Sorting
     {
         protected int m_ScoreRequiredToCompleteTheLevel;
         
-        public int m_CurrentScore;
+        public float m_CurrentScore;
 
         private Collector[] m_Collectors;
+
+        private Collectible[] m_Collectibles;
+
+        private Draggable[] m_Draggables;
 
         [SerializeField]
         public UnityEvent onGameStart;
@@ -23,11 +27,15 @@ namespace TMKOC.Sorting
         [SerializeField]
         public UnityEvent onGameRestart;
 
+       
+
         public string m_Tip;
 
         protected virtual void Awake()
         {
             m_Collectors =GetComponentsInChildren<Collector>();
+            m_Collectibles = GetComponentsInChildren<Collectible>();
+            m_Draggables = GetComponentsInChildren<Draggable>();
              Invoke(nameof(SetScoreRequiredToCompleteTheLevel),2);
         }
 
@@ -114,6 +122,14 @@ namespace TMKOC.Sorting
             {
                 Gamemanager.Instance.GameOver();
                 Gamemanager.Instance.GameLoose();
+            }
+        }
+
+        public virtual void OnLevelAnimationFinished()
+        {
+            for(int i = 0;i< m_Draggables.Length;i++)
+            {
+                m_Draggables[i].m_CanDrag = true;
             }
         }
     }

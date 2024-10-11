@@ -8,6 +8,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 {
     public class CrayonSelect : Crayon
     {
+         private bool m_CanSelect;
         [SerializeField] private SpriteRenderer m_CrayonColorSprite;
 
         public Action<CrayonColor> OnCrayonSelected;
@@ -66,6 +67,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void OnGameStart()
         {
+            m_CanSelect = false;
             m_IsSelected = false;
             m_InitialDotweenAnimation.DOPlayForward();
         }
@@ -88,6 +90,9 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void OnMouseDown() 
         {
+            if(!m_CanSelect)
+                return;
+        
             m_IsSelected = m_IsSelected?false:true;
 
             if(m_IsSelected)
@@ -121,6 +126,11 @@ namespace TMKOC.Sorting.ColorfulCrayons
         protected override void OnTriggerStay(Collider other)
         {
             
+        }
+
+        public void OnInitialDotweenAnimationFinished()
+        {
+            m_CanSelect = true;
         }
 
         

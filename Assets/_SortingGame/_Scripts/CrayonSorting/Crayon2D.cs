@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Crayon2D : Crayon
 {
+
     [SerializeField] private SpriteRenderer m_CrayonColorSprite;
 
     protected override void SetCrayonColor(CrayonColor crayonColor)
@@ -58,7 +59,7 @@ public class Crayon2D : Crayon
     {
         base.BaseHandleCollectorOnTriggerExit(collider);
 
-        
+
         m_ValidCollector = null;
         m_CurrentCollector = null;
     }
@@ -75,46 +76,86 @@ public class Crayon2D : Crayon
 
     protected override void HandleDragEnd()
     {
-        if(m_IsPlacedInsideCollector)
+        if (m_IsPlacedInsideCollector)
         {
             draggable.ResetToStartDraggingValues();
             return;
         }
         if (m_CurrentCollector != null)
         {
-            if (m_ValidCollector != null){
-                
-                if((m_CurrentCollector as CrayonBox2D).CrayonColor.HasFlag(m_CrayonColor))
-                    m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
-                else
-                    m_CurrentCollector.SnapCollectibleToCollector(this, () => {});
+            if (m_ValidCollector != null)
+            {
+
+                if (m_ValidCollector.IsSlotAvailable())
+                {
+                    if ((m_CurrentCollector as CrayonBox2D).CrayonColor.HasFlag(m_CrayonColor))
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                    else
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
                     PlaceInCorrectly(m_CurrentCollector);
+                }
+                else
+                {
+                    draggable.ResetToStartDraggingValues();
+
+                    m_ValidCollector = null;
+                    m_CurrentCollector = null;
+                }
 
             }
-        
+
 
         }
     }
 
     protected override void OnDragStartedStaticAction(Transform transform)
     {
-        if(transform == this.transform)
+        if (transform == this.transform)
             return;
 
-       if(m_Collider is Collider)
+        if (m_Collider is Collider)
             ((Collider)m_Collider).enabled = false;
-        if(m_Collider is Collider2D)
+        if (m_Collider is Collider2D)
             ((Collider2D)m_Collider).enabled = false;
     }
 
     protected override void OnDragEndStaticAction(Transform transform)
     {
-      if(transform == this.transform)
+        if (transform == this.transform)
             return;
 
-       if(m_Collider is Collider)
+        if (m_Collider is Collider)
             ((Collider)m_Collider).enabled = true;
-        if(m_Collider is Collider2D)
+        if (m_Collider is Collider2D)
             ((Collider2D)m_Collider).enabled = true;
+    }
+
+    protected override void OnGameStart()
+    {
+        if (m_HasCustomSnapPoint)
+        {
+            m_IsPlacedCorrectly = m_CustomIsPlacedCorrectly;
+            m_IsPlacedInsideCollector = true;
+
+            m_CurrentSnapPoint = m_CustomSnapPoint;
+            transform.position = m_CurrentSnapPoint.transform.position;
+            transform.rotation = m_CurrentSnapPoint.transform.rotation;
+        }
+        else
+        {
+            m_IsPlacedCorrectly = false;
+            m_IsPlacedInsideCollector = false;
+        }
+    }
+
+    protected override void Reset()
+    {
+        m_IsPlacedCorrectly = false;
+
+        if(Gamemanager.Instance.CurrentGameState != GameState.Restart)
+            draggable.m_CanDrag = true;
+        else
+            draggable.m_CanDrag = false;
+
     }
 }
