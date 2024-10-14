@@ -23,8 +23,7 @@ namespace TMKOC.Sorting.CarSorting
 
             for(int i = 0;i<collectibleSelectionData.Length;i++)
             {
-                CollectibleSelectionUI.Instance.AddData(collectibleSelectionData[i].collectibleDataSO,1);
-
+               CollectibleSelectionUI.Instance.AddData(collectibleSelectionData[i].collectibleDataSO,collectibleSelectionData[i].noOfCollectibleToSpawn);
             }
 
 

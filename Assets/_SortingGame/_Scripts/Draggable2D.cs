@@ -8,7 +8,6 @@ namespace TMKOC.Sorting
     public class Draggable2D : Draggable
     {
 
-        
         protected override void StartDragging()
         {
             // Raycast to detect if the mouse is over this object
