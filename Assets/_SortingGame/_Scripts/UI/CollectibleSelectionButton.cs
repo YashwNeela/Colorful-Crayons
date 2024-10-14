@@ -30,7 +30,9 @@ namespace TMKOC.Sorting
         public void SpawnCollectible()
         {
             Debug.Log("Collectible spawned");
-           DraggableUI2D draggable = Instantiate(m_CurrentCollectibleDataSO.collectiblePrefab,Camera.main.ScreenToWorldPoint(transform.position),Quaternion.identity)
+            Vector3 spawnPoint = Camera.main.ScreenToWorldPoint(transform.position);
+            
+           DraggableUI2D draggable = Instantiate(m_CurrentCollectibleDataSO.collectiblePrefab,spawnPoint,Quaternion.identity)
            .GetComponent<DraggableUI2D>();
             draggable.OnSpawned();
         }

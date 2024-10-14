@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TMKOC.Sorting.CarSorting
 {
@@ -15,16 +16,22 @@ namespace TMKOC.Sorting.CarSorting
     {
         
         [SerializeField] private CollectibleSelectionData[] collectibleSelectionData;
+        [SerializeField]
+        public UnityEvent onGameWinCarLevel;
 
         protected override void OnGameStart()
         {
             base.OnGameStart();
             CollectibleSelectionUI.Instance.ClearSelectionUI();
 
+            
             for(int i = 0;i<collectibleSelectionData.Length;i++)
             {
+                
                CollectibleSelectionUI.Instance.AddData(collectibleSelectionData[i].collectibleDataSO,collectibleSelectionData[i].noOfCollectibleToSpawn);
             }
+
+            
 
 
         }
@@ -39,6 +46,7 @@ namespace TMKOC.Sorting.CarSorting
             onLevelCompleteCheck?.Invoke();
             if(m_CurrentScore == m_ScoreRequiredToCompleteTheLevel){
                 Gamemanager.Instance.GameOver();
+                onGameWinCarLevel?.Invoke();
                 yield return new WaitForSeconds(2);
                Gamemanager.Instance.GameWin();
             }else

@@ -15,9 +15,9 @@ namespace TMKOC.Sorting.CarSorting
         YellowCar = 1 << 3,
 
         BlueTire = 1 << 4,
-        SketchpenYellow = 1 << 5,
-        SketchpenGreen = 1 << 6,
-        SketchpenBlue = 1 << 7,
+        GreenTire = 1 << 5,
+        YellowTire = 1 << 6,
+        RedTire = 1 << 7,
 
 
 
