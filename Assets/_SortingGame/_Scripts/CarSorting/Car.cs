@@ -54,6 +54,9 @@ namespace TMKOC.Sorting.CarSorting
 
         public override void OnCollectibleExited(Collectible collectible)
         {
+            if(!collectible.IsPlacedInsideCollector)
+                return;
+                
             collectible.RemoveFromSnapPoint();
             if (m_CarType.HasFlag((collectible as CarTire).CarType))
             {
