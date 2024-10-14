@@ -27,6 +27,14 @@ namespace TMKOC.Sorting
         [SerializeField]
         public UnityEvent onGameRestart;
 
+        [SerializeField]
+        public UnityEvent onLevelCompleteCheck;
+
+        [SerializeField]
+        public UnityEvent onGameWin;
+
+
+
        
 
         public string m_Tip;
@@ -45,7 +53,13 @@ namespace TMKOC.Sorting
             SubscribeToOnItemCollectedAction();
             Gamemanager.OnGameStart += OnGameStart;
             Gamemanager.OnGameRestart += OnGameRestart;
+            Gamemanager.OnGameWin += OnGameWin;
             Gamemanager.OnLevelCompleteCheck += OnLevelCompleteCheck;
+        }
+
+        protected virtual void OnGameWin()
+        {
+            onGameWin?.Invoke();
         }
 
         protected virtual void OnGameStart()
@@ -66,6 +80,8 @@ namespace TMKOC.Sorting
             Gamemanager.OnGameStart -= OnGameStart;
 
             Gamemanager.OnGameRestart -= OnGameRestart;
+            Gamemanager.OnGameWin -= OnGameWin;
+
             Gamemanager.OnLevelCompleteCheck -= OnLevelCompleteCheck;
 
 
@@ -115,6 +131,7 @@ namespace TMKOC.Sorting
 
         protected virtual void OnLevelCompleteCheck()
         {
+            onLevelCompleteCheck?.Invoke();
             if(m_CurrentScore == m_ScoreRequiredToCompleteTheLevel){
                 Gamemanager.Instance.GameOver();
                 Gamemanager.Instance.GameWin();

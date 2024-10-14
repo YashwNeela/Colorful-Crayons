@@ -29,6 +29,25 @@ namespace TMKOC.Sorting.CarSorting
 
         }
 
+        protected override void OnLevelCompleteCheck()
+        {
+             StartCoroutine(Co_OnLevelCompletedCheck());
+        }
+
+        private IEnumerator Co_OnLevelCompletedCheck()
+        {
+            onLevelCompleteCheck?.Invoke();
+            if(m_CurrentScore == m_ScoreRequiredToCompleteTheLevel){
+                Gamemanager.Instance.GameOver();
+                yield return new WaitForSeconds(2);
+               Gamemanager.Instance.GameWin();
+            }else
+            {
+                Gamemanager.Instance.GameOver();
+                Gamemanager.Instance.GameLoose();
+            }
+        }
+
         protected override void OnGameRestart()
         {
             base.OnGameRestart();
