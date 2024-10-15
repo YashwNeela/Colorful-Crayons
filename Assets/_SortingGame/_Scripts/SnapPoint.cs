@@ -72,7 +72,7 @@ namespace TMKOC.Sorting
             m_CurrentCollectible = null;
         }
 
-        public void SetCollectible(Collectible collectible)
+        public virtual void SetCollectible(Collectible collectible)
         {
             m_CurrentCollectible = collectible;
             IsOccupied = true;

@@ -10,6 +10,10 @@ namespace TMKOC.Sorting.CarSorting
 
         public CarType CarType => m_CarType;
 
+        private bool m_CanDestroy;
+
+        Coroutine CanDestoryRef;
+
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             HandleCollectorOnTriggerEnter(other);
@@ -71,6 +75,12 @@ namespace TMKOC.Sorting.CarSorting
             base.PlaceInCorrectly(collector);
 
         }
+        protected override void HandleDragStart()
+        {
+            base.HandleDragStart();
+            if(CanDestoryRef != null)
+                StopCoroutine(CanDestoryRef);
+        }
 
         protected override void HandleDragEnd()
         {
@@ -93,8 +103,21 @@ namespace TMKOC.Sorting.CarSorting
                 }
 
 
+            }else
+            {
+                m_CanDestroy = true;
+                CanDestoryRef = StartCoroutine(Co_Destroy());
+                
             }
         }
+
+        IEnumerator Co_Destroy()
+        {
+            yield return new WaitForSeconds(2);
+            gameObject.SetActive(false);
+           // Destroy(gameObject);
+        }
+
 
         protected override void OnDragStartedStaticAction(Transform transform)
         {
