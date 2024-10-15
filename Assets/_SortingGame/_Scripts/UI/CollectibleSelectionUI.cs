@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,14 @@ namespace TMKOC.Sorting
 
         [SerializeField] CollectibleSelectionButton m_CollectibleSelectionButtonPrefab;
 
+        [SerializeField] HorizontalLayoutGroup m_HorizontalLayourGroup;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            m_HorizontalLayourGroup = GetComponentInChildren<HorizontalLayoutGroup>();
+        }
+
         public void ClearSelectionUI()
         {
             GameObject content = m_ScrollRect.content.gameObject;
@@ -24,12 +33,14 @@ namespace TMKOC.Sorting
             }
         }
 
-        public void AddData(CollectibleDataSO collectibleDataSO, int count)
+        public void AddData(CollectibleDataSO collectibleDataSO, int count, float layoutSpacing)
         {
+            m_HorizontalLayourGroup.spacing = layoutSpacing;
             for (int i = 0; i < count; i++)
             {
                 CollectibleSelectionButton button = Instantiate(m_CollectibleSelectionButtonPrefab, m_ScrollRect.content.gameObject.transform);
 
+                button.transform.localScale = collectibleDataSO.scale;
                 // Set the image for the button
                 button.SetData(collectibleDataSO);
 

@@ -19,6 +19,8 @@ namespace TMKOC.Sorting.CarSorting
         [SerializeField]
         public UnityEvent onGameWinCarLevel;
 
+        [SerializeField] private float m_LayoutSpacing;
+
         protected override void OnGameStart()
         {
             base.OnGameStart();
@@ -28,7 +30,7 @@ namespace TMKOC.Sorting.CarSorting
             for(int i = 0;i<collectibleSelectionData.Length;i++)
             {
                 
-               CollectibleSelectionUI.Instance.AddData(collectibleSelectionData[i].collectibleDataSO,collectibleSelectionData[i].noOfCollectibleToSpawn);
+               CollectibleSelectionUI.Instance.AddData(collectibleSelectionData[i].collectibleDataSO,collectibleSelectionData[i].noOfCollectibleToSpawn,m_LayoutSpacing);
             }
 
             

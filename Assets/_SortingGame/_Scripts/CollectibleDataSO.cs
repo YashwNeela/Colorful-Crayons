@@ -13,5 +13,7 @@ public class CollectibleDataSO : SerializedScriptableObject
     public Collectible collectiblePrefab;
 
     public Sprite collectibleUISprite;
+
+    public Vector3 scale;
 }
 }
