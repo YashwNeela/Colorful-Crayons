@@ -440,7 +440,7 @@ MonoBehaviour:
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Assign Same Tires to car
+  m_Tip: Assign Same Color Tires to car
   collectibleSelectionData:
   - collectibleDataSO: {fileID: 11400000, guid: 43c8cd61763784b4388afd1bda2e36a7,
       type: 2}
@@ -594,7 +594,8 @@ Transform:
   m_LocalPosition: {x: -0.4, y: -8.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1150421630}
   m_Father: {fileID: 345198900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9897582
@@ -5203,7 +5204,7 @@ MonoBehaviour:
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Assign Same Tires to car
+  m_Tip: Assign Same Color Tires to car
   collectibleSelectionData:
   - collectibleDataSO: {fileID: 11400000, guid: 43c8cd61763784b4388afd1bda2e36a7,
       type: 2}
@@ -5241,7 +5242,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_LayoutSpacing: 300
+  m_LayoutSpacing: 200
 --- !u!1001 &190303851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12564,7 +12565,7 @@ MonoBehaviour:
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Assign Same Tires to car
+  m_Tip: Assign Same Color Car to Petrol Pump
   collectibleSelectionData:
   - collectibleDataSO: {fileID: 11400000, guid: 72319031e525f40a3a633ae1dea7387e,
       type: 2}
@@ -19799,8 +19800,8 @@ RectTransform:
   m_GameObject: {fileID: 668780721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1298263877}
   - {fileID: 2124033194}
@@ -19808,8 +19809,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 48.830017}
-  m_SizeDelta: {x: 0, y: 250}
+  m_AnchoredPosition: {x: 0, y: 22}
+  m_SizeDelta: {x: 0, y: 99.04}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &668780723
 MonoBehaviour:
@@ -19824,7 +19825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -24443,10 +24444,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -30803,7 +30804,7 @@ MonoBehaviour:
   m_LevelManager: {fileID: 2116294047}
   GAMEID: 54
   testLevel: 1
-  levelNumber: 4
+  levelNumber: 0
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
   m_MaxLives: 0
   m_RemaningLivesText: {fileID: 547800514}
@@ -34718,6 +34719,218 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1146808814}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1150421629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150421630}
+  - component: {fileID: 1150421636}
+  - component: {fileID: 1150421635}
+  - component: {fileID: 1150421634}
+  - component: {fileID: 1150421633}
+  - component: {fileID: 1150421632}
+  - component: {fileID: 1150421631}
+  m_Layer: 0
+  m_Name: 'GreenCarComplete_Silhouette '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1150421630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150421629}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.4705882, y: 1.4705882, z: 1.4705882}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9897581}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1150421631
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150421629}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 16.97, y: 6.56}
+    newSize: {x: 16.03, y: 5.52}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 16.03, y: 5.52}
+  m_EdgeRadius: 0
+--- !u!50 &1150421632
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150421629}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1150421633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150421629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3de03cd11ef481c9030b9cca68f1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HasCustomSnapPoint: 0
+  m_CustomSnapPoint: {fileID: 0}
+  m_CurrentSnapPoint: {fileID: 9897582}
+  m_HasCustomDefaulParent: 0
+  m_DefaulParent: {fileID: 0}
+  m_CustomIsPlacedCorrectly: 0
+  m_IsPlacedCorrectly: 0
+  m_CarType: 2048
+--- !u!114 &1150421634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150421629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18507e5973f584cf9b60c1d2adaa919b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1150421635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150421629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef06e93a634c846be992bd4472857d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CanDrag: 1
+  screenLeft: 0
+  screenRight: 0
+  GroundLevel: 0
+  m_DragStartPos: {x: 33.619976, y: -371.18704, z: 0}
+  m_DragStartRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_DragStartScale: {x: 25, y: 25, z: 25}
+--- !u!212 &1150421636
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150421629}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 10a09d29417c24631b4ca455ef45386b, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 16.03, y: 5.52}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1001 &1150826136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35460,7 +35673,7 @@ MonoBehaviour:
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Assign Same Tires to car
+  m_Tip: Assing Similar Petrol pump and Car to garage
   collectibleSelectionData:
   - collectibleDataSO: {fileID: 11400000, guid: 72319031e525f40a3a633ae1dea7387e,
       type: 2}
@@ -37620,7 +37833,7 @@ MonoBehaviour:
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Assign Same Tires to car
+  m_Tip: Put Same Color Car in Garage
   collectibleSelectionData:
   - collectibleDataSO: {fileID: 11400000, guid: 72319031e525f40a3a633ae1dea7387e,
       type: 2}
@@ -38601,8 +38814,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -41.49402, y: 0}
+  m_SizeDelta: {x: 1033.8569, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1298263878
 MonoBehaviour:
@@ -47764,8 +47977,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000061035, y: 0}
-  m_SizeDelta: {x: 2732, y: 250}
+  m_AnchoredPosition: {x: 0, y: 10.8861}
+  m_SizeDelta: {x: 1080, y: 77.2679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1624776150
 MonoBehaviour:
@@ -52658,7 +52871,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 233}
+  m_SizeDelta: {x: 0, y: 82.4875}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1788920951
 MonoBehaviour:
@@ -52716,7 +52929,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 300
+  m_Spacing: 266.64
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -63521,6 +63734,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4808916125642773401, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7400264055877382353, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -64741,6 +64959,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 436314212403312946, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 953922908041342756, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -64801,6 +65024,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4221419179200753046, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}

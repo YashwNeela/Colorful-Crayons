@@ -14,6 +14,8 @@ namespace TMKOC.Sorting
 
         [SerializeField] CollectibleSelectionButton m_CollectibleSelectionButtonPrefab;
 
+        private List<CollectibleSelectionButton> m_CollectibleSelectionButtonList = new List<CollectibleSelectionButton>();
+
         [SerializeField] HorizontalLayoutGroup m_HorizontalLayourGroup;
 
         protected override void Awake()
@@ -42,7 +44,10 @@ namespace TMKOC.Sorting
 
                 button.transform.localScale = collectibleDataSO.scale;
                 // Set the image for the button
-                button.SetData(collectibleDataSO);
+                button.SetData(collectibleDataSO,this);
+                button.ToggleInteractableButton(true);
+
+                m_CollectibleSelectionButtonList.Add(button);
 
                 // Get the RectTransform component of the button
                 //RectTransform buttonRectTransform = button.GetComponent<RectTransform>();
@@ -56,6 +61,25 @@ namespace TMKOC.Sorting
                 // Debug.Log("Value is " + i);
                 // buttonRectTransform.anchoredPosition = new Vector2(i*(400 * (i/2==0?1:-1)), 0); // Adjust Y as needed for vertical positioning
 
+            }
+        }
+
+        public void OnButtonPressed()
+        {
+            StartCoroutine(Co_OnButtonPressed());
+        }
+
+        private IEnumerator Co_OnButtonPressed()
+        {
+            for(int i = 0;i<m_CollectibleSelectionButtonList.Count;i++)
+            {
+                m_CollectibleSelectionButtonList[i].ToggleInteractableButton(false);
+            }
+
+            yield return new WaitForSeconds(2);
+            for(int i = 0;i<m_CollectibleSelectionButtonList.Count;i++)
+            {
+                m_CollectibleSelectionButtonList[i].ToggleInteractableButton(true);
             }
         }
     }
