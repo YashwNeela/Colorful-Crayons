@@ -6,13 +6,13 @@ namespace TMKOC.Sorting.CarSorting
 {
     public class CarTire : Collectible
     {
-        [SerializeField] private CarType m_CarType;
+        [SerializeField] protected CarType m_CarType;
 
         public CarType CarType => m_CarType;
 
-        private bool m_CanDestroy;
+        protected bool m_CanDestroy;
 
-        Coroutine CanDestoryRef;
+        protected Coroutine CanDestoryRef;
 
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
@@ -49,6 +49,13 @@ namespace TMKOC.Sorting.CarSorting
             }
 
         }
+
+        protected void BaseHandleCollectorOnTriggerEnter(Component collider)
+        {
+            base.HandleCollectorOnTriggerEnter(collider);
+
+        }
+        
 
         protected virtual void OnTriggerExit2D(Collider2D other)
         {
@@ -111,7 +118,7 @@ namespace TMKOC.Sorting.CarSorting
             }
         }
 
-        IEnumerator Co_Destroy()
+       protected IEnumerator Co_Destroy()
         {
             yield return new WaitForSeconds(2);
             gameObject.SetActive(false);

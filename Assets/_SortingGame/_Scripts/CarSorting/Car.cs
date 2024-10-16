@@ -67,5 +67,20 @@ namespace TMKOC.Sorting.CarSorting
                     OnItemRemoved();
             }
         }
+
+        public override SnapPoint GetValidSnapPoint(Collectible collectible)
+        {
+            foreach(SnapPoint snapPoint in snapPoints)
+            {
+                if(!snapPoint.IsOccupied)
+                {
+                    if((snapPoint as CarSnapPoint).CarType.HasFlag((collectible as CarTire).CarType))
+                    {
+                        return snapPoint;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

@@ -10,8 +10,6 @@ namespace TMKOC.Sorting.CarSorting
     {
         public CollectibleDataSO collectibleDataSO;
         public int noOfCollectibleToSpawn;
-
-        public CarType m_CarType;
     }
 
     public class CarLevel : Level
