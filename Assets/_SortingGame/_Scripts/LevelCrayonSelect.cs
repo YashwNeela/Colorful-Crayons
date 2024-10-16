@@ -68,8 +68,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
         }
 
          private void OnCrayonDeselected(CrayonColor crayonColor)
-        {
-            
+        {            
             if(m_CrayonColor.HasFlag(crayonColor))
                 base.m_CurrentScore--;
             else

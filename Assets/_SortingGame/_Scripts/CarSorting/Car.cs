@@ -22,8 +22,6 @@ namespace TMKOC.Sorting.CarSorting
         RedPetrolPump = 1<<8, BluePetrolPump = 1<<9, YellowPetrolPump = 1<<10, GreenPetrolPump = 1<<11, RedGarage = 1<<12,
         BlueGarage = 1<<13, YellowGarage = 1<<14, GreenGarage = 1<<15
 
-
-
     }
     public class Car : Collector
     {
