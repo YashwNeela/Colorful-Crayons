@@ -15,9 +15,12 @@ namespace TMKOC.Sorting.CarSorting
         YellowCar = 1 << 3,
 
         BlueTire = 1 << 4,
-        SketchpenYellow = 1 << 5,
-        SketchpenGreen = 1 << 6,
-        SketchpenBlue = 1 << 7,
+        GreenTire = 1 << 5,
+        YellowTire = 1 << 6,
+        RedTire = 1 << 7,
+
+        RedPetrolPump = 1<<8, BluePetrolPump = 1<<9, YellowPetrolPump = 1<<10, GreenPetrolPump = 1<<11, RedGarage = 1<<12,
+        BlueGarage = 1<<13, YellowGarage = 1<<14, GreenGarage = 1<<15
 
     }
     public class Car : Collector
@@ -52,12 +55,30 @@ namespace TMKOC.Sorting.CarSorting
 
         public override void OnCollectibleExited(Collectible collectible)
         {
+            if(!collectible.IsPlacedInsideCollector)
+                return;
+                
             collectible.RemoveFromSnapPoint();
             if (m_CarType.HasFlag((collectible as CarTire).CarType))
             {
                 if (collectedItems > 0)
                     OnItemRemoved();
             }
+        }
+
+        public override SnapPoint GetValidSnapPoint(Collectible collectible)
+        {
+            foreach(SnapPoint snapPoint in snapPoints)
+            {
+                if(!snapPoint.IsOccupied)
+                {
+                    if((snapPoint as CarSnapPoint).CarType.HasFlag((collectible as CarTire).CarType))
+                    {
+                        return snapPoint;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

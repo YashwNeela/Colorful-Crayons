@@ -36,6 +36,8 @@ namespace TMKOC.Sorting
 
         protected bool m_IsPlacedInsideCollector = false;
 
+        public bool IsPlacedInsideCollector => m_IsPlacedInsideCollector;
+
         protected Component m_Collider;
 
 

@@ -35,7 +35,7 @@ namespace TMKOC.Sorting
             //     ((Collider2D)m_Collider).enabled = false;
             // }
 
-           // DisableCollider();
+            // DisableCollider();
             Gamemanager.OnGameStart += OnGameStart;
             Draggable.OnDragStartedStaticAction += OnDragStartedStaticAction;
             Draggable.OnDraggingStaticAction += OnDraggingStaticAction;
@@ -69,30 +69,31 @@ namespace TMKOC.Sorting
         }
         private void OnDragEndStaticAction(Transform transform)
         {
-           // DisableCollider();
+            // DisableCollider();
             // Invoke(nameof(DisableCollider),1f);
         }
 
         private void OnGameStart()
         {
-           Invoke(nameof(FetchCollectedItemCount),0.5f);
-            
+            Invoke(nameof(FetchCollectedItemCount), 0.5f);
+
         }
 
         private void FetchCollectedItemCount()
         {
             collectedItems = 0;
-            for(int i = 0;i< snapPoints.Length;i++)
+            for (int i = 0; i < snapPoints.Length; i++)
             {
-                if(snapPoints[i].HasValidCollectible()){
+                if (snapPoints[i].HasValidCollectible())
+                {
                     collectedItems++;
-                    m_Level.m_CurrentScore ++;
-                }       
+                    m_Level.m_CurrentScore++;
+                }
             }
-            
+
         }
 
-        
+
 
         protected virtual void Awake()
         {
@@ -116,7 +117,7 @@ namespace TMKOC.Sorting
                     collectible.transform.parent = snapPoint.transform; // Change parent first
                     collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
                     collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
-                    
+
                     snapPoint.IsOccupied = true;
                     collectible.SetSnapPoint(snapPoint);
                     OnItemCollected(snapPoint);
@@ -126,6 +127,19 @@ namespace TMKOC.Sorting
             }
         }
 
+        public virtual void SnapCollectibleToCollector(Collectible collectible, SnapPoint snapPoint, Action PlacedCorrectly)
+        {
+            // collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
+            collectible.transform.parent = snapPoint.transform; // Change parent first
+            collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
+            collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
+
+            snapPoint.IsOccupied = true;
+            collectible.SetSnapPoint(snapPoint);
+            OnItemCollected(snapPoint);
+            PlacedCorrectly?.Invoke();
+        }
+
         public virtual void OnCollectibleEntered(Collectible collectible)
         {
 
@@ -133,7 +147,7 @@ namespace TMKOC.Sorting
 
         public virtual void OnCollectibleExited(Collectible collectible)
         {
-            
+
         }
 
         protected virtual void OnItemCollected(SnapPoint snapPoint)
@@ -191,12 +205,17 @@ namespace TMKOC.Sorting
 
         public virtual bool IsSlotAvailable()
         {
-            for(int i = 0;i<snapPoints.Length;i++)
+            for (int i = 0; i < snapPoints.Length; i++)
             {
-                if(!snapPoints[i].IsOccupied)
+                if (!snapPoints[i].IsOccupied)
                     return true;
             }
             return false;
+        }
+
+        public virtual SnapPoint GetValidSnapPoint(Collectible collectible)
+        {
+            return null;
         }
     }
 }
