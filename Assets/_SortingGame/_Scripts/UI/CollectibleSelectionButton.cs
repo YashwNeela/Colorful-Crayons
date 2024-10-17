@@ -17,7 +17,7 @@ namespace TMKOC.Sorting
 
         void Awake()
         {
-            m_Image = GetComponent<Image>();
+            //m_Image = GetComponent<Image>();
         }
         // Start is called before the first frame update
         void Start()

@@ -14,7 +14,7 @@ public class ParticleEffectManager : SerializedSingleton<ParticleEffectManager>
        p.transform.localScale = scale;
        p.transform.parent = parent;
 
-       p.transform.localPosition = Vector3.zero;
+       p.transform.localPosition = position;
        p.Play();
     }
 

@@ -19,7 +19,7 @@ namespace TMKOC.Sorting.CarSorting
         protected override void Start()
         {
             base.Start();
-            CanDestoryRef = StartCoroutine(Co_Destroy());
+         //   CanDestoryRef = StartCoroutine(Co_Destroy());
         }
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
@@ -86,7 +86,7 @@ namespace TMKOC.Sorting.CarSorting
         protected override void OnPlacedCorrectly()
         {
             base.OnPlacedCorrectly();
-            ParticleEffectManager.Instance.PlayParticleEffect(0,transform.position,new Vector3(100,100,100),transform);
+            ParticleEffectManager.Instance.PlayParticleEffect(0,transform.position,new Vector3(100,100,100),null);
 
         }
 
@@ -125,8 +125,8 @@ namespace TMKOC.Sorting.CarSorting
 
             }else
             {
-                m_CanDestroy = true;
-                CanDestoryRef = StartCoroutine(Co_Destroy());
+                // m_CanDestroy = true;
+                // CanDestoryRef = StartCoroutine(Co_Destroy());
                 
             }
         }
@@ -159,6 +159,14 @@ namespace TMKOC.Sorting.CarSorting
                 ((Collider)m_Collider).enabled = true;
             if (m_Collider is Collider2D)
                 ((Collider2D)m_Collider).enabled = true;
+        }
+
+        public void OnCrossButtonPressed()
+        {
+            //m_CurrentSnapPoint.ResetSnapPoint();
+            m_CurrentCollector.OnCollectibleExited(this);
+            ParticleEffectManager.Instance.PlayParticleEffect(1,transform.position,new Vector3(200,200,200),null);
+            Destroy(gameObject);
         }
     }
 }
