@@ -24,7 +24,7 @@ namespace TMKOC.Sorting.CarSorting
                 // }
                 // else
                 //     m_IsTryingToPlaceWrong = true;
-                if(collectorBox.GetValidSnapPoint(this) != null)
+             //   if(collectorBox.GetValidSnapPoint(this) != null)
                     m_ValidCollector = collectorBox;
             }
         }
@@ -41,8 +41,17 @@ namespace TMKOC.Sorting.CarSorting
                 if (m_ValidCollector != null)
                 {
 
-                    if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
-                        m_CurrentCollector.SnapCollectibleToCollector(this,m_ValidCollector.GetValidSnapPoint(this), () => OnPlacedCorrectly());
+                    // if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
+                    //     m_CurrentCollector.SnapCollectibleToCollector(this,m_ValidCollector.GetValidSnapPoint(this), () => OnPlacedCorrectly());
+                    // else{
+                    //     m_CurrentCollector.SnapCollectibleToCollector(this,m_ValidCollector.GetValidSnapPoint(this), () => {});
+                    //     PlaceInCorrectly(m_CurrentCollector);
+                    // }
+                                        if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                    else
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
+                    PlaceInCorrectly(m_CurrentCollector);
 
                 }
 

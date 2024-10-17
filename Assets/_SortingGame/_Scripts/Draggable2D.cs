@@ -11,20 +11,23 @@ namespace TMKOC.Sorting
         protected override void StartDragging()
         {
             // Raycast to detect if the mouse is over this object
-            Vector2 mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
+    Vector2 mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
 
-            // Perform a 2D raycast at the mouse position
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+    // LayerMask to ignore specific layers
+    int layerMask = ~(1 << LayerMask.NameToLayer("Water")); // Replace "LayerToIgnore" with the layer name
 
-            // Check if the ray hit this object (2D collider)
-            if (hit.collider == m_Collider)
-            {
-                // Store the current Z position
-                m_ZPosition = transform.position.z;
+    // Perform a 2D raycast at the mouse position, with the layer mask
+    RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, layerMask);
 
-                // Call the method to handle dragging logic
-                HandleStartDragging();
-            }
+    // Check if the ray hit this object (2D collider)
+    if (hit.collider == m_Collider)
+    {
+        // Store the current Z position
+        m_ZPosition = transform.position.z;
+
+        // Call the method to handle dragging logic
+        HandleStartDragging();
+    }
         }
 
         protected override void DragObject()

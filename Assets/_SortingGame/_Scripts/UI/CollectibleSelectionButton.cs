@@ -37,10 +37,14 @@ namespace TMKOC.Sorting
                 return;
 
             Debug.Log("Collectible spawned");
-            Vector3 spawnPoint = Camera.main.ScreenToWorldPoint(transform.position);
+             // Convert the UI position (pivot point) to screen space
+    Vector3 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, GetComponent<RectTransform>().position);
+
+    // Convert the screen point to world space for object spawning
+    Vector3 spawnPoint = Camera.main.ScreenToWorldPoint(new Vector3(screenPoint.x, screenPoint.y, Camera.main.nearClipPlane)); // Adjust z as needed
             
            DraggableUI2D draggable = Instantiate(m_CurrentCollectibleDataSO.collectiblePrefab,
-           new Vector3(spawnPoint.x,spawnPoint.y,10),Quaternion.identity)
+           new Vector3(spawnPoint.x,spawnPoint.y + 100,0),Quaternion.identity)
            .GetComponent<DraggableUI2D>();
             draggable.OnSpawned();
 

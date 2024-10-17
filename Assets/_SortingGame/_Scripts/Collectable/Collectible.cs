@@ -50,6 +50,7 @@ namespace TMKOC.Sorting
             Draggable.OnDragEndStaticAction += OnDragEndStaticAction;
         }
 
+        protected virtual void Start(){}
         protected virtual void OnGameStart()
         {
             draggable.m_CanDrag = true;
@@ -84,9 +85,9 @@ namespace TMKOC.Sorting
         {
             Gamemanager.OnGameRestart -= OnGameRestart;
             Gamemanager.OnGameStart -= OnGameStart;
-            Draggable.OnDragStartedStaticAction += OnDragStartedStaticAction;
-            Draggable.OnDraggingStaticAction += OnDraggingStaticAction;
-            Draggable.OnDragEndStaticAction += OnDragEndStaticAction;
+            Draggable.OnDragStartedStaticAction -= OnDragStartedStaticAction;
+            Draggable.OnDraggingStaticAction -= OnDraggingStaticAction;
+            Draggable.OnDragEndStaticAction -= OnDragEndStaticAction;
 
         }
 
@@ -129,6 +130,7 @@ namespace TMKOC.Sorting
         {
             HandleCollectorOnTriggerEnter(other);
         }
+         
 
         protected virtual void HandleCollectorOnTriggerEnter(Component collider)
         {

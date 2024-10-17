@@ -31,6 +31,7 @@ namespace TMKOC.Sorting
 
     public class Gamemanager : Singleton<Gamemanager>
     {
+        public GameObject m_LevelCheckButton;
         [SerializeField] protected LevelManager m_LevelManager;
 
         protected DataManager dataManager;
@@ -160,9 +161,18 @@ namespace TMKOC.Sorting
                 GameStart(levelNumber);
                 
             }
-            
+            m_LevelCheckButton.GetComponentInChildren<Button>().interactable = false;
+
+            Invoke(nameof(EnableLevelCheckButton),2);
 
             OnFirstTimeGameStartAction?.Invoke();
+
+            
+        }
+
+        void EnableLevelCheckButton()
+        {
+            m_LevelCheckButton.GetComponentInChildren<Button>().interactable = true;
         }
 
         private void OnApplicationQuit() {

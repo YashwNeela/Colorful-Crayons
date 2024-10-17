@@ -58,16 +58,16 @@ namespace TMKOC.Sorting
 
         }
 
-        private void OnDragStartedStaticAction(Transform transform)
+        protected virtual void OnDragStartedStaticAction(Transform transform)
         {
             //EnableCollider();
         }
 
-        private void OnDraggingStaticAction(Transform transform)
+        protected virtual void OnDraggingStaticAction(Transform transform)
         {
             // EnableCollider();
         }
-        private void OnDragEndStaticAction(Transform transform)
+        protected virtual void OnDragEndStaticAction(Transform transform)
         {
             // DisableCollider();
             // Invoke(nameof(DisableCollider),1f);

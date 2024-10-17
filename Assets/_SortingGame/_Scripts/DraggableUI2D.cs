@@ -10,9 +10,9 @@ namespace TMKOC.Sorting
 
         public void OnSpawned()
         {
-            m_isDragging = true;
-            m_CanDrag = true;
-            StartDragging();
+            // m_isDragging = true;
+             m_CanDrag = true;
+            // StartDragging();
             
         }
         

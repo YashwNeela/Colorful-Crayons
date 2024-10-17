@@ -10,10 +10,17 @@ namespace TMKOC.Sorting.CarSorting
 
         public CarType CarType => m_CarType;
 
-        protected bool m_CanDestroy;
+        protected bool m_CanDestroy = true;
 
         protected Coroutine CanDestoryRef;
 
+
+
+        protected override void Start()
+        {
+            base.Start();
+            CanDestoryRef = StartCoroutine(Co_Destroy());
+        }
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             HandleCollectorOnTriggerEnter(other);
@@ -26,6 +33,8 @@ namespace TMKOC.Sorting.CarSorting
         /// <param name="other">The other Collider2D involved in this collision.</param>
         protected virtual void OnTriggerStay2D(Collider2D other)
         {
+            Debug.Log("Collider name " + other.name);
+
             HandleCollectorOnTriggerStay(other);
         }
         protected override void HandleCollectorOnTriggerEnter(Component collider)
@@ -48,7 +57,11 @@ namespace TMKOC.Sorting.CarSorting
                 m_ValidCollector = collectorBox;
             }
         }
-
+        protected override void OnGameStart()
+        {
+            base.OnGameStart();
+            Destroy(gameObject);
+        }
         protected void BaseHandleCollectorOnTriggerEnter(Component collider)
         {
             base.HandleCollectorOnTriggerEnter(collider);
@@ -73,6 +86,7 @@ namespace TMKOC.Sorting.CarSorting
         protected override void OnPlacedCorrectly()
         {
             base.OnPlacedCorrectly();
+            ParticleEffectManager.Instance.PlayParticleEffect(0,transform.position,new Vector3(100,100,100),transform);
 
         }
 
