@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 
@@ -36,18 +37,39 @@ namespace TMKOC.Sorting.FruitSorting2D
             {
                 if (!snapPoint.IsOccupied)
                 {
-                    // collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
+                    //// collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
                     collectible.transform.parent = snapPoint.transform; // Change parent first
-                    collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
-                    collectible.transform.localRotation = Quaternion.identity; // Reset rotation relative to the new parent
-                    snapPoint.IsOccupied = true;
-                    collectible.SetSnapPoint(snapPoint);
 
-                    if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
+                    collectible.transform.DOLocalJump(Vector3.zero, 10f, 1, .5f).OnComplete(() =>
                     {
-                        OnItemCollected(snapPoint);
-                        PlacedCorrectly?.Invoke();
-                    }
+                        snapPoint.IsOccupied = true;
+                        collectible.SetSnapPoint(snapPoint);
+
+                        if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
+                        {
+                            OnItemCollected(snapPoint);
+                            PlacedCorrectly?.Invoke();
+                        }
+                    });
+
+
+                    //collectible.transform.DOLocalMove(Vector3.zero, 0.75f).OnComplete(() =>
+                    //{
+
+                    //    snapPoint.IsOccupied = true;
+                    //    collectible.SetSnapPoint(snapPoint);
+
+                    //    if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
+                    //    {
+                    //        OnItemCollected(snapPoint);
+                    //        PlacedCorrectly?.Invoke();
+                    //    }
+                    //});
+
+                    //collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
+
+
+
 
                     break;
                 }

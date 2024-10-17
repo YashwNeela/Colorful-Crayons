@@ -54,8 +54,16 @@ namespace TMKOC.Sorting.FruitSorting2D
 
         }
 
+
+        protected override void HandleDragStart()
+        {
+            this.GetComponent<SpriteRenderer>().sortingOrder = 101;
+
+        }
         protected override void HandleDragEnd()
         {
+            this.GetComponent<SpriteRenderer>().sortingOrder = 0;
+
             if (m_IsPlacedInsideCollector)
             {
                 draggable.ResetToStartDraggingValues();
