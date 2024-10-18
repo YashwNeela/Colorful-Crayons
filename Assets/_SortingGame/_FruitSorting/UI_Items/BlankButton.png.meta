@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5e55c5785518344069ccc092373f6b8b
+guid: 67977606f690c6f44a56a88b60a3ed8e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -51,7 +51,7 @@ TextureImporter:
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
-  alphaUsage: 0
+  alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -134,7 +134,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: BlankButton_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 264
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 23, y: 30, z: 23, w: 15}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 361309e6486d5934db839b8f9d127cd4
+      internalID: 1282037131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -145,7 +166,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BlankButton_0: 1282037131
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

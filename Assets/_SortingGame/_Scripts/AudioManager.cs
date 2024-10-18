@@ -111,7 +111,7 @@ namespace TMKOC.Sorting
             if (m_SFXAudioSource.isPlaying)
                 return;
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.intro[Random.Range(0, m_CurrentLocalizedAudio.intro.Count)];
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.intro[Random.Range(0, m_CurrentLocalizedAudio.intro.Count)];
             m_SFXAudioSource.Play();
         }
 
@@ -122,7 +122,7 @@ namespace TMKOC.Sorting
 
             if (Random.Range(0f, 1f) < 0.5f)
             {
-                m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelStart[Random.Range(0, m_CurrentLocalizedAudio.levelStart.Count)];
+                //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelStart[Random.Range(0, m_CurrentLocalizedAudio.levelStart.Count)];
                 m_SFXAudioSource.Play();
             }
         }
