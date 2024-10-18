@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using DG.Tweening;
 
 namespace TMKOC.Sorting.FruitSorting2D
 {
@@ -47,6 +47,12 @@ namespace TMKOC.Sorting.FruitSorting2D
             base.OnPlacedCorrectly();
 
         }
+        protected virtual void OnTriggerStay2D(Collider2D other)
+        {
+            Debug.Log("Collider name " + other.name);
+
+            HandleCollectorOnTriggerEnter(other);
+        }
 
         protected override void PlaceInCorrectly(Collector collector)
         {
@@ -58,6 +64,7 @@ namespace TMKOC.Sorting.FruitSorting2D
         protected override void HandleDragStart()
         {
             this.GetComponent<SpriteRenderer>().sortingOrder = 101;
+
 
         }
         protected override void HandleDragEnd()

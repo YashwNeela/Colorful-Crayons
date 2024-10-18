@@ -40,7 +40,7 @@ namespace TMKOC.Sorting.FruitSorting2D
                     //// collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
                     collectible.transform.parent = snapPoint.transform; // Change parent first
 
-                    collectible.transform.DOLocalJump(Vector3.zero, 10f, 1, .5f).OnComplete(() =>
+                    collectible.transform.DOLocalJump(Vector3.zero, 10f, 1, .35f).OnComplete(() =>
                     {
                         snapPoint.IsOccupied = true;
                         collectible.SetSnapPoint(snapPoint);
