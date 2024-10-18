@@ -76,7 +76,7 @@ namespace TMKOC.Sorting
                 m_CollectibleSelectionButtonList[i].ToggleInteractableButton(false);
             }
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             for(int i = 0;i<m_CollectibleSelectionButtonList.Count;i++)
             {
                 m_CollectibleSelectionButtonList[i].ToggleInteractableButton(true);
