@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TMKOC.Sorting
 {
@@ -11,20 +12,31 @@ namespace TMKOC.Sorting
         public Transform m_TipText;
         private bool m_IsShowingTip;
 
+        [SerializeField] private Button m_CheckButton;
+
         void OnEnable()
         {
             Gamemanager.OnGameStart += OnGameStart;
+            Gamemanager.OnLevelCompleteCheck +=OnLevelCompleteCheck;
+        }
+
+        private void OnLevelCompleteCheck()
+        {
+            m_CheckButton.interactable = false;
         }
 
         void OnDisable()
         {
             Gamemanager.OnGameStart -= OnGameStart;
+            Gamemanager.OnLevelCompleteCheck -=OnLevelCompleteCheck;
+
 
         }
 
         private void OnGameStart()
         {
             m_IsShowingTip = false;
+            m_CheckButton.interactable = true;
             ShowTip();
         }
 

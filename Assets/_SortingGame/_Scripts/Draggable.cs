@@ -115,6 +115,11 @@ namespace TMKOC.Sorting
             m_DragStartScale = transform.lossyScale;
         }
 
+        public void ResetToPointValues(Vector3 position)
+        {
+            transform.position = position;
+        }
+
         protected virtual void DragObject()
         {
             Vector3 mousePosition = Input.mousePosition;

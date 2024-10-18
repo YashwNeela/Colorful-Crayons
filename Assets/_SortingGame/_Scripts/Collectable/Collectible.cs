@@ -45,6 +45,8 @@ namespace TMKOC.Sorting
         {
             Gamemanager.OnGameRestart += OnGameRestart;
             Gamemanager.OnGameStart += OnGameStart;
+            Gamemanager.OnGameOver += OnGameOver;
+            Gamemanager.OnLevelCompleteCheck += OnLevelCompleteCheck;
             Draggable.OnDragStartedStaticAction += OnDragStartedStaticAction;
             Draggable.OnDraggingStaticAction += OnDraggingStaticAction;
             Draggable.OnDragEndStaticAction += OnDragEndStaticAction;
@@ -85,10 +87,23 @@ namespace TMKOC.Sorting
         {
             Gamemanager.OnGameRestart -= OnGameRestart;
             Gamemanager.OnGameStart -= OnGameStart;
+            Gamemanager.OnGameOver -= OnGameOver;
+            Gamemanager.OnLevelCompleteCheck -= OnLevelCompleteCheck;
+
             Draggable.OnDragStartedStaticAction -= OnDragStartedStaticAction;
             Draggable.OnDraggingStaticAction -= OnDraggingStaticAction;
             Draggable.OnDragEndStaticAction -= OnDragEndStaticAction;
 
+        }
+
+        protected virtual void OnLevelCompleteCheck()
+        {
+            
+        }
+
+        protected virtual void OnGameOver()
+        {
+          
         }
 
         protected virtual void OnDragEndStaticAction(Transform transform)

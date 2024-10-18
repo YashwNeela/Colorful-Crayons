@@ -76,6 +76,7 @@ namespace TMKOC.Sorting.CarSorting
 
         protected override void HandleCollectorOnTriggerExit(Component collider)
         {
+            Debug.Log("Collider Exited " + collider.name);
             base.HandleCollectorOnTriggerExit(collider);
 
 
@@ -106,7 +107,8 @@ namespace TMKOC.Sorting.CarSorting
         {
             if (m_IsPlacedInsideCollector)
             {
-                draggable.ResetToStartDraggingValues();
+              //  draggable.ResetToStartDraggingValues();
+                draggable.ResetToPointValues(m_CurrentSnapPoint.transform.position);
                 return;
             }
             if (m_CurrentCollector != null && m_CurrentCollector.IsSlotAvailable())
@@ -164,9 +166,16 @@ namespace TMKOC.Sorting.CarSorting
         public void OnCrossButtonPressed()
         {
             //m_CurrentSnapPoint.ResetSnapPoint();
-            m_CurrentCollector.OnCollectibleExited(this);
+            if(m_CurrentCollector != null)
+                m_CurrentCollector.OnCollectibleExited(this);
             ParticleEffectManager.Instance.PlayParticleEffect(1,transform.position,new Vector3(200,200,200),null);
             Destroy(gameObject);
+        }
+
+        protected override void OnLevelCompleteCheck()
+        {
+            base.OnLevelCompleteCheck();
+            GetComponentInChildren<Canvas>().gameObject.SetActive(false);
         }
     }
 }

@@ -58,8 +58,8 @@ namespace TMKOC.Sorting.CarSorting
 
             }else
             {
-                m_CanDestroy = true;
-                CanDestoryRef = StartCoroutine(Co_Destroy());
+                // m_CanDestroy = true;
+                // CanDestoryRef = StartCoroutine(Co_Destroy());
                 
             }
         }

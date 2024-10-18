@@ -44,7 +44,7 @@ namespace TMKOC.Sorting
     Vector3 spawnPoint = Camera.main.ScreenToWorldPoint(new Vector3(screenPoint.x, screenPoint.y, Camera.main.nearClipPlane)); // Adjust z as needed
             
            DraggableUI2D draggable = Instantiate(m_CurrentCollectibleDataSO.collectiblePrefab,
-           new Vector3(spawnPoint.x,spawnPoint.y + 100,0),Quaternion.identity)
+           new Vector3(spawnPoint.x,spawnPoint.y,0),Quaternion.identity)
            .GetComponent<DraggableUI2D>();
             draggable.OnSpawned();
 

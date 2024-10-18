@@ -21,6 +21,8 @@ namespace TMKOC.Sorting.CarSorting
 
         [SerializeField] private float m_LayoutSpacing;
 
+        [SerializeField] private Sprite m_Background;
+
         protected override void OnGameStart()
         {
             base.OnGameStart();
