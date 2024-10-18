@@ -15,6 +15,10 @@ namespace TMKOC.Sorting
         
         public float m_CurrentScore;
 
+        [SerializeField] int m_LevelTimer;
+
+        public int LevelTimer => m_LevelTimer;
+
         private Collector[] m_Collectors;
 
         private Collectible[] m_Collectibles;
@@ -32,6 +36,7 @@ namespace TMKOC.Sorting
 
         [SerializeField]
         public UnityEvent onGameWin;
+        
 
 
 

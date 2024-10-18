@@ -356,6 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -1867,6 +1868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -5143,6 +5145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 30
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -6113,6 +6116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -8598,6 +8602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -8862,6 +8867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -9077,6 +9083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -12335,7 +12342,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &410087039
@@ -12504,6 +12511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -13117,6 +13125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -15938,6 +15947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -17165,6 +17175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -17672,7 +17683,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &570458691
@@ -18651,6 +18662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -21384,6 +21396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -22609,6 +22622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -23989,6 +24003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -24166,6 +24181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -28754,7 +28770,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &964720713
@@ -30492,6 +30508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -31463,6 +31480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -31960,6 +31978,139 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1056692228}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1062305889
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 973369743079979488, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_Name
+      value: Canvas_Timer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591038236117835668, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: hudUI
+      value: 
+      objectReference: {fileID: 1722414072}
+    - target: {fileID: 7591038236117835668, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: countdownDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591038236117835668, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4de38fdd2aa54ce44acc2ef6f34b221d, type: 3}
 --- !u!1 &1063220304
 GameObject:
   m_ObjectHideFlags: 0
@@ -33144,6 +33295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -34108,6 +34260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -34739,6 +34892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -34979,7 +35133,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1140901990
@@ -36017,6 +36171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -37766,6 +37921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -37986,6 +38142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -38082,6 +38239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -38556,6 +38714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -41911,6 +42070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -41970,6 +42130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -42768,6 +42929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -43228,6 +43390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls:
@@ -44662,7 +44825,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1515897856
@@ -44712,6 +44875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -46848,7 +47012,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &1566048360
@@ -47301,6 +47465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -51224,6 +51389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -54752,6 +54918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentScore: 0
+  m_LevelTimer: 0
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -67686,3 +67853,4 @@ SceneRoots:
   - {fileID: 91489646852027126}
   - {fileID: 432731407}
   - {fileID: 849273399}
+  - {fileID: 1062305889}

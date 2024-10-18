@@ -32,6 +32,11 @@ namespace TMKOC.Sorting
         
         }
 
+        public Level GetCurrentLevel()
+        {
+            return levels[CurrentLevelIndex].GetComponent<Level>();
+        }
+
         public void CompleteLevel()
         {
             // Deactivate the current level

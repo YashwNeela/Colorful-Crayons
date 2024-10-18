@@ -19,7 +19,7 @@ namespace TMKOC.Sorting
         void Start()
         {
             // Initialize countdown time and color
-            currentTime = countdownDuration;
+            
 
             // Ensure the animation is initially paused (won't play right away)
             if (dotweenAnimation != null)
@@ -74,8 +74,10 @@ namespace TMKOC.Sorting
         // Call this method to start the countdown
         public void StartCountdown()
         {
-            
-            currentTime = countdownDuration;
+            countdownDuration = LevelManager.Instance.GetCurrentLevel().LevelTimer;
+
+            currentTime =countdownDuration;
+          //  currentTime = countdownDuration;
             isCountingDown = true;
         }
 
