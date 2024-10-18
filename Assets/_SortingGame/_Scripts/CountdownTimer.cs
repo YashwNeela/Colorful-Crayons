@@ -40,7 +40,7 @@ namespace TMKOC.Sorting
         }
         void Update()
         {
-            if (isCountingDown)
+            if (isCountingDown && Gamemanager.Instance.CurrentGameState == GameState.Playing)
             {
                 // Decrease the time
                 currentTime -= Time.deltaTime;

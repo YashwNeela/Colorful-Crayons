@@ -16,6 +16,7 @@ namespace TMKOC.Sorting.CarSorting
 
 
 
+       
         protected override void Start()
         {
             base.Start();
@@ -35,7 +36,7 @@ namespace TMKOC.Sorting.CarSorting
         {
             Debug.Log("Collider name " + other.name);
 
-            HandleCollectorOnTriggerStay(other);
+            HandleCollectorOnTriggerEnter(other);
         }
         protected override void HandleCollectorOnTriggerEnter(Component collider)
         {
@@ -176,6 +177,9 @@ namespace TMKOC.Sorting.CarSorting
         {
             base.OnLevelCompleteCheck();
             GetComponentInChildren<Canvas>().gameObject.SetActive(false);
+
+            if(m_CurrentSnapPoint == null)
+                Destroy(gameObject);
         }
     }
 }
