@@ -18,7 +18,11 @@ public class LevelShapeSelect : Level
             m_ShapeSelectList = GetComponentsInChildren<ShapeSelect>().ToList();
         }
         protected override  void OnEnable() {
+          
+           
             Gamemanager.OnGameStart += OnGameStart;
+            Gamemanager.OnGameRestart += OnGameRestart;
+            Gamemanager.OnGameWin += OnGameWin;
             Gamemanager.OnLevelCompleteCheck += OnLevelCompleteCheck;
             SubScribeToShapeSelectActions();
             
@@ -26,7 +30,11 @@ public class LevelShapeSelect : Level
 
         protected override void OnDisable()
         {
+            
+            
             Gamemanager.OnGameStart -= OnGameStart;
+            Gamemanager.OnGameRestart -= OnGameRestart;
+            Gamemanager.OnGameWin -= OnGameWin;
             Gamemanager.OnLevelCompleteCheck -= OnLevelCompleteCheck;
 
             UnSubScribeToShapeSelectActions();
@@ -77,10 +85,13 @@ public class LevelShapeSelect : Level
             
         }
 
-          private void OnGameStart()
+        protected override void OnGameStart()
         {
+            base.OnGameStart();
             SetScoreRequiredToCompleteTheLevel();
+
         }
+        
 
         protected override void SetScoreRequiredToCompleteTheLevel()
         {

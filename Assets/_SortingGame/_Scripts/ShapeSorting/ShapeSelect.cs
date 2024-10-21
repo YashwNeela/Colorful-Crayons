@@ -14,6 +14,12 @@ public class ShapeSelect : Collectible
         [SerializeField] private ShapeType m_ShapeType;
 
 
+        protected override void Awake()
+        {
+            base.Awake();
+            
+
+        }
         protected override void OnEnable()
         {
             Gamemanager.OnGameStart += OnGameStart;
@@ -49,12 +55,14 @@ public class ShapeSelect : Collectible
 
         private void ShapeSelected()
         {
+          //  m_SelectedSequence.Play();
             transform.DOScale(75f, 0.25f);
             OnShapeSelected?.Invoke(m_ShapeType);
         }
 
         private void ShapeDeselected()
         {
+         //   m_SelectedSequence.PlayBackwards();
             transform.DOScale(63f, 0.25f);
             OnShapeDeselected?.Invoke(m_ShapeType);
         }
