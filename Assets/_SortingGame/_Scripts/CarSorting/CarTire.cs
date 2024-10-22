@@ -141,11 +141,14 @@ namespace TMKOC.Sorting.CarSorting
 
         private void PlayTirePlacedAudio()
         {
-            if(m_CarType == CarType.BlueTire || m_CarType == CarType.GreenTire || m_CarType == CarType.YellowTire
-            || m_CarType == CarType.RedTire){
-                CarSortingAudioManager.Instance.
+            // if(m_CarType == CarType.BlueTire || m_CarType == CarType.GreenTire || m_CarType == CarType.YellowTire
+            // || m_CarType == CarType.RedTire){
+            //     CarSortingAudioManager.Instance.
+            //     PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).wheelsAttached,CarSortingAudioManager.Instance.SFXAudioSource);
+            // }
+            CarSortingAudioManager.Instance.
                 PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).wheelsAttached,CarSortingAudioManager.Instance.SFXAudioSource);
-            }
+            
         }
 
        protected IEnumerator Co_Destroy()

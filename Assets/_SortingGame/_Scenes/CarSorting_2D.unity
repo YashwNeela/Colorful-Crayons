@@ -641,7 +641,7 @@ MonoBehaviour:
   updateType: 0
   isSpeedBased: 0
   hasOnStart: 0
-  hasOnPlay: 0
+  hasOnPlay: 1
   hasOnUpdate: 0
   hasOnStepComplete: 0
   hasOnComplete: 0
@@ -652,7 +652,19 @@ MonoBehaviour:
       m_Calls: []
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2090325949}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -2475,6 +2487,18 @@ MonoBehaviour:
   optionalScrambleMode: 0
   optionalShakeRandomnessMode: 0
   optionalString: 
+--- !u!114 &79322368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 991182847435613092, guid: 58fffbef14aa84afe99b30ad9acaab2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8073498594802956677}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79322361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303c0eb211f9f414a88b3f448bbae38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &81872350
 GameObject:
   m_ObjectHideFlags: 0
@@ -5123,7 +5147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &181041589
 Transform:
   m_ObjectHideFlags: 0
@@ -21047,7 +21071,7 @@ MonoBehaviour:
   updateType: 0
   isSpeedBased: 0
   hasOnStart: 0
-  hasOnPlay: 0
+  hasOnPlay: 1
   hasOnUpdate: 0
   hasOnStepComplete: 0
   hasOnComplete: 0
@@ -21058,7 +21082,19 @@ MonoBehaviour:
       m_Calls: []
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 79322368}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -22896,7 +22932,7 @@ PrefabInstance:
     - target: {fileID: 991182847435613092, guid: 58fffbef14aa84afe99b30ad9acaab2b,
         type: 3}
       propertyPath: m_CarType
-      value: 256
+      value: 257
       objectReference: {fileID: 0}
     - target: {fileID: 991182847435613092, guid: 58fffbef14aa84afe99b30ad9acaab2b,
         type: 3}
@@ -23155,6 +23191,18 @@ MonoBehaviour:
   optionalScrambleMode: 0
   optionalShakeRandomnessMode: 0
   optionalString: 
+--- !u!114 &806426203 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 991182847435613092, guid: 58fffbef14aa84afe99b30ad9acaab2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 806426196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149736980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303c0eb211f9f414a88b3f448bbae38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &808501890
 GameObject:
   m_ObjectHideFlags: 0
@@ -24280,7 +24328,7 @@ MonoBehaviour:
   updateType: 0
   isSpeedBased: 0
   hasOnStart: 0
-  hasOnPlay: 0
+  hasOnPlay: 1
   hasOnUpdate: 0
   hasOnStepComplete: 0
   hasOnComplete: 0
@@ -24291,7 +24339,19 @@ MonoBehaviour:
       m_Calls: []
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1132402318}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -24632,7 +24692,19 @@ MonoBehaviour:
       m_Calls: []
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2048928306}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -31304,7 +31376,7 @@ MonoBehaviour:
   m_LevelManager: {fileID: 2116294047}
   GAMEID: 54
   testLevel: 1
-  levelNumber: 0
+  levelNumber: 2
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
   m_MaxLives: 1
   m_RemaningLivesText: {fileID: 547800514}
@@ -31505,7 +31577,7 @@ MonoBehaviour:
   updateType: 0
   isSpeedBased: 0
   hasOnStart: 0
-  hasOnPlay: 0
+  hasOnPlay: 1
   hasOnUpdate: 0
   hasOnStepComplete: 0
   hasOnComplete: 0
@@ -31516,7 +31588,19 @@ MonoBehaviour:
       m_Calls: []
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2048928306}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -34385,7 +34469,7 @@ MonoBehaviour:
   snapPoints:
   - {fileID: 1846597667}
   collectedItems: 0
-  m_CarType: 128
+  m_CarType: 129
 --- !u!212 &1132402320
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36026,7 +36110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1171720101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38101,7 +38185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1272404423
 Transform:
   m_ObjectHideFlags: 0
@@ -40585,7 +40669,7 @@ MonoBehaviour:
   updateType: 0
   isSpeedBased: 0
   hasOnStart: 0
-  hasOnPlay: 0
+  hasOnPlay: 1
   hasOnUpdate: 0
   hasOnStepComplete: 0
   hasOnComplete: 0
@@ -40596,7 +40680,19 @@ MonoBehaviour:
       m_Calls: []
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1188928481}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -44793,7 +44889,19 @@ MonoBehaviour:
       m_Calls: []
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1132402318}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -44853,7 +44961,7 @@ MonoBehaviour:
   animationType: 2
   targetType: 11
   forcedTargetType: 0
-  autoPlay: 1
+  autoPlay: 0
   useTargetAsV3: 0
   endValueFloat: 0
   endValueV3: {x: -1200, y: 0, z: 0}
@@ -54089,7 +54197,7 @@ MonoBehaviour:
   updateType: 0
   isSpeedBased: 0
   hasOnStart: 0
-  hasOnPlay: 0
+  hasOnPlay: 1
   hasOnUpdate: 0
   hasOnStepComplete: 0
   hasOnComplete: 0
@@ -54100,7 +54208,19 @@ MonoBehaviour:
       m_Calls: []
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 806426203}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -61372,7 +61492,7 @@ MonoBehaviour:
   snapPoints:
   - {fileID: 381910014}
   collectedItems: 0
-  m_CarType: 16
+  m_CarType: 18
 --- !u!61 &2048928307
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -63689,7 +63809,7 @@ MonoBehaviour:
   snapPoints:
   - {fileID: 9897582}
   collectedItems: 0
-  m_CarType: 2048
+  m_CarType: 2052
 --- !u!212 &2090325950
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66644,7 +66764,7 @@ PrefabInstance:
     - target: {fileID: 4566653479042792899, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: _length
-      value: 2118.368
+      value: 1919.2546
       objectReference: {fileID: 0}
     - target: {fileID: 5814089035050786521, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -67360,6 +67480,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 991182847435613092, guid: 58fffbef14aa84afe99b30ad9acaab2b,
         type: 3}
+      propertyPath: m_CarType
+      value: 1032
+      objectReference: {fileID: 0}
+    - target: {fileID: 991182847435613092, guid: 58fffbef14aa84afe99b30ad9acaab2b,
+        type: 3}
       propertyPath: snapPoints.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -67368,6 +67493,11 @@ PrefabInstance:
       propertyPath: snapPoints.Array.data[0]
       value: 
       objectReference: {fileID: 709056902}
+    - target: {fileID: 2743845400435893409, guid: 58fffbef14aa84afe99b30ad9acaab2b,
+        type: 3}
+      propertyPath: m_CarType
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 4005533766035095353, guid: 58fffbef14aa84afe99b30ad9acaab2b,
         type: 3}
       propertyPath: m_Size.x
