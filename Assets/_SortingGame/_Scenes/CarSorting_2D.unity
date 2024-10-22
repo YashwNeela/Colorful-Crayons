@@ -5123,7 +5123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &181041589
 Transform:
   m_ObjectHideFlags: 0
@@ -10631,7 +10631,7 @@ MonoBehaviour:
   snapPoints:
   - {fileID: 1601082672}
   collectedItems: 0
-  m_CarType: 16
+  m_CarType: 18
 --- !u!61 &363852628
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12489,7 +12489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &410155865
 Transform:
   m_ObjectHideFlags: 0
@@ -14537,7 +14537,7 @@ MonoBehaviour:
   updateType: 0
   isSpeedBased: 0
   hasOnStart: 0
-  hasOnPlay: 0
+  hasOnPlay: 1
   hasOnUpdate: 0
   hasOnStepComplete: 0
   hasOnComplete: 0
@@ -14545,10 +14545,34 @@ MonoBehaviour:
   hasOnRewind: 0
   onStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 363852627}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 363852627}
+        m_TargetAssemblyTypeName: TMKOC.Sorting.CarSorting.Car, Assembly-CSharp
+        m_MethodName: PlayCarAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -15432,6 +15456,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2806099247728319949, guid: 83b9da1f1a6fd4c818b57dc82a440c11,
     type: 3}
   m_PrefabInstance: {fileID: 488724399}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &491736923 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6082459032070349749, guid: 6baae7f66356945ebaaaada5936c1c5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 91489646852027126}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &499116148
 PrefabInstance:
@@ -23231,6 +23261,77 @@ Transform:
   - {fileID: 1478927922}
   m_Father: {fileID: 181041589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &816723995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4808916125642773401, guid: 6baae7f66356945ebaaaada5936c1c5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 91489646852027126}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &816723998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816723995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495bfb79c49964f04aa359242af0fc97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 863460e4d05e14d49b73080bc75312e1, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: audioSO
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[TMKOC.Sorting.AudioLanguage,
+        Assembly-CSharp],[TMKOC.Sorting.AudioLocalizationSO, Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.Sorting.AudioLanguage,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  m_ShouldDestroyOnLoad: 1
+  m_CurretAudioLanguage: 1
+  m_BackGroundAudioSource: {fileID: 491736923}
+  m_SFXAudioSource: {fileID: 1484475687}
+  m_ExtraAudioSource: {fileID: 1856180034}
 --- !u!1001 &817537159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43550,6 +43651,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1483458242}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1484475687 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1170218560471628385, guid: 6baae7f66356945ebaaaada5936c1c5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 91489646852027126}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1486162879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54990,6 +55097,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1853521087}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1856180034 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 579591502385513111, guid: 6baae7f66356945ebaaaada5936c1c5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 91489646852027126}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1862011734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65263,7 +65376,7 @@ PrefabInstance:
     - target: {fileID: 4808916125642773401, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7400264055877382353, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
@@ -65317,14 +65430,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
+      propertyPath: m_CurretAudioLanguage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
-    m_RemovedComponents: []
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"audioSO","add_keys":null,"remove_keys":{"$id":0,"$type":"System.Object[],
+        mscorlib","$rlength":1,"$rcontent":[{"$id":1,"$type":"TMKOC.Sorting.AudioLanguage,
+        Assembly-CSharp",2}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"audioSO.{1es}","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 863460e4d05e14d49b73080bc75312e1,
+        type: 2}
+    m_RemovedComponents:
+    - {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4808916125642773401, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 816723998}
   m_SourcePrefab: {fileID: 100100000, guid: 6baae7f66356945ebaaaada5936c1c5a, type: 3}
 --- !u!4 &543450653214890887 stripped
 Transform:
