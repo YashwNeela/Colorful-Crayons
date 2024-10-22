@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TMKOC.Sorting.FruitSorting2D
@@ -29,7 +30,47 @@ namespace TMKOC.Sorting.FruitSorting2D
     {
         [SerializeField] private FruitType m_FruitType;
 
+        public static event Action<List<GridItemData>> OnLevelOver;
+
         public FruitType FruitType => m_FruitType;
+
+        private List<GridItemData> gridItems = new();
+
+        private List<Tuple<Collectible, bool>> collectibles = new();
+
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            Gamemanager.OnGameRestart += ClearCollectibles;
+            Gamemanager.OnLevelCompleteCheck += ItemsInBasket;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            Gamemanager.OnGameRestart -= ClearCollectibles;
+            Gamemanager.OnLevelCompleteCheck += ItemsInBasket;
+        }
+
+        private void ClearCollectibles()
+        {
+            collectibles.Clear();
+        }
+
+        private void ItemsInBasket()
+        {
+            gridItems.Clear();
+            for (int i = 0; i < collectibles.Count; i++)
+            {
+                var item = collectibles[i];
+                GridItemData newGridItem = new GridItemData(item.Item1.GetComponent<SpriteRenderer>().sprite,  item.Item2);
+                gridItems.Add(newGridItem);
+            }
+
+            OnLevelOver?.Invoke(gridItems);
+        }
+
 
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
@@ -49,6 +90,22 @@ namespace TMKOC.Sorting.FruitSorting2D
                         {
                             OnItemCollected(snapPoint);
                             PlacedCorrectly?.Invoke();
+
+                            // Add to collectibles
+                            collectibles.Add(new(collectible, true));
+
+                            // create a GridItemData
+                            //GridItemData newGridItem = new GridItemData(collectible.GetComponent<SpriteRenderer>().sprite, true, collectible);
+                            //gridItems.Add(newGridItem);
+
+                            //Debug.Log("fruit name: " + collectible.name);
+                        } else
+                        {
+                            collectibles.Add(new(collectible, false));
+
+                            //GridItemData newGridItem = new GridItemData(collectible.GetComponent<SpriteRenderer>().sprite, true, collectible);
+                            //gridItems.Add(newGridItem);
+                            //Debug.Log("incorrect fruit name: " + collectible.name);
                         }
                     });
 
@@ -67,10 +124,6 @@ namespace TMKOC.Sorting.FruitSorting2D
                     //});
 
                     //collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
-
-
-
-
                     break;
                 }
             }
@@ -81,8 +134,14 @@ namespace TMKOC.Sorting.FruitSorting2D
             collectible.RemoveFromSnapPoint();
             if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
             {
+                collectibles.Remove(new(collectible, true));
+                //Debug.Log("correct-fruit: " + collectible.name);
                 if (collectedItems > 0)
                     OnItemRemoved();
+            } else
+            {
+                collectibles.Remove(new(collectible, false));
+                //Debug.Log("incorrect-fruit: " + collectible.name);
             }
         }
     }

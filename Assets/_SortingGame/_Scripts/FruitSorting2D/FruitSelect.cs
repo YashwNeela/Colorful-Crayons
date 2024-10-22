@@ -12,6 +12,13 @@ namespace TMKOC.Sorting.FruitSorting2D
         [SerializeField] private bool m_IsSelected = false;
         [SerializeField] private FruitType m_FruitType;
 
+        private SpriteRenderer _highlightSelected;
+
+        protected override void Start()
+        {
+            _highlightSelected = transform.GetChild(0).GetComponent <SpriteRenderer>();
+            _highlightSelected.DOFade(0f, 0.25f);
+        }
 
         protected override void OnEnable()
         {
@@ -48,13 +55,15 @@ namespace TMKOC.Sorting.FruitSorting2D
 
         private void FruitSelected()
         {
-            transform.DOScale(1.25f, 0.25f);
+            _highlightSelected.DOFade(1f, 0.25f);
+            //transform.DOScale(1.25f, 0.25f);
             OnFruitSelected?.Invoke(m_FruitType);
         }
 
         private void FruitDeselected()
         {
-            transform.DOScale(1f, 0.25f);
+            _highlightSelected.DOFade(0f, 0.25f);
+            //transform.DOScale(1f, 0.25f);
             OnFruitDeselected?.Invoke(m_FruitType);
         }
 
