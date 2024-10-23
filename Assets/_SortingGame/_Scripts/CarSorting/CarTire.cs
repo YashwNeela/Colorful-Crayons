@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMKOC.Sorting;
 using UnityEngine;
 
 namespace TMKOC.Sorting.CarSorting
@@ -117,10 +118,14 @@ namespace TMKOC.Sorting.CarSorting
                 if (m_ValidCollector != null)
                 {
 
-                    if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
+                    if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType)){
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
-                    else
+                        PlayTirePlacedAudio();
+                    }
+                    else{
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
+                        PlayTirePlacedAudio();
+                    }
                     PlaceInCorrectly(m_CurrentCollector);
 
                 }
@@ -132,6 +137,18 @@ namespace TMKOC.Sorting.CarSorting
                 // CanDestoryRef = StartCoroutine(Co_Destroy());
                 
             }
+        }
+
+        private void PlayTirePlacedAudio()
+        {
+            // if(m_CarType == CarType.BlueTire || m_CarType == CarType.GreenTire || m_CarType == CarType.YellowTire
+            // || m_CarType == CarType.RedTire){
+            //     CarSortingAudioManager.Instance.
+            //     PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).wheelsAttached,CarSortingAudioManager.Instance.SFXAudioSource);
+            // }
+            CarSortingAudioManager.Instance.
+                PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).wheelsAttached,CarSortingAudioManager.Instance.SFXAudioSource);
+            
         }
 
        protected IEnumerator Co_Destroy()

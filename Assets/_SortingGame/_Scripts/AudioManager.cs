@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 
 //Sun liaadasd tap tap siddhart tap tap
 namespace TMKOC.Sorting
@@ -18,10 +19,14 @@ namespace TMKOC.Sorting
         [SerializeField] protected AudioLanguage m_CurretAudioLanguage;
         [SerializeField] protected Dictionary<AudioLanguage, AudioLocalizationSO> audioSO;
         protected AudioLocalizationSO m_CurrentLocalizedAudio;
+        public AudioLocalizationSO CurrentLocalizedAudio => m_CurrentLocalizedAudio;
         [SerializeField] protected AudioSource m_BackGroundAudioSource;
+        public AudioSource BackgroundAudioSource => m_BackGroundAudioSource;
         [SerializeField] protected AudioSource m_SFXAudioSource;
+        public AudioSource SFXAudioSource => m_SFXAudioSource;
 
         [SerializeField] protected AudioSource m_ExtraAudioSource;
+        public AudioSource ExtraAudioSource => m_ExtraAudioSource;
 
         protected virtual void OnEnable()
         {
@@ -205,6 +210,20 @@ namespace TMKOC.Sorting
         }
 
 
+        public virtual void PlayAudio(AudioClip clip, AudioSource audioSource,
+        bool overridePreviousClips = false, bool isPlayOneShot = false)
+        {
+            if(audioSource.isPlaying && !overridePreviousClips)
+                return;
+            else if(overridePreviousClips && audioSource.isPlaying)
+                audioSource.Stop();
+
+            audioSource.clip = clip;
+            if(!isPlayOneShot)
+                audioSource.Play();
+            else
+                audioSource.PlayOneShot(clip);
+        }
 
 
     }
