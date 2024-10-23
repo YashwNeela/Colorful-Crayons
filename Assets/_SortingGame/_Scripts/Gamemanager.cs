@@ -301,9 +301,9 @@ namespace TMKOC.Sorting
 
         IEnumerator DelayHomeButton()
         {
-            if (AssetBundleLoading.instance != null)
+           // if (AssetBundleLoading.instance != null)
             {
-                AssetBundleLoading.instance.UnloadBundle();
+          //      AssetBundleLoading.instance.UnloadBundle();
             }
             yield return new WaitForSeconds(0.1f);
             SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
