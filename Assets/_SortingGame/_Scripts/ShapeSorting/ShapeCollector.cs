@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 
@@ -25,6 +26,56 @@ namespace TMKOC.Sorting.ShapeSorting
     }
     public class ShapeCollector : Collector
     {
-        
+        [SerializeField] private ShapeType m_ShapeType;
+
+        public ShapeType ShapeType => m_ShapeType;
+
+          public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
+        {
+            foreach (var snapPoint in snapPoints)
+            {
+                if (!snapPoint.IsOccupied)
+                {
+                    //// collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
+                    collectible.transform.parent = snapPoint.transform; // Change parent first
+                    snapPoint.IsOccupied = true;
+                    collectible.SetSnapPoint(snapPoint);
+                    OnItemCollected(snapPoint);
+                    PlacedCorrectly?.Invoke();
+                    
+
+
+                    //collectible.transform.DOLocalMove(Vector3.zero, 0.75f).OnComplete(() =>
+                    //{
+
+                    //    snapPoint.IsOccupied = true;
+                    //    collectible.SetSnapPoint(snapPoint);
+
+                    //    if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
+                    //    {
+                    //        OnItemCollected(snapPoint);
+                    //        PlacedCorrectly?.Invoke();
+                    //    }
+                    //});
+
+                    //collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
+
+
+
+
+                    break;
+                }
+            }
+        }
+
+        public override void OnCollectibleExited(Collectible collectible)
+        {
+            collectible.RemoveFromSnapPoint();
+            if (m_ShapeType.HasFlag((collectible as ShapeCollectible).ShapeType))
+            {
+                if (collectedItems > 0)
+                    OnItemRemoved();
+            }
+        }
     }
 }
