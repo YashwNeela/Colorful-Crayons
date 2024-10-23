@@ -152,10 +152,10 @@ namespace TMKOC.Sorting
         public virtual void FirstTimeGameStart()
         {
              if(!testLevel)
-            dataManager.FetchData(() =>
-                {
-                    GameStart(dataManager.StudentGameData.data.completedLevel);
-                });
+            // dataManager.FetchData(() =>
+            //     {
+            //         GameStart(dataManager.StudentGameData.data.completedLevel);
+            //     });
             if (testLevel)
             {
                 GameStart(levelNumber);
@@ -176,10 +176,10 @@ namespace TMKOC.Sorting
         }
 
         private void OnApplicationQuit() {
-            dataManager.SendData(()=>
-            {
+            // dataManager.SendData(()=>
+            // {
 
-            });
+            // });
         }
 
         public virtual void LevelCompleteCheck()
@@ -240,7 +240,7 @@ namespace TMKOC.Sorting
             }
             else
             {
-                dataManager.OnLevelCompleted();
+               // dataManager.OnLevelCompleted();
                 if (m_PlayCloudTransition)
                 {
                     //CloudUI.Instance.PlayColoudEnterAnimation();
@@ -288,10 +288,10 @@ namespace TMKOC.Sorting
         public virtual void GoBackToPlayschool()
         {
            UnityEngine.Debug.Log("Go back to playschool");
-            dataManager.SendData(()=>
-            {
-                LoadSceneToMainMenu();
-            });
+            // dataManager.SendData(()=>
+            // {
+            //     LoadSceneToMainMenu();
+            // });
         }
 
         public void LoadSceneToMainMenu()
@@ -308,7 +308,7 @@ namespace TMKOC.Sorting
             yield return new WaitForSeconds(0.1f);
             SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
             Resources.UnloadUnusedAssets();
-            dataManager.SendData();
+          //  dataManager.SendData();
             print("SENT");
             Destroy(gameObject);
         }
@@ -325,8 +325,8 @@ namespace TMKOC.Sorting
         public virtual void GameCompleted()
         {
             m_CurrentGameState = GameState.Completed;
-           dataManager.SetCompletedLevel(dataManager.StudentGameData.data.totalLevel);
-            dataManager.OnGameCompleted();
+        //    dataManager.SetCompletedLevel(dataManager.StudentGameData.data.totalLevel);
+        //     dataManager.OnGameCompleted();
             
             OnGameCompleted?.Invoke();
         }
@@ -336,18 +336,18 @@ namespace TMKOC.Sorting
         protected override void Awake()
         {
             base.Awake();
-             dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
+          //   dataManager = new DataManager(GAMEID, Time.time, m_LevelManager.MaxLevels,testLevel);
         }
         /// <summary>
         /// This function is called when the object becomes enabled and active.
         /// </summary>
         void OnEnable()
         {
-            DataManager.OnDataManagerInitialized += OnDataManagerInitialized;
+           // DataManager.OnDataManagerInitialized += OnDataManagerInitialized;
         }
 
         private void OnDisable() {
-            DataManager.OnDataManagerInitialized -= OnDataManagerInitialized;
+            //DataManager.OnDataManagerInitialized -= OnDataManagerInitialized;
             
         }
 
@@ -366,7 +366,7 @@ namespace TMKOC.Sorting
          private void Update() {
             if(Input.GetKeyDown(KeyCode.P))
             {
-                dataManager.SendData();
+               // dataManager.SendData();
             }
         }
 
