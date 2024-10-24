@@ -35,6 +35,7 @@ public class ShapeSelect : Collectible
 
         private void OnGameStart()
         {
+          m_HighLightGameobject.SetActive(false);
 
             m_IsSelected = false;
 
@@ -42,7 +43,8 @@ public class ShapeSelect : Collectible
 
         private void OnGameRestart()
         {
-
+          m_HighLightGameobject.SetActive(false);
+            
             m_ObjectReseter.ResetObject();
         }
         private void OnMouseDown()
