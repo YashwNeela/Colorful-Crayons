@@ -21,6 +21,8 @@ namespace TMKOC.Sorting
 
         protected Level m_Level;
 
+        [SerializeField] protected bool m_ShouldIncludeScore = true;
+
 
         protected virtual void OnEnable()
         {
@@ -200,7 +202,17 @@ namespace TMKOC.Sorting
 
         public virtual int GetMaxSnapPoints()
         {
+
             return snapPoints.Length;
+        }
+
+        public virtual int GetScore()
+        {
+            if(m_ShouldIncludeScore)
+                return GetMaxSnapPoints();
+            return
+                0;
+
         }
 
         public virtual bool IsSlotAvailable()

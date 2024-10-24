@@ -18,6 +18,15 @@ namespace TMKOC.Sorting.ShapeSorting
             m_StartPos = transform.position;
         }
 
+        protected override void OnGameStart()
+        {
+            base.OnGameStart();
+            gameObject.SetActive(false);
+            gameObject.SetActive(true);
+
+        }
+
+
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             HandleCollectorOnTriggerEnter(other);
@@ -26,6 +35,13 @@ namespace TMKOC.Sorting.ShapeSorting
         protected virtual void OnTriggerExit2D(Collider2D other)
         {
             HandleCollectorOnTriggerExit(other);
+        }
+
+        
+        protected virtual void OnTriggerStay2D(Collider2D other)
+        {
+            HandleCollectorOnTriggerEnter(other);
+            
         }
 
         protected override void HandleCollectorOnTriggerEnter(Component collider)
@@ -63,15 +79,10 @@ namespace TMKOC.Sorting.ShapeSorting
         }
 
 
-        protected override void HandleDragStart()
-        {
-            this.GetComponent<SpriteRenderer>().sortingOrder = 101;
-
-        }
         protected override void HandleDragEnd()
         {
-            this.GetComponent<SpriteRenderer>().sortingOrder = 0;
-
+            
+            Debug.Log("Handle drag end");
             if(m_IsPlacedInsideCollector)
             {
                 draggable.ResetToStartDraggingValues();
@@ -81,19 +92,23 @@ namespace TMKOC.Sorting.ShapeSorting
             {
                 if (m_ValidCollector != null)
                 {
-
+                   
                     if ((m_CurrentCollector as ShapeCollector).ShapeType.HasFlag(m_ShapeType))
-                        m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => {
+                            OnPlacedCorrectly();
+                            });
                     else
-                        m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => {});
                     PlaceInCorrectly(m_CurrentCollector);
 
                 }
             }else
             {
-                draggable.ResetToPointValues(m_StartPos);
+                //draggable.ResetToPointValues(m_StartPos);
             }
         }
+
+        
 
 
         protected override void OnDragStartedStaticAction(Transform transform)
@@ -118,22 +133,7 @@ namespace TMKOC.Sorting.ShapeSorting
                 ((Collider2D)m_Collider).enabled = true;
         }
 
-        // 
-
-        private bool m_IsSelected;
-
-        private void OnMouseDown()
-        {
-            m_IsSelected = m_IsSelected ? false : true;
-
-            if (m_IsSelected)
-                FruitSelected();
-            else
-                FruitUnselected();
-        }
-
-        private void FruitSelected() { }
-        private void FruitUnselected() { }
+        
         
     }
 }

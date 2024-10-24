@@ -38,27 +38,16 @@ namespace TMKOC.Sorting.ShapeSorting
                 {
                     //// collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
                     collectible.transform.parent = snapPoint.transform; // Change parent first
+                    collectible.transform.localPosition = Vector3.zero;
                     snapPoint.IsOccupied = true;
                     collectible.SetSnapPoint(snapPoint);
-                    OnItemCollected(snapPoint);
+                    if(m_ShouldIncludeScore)
+                        OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
                     
 
 
-                    //collectible.transform.DOLocalMove(Vector3.zero, 0.75f).OnComplete(() =>
-                    //{
-
-                    //    snapPoint.IsOccupied = true;
-                    //    collectible.SetSnapPoint(snapPoint);
-
-                    //    if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
-                    //    {
-                    //        OnItemCollected(snapPoint);
-                    //        PlacedCorrectly?.Invoke();
-                    //    }
-                    //});
-
-                    //collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
+                    
 
 
 
