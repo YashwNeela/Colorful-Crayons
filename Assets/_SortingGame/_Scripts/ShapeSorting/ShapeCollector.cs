@@ -41,7 +41,7 @@ namespace TMKOC.Sorting.ShapeSorting
                     collectible.transform.localPosition = Vector3.zero;
                     snapPoint.IsOccupied = true;
                     collectible.SetSnapPoint(snapPoint);
-                    if(m_ShouldIncludeScore)
+                    if(m_ShouldIncludeScore && m_ShapeType.HasFlag((collectible as ShapeCollectible).ShapeType))
                         OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
                     

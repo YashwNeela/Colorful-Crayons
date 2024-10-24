@@ -69,7 +69,7 @@ namespace TMKOC.Sorting.ShapeSorting
         protected override void OnPlacedCorrectly()
         {
             base.OnPlacedCorrectly();
-
+            ParticleEffectManager.Instance.PlayParticleEffect(0,transform.position,new Vector3(100,100,100),null);
         }
 
         protected override void PlaceInCorrectly(Collector collector)
@@ -88,7 +88,7 @@ namespace TMKOC.Sorting.ShapeSorting
                 draggable.ResetToStartDraggingValues();
                 return;
             }
-            if (m_CurrentCollector != null)
+            if (m_CurrentCollector != null && m_CurrentCollector.IsSlotAvailable())
             {
                 if (m_ValidCollector != null)
                 {
@@ -104,7 +104,8 @@ namespace TMKOC.Sorting.ShapeSorting
                 }
             }else
             {
-                //draggable.ResetToPointValues(m_StartPos);
+                draggable.ResetToStartDraggingValues();
+
             }
         }
 
