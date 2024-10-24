@@ -34,9 +34,9 @@ namespace TMKOC.Sorting
         public GameObject m_LevelCheckButton;
         [SerializeField] protected LevelManager m_LevelManager;
 
-        protected DataManager dataManager;
+      //  protected DataManager dataManager;
 
-        public DataManager DataManager => dataManager;
+     //   public DataManager DataManager => dataManager;
 
         public int GAMEID;
 
@@ -71,7 +71,7 @@ namespace TMKOC.Sorting
         public static UnityAction OnRightAnswerAction;
         public static UnityAction OnWrongAnswerAction;
 
-        PlayschoolTestDataManager m_TestData;
+     //   PlayschoolTestDataManager m_TestData;
 
         [Button]
         public void OpenTerminal()
@@ -151,7 +151,7 @@ namespace TMKOC.Sorting
 
         public virtual void FirstTimeGameStart()
         {
-             if(!testLevel)
+            // if(!testLevel)
             // dataManager.FetchData(() =>
             //     {
             //         GameStart(dataManager.StudentGameData.data.completedLevel);
@@ -306,7 +306,7 @@ namespace TMKOC.Sorting
           //      AssetBundleLoading.instance.UnloadBundle();
             }
             yield return new WaitForSeconds(0.1f);
-            SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
+          //  SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
             Resources.UnloadUnusedAssets();
           //  dataManager.SendData();
             print("SENT");
@@ -360,6 +360,7 @@ namespace TMKOC.Sorting
 
         public void Start()
         {
+            FirstTimeGameStart();
           
         }
 

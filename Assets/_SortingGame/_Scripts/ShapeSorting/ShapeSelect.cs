@@ -13,6 +13,8 @@ public class ShapeSelect : Collectible
         [SerializeField] private bool m_IsSelected = false;
         [SerializeField] private ShapeType m_ShapeType;
 
+        [SerializeField] private GameObject m_HighLightGameobject;
+
 
         protected override void Awake()
         {
@@ -56,12 +58,15 @@ public class ShapeSelect : Collectible
         private void ShapeSelected()
         {
           //  m_SelectedSequence.Play();
+          m_HighLightGameobject.SetActive(true);
             transform.DOScale(75f, 0.25f);
             OnShapeSelected?.Invoke(m_ShapeType);
         }
 
         private void ShapeDeselected()
         {
+          m_HighLightGameobject.SetActive(false);
+
          //   m_SelectedSequence.PlayBackwards();
             transform.DOScale(63f, 0.25f);
             OnShapeDeselected?.Invoke(m_ShapeType);
