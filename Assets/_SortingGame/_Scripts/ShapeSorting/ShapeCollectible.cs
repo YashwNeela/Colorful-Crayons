@@ -61,9 +61,9 @@ namespace TMKOC.Sorting.ShapeSorting
 
         protected override void HandleCollectorOnTriggerExit(Component collider)
         {
-            // base.HandleCollectorOnTriggerExit(collider);
-            // m_ValidCollector = null;
-            // m_CurrentCollector = null;
+            base.HandleCollectorOnTriggerExit(collider);
+            m_ValidCollector = null;
+            m_CurrentCollector = null;
         }
 
         protected override void OnPlacedCorrectly()
