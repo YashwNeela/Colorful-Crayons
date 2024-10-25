@@ -21,7 +21,7 @@ namespace TMKOC.Sorting.ShapeSorting
         Dice = 1<<10,EarRings = 1<<11, Egg = 1<<12, Hanger = 1<<13, Hexagon = 1<<14, Leaf = 1<<15,
         Nut = 1<<16, OvalMirror = 1<<17, PhotoFrame1 = 1<<18, PhotonFram2 = 1<<19, Pizza = 1<<20,
         PizzaSlice = 1<<21, Radio = 1<<22, RubyBall = 1<<23, TrafficCone = 1<<24, TV = 1<<25, Watermelon = 1<<26,
-        Wheel1 = 1<<27, Wheel2 = 1<<28, 
+        Wheel1 = 1<<27, Wheel2 = 1<<28, Snowflake = 1<<29
 
     }
     public class ShapeCollector : Collector
