@@ -12,6 +12,8 @@ namespace TMKOC.Sorting.ShapeSorting
 
         Vector3 m_StartPos;
 
+        bool canAuto;
+
         protected override void Awake()
         {
             base.Awake();
@@ -37,11 +39,11 @@ namespace TMKOC.Sorting.ShapeSorting
             HandleCollectorOnTriggerExit(other);
         }
 
-        
+
         protected virtual void OnTriggerStay2D(Collider2D other)
         {
             HandleCollectorOnTriggerEnter(other);
-            
+
         }
 
         protected override void HandleCollectorOnTriggerEnter(Component collider)
@@ -57,6 +59,27 @@ namespace TMKOC.Sorting.ShapeSorting
             {
                 m_ValidCollector = collectorBox;
             }
+
+            if(canAuto){
+            if (m_CurrentCollector != null && m_CurrentCollector.IsSlotAvailable())
+            {
+                if (m_ValidCollector != null)
+                {
+
+                    if ((m_CurrentCollector as ShapeCollector).ShapeType.HasFlag(m_ShapeType))
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () =>
+                        {
+                            OnPlacedCorrectly();
+                        });
+                    else
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
+                    PlaceInCorrectly(m_CurrentCollector);
+
+                }
+            }
+            canAuto = false;
+            }
+            
         }
 
         protected override void HandleCollectorOnTriggerExit(Component collider)
@@ -69,7 +92,7 @@ namespace TMKOC.Sorting.ShapeSorting
         protected override void OnPlacedCorrectly()
         {
             base.OnPlacedCorrectly();
-            ParticleEffectManager.Instance.PlayParticleEffect(0,transform.position,new Vector3(100,100,100),null);
+            ParticleEffectManager.Instance.PlayParticleEffect(0, transform.position, new Vector3(100, 100, 100), null);
         }
 
         protected override void PlaceInCorrectly(Collector collector)
@@ -81,9 +104,9 @@ namespace TMKOC.Sorting.ShapeSorting
 
         protected override void HandleDragEnd()
         {
-            
+
             Debug.Log("Handle drag end");
-            if(m_IsPlacedInsideCollector)
+            if (m_IsPlacedInsideCollector)
             {
                 draggable.ResetToStartDraggingValues();
                 return;
@@ -92,24 +115,26 @@ namespace TMKOC.Sorting.ShapeSorting
             {
                 if (m_ValidCollector != null)
                 {
-                   
+
                     if ((m_CurrentCollector as ShapeCollector).ShapeType.HasFlag(m_ShapeType))
-                        m_CurrentCollector.SnapCollectibleToCollector(this, () => {
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () =>
+                        {
                             OnPlacedCorrectly();
-                            });
+                        });
                     else
-                        m_CurrentCollector.SnapCollectibleToCollector(this, () => {});
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
                     PlaceInCorrectly(m_CurrentCollector);
 
                 }
-            }else
+            }
+            else
             {
                 draggable.ResetToStartDraggingValues();
-
+                canAuto = true;
             }
         }
 
-        
+
 
 
         protected override void OnDragStartedStaticAction(Transform transform)
@@ -134,7 +159,7 @@ namespace TMKOC.Sorting.ShapeSorting
                 ((Collider2D)m_Collider).enabled = true;
         }
 
-        
-        
+
+
     }
 }
