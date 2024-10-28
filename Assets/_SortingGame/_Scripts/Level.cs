@@ -19,11 +19,17 @@ namespace TMKOC.Sorting
 
         public int LevelTimer => m_LevelTimer;
 
-        private Collector[] m_Collectors;
+        protected Collector[] m_Collectors;
 
-        private Collectible[] m_Collectibles;
+        public Collector[] Collectors => m_Collectors;
 
-        private Draggable[] m_Draggables;
+        protected Collectible[] m_Collectibles;
+
+        public Collectible[] Collectibles => m_Collectibles;
+
+        protected Draggable[] m_Draggables;
+
+        public Draggable[] Draggables => m_Draggables;
 
         [SerializeField]
         public UnityEvent onGameStart;
