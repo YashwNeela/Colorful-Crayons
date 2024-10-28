@@ -96,7 +96,7 @@ namespace TMKOC.Sorting
         {
             for(int i = 0 ;i<m_Collectors.Length;i++)
             {
-                m_ScoreRequiredToCompleteTheLevel += m_Collectors[i].GetMaxSnapPoints();
+                m_ScoreRequiredToCompleteTheLevel += m_Collectors[i].GetScore();
             }
         }
 

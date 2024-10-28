@@ -21,7 +21,7 @@ namespace TMKOC.Sorting.ShapeSorting
         Dice = 1<<10,EarRings = 1<<11, Egg = 1<<12, Hanger = 1<<13, Hexagon = 1<<14, Leaf = 1<<15,
         Nut = 1<<16, OvalMirror = 1<<17, PhotoFrame1 = 1<<18, PhotonFram2 = 1<<19, Pizza = 1<<20,
         PizzaSlice = 1<<21, Radio = 1<<22, RubyBall = 1<<23, TrafficCone = 1<<24, TV = 1<<25, Watermelon = 1<<26,
-        Wheel1 = 1<<27, Wheel2 = 1<<28, 
+        Wheel1 = 1<<27, Wheel2 = 1<<28, Snowflake = 1<<29, Chest = 1<<30
 
     }
     public class ShapeCollector : Collector
@@ -38,27 +38,16 @@ namespace TMKOC.Sorting.ShapeSorting
                 {
                     //// collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
                     collectible.transform.parent = snapPoint.transform; // Change parent first
+                    collectible.transform.localPosition = Vector3.zero;
                     snapPoint.IsOccupied = true;
                     collectible.SetSnapPoint(snapPoint);
-                    OnItemCollected(snapPoint);
+                    if(m_ShouldIncludeScore && m_ShapeType.HasFlag((collectible as ShapeCollectible).ShapeType))
+                        OnItemCollected(snapPoint);
                     PlacedCorrectly?.Invoke();
                     
 
 
-                    //collectible.transform.DOLocalMove(Vector3.zero, 0.75f).OnComplete(() =>
-                    //{
-
-                    //    snapPoint.IsOccupied = true;
-                    //    collectible.SetSnapPoint(snapPoint);
-
-                    //    if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
-                    //    {
-                    //        OnItemCollected(snapPoint);
-                    //        PlacedCorrectly?.Invoke();
-                    //    }
-                    //});
-
-                    //collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
+                    
 
 
 

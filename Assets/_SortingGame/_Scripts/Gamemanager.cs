@@ -34,9 +34,16 @@ namespace TMKOC.Sorting
         public GameObject m_LevelCheckButton;
         [SerializeField] protected LevelManager m_LevelManager;
 
-        protected DataManager dataManager;
+      //  protected DataManager dataManager;
 
-        public DataManager DataManager => dataManager;
+     //   public DataManager DataManager => dataManager;
+
+            protected GameCategoryDataManager m_CatergoryDataManager;
+            public GameCategoryDataManager GameCategoryDataManager=> m_CatergoryDataManager;
+
+            protected UpdateCategoryApiManager m_UpdateCategoryApiManager;
+
+            public UpdateCategoryApiManager UpdateCategoryApiManager=> m_UpdateCategoryApiManager;
 
         public int GAMEID;
 
@@ -71,7 +78,7 @@ namespace TMKOC.Sorting
         public static UnityAction OnRightAnswerAction;
         public static UnityAction OnWrongAnswerAction;
 
-        PlayschoolTestDataManager m_TestData;
+     //   PlayschoolTestDataManager m_TestData;
 
         [Button]
         public void OpenTerminal()
@@ -151,16 +158,20 @@ namespace TMKOC.Sorting
 
         public virtual void FirstTimeGameStart()
         {
-             if(!testLevel)
+            m_CatergoryDataManager = new GameCategoryDataManager(GAMEID);
+            m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
+
+            if (!testLevel)
+                levelNumber = m_CatergoryDataManager.GetCompletedLevel;
+            // if(!testLevel)
             // dataManager.FetchData(() =>
             //     {
             //         GameStart(dataManager.StudentGameData.data.completedLevel);
             //     });
-            if (testLevel)
-            {
-                GameStart(levelNumber);
+
+            GameStart(levelNumber);
                 
-            }
+
             m_LevelCheckButton.GetComponentInChildren<Button>().interactable = false;
 
             Invoke(nameof(EnableLevelCheckButton),2);
@@ -180,6 +191,7 @@ namespace TMKOC.Sorting
             // {
 
             // });
+            m_CatergoryDataManager.SaveLevel(LevelManager.Instance.CurrentLevelIndex,LevelManager.Instance.MaxLevels);
         }
 
         public virtual void LevelCompleteCheck()
@@ -192,6 +204,19 @@ namespace TMKOC.Sorting
             SetRemainingLives(m_MaxLives);
             SetScore(0);
             LevelManager.Instance.LoadLevel(level);
+            m_CatergoryDataManager.SaveLevel(level,LevelManager.Instance.MaxLevels);
+
+            int star = m_CatergoryDataManager.Getstar;
+            if (star >= 5)
+            {
+                m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 0, 5);
+            }
+            else
+            {
+                m_UpdateCategoryApiManager.SetGameDataMore(level, LevelManager.Instance.MaxLevels, 0, star);
+            }
+
+
             OnGameStart?.Invoke();
 
             GamePlaying();
@@ -306,7 +331,7 @@ namespace TMKOC.Sorting
           //      AssetBundleLoading.instance.UnloadBundle();
             }
             yield return new WaitForSeconds(0.1f);
-            SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
+          //  SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
             Resources.UnloadUnusedAssets();
           //  dataManager.SendData();
             print("SENT");
@@ -328,6 +353,8 @@ namespace TMKOC.Sorting
         //    dataManager.SetCompletedLevel(dataManager.StudentGameData.data.totalLevel);
         //     dataManager.OnGameCompleted();
             
+            m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels,LevelManager.Instance.MaxLevels,0,5);
+            m_CatergoryDataManager.SaveLevel(LevelManager.Instance.MaxLevels,LevelManager.Instance.MaxLevels);
             OnGameCompleted?.Invoke();
         }
 
@@ -360,6 +387,7 @@ namespace TMKOC.Sorting
 
         public void Start()
         {
+            FirstTimeGameStart();
           
         }
 

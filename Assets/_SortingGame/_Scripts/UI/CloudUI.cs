@@ -13,6 +13,8 @@ public class CloudUI : Singleton<CloudUI>
         m_Animator = GetComponent<Animator>();
     }
 
+    //Called from animation event
+
     public void OnCloudAnimationFinished()
     {
         Gamemanager.Instance.LoadNextLevel(LevelManager.Instance.CurrentLevelIndex + 1);

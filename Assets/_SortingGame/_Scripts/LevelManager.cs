@@ -42,6 +42,7 @@ namespace TMKOC.Sorting
             // Deactivate the current level
             levels[currentLevelIndex].gameObject.SetActive(false);
 
+            
             // Increment level index
             currentLevelIndex++;
 

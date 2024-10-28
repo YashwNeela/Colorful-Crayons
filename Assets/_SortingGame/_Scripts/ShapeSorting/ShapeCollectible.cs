@@ -12,11 +12,22 @@ namespace TMKOC.Sorting.ShapeSorting
 
         Vector3 m_StartPos;
 
+        bool canAuto;
+
         protected override void Awake()
         {
             base.Awake();
             m_StartPos = transform.position;
         }
+
+        protected override void OnGameStart()
+        {
+            base.OnGameStart();
+            gameObject.SetActive(false);
+            gameObject.SetActive(true);
+
+        }
+
 
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
@@ -26,6 +37,13 @@ namespace TMKOC.Sorting.ShapeSorting
         protected virtual void OnTriggerExit2D(Collider2D other)
         {
             HandleCollectorOnTriggerExit(other);
+        }
+
+
+        protected virtual void OnTriggerStay2D(Collider2D other)
+        {
+            HandleCollectorOnTriggerEnter(other);
+
         }
 
         protected override void HandleCollectorOnTriggerEnter(Component collider)
@@ -41,6 +59,27 @@ namespace TMKOC.Sorting.ShapeSorting
             {
                 m_ValidCollector = collectorBox;
             }
+
+            if(canAuto){
+            if (m_CurrentCollector != null && m_CurrentCollector.IsSlotAvailable())
+            {
+                if (m_ValidCollector != null)
+                {
+
+                    if ((m_CurrentCollector as ShapeCollector).ShapeType.HasFlag(m_ShapeType))
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () =>
+                        {
+                            OnPlacedCorrectly();
+                        });
+                    else
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
+                    PlaceInCorrectly(m_CurrentCollector);
+
+                }
+            }
+            canAuto = false;
+            }
+            
         }
 
         protected override void HandleCollectorOnTriggerExit(Component collider)
@@ -53,7 +92,7 @@ namespace TMKOC.Sorting.ShapeSorting
         protected override void OnPlacedCorrectly()
         {
             base.OnPlacedCorrectly();
-
+            ParticleEffectManager.Instance.PlayParticleEffect(0, transform.position, new Vector3(100, 100, 100), null);
         }
 
         protected override void PlaceInCorrectly(Collector collector)
@@ -63,37 +102,39 @@ namespace TMKOC.Sorting.ShapeSorting
         }
 
 
-        protected override void HandleDragStart()
-        {
-            this.GetComponent<SpriteRenderer>().sortingOrder = 101;
-
-        }
         protected override void HandleDragEnd()
         {
-            this.GetComponent<SpriteRenderer>().sortingOrder = 0;
 
-            if(m_IsPlacedInsideCollector)
+            Debug.Log("Handle drag end");
+            if (m_IsPlacedInsideCollector)
             {
                 draggable.ResetToStartDraggingValues();
                 return;
             }
-            if (m_CurrentCollector != null)
+            if (m_CurrentCollector != null && m_CurrentCollector.IsSlotAvailable())
             {
                 if (m_ValidCollector != null)
                 {
 
                     if ((m_CurrentCollector as ShapeCollector).ShapeType.HasFlag(m_ShapeType))
-                        m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                        m_CurrentCollector.SnapCollectibleToCollector(this, () =>
+                        {
+                            OnPlacedCorrectly();
+                        });
                     else
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
                     PlaceInCorrectly(m_CurrentCollector);
 
                 }
-            }else
+            }
+            else
             {
-                draggable.ResetToPointValues(m_StartPos);
+                draggable.ResetToStartDraggingValues();
+                canAuto = true;
             }
         }
+
+
 
 
         protected override void OnDragStartedStaticAction(Transform transform)
@@ -118,22 +159,7 @@ namespace TMKOC.Sorting.ShapeSorting
                 ((Collider2D)m_Collider).enabled = true;
         }
 
-        // 
 
-        private bool m_IsSelected;
 
-        private void OnMouseDown()
-        {
-            m_IsSelected = m_IsSelected ? false : true;
-
-            if (m_IsSelected)
-                FruitSelected();
-            else
-                FruitUnselected();
-        }
-
-        private void FruitSelected() { }
-        private void FruitUnselected() { }
-        
     }
 }
