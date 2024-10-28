@@ -10,6 +10,7 @@ namespace TMKOC.Sorting
     public abstract class Collector : MonoBehaviour
     {
         [SerializeField] protected SnapPoint[] snapPoints;
+        public SnapPoint[] SnapPoints => snapPoints;
 
         [SerializeField] protected int collectedItems;
 
