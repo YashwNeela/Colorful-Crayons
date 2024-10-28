@@ -312,8 +312,13 @@ namespace TMKOC.Sorting
         #region GoBackToPlaySchool
         public virtual void GoBackToPlayschool()
         {
-           UnityEngine.Debug.Log("Go back to playschool");
+        
+            #if PLAYSCHOOL_MAIN
+           SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
             // dataManager.SendData(()=>
+            #else
+            UnityEngine.Debug.Log("Go back to playschool");
+            #endif
             // {
             //     LoadSceneToMainMenu();
             // });
