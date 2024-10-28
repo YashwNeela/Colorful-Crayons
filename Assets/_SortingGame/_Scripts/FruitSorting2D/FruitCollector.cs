@@ -50,7 +50,7 @@ namespace TMKOC.Sorting.FruitSorting2D
         {
             base.OnDisable();
             Gamemanager.OnGameRestart -= ClearCollectibles;
-            Gamemanager.OnLevelCompleteCheck += ItemsInBasket;
+            Gamemanager.OnLevelCompleteCheck -= ItemsInBasket;
         }
 
         private void ClearCollectibles()

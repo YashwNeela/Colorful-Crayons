@@ -13,6 +13,37 @@ namespace TMKOC.Sorting.FruitSorting2D
             SetScoreRequiredToCompleteTheLevel();
         }
 
+        protected override void OnLevelCompleteCheck()
+        {
+            base.OnLevelCompleteCheck();
+
+            int totalCount = 0;
+
+            foreach (Collector collector in Collectors)
+            {
+                for (int i = 0; i < collector.SnapPoints.Length; i++)
+                {
+                    if (collector.SnapPoints[i].IsOccupied)
+                    {
+                        totalCount++;
+                    }
+                }
+            }
+
+            onLevelCompleteCheck?.Invoke();
+
+            if (m_CurrentScore == m_ScoreRequiredToCompleteTheLevel && totalCount == m_ScoreRequiredToCompleteTheLevel)
+            {
+                Gamemanager.Instance.GameOver();
+                Gamemanager.Instance.GameWin();
+            }
+            else
+            {
+                Gamemanager.Instance.GameOver();
+                Gamemanager.Instance.GameLoose();
+            }
+        }
+
         protected override void SetScoreRequiredToCompleteTheLevel()
         {
             base.m_CurrentScore = 0;
