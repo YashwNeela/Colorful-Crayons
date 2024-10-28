@@ -6026,53 +6026,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &432731405
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 432731407}
-  - component: {fileID: 432731406}
-  m_Layer: 0
-  m_Name: StudentProgressAPI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &432731406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432731405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8afc99527922266448762a05a4465ece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGet: 0
-  gameId: 1
-  GetAuth: 
---- !u!4 &432731407
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432731405}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &452477450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10742,7 +10695,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  m_ShouldDestroyOnLoad: 0
+  m_ShouldDestroyOnLoad: 1
   m_ParticleSystem:
   - {fileID: 4981501835830743253, guid: 774b9c9d7501f44168a4f5b7fcf42ceb, type: 3}
   - {fileID: 7265324377802546572, guid: 35ad8fdf943394b57b59f671d49915e0, type: 3}
@@ -28383,5 +28336,4 @@ SceneRoots:
   - {fileID: 3957112341757298856}
   - {fileID: 1533521854}
   - {fileID: 91489646852027126}
-  - {fileID: 432731407}
   - {fileID: 849273399}
