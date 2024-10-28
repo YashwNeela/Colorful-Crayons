@@ -313,7 +313,7 @@ namespace TMKOC.Sorting
         public virtual void GoBackToPlayschool()
         {
         
-            #if PLAYSHOOL_MAIN
+            #if PLAYSCHOOL_MAIN
            SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
             // dataManager.SendData(()=>
             #else
