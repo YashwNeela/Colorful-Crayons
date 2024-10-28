@@ -5962,50 +5962,6 @@ Transform:
   - {fileID: 330437950}
   m_Father: {fileID: 854537041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &432731405
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 432731407}
-  - component: {fileID: 432731406}
-  m_Layer: 0
-  m_Name: StudentProgressAPI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &432731406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432731405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8afc99527922266448762a05a4465ece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &432731407
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432731405}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &437835591
 GameObject:
   m_ObjectHideFlags: 0
@@ -10503,7 +10459,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
 --- !u!114 &864475554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12926,21 +12882,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Timer
       objectReference: {fileID: 0}
-    - target: {fileID: 3382803010670687905, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 330.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 3382803010670687905, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3382803010670687905, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
         type: 3}
       propertyPath: m_Pivot.x
@@ -13052,16 +12993,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7591038236117835668, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
         type: 3}
-    - target: {fileID: 8044642367356680003, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 68
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044642367356680003, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -24
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26083,6 +26014,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7712642162474414253, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 7988087890926442213, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_Name
@@ -26092,6 +26028,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _length
       value: 1662.7687
+      objectReference: {fileID: 0}
+    - target: {fileID: 8858670874637214206, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26205,5 +26146,4 @@ SceneRoots:
   - {fileID: 3957112341757298856}
   - {fileID: 1533521854}
   - {fileID: 91489646852027126}
-  - {fileID: 432731407}
   - {fileID: 849273399}
