@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMKOC.Sorting.ColorfulCrayons;
 using UnityEngine;
 
 namespace TMKOC.Sorting.FruitSorting2D
@@ -10,6 +10,8 @@ namespace TMKOC.Sorting.FruitSorting2D
         [SerializeField] private new int m_ScoreRequiredToCompleteTheLevel;
         [SerializeField] private FruitType m_FruitType;
         [SerializeField] List<FruitSelect> m_FruitSelectList;
+
+        public static event Action OnGameEnd;
 
 
         protected override void Awake()
@@ -24,6 +26,22 @@ namespace TMKOC.Sorting.FruitSorting2D
             //Gamemanager.OnGameRestart += base.OnGameRestart;
             SubscribeToFruitSelectActions();
         }
+        protected override void OnLevelCompleteCheck()
+        {
+            onLevelCompleteCheck?.Invoke();
+            if (m_CurrentScore == m_ScoreRequiredToCompleteTheLevel)
+            {
+                Gamemanager.Instance.GameOver();
+                Gamemanager.Instance.GameWin();
+            }
+            else
+            {
+                Gamemanager.Instance.GameOver();
+                Gamemanager.Instance.GameLoose();
+            }
+            OnGameEnd?.Invoke();
+        }
+
 
         protected override void OnDisable()
         {;

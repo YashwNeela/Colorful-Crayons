@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,6 +62,7 @@ namespace TMKOC.Sorting.FruitSorting2D
         private void ItemsInBasket()
         {
             gridItems.Clear();
+
             for (int i = 0; i < collectibles.Count; i++)
             {
                 var item = collectibles[i];
@@ -68,9 +70,20 @@ namespace TMKOC.Sorting.FruitSorting2D
                 gridItems.Add(newGridItem);
             }
 
-            OnLevelOver?.Invoke(gridItems);
+            if(sastaFixCoroutine != null)
+            {
+                StopCoroutine(sastaFixCoroutine);
+            }
+            sastaFixCoroutine = StartCoroutine(SastaFix(0.01f));
         }
 
+        private Coroutine sastaFixCoroutine;
+
+        private IEnumerator SastaFix(float waitTime)
+        {
+            yield return new WaitForSeconds(waitTime);
+            OnLevelOver?.Invoke(gridItems);
+        }
 
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {

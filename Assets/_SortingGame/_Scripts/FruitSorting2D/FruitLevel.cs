@@ -15,7 +15,7 @@ namespace TMKOC.Sorting.FruitSorting2D
 
         protected override void OnLevelCompleteCheck()
         {
-            base.OnLevelCompleteCheck();
+            //base.OnLevelCompleteCheck();
 
             int totalCount = 0;
 

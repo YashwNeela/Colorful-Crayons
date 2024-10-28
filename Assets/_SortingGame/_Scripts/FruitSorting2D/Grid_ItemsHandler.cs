@@ -20,6 +20,7 @@ namespace TMKOC.Sorting.FruitSorting2D
             FruitCollector.OnLevelOver -= LoadCollectedItems;
         }
 
+
         private void ResetList()
         {
             foreach (Grid_ItemController item in _currentItems)
@@ -33,7 +34,6 @@ namespace TMKOC.Sorting.FruitSorting2D
         int index = 0;
         private void LoadCollectedItems(List<GridItemData> gridItems)
         {
-            Debug.Log("chk" + index++);
             for (int i = 0; i < gridItems.Count; i++)
             {
                 Grid_ItemController grid_item = Instantiate(_gridItemPrefab, transform);
