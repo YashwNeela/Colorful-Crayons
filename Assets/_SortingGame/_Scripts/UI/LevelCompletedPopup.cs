@@ -18,14 +18,26 @@ public class LevelCompletedPopup : MonoBehaviour
 
     [SerializeField] private GameObject[] m_WinText;
 
+    [SerializeField] private LevelFailUI m_LevelFailUI;
 
+
+    void Awake()
+    {
+       
+    }
     void OnEnable()
     {
+        Gamemanager.OnGameOver += OnGameOver;
         Gamemanager.OnGameStart += OnGameStart;
         Gamemanager.OnGameLoose += OnGameLoose;
         Gamemanager.OnGameWin += OnGameWin;
         Gamemanager.OnGameCompleted += OnGameCompleted;
 
+    }
+
+    private void OnGameOver()
+    {
+        m_LevelFailUI.SetLevelFailData(10);
     }
 
     private void OnGameCompleted()
@@ -36,6 +48,8 @@ public class LevelCompletedPopup : MonoBehaviour
 
     void OnDisable()
     {
+        Gamemanager.OnGameOver -= OnGameOver;
+
         Gamemanager.OnGameStart -= OnGameStart;
         Gamemanager.OnGameLoose -= OnGameLoose;
         Gamemanager.OnGameWin -= OnGameWin;
