@@ -23,7 +23,7 @@ namespace TMKOC.Sorting.FruitSorting2D
         Eggplant = 1 << 11,
         Onion = 1 << 12,
         Pumpkin = 1 << 13,
-        Tomato = 1 << 14,
+        Beetroot = 1 << 14,
     }
 
 
