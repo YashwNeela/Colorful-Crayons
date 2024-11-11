@@ -9,6 +9,8 @@ namespace TMKOC.Sorting
 {
     public abstract class Collectible : MonoBehaviour
     {
+        [SerializeField] private SpriteRenderer m_SpriteRenderer;
+        public SpriteRenderer spriteRenderer => m_SpriteRenderer;
         protected Collector m_ValidCollector;
 
         protected Collector m_CurrentCollector;
@@ -52,12 +54,12 @@ namespace TMKOC.Sorting
             Draggable.OnDragEndStaticAction += OnDragEndStaticAction;
         }
 
-        protected virtual void Start(){}
+        protected virtual void Start() { }
         protected virtual void OnGameStart()
         {
             draggable.m_CanDrag = true;
 
-            if(m_HasCustomSnapPoint)
+            if (m_HasCustomSnapPoint)
             {
                 m_IsPlacedCorrectly = m_CustomIsPlacedCorrectly;
                 m_IsPlacedInsideCollector = true;
@@ -66,7 +68,7 @@ namespace TMKOC.Sorting
                 transform.position = m_CurrentSnapPoint.transform.position;
                 transform.rotation = m_CurrentSnapPoint.transform.rotation;
             }
-            
+
             else
             {
                 m_IsPlacedCorrectly = false;
@@ -79,7 +81,7 @@ namespace TMKOC.Sorting
             m_ObjectReseter.ResetObject();
             Reset();
 
-            if(m_HasCustomSnapPoint)
+            if (m_HasCustomSnapPoint)
                 m_CurrentSnapPoint = m_CustomSnapPoint;
         }
 
@@ -98,32 +100,32 @@ namespace TMKOC.Sorting
 
         protected virtual void OnLevelCompleteCheck()
         {
-            
+
         }
 
         protected virtual void OnGameOver()
         {
-          
+
         }
 
         protected virtual void OnDragEndStaticAction(Transform transform)
         {
-            
+
         }
 
         protected virtual void OnDraggingStaticAction(Transform transform)
         {
-            
+
         }
 
         protected virtual void OnDragStartedStaticAction(Transform transform)
         {
-            
+
         }
 
         protected virtual void Awake()
         {
-            if(!m_HasCustomDefaulParent)
+            if (!m_HasCustomDefaulParent)
                 m_DefaulParent = transform.parent;
 
             // Subscribe to the OnDragEnd event
@@ -137,28 +139,28 @@ namespace TMKOC.Sorting
 
             m_Collider = GetComponent<Collider>();
 
-            if(m_Collider == null)
-            m_Collider = GetComponent<Collider2D>();
+            if (m_Collider == null)
+                m_Collider = GetComponent<Collider2D>();
         }
 
         protected virtual void OnTriggerEnter(Collider other)
         {
             HandleCollectorOnTriggerEnter(other);
         }
-         
+
 
         protected virtual void HandleCollectorOnTriggerEnter(Component collider)
         {
-            if(collider is Collider)
+            if (collider is Collider)
                 m_CurrentCollector = ((Collider)collider).GetComponent<Collector>();
-            else if(collider is Collider2D)
+            else if (collider is Collider2D)
                 m_CurrentCollector = ((Collider2D)collider).GetComponent<Collector>();
 
-            if(m_CurrentCollector == null)
-                return; 
+            if (m_CurrentCollector == null)
+                return;
 
             Debug.Log("Trigger Entered");
-            if(m_CurrentCollector != null && !m_IsPlacedCorrectly && draggable.IsDragging)
+            if (m_CurrentCollector != null && !m_IsPlacedCorrectly && draggable.IsDragging)
                 m_CurrentCollector.OnCollectibleEntered(this);
         }
 
@@ -178,68 +180,70 @@ namespace TMKOC.Sorting
         }
         protected virtual void HandleCollectorOnTriggerExit(Component collider)
         {
-            if(collider is Collider)
+            if (collider is Collider)
                 m_CurrentCollector = ((Collider)collider).GetComponent<Collector>();
-            else if(collider is Collider2D)
+            else if (collider is Collider2D)
                 m_CurrentCollector = ((Collider2D)collider).GetComponent<Collector>();
-            
-            
+
+
             Debug.Log("Trigger Exited");
 
-            
-           
 
-            if(m_CurrentCollector != null && draggable.IsDragging){
+
+
+            if (m_CurrentCollector != null && draggable.IsDragging)
+            {
                 m_CurrentCollector.OnCollectibleExited(this);
                 m_IsPlacedCorrectly = false;
                 m_IsPlacedInsideCollector = false;
             }
-            
-        
+
+
 
         }
 
-        
+
 
         protected virtual void HandleDragEnd()
         {
-            if(m_IsPlacedInsideCollector){
+            if (m_IsPlacedInsideCollector)
+            {
                 draggable.ResetToStartDraggingValues();
                 return;
             }
 
             if (m_ValidCollector != null)
             {
-                m_ValidCollector.SnapCollectibleToCollector(this,()=> OnPlacedCorrectly());
+                m_ValidCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
             }
-            else if(m_IsTryingToPlaceWrong)
+            else if (m_IsTryingToPlaceWrong)
                 PlaceInCorrectly(m_CurrentCollector);
-            
+
             m_IsTryingToPlaceWrong = false;
-                
+
         }
 
         protected virtual void HandleDragStart()
         {
-            
+
         }
 
         protected virtual void OnPlacedCorrectly()
         {
             m_IsPlacedCorrectly = true;
             m_IsPlacedInsideCollector = true;
-           // draggable.m_CanDrag = false;
+            // draggable.m_CanDrag = false;
         }
 
         protected virtual void PlaceInCorrectly(Collector collector)
         {
-            if(collector != null)
+            if (collector != null)
                 collector.OnWrongItemTriedToCollect();
             draggable.m_CanDrag = true;
             m_IsPlacedCorrectly = false;
             m_IsPlacedInsideCollector = true;
-            
-           
+
+
         }
 
         protected virtual void Reset()
@@ -252,15 +256,15 @@ namespace TMKOC.Sorting
         {
             m_CurrentSnapPoint = snapPoint;
             m_CurrentSnapPoint.SetCollectible(this);
-            
+
         }
 
         public virtual void RemoveFromSnapPoint()
         {
             transform.parent = m_DefaulParent;
-            if(m_CurrentSnapPoint != null)
+            if (m_CurrentSnapPoint != null)
                 m_CurrentSnapPoint.ResetSnapPoint();
-            
+
             m_CurrentSnapPoint = null;
 
             Reset();

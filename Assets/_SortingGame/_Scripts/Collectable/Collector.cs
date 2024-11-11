@@ -24,6 +24,8 @@ namespace TMKOC.Sorting
 
         [SerializeField] protected bool m_ShouldIncludeScore = true;
 
+        public bool ShouldIncludeScore => m_ShouldIncludeScore;
+
 
         protected virtual void OnEnable()
         {

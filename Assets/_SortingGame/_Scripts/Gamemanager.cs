@@ -163,6 +163,8 @@ namespace TMKOC.Sorting
 
             if (!testLevel)
                 levelNumber = m_CatergoryDataManager.GetCompletedLevel;
+            else 
+                levelNumber = levelNumber;
             // if(!testLevel)
             // dataManager.FetchData(() =>
             //     {
