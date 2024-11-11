@@ -17,6 +17,8 @@ namespace TMKOC.Sorting
 
         [SerializeField] protected Collectible m_CurrentCollectible;
 
+        public Collectible CurrentCollectible => m_CurrentCollectible;
+
         void OnEnable()
         {
             Gamemanager.OnGameStart += OnGameStart;
