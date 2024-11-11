@@ -146,7 +146,7 @@ namespace TMKOC.Sorting
                 m_SFXAudioSource.Stop();
 
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[Random.Range(0, m_CurrentLocalizedAudio.levelComplete.Count)];
+            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[LevelManager.Instance.CurrentLevelIndex];
             m_SFXAudioSource.Play();
         }
 
@@ -158,7 +158,7 @@ namespace TMKOC.Sorting
             else if (overridePreviousClips && m_SFXAudioSource.isPlaying)
                 m_SFXAudioSource.Stop();
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[Random.Range(0, m_CurrentLocalizedAudio.levelFail.Count)];
+            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[LevelManager.Instance.CurrentLevelIndex];
             m_SFXAudioSource.Play();
         }
 

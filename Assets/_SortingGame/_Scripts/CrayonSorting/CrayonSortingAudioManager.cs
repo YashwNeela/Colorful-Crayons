@@ -10,14 +10,14 @@ namespace TMKOC.Sorting
     {
         public void PlayColorNameAudio(CrayonColor color, bool overridePreviousClips = false)
         {
-            if (m_SFXAudioSource.isPlaying && !overridePreviousClips)
-                return;
-            else if (overridePreviousClips && m_SFXAudioSource.isPlaying)
-                m_SFXAudioSource.Stop();
+            // if (m_SFXAudioSource.isPlaying && !overridePreviousClips)
+            //     return;
+            // else if (overridePreviousClips && m_SFXAudioSource.isPlaying)
+            //     m_SFXAudioSource.Stop();
 
-            m_SFXAudioSource.clip = (m_CurrentLocalizedAudio as CrayonSortingAudio)
-            .CrayonColorNameDict[color];
-            m_SFXAudioSource.Play();
+            // m_SFXAudioSource.clip = (m_CurrentLocalizedAudio as CrayonSortingAudio)
+            // .CrayonColorNameDict[color];
+            // m_SFXAudioSource.Play();
         
         }
 
