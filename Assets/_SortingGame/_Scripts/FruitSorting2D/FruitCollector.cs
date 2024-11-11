@@ -24,6 +24,8 @@ namespace TMKOC.Sorting.FruitSorting2D
         Onion = 1 << 12,
         Pumpkin = 1 << 13,
         Beetroot = 1 << 14,
+        Fruit = 1 << 15,
+        Vegetable = 1 << 16
     }
 
 

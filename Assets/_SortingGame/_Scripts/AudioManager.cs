@@ -28,6 +28,28 @@ namespace TMKOC.Sorting
         [SerializeField] protected AudioSource m_ExtraAudioSource;
         public AudioSource ExtraAudioSource => m_ExtraAudioSource;
 
+        protected override void Awake()
+        {
+            base.Awake();
+#if PLAYSCHOOL_MAIN
+            switch (PlayerPrefs.GetString("PlaySchoolLanguage"))
+            {
+                case "English":
+                SetAudioLanguage(AudioLanguage.English);
+                break;
+                case "Hindi":
+                SetAudioLanguage(AudioLanguage.Hindi);
+                break;
+                default:
+                SetAudioLanguage(AudioLanguage.English);
+                break;
+            }
+#else
+            SetAudioLanguage(m_CurretAudioLanguage);
+#endif
+
+            PlayBackgroundAudio();
+        }
         protected virtual void OnEnable()
         {
             Gamemanager.OnFirstTimeGameStartAction += OnFirstTimeGameStart;
@@ -90,24 +112,7 @@ namespace TMKOC.Sorting
 
         protected virtual void Start()
         {
-            #if PLAYSCHOOL_MAIN
-            switch (PlayerPrefs.GetString("PlaySchoolLanguage"))
-            {
-                case "English":
-                SetAudioLanguage(AudioLanguage.English);
-                break;
-                case "Hindi":
-                SetAudioLanguage(AudioLanguage.Hindi);
-                break;
-                default:
-                SetAudioLanguage(AudioLanguage.English);
-                break;
-            }
-            #else
-                SetAudioLanguage(m_CurretAudioLanguage);
-            #endif
 
-            PlayBackgroundAudio();
         }
 
         protected virtual void SetAudioLanguage(AudioLanguage audioLanguage)
@@ -133,8 +138,8 @@ namespace TMKOC.Sorting
 
             //if (Random.Range(0f, 1f) < 0.5f)
             //{
-                m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
-                m_SFXAudioSource.Play();
+            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
+            m_SFXAudioSource.Play();
             //}
         }
 
@@ -219,13 +224,13 @@ namespace TMKOC.Sorting
         public virtual void PlayAudio(AudioClip clip, AudioSource audioSource,
         bool overridePreviousClips = false, bool isPlayOneShot = false)
         {
-            if(audioSource.isPlaying && !overridePreviousClips)
+            if (audioSource.isPlaying && !overridePreviousClips)
                 return;
-            else if(overridePreviousClips && audioSource.isPlaying)
+            else if (overridePreviousClips && audioSource.isPlaying)
                 audioSource.Stop();
 
             audioSource.clip = clip;
-            if(!isPlayOneShot)
+            if (!isPlayOneShot)
                 audioSource.Play();
             else
                 audioSource.PlayOneShot(clip);
