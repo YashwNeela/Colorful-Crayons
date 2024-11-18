@@ -161,8 +161,11 @@ namespace TMKOC.Sorting
             m_CatergoryDataManager = new GameCategoryDataManager(GAMEID);
             m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
 
-            if (!testLevel)
+            if (!testLevel){
                 levelNumber = m_CatergoryDataManager.GetCompletedLevel;
+                if(levelNumber == LevelManager.Instance.MaxLevels-1)
+                    levelNumber = 0;
+            }
             else 
                 levelNumber = levelNumber;
             // if(!testLevel)

@@ -34,7 +34,7 @@ namespace TMKOC.Sorting
 #if PLAYSCHOOL_MAIN
             switch (PlayerPrefs.GetString("PlaySchoolLanguage"))
             {
-                case "English":
+                case "EnglishUS":
                 SetAudioLanguage(AudioLanguage.English);
                 break;
                 case "Hindi":
@@ -101,8 +101,8 @@ namespace TMKOC.Sorting
 
         private void OnGameCompleted()
         {
-            m_ExtraAudioSource.clip = m_CurrentLocalizedAudio.gameComplete[Random.Range(0, m_CurrentLocalizedAudio.gameComplete.Count)];
-            m_ExtraAudioSource.Play();
+           // m_ExtraAudioSource.clip = m_CurrentLocalizedAudio.gameComplete[Random.Range(0, m_CurrentLocalizedAudio.gameComplete.Count)];
+            //m_ExtraAudioSource.Play();
         }
 
         protected virtual void OnGameWin()
