@@ -85,15 +85,15 @@ namespace TMKOC.Sorting.CarSorting
         {
             if(m_CarType.HasFlag(CarType.BlueCar))
             {
-                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).normalCarAudio,CarSortingAudioManager.Instance.SFXAudioSource,isPlayOneShot: true);
+                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).normalCarAudio,CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
 
             }
             else if(m_CarType.HasFlag(CarType.RedCar))
-                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).muscleCarAudio,CarSortingAudioManager.Instance.SFXAudioSource,isPlayOneShot: true);
+                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).muscleCarAudio,CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
              else if(m_CarType.HasFlag(CarType.YellowCar))
-                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).sportsCarAudio,CarSortingAudioManager.Instance.SFXAudioSource,isPlayOneShot: true);
+                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).sportsCarAudio,CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
                  else if(m_CarType.HasFlag(CarType.GreenCar))
-                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).normalCarAudio,CarSortingAudioManager.Instance.SFXAudioSource,isPlayOneShot: true);
+                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).normalCarAudio,CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
 
         }
       
