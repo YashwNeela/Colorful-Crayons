@@ -163,7 +163,7 @@ namespace TMKOC.Sorting
 
             if (!testLevel){
                 levelNumber = m_CatergoryDataManager.GetCompletedLevel;
-                if(levelNumber == LevelManager.Instance.MaxLevels-1)
+                if(levelNumber == LevelManager.Instance.MaxLevels)
                     levelNumber = 0;
             }
             else 
