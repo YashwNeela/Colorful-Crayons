@@ -36,9 +36,17 @@ namespace TMKOC.Sorting
         private void OnGameStart()
         {
             m_IsShowingTip = false;
+            StartCoroutine(StaticCoroutine.Co_GenericCoroutine(3f,()=>
+            {
             m_CheckButton.interactable = true;
+
+            }));
+            
+            
             ShowTip();
         }
+
+       
 
         public void OnBackButtonClicked()
         {
