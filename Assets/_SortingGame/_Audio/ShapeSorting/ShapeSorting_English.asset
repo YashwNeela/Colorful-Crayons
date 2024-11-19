@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4949ff34688394adeb3620a5f25b162e, type: 3}
+  m_Name: ShapeSorting_English
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 8300000, guid: 8ee4e64e2edc043099a2246b0ca337aa, type: 3}
+    - {fileID: 8300000, guid: 6ce5d7682fa6145eb893f724b8003fdd, type: 3}
+    - {fileID: 8300000, guid: 62e3d067707bd4c648e92aca11fe9cc4, type: 3}
+    - {fileID: 8300000, guid: 1753e94880fe949d892f26759ff677fa, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: crayonColorNameDict
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[TMKOC.Sorting.ColorfulCrayons.CrayonColor,
+        Assembly-CSharp],[UnityEngine.AudioClip, UnityEngine.AudioModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.Sorting.ColorfulCrayons.CrayonColor,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 8
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 16
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 32
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 64
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 128
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  audioLanguage: 1
+  intro:
+  - {fileID: 8300000, guid: 99883bda5f2bc468aa5f8c27c9c49591, type: 3}
+  background:
+  - {fileID: 8300000, guid: fa151cf5f212945cd9ed18c7865ea2b6, type: 3}
+  levelStart:
+  - {fileID: 8300000, guid: 4fa93c84ba8334f499ff14bcbd215ad2, type: 3}
+  levelComplete:
+  - {fileID: 8300000, guid: 8b3a6491d6f1c4c7fb1c208639ff91cd, type: 3}
+  - {fileID: 8300000, guid: cf1f40f105bdc470c80cb0539f3fa955, type: 3}
+  - {fileID: 8300000, guid: 33e75822347d645d6990f3d43f8eafee, type: 3}
+  - {fileID: 8300000, guid: 75211ed0205d746d4848f1c48237fa85, type: 3}
+  - {fileID: 8300000, guid: 8e4d09572d4814b07af7b9373d4b956d, type: 3}
+  - {fileID: 8300000, guid: a7533499ab39b4db790e6a31ba96b258, type: 3}
+  levelFail:
+  - {fileID: 8300000, guid: 7d8bc31e47df2409b9ad8bf22311a059, type: 3}
+  - {fileID: 8300000, guid: 8a03aa3ce252c4c18817946fd39c8414, type: 3}
+  - {fileID: 8300000, guid: 65e235db5d20243d9b866cbaf63d361e, type: 3}
+  - {fileID: 8300000, guid: 570ea3b16cd0c4a138125f6902f0661f, type: 3}
+  - {fileID: 8300000, guid: 2cbf56570379a41d59d4040ae9b82bd4, type: 3}
+  - {fileID: 8300000, guid: b7bd500e35fa44ef893902a8468b28e8, type: 3}
+  levelIntro:
+  - {fileID: 8300000, guid: 4e177a379f41b4b20bd54abdc0f31bbc, type: 3}
+  - {fileID: 8300000, guid: 2e8ca06d9756f4b75817019753260b02, type: 3}
+  - {fileID: 8300000, guid: 036b753809d0644278438dd09d7ff60f, type: 3}
+  - {fileID: 8300000, guid: 0d038cda604c2426da33296614b5f777, type: 3}
+  - {fileID: 8300000, guid: 0cd6de0da660d41289899fd87b9fe327, type: 3}
+  - {fileID: 8300000, guid: 0643fd5e3693b4ff79d0464325672cc8, type: 3}
+  gameComplete:
+  - {fileID: 8300000, guid: 314e0647139734f978f97e034be7555c, type: 3}
+  retry: []
+  rightAnswer:
+  - {fileID: 8300000, guid: e7dda7c1641d14ffdaa8a741e3141711, type: 3}
+  wrongAnswer:
+  - {fileID: 8300000, guid: 57ab060f0725648a6b771d6f4b853640, type: 3}
