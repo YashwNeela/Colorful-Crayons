@@ -14,6 +14,17 @@ namespace TMKOC.Sorting
 
         [SerializeField] private GameObject m_DetailContainer;
 
+        [SerializeField] private Button m_RetryButton;
+
+        void OnEnable()
+        {
+            m_RetryButton.interactable = false;
+            StartCoroutine(StaticCoroutine.Co_GenericCoroutine(3,()=>
+            {
+            m_RetryButton.interactable = true;
+
+            }));
+        }
 
 
 

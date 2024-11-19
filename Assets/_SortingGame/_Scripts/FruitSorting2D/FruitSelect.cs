@@ -40,7 +40,7 @@ namespace TMKOC.Sorting.FruitSorting2D
 
         private void OnGameRestart()
         {
-
+            FruitDeselected();
             m_ObjectReseter.ResetObject();
         }
         private void OnMouseDown()
