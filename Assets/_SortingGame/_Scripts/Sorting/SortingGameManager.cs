@@ -17,15 +17,13 @@ namespace TMKOC.Sorting
     public class SortingGameManager : GameManager
     {
         public GameObject m_LevelCheckButton;
-        [SerializeField] protected LevelManager m_LevelManager;
+        [SerializeField] protected SortingLevelManager m_LevelManager;
 
       //  protected DataManager dataManager;
 
      //   public DataManager DataManager => dataManager;
 
-        public bool testLevel;
 
-        public int levelNumber;
 
         public DOTweenAnimation m_CameraShakeDotweenAnimation;
 
@@ -105,22 +103,7 @@ namespace TMKOC.Sorting
         public override void FirstTimeGameStart()
         {
           base.FirstTimeGameStart();
-            if (!testLevel){
-                levelNumber = m_CatergoryDataManager.GetCompletedLevel;
-                if(levelNumber == LevelManager.Instance.MaxLevels)
-                    levelNumber = 0;
-            }
-            else 
-                levelNumber = levelNumber;
-            // if(!testLevel)
-            // dataManager.FetchData(() =>
-            //     {
-            //         GameStart(dataManager.StudentGameData.data.completedLevel);
-            //     });
-
-            GameStart(levelNumber);
-                
-
+           
             m_LevelCheckButton.GetComponentInChildren<Button>().interactable = false;
 
             Invoke(nameof(EnableLevelCheckButton),2);
@@ -137,7 +120,7 @@ namespace TMKOC.Sorting
             // {
 
             // });
-            m_CatergoryDataManager.SaveLevel(LevelManager.Instance.CurrentLevelIndex,LevelManager.Instance.MaxLevels);
+            m_CatergoryDataManager.SaveLevel(SortingLevelManager.Instance.CurrentLevelIndex,SortingLevelManager.Instance.MaxLevels);
         }
 
         public virtual void LevelCompleteCheck()
@@ -155,7 +138,7 @@ namespace TMKOC.Sorting
         {
             base.GameNotCompleted();
             ConfettiUI.Instance.PlayParticle();
-            Invoke(nameof(PlayLevelCompletedBlast), 2);
+           // Invoke(nameof(PlayLevelCompletedBlast), 2);
         }
 
         private void PlayLevelCompletedBlast()
@@ -164,7 +147,7 @@ namespace TMKOC.Sorting
             p.transform.position = m_LevelCompleteBlastParent.position + m_LevelCompletedBlastOffset;
 
             p.Play();
-            LoadNextLevel(LevelManager.Instance.CurrentLevelIndex + 1);
+            LoadNextLevel(SortingLevelManager.Instance.CurrentLevelIndex + 1);
 
 
         }

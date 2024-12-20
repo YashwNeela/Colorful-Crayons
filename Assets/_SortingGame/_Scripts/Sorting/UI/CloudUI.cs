@@ -17,7 +17,7 @@ public class CloudUI : Singleton<CloudUI>
 
     public void OnCloudAnimationFinished()
     {
-        SortingGameManager.Instance.LoadNextLevel(LevelManager.Instance.CurrentLevelIndex + 1);
+        SortingGameManager.Instance.LoadNextLevel(SortingLevelManager.Instance.CurrentLevelIndex + 1);
     }
 
     public void PlayColoudEnterAnimation()

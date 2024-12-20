@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TMKOC.Sorting
 {
-    public class CrayonSortingAudioManager : AudioManager
+    public class CrayonSortingAudioManager : SortingAudioManager
     {
         public void PlayColorNameAudio(CrayonColor color, bool overridePreviousClips = false)
         {

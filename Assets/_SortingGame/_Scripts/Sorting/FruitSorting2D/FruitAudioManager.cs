@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TMKOC.Sorting.FruitSorting2D
 {
 
-    public class FruitAudioManager : AudioManager
+    public class FruitAudioManager : SortingAudioManager
     {
         //public Action<int> PassLevelNumber;
 

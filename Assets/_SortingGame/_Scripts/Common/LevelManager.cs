@@ -1,48 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMKOC.Sorting;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-namespace TMKOC.Sorting
+
+namespace TMKOC
 {
     public class LevelManager : Singleton<LevelManager>
     {
         public TextMeshProUGUI m_LevelText;
-
         public TextMeshProUGUI m_TipText;
+
         [SerializeField] private List<GameObject> levels; // Array to hold all levels
-
-       
-
-
 
         public int MaxLevels => levels.Count;
         private int currentLevelIndex = 0;
 
         public int CurrentLevelIndex => currentLevelIndex;
 
-    
+        private GameManager m_GameManager;
 
-        private SortingGameManager gameManager;
-
-        void Start()
+        protected virtual void Start()
         {
-            gameManager = FindObjectOfType<SortingGameManager>();
-
-        
+            m_GameManager = FindAnyObjectByType<GameManager>();
         }
 
-        public Level GetCurrentLevel()
+        public virtual Level GetCurrentLevel()
         {
             return levels[CurrentLevelIndex].GetComponent<Level>();
         }
 
-        public void CompleteLevel()
+        public virtual void CompleteLevel()
         {
-            // Deactivate the current level
             levels[currentLevelIndex].gameObject.SetActive(false);
 
-            
+
             // Increment level index
             currentLevelIndex++;
 
@@ -55,20 +47,20 @@ namespace TMKOC.Sorting
             else
             {
                 // No more levels, handle game completion
-                gameManager.GameOver(); // Assuming you have a method in GameManager to handle this
+                m_GameManager.GameOver(); // Assuming you have a method in GameManager to handle this
             }
         }
 
-        public void RestartLevel()
+        public virtual void RestartLevel()
         {
             // Reset the current level (useful if the player fails and needs to retry)
             levels[currentLevelIndex].gameObject.SetActive(false);
-           levels[currentLevelIndex].gameObject.SetActive(true);
+            levels[currentLevelIndex].gameObject.SetActive(true);
         }
 
-        public void LoadLevel(int levelIndex)
+        public virtual void LoadLevel(int levelIndex)
         {
-            if (levelIndex >= 0 && levelIndex < levels.Count)
+             if (levelIndex >= 0 && levelIndex < levels.Count)
             {
                 // Deactivate all levels
                 foreach (var level in levels)
@@ -85,6 +77,8 @@ namespace TMKOC.Sorting
             }
         }
 
-        
+
+
+
     }
 }

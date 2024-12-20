@@ -9,7 +9,7 @@ namespace TMKOC.Sorting
 
     public class LevelGenerator : MonoBehaviour
     {
-        [SerializeField] protected LevelManager levelManager;
+        [SerializeField] protected SortingLevelManager levelManager;
         public List<Transform> collectibleSpawnPoints;
 
         public List<Collectible> collectibles;

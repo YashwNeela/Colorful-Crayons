@@ -4,7 +4,7 @@ using TMKOC.Sorting.FruitSorting;
 using UnityEngine;
 namespace TMKOC.Sorting
 {
-    public class FruitSortingAudioManager : AudioManager
+    public class FruitSortingAudioManager : SortingAudioManager
     {
         public void PlayFruitNameAudio(BasketType basketType, bool overridePreviousClips = false)
         {

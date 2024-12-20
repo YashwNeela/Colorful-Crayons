@@ -4,7 +4,7 @@ using TMKOC.Sorting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CarSortingAudio", menuName = "ScriptableObject/CarSortingAudio")]
-public class CarSortingAudio : AudioLocalizationSO
+public class CarSortingAudio : SortingAudioLocalizationSO
 {
     public AudioClip wheelsAttached;
     public AudioClip muscleCarAudio;

@@ -5,7 +5,7 @@ using TMKOC.Sorting.FruitSorting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FruitSortingAudio", menuName = "ScriptableObject/FruitSortingAudio")]
-public class FruitSortingAudio : AudioLocalizationSO
+public class FruitSortingAudio : SortingAudioLocalizationSO
 {
      [SerializeField] protected Dictionary<BasketType, AudioClip> fruitNameDict;
 

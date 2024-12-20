@@ -5,7 +5,7 @@ using TMKOC.Sorting.ColorfulCrayons;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CrayonSortingAudio", menuName = "ScriptableObject/CrayonSortingAudio")]
-public class CrayonSortingAudio : AudioLocalizationSO
+public class CrayonSortingAudio : SortingAudioLocalizationSO
 {
     [SerializeField] protected Dictionary<CrayonColor, AudioClip> crayonColorNameDict;
 
