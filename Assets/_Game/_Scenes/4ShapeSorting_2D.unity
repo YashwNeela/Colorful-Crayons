@@ -4601,6 +4601,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b27c41e2d07643dcab0c4e4efbc20d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Pick 2 Circles
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -4719,13 +4723,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Pick 2 Circles
   m_ShapeType: 4
   m_ScoreRequiredToCompleteTheLevel: 2
   m_ShapeSelectList: []
@@ -8766,6 +8766,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Put All Circles on Board
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 50
   onGameStart:
@@ -8774,13 +8778,9 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Put All Circles on Board
 --- !u!1 &703742828
 GameObject:
   m_ObjectHideFlags: 0
@@ -12572,11 +12572,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShouldDestroyOnLoad: 1
-  m_LevelCheckButton: {fileID: 460608101}
-  m_LevelManager: {fileID: 187923930}
   GAMEID: 77
   testLevel: 0
   levelNumber: 5
+  m_CurrentGameState: 0
+  m_PlayCloudTransition: 1
+  m_LevelCheckButton: {fileID: 460608101}
+  m_LevelManager: {fileID: 187923930}
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
   m_MaxLives: 1
   m_RemaningLivesText: {fileID: 547800514}
@@ -12584,8 +12586,6 @@ MonoBehaviour:
   m_LevelCompletedBlastOffset: {x: 0, y: 0, z: 0}
   m_LevelCompletedBlast: {fileID: 0}
   m_LevelCompleteBlastParent: {fileID: 0}
-  m_CurrentGameState: 0
-  m_PlayCloudTransition: 1
   m_Background: {fileID: 2144783658}
 --- !u!1 &1044539364
 GameObject:
@@ -14651,6 +14651,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b27c41e2d07643dcab0c4e4efbc20d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Pick 1 Triangle and 1 Square
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -14755,13 +14759,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Pick 1 Triangle and 1 Square
   m_ShapeType: 17
   m_ScoreRequiredToCompleteTheLevel: 2
   m_ShapeSelectList: []
@@ -15990,6 +15990,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b27c41e2d07643dcab0c4e4efbc20d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Find All Ovals
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -16142,13 +16146,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Find All Ovals
   m_ShapeType: 8
   m_ScoreRequiredToCompleteTheLevel: 3
   m_ShapeSelectList: []
@@ -21626,6 +21626,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Match Shapes on Board
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 50
   onGameStart:
@@ -21634,13 +21638,9 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Match Shapes on Board
 --- !u!1 &1783201104
 GameObject:
   m_ObjectHideFlags: 0
@@ -23322,6 +23322,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Sort by Shape
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 50
   onGameStart:
@@ -23330,13 +23334,9 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Sort by Shape
 --- !u!1 &1879085192
 GameObject:
   m_ObjectHideFlags: 0
@@ -25750,8 +25750,9 @@ PrefabInstance:
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"audioSO","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":1,"$rcontent":[{"$id":1,"$type":"TMKOC.Sorting.AudioLanguage,
-        Assembly-CSharp",2}]},"remove_keys":{"$id":2,"$type":"System.Object[], mscorlib","$rlength":0,"$rcontent":[]}'
+      value: '"path":"audioSO","value":{"$id":0,"$type":"System.Collections.Generic.Dictionary`2[[TMKOC.AudioLanguage,
+        Assembly-CSharp],[TMKOC.AudioLocalizationSO, Assembly-CSharp]], mscorlib","comparer":{"$id":1,"$type":"System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.AudioLanguage,
+        Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]},"$rlength":2,"$rcontent":[{"$k":1,"$v":$eref:0},{"$k":2,"$v":$eref:1}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}

@@ -2240,6 +2240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Put Blue Sketchpens in the Box
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -2284,13 +2288,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Put Blue Sketchpens in the Box
 --- !u!1 &307645874
 GameObject:
   m_ObjectHideFlags: 0
@@ -2337,6 +2337,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Put the Crayons in their Respective Colored Boxes
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -2417,13 +2421,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Put the Crayons in their Respective Colored Boxes
 --- !u!1 &314888281
 GameObject:
   m_ObjectHideFlags: 0
@@ -6787,6 +6787,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Put Yellow Crayons in the Box
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -6831,13 +6835,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Put Yellow Crayons in the Box
 --- !u!114 &792662807 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8242273892892969899, guid: 4029eb771ce6746368afa6b25671a64d,
@@ -9625,11 +9625,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShouldDestroyOnLoad: 1
-  m_LevelCheckButton: {fileID: 750317699}
-  m_LevelManager: {fileID: 2116294047}
   GAMEID: 75
   testLevel: 0
   levelNumber: 0
+  m_CurrentGameState: 0
+  m_PlayCloudTransition: 1
+  m_LevelCheckButton: {fileID: 750317699}
+  m_LevelManager: {fileID: 2116294047}
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
   m_MaxLives: 5
   m_RemaningLivesText: {fileID: 547800514}
@@ -9637,8 +9639,6 @@ MonoBehaviour:
   m_LevelCompletedBlastOffset: {x: 0, y: 0, z: 0}
   m_LevelCompletedBlast: {fileID: 0}
   m_LevelCompleteBlastParent: {fileID: 0}
-  m_CurrentGameState: 0
-  m_PlayCloudTransition: 1
 --- !u!4 &1033244711
 Transform:
   m_ObjectHideFlags: 0
@@ -10236,6 +10236,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b5d8eb5989e64564b6bc6fea8b57615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Select 3 Blue Sketchpens
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -10244,13 +10248,9 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Select 3 Blue Sketchpens
   m_CrayonColor: 128
   m_ScoreRequiredToCompleteTheLevel: 3
   m_CrayonSelectList: []
@@ -10436,6 +10436,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Put Green Sketchpens in the Box
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -10480,13 +10484,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Put Green Sketchpens in the Box
 --- !u!1 &1139241248
 GameObject:
   m_ObjectHideFlags: 0
@@ -11325,6 +11325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Put Red Crayons in Box
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -11369,13 +11373,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Put Red Crayons in Box
 --- !u!1001 &1274220220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12190,6 +12190,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b5d8eb5989e64564b6bc6fea8b57615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Select 3 Blue Sketchpens and 2 Yellow Crayons
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -12198,13 +12202,9 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Select 3 Blue Sketchpens and 2 Yellow Crayons
   m_CrayonColor: 130
   m_ScoreRequiredToCompleteTheLevel: 5
   m_CrayonSelectList: []
@@ -12823,6 +12823,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Put the Crayons in their Respective Colored Boxes
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -12903,13 +12907,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Put the Crayons in their Respective Colored Boxes
 --- !u!1 &1513930392
 GameObject:
   m_ObjectHideFlags: 0
@@ -16452,6 +16452,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b5d8eb5989e64564b6bc6fea8b57615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: Select Red Crayons
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -16460,13 +16464,9 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
-  m_Tip: Select Red Crayons
   m_CrayonColor: 1
   m_ScoreRequiredToCompleteTheLevel: 4
   m_CrayonSelectList: []
@@ -19978,21 +19978,39 @@ PrefabInstance:
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"audioSO.{2es}","value":$eref:0'
+      value: '"path":"audioSO","value":{"$id":0,"$type":"System.Collections.Generic.Dictionary`2[[TMKOC.AudioLanguage,
+        Assembly-CSharp],[TMKOC.AudioLocalizationSO, Assembly-CSharp]], mscorlib","comparer":{"$id":1,"$type":"System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.AudioLanguage,
+        Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]},"$rlength":2,"$rcontent":[{"$k":1,"$v":$eref:0},{"$k":2,"$v":$eref:1}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"audioSO.{1es}","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      value: '"path":"audioSO.{2es}","value":$eref:1'
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 438d2dc6aaffd405485b75feafa4566e,
+        type: 2}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 4ceb6f4a6cbf740f1978352767b22bf2,
         type: 2}

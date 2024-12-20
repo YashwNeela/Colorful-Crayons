@@ -14,13 +14,13 @@ namespace TMKOC
     public class AudioManager : SerializedSingleton<AudioManager>
     {
         #region  Audio Sources
-        [SerializeField] protected Dictionary<AudioLanguage, SortingAudioLocalizationSO> audioSO;
+        [SerializeField] protected Dictionary<AudioLanguage, AudioLocalizationSO> audioSO;
 
         [SerializeField] protected AudioLanguage m_CurretAudioLanguage;
 
-        protected SortingAudioLocalizationSO m_CurrentLocalizedAudio;
+        protected AudioLocalizationSO m_CurrentLocalizedAudio;
 
-        public SortingAudioLocalizationSO CurrentLocalizedAudio => m_CurrentLocalizedAudio;
+        public AudioLocalizationSO CurrentLocalizedAudio => m_CurrentLocalizedAudio;
 
         [SerializeField] protected AudioSource m_BackGroundAudioSource;
 
@@ -60,6 +60,8 @@ namespace TMKOC
         }
         protected virtual void SetAudioLanguage(AudioLanguage audioLanguage)
         {
+            if(audioLanguage == AudioLanguage.None)
+                return;
             m_CurrentLocalizedAudio = audioSO[audioLanguage];
             PlayBackgroundAudio();
         }
