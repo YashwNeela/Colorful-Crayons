@@ -1,5 +1,4 @@
 using UnityEngine;
-using DG.Tweening;
 
 namespace TMKOC.Sorting.FruitSorting2D
 {

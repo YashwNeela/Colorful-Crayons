@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1481,7 +1481,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -11.54, y: 11, z: 0}
-  m_LocalScale: {x: 0.74999994, y: 0.74999994, z: 0.74999994}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1811370114}
@@ -5571,10 +5571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Add correct fruit to correct basket by color
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 60
   onGameStart:
@@ -5631,9 +5627,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Add correct fruit to correct basket by color
 --- !u!1 &401271443
 GameObject:
   m_ObjectHideFlags: 0
@@ -5680,10 +5680,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b092ca8eea445418ccf9da03256482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Collect 3 Fruits And 3 Vegetables
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 40
   onGameStart:
@@ -5740,9 +5736,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Collect 3 Fruits And 3 Vegetables
   m_ScoreRequiredToCompleteTheLevel: 6
   m_FruitType: 98304
 --- !u!1 &405055988
@@ -7807,10 +7807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b092ca8eea445418ccf9da03256482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Add 3 Apples To Basket
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 40
   onGameStart:
@@ -7843,9 +7839,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Add 3 Apples To Basket
   m_ScoreRequiredToCompleteTheLevel: 3
   m_FruitType: 33
 --- !u!1 &593546864
@@ -10499,8 +10499,8 @@ Transform:
   m_GameObject: {fileID: 741541030}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.85, y: 11.18, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_LocalPosition: {x: -11.85, y: 10.65, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1329103276}
@@ -12883,10 +12883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdcc548018c71340bc0c06bae61691d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Select 4 Vegetables
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -12967,9 +12963,13 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Select 4 Vegetables
   m_ScoreRequiredToCompleteTheLevel: 4
   m_FruitType: 31752
   m_FruitSelectList: []
@@ -13551,13 +13551,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShouldDestroyOnLoad: 1
+  m_LevelCheckButton: {fileID: 1986864592}
+  m_LevelManager: {fileID: 2116294047}
   GAMEID: 54
   testLevel: 1
   levelNumber: 0
-  m_CurrentGameState: 0
-  m_PlayCloudTransition: 1
-  m_LevelCheckButton: {fileID: 1986864592}
-  m_LevelManager: {fileID: 2116294047}
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
   m_MaxLives: 5
   m_RemaningLivesText: {fileID: 121606797}
@@ -13565,6 +13563,8 @@ MonoBehaviour:
   m_LevelCompletedBlastOffset: {x: 0, y: 0, z: 0}
   m_LevelCompletedBlast: {fileID: 0}
   m_LevelCompleteBlastParent: {fileID: 0}
+  m_CurrentGameState: 0
+  m_PlayCloudTransition: 1
 --- !u!4 &1033244711
 Transform:
   m_ObjectHideFlags: 0
@@ -15685,10 +15685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b092ca8eea445418ccf9da03256482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Collect 4 Vegetables
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -15721,9 +15717,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Collect 4 Vegetables
   m_ScoreRequiredToCompleteTheLevel: 4
   m_FruitType: 31752
 --- !u!1 &1261172859
@@ -16394,10 +16394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Assign Apple and Green Apple
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 0
   onGameStart:
@@ -16406,9 +16402,13 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Assign Apple and Green Apple
 --- !u!1 &1386498974
 GameObject:
   m_ObjectHideFlags: 0
@@ -16480,7 +16480,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: bd6da6b2114314880a6059bfb123d3d5, type: 2}
+    - {fileID: 11400000, guid: f02532ed4b4f1a848ab53a71acc41a94, type: 2}
     - {fileID: 11400000, guid: a3679d3ac3b72f4438a2863c0794fe18, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -16489,11 +16489,11 @@ MonoBehaviour:
     SerializationNodes:
     - Name: audioSO
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[TMKOC.AudioLanguage, Assembly-CSharp],[TMKOC.AudioLocalizationSO,
-        Assembly-CSharp]], mscorlib
+      Data: 0|UnityEngine.Rendering.SerializedDictionary`2[[TMKOC.Sorting.AudioLanguage,
+        Assembly-CSharp],[TMKOC.Sorting.AudioLocalizationSO, Assembly-CSharp]], Unity.RenderPipelines.Core.Runtime
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.AudioLanguage,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.Sorting.AudioLanguage,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
@@ -17286,136 +17286,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 90148155260227037, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 90148155260227037, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 90148155260227037, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1496.9662
-      objectReference: {fileID: 0}
-    - target: {fileID: 90148155260227037, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 879.4678
-      objectReference: {fileID: 0}
-    - target: {fileID: 90148155260227037, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 748.4831
-      objectReference: {fileID: 0}
-    - target: {fileID: 90148155260227037, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -945.4678
-      objectReference: {fileID: 0}
-    - target: {fileID: 436314212403312946, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 2.0002441
-      objectReference: {fileID: 0}
-    - target: {fileID: 518718129032937446, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 561824457706287282, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 953922908041342756, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -650
-      objectReference: {fileID: 0}
-    - target: {fileID: 1533951359961081639, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1533951359961081639, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1533951359961081639, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1496.9662
-      objectReference: {fileID: 0}
-    - target: {fileID: 1533951359961081639, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 505.7339
-      objectReference: {fileID: 0}
-    - target: {fileID: 1533951359961081639, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 748.4831
-      objectReference: {fileID: 0}
-    - target: {fileID: 1533951359961081639, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -252.86694
       objectReference: {fileID: 0}
     - target: {fileID: 1682900415086571774, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_CheckButton
       value: 
       objectReference: {fileID: 1986864594}
-    - target: {fileID: 2522393633400421021, guid: 4029eb771ce6746368afa6b25671a64d,
+    - target: {fileID: 2199982298684036787, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
-      propertyPath: m_BlockingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815223136745771553, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815223136745771553, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815223136745771553, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1496.9662
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815223136745771553, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 439.7339
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815223136745771553, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 748.4831
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815223136745771553, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -659.6008
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3413372517818399826, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4221419179200753046, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 2.0002441
-      objectReference: {fileID: 0}
     - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -17434,6 +17324,11 @@ PrefabInstance:
     - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4566653479042792899, guid: 4029eb771ce6746368afa6b25671a64d,
@@ -17464,6 +17359,11 @@ PrefabInstance:
     - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5814089035050786521, guid: 4029eb771ce6746368afa6b25671a64d,
@@ -17566,50 +17466,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5864960253898847973, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 944.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 6100443375292783667, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_BlockingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964563159667651564, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964563159667651564, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964563159667651564, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1496.9662
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964563159667651564, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 439.7339
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964563159667651564, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 748.4831
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964563159667651564, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -219.86694
-      objectReference: {fileID: 0}
-    - target: {fileID: 7287838761122772232, guid: 4029eb771ce6746368afa6b25671a64d,
+    - target: {fileID: 6258655988406292971, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371049726981865527, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_Padding.m_Top
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 7988087890926442213, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -17625,36 +17490,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8674783380545663832, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_BlockingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 9058386500131790708, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9058386500131790708, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9058386500131790708, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9058386500131790708, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9058386500131790708, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18686,10 +18521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b092ca8eea445418ccf9da03256482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Collect 3 Fruits
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -18818,9 +18649,13 @@ MonoBehaviour:
   onGameRestart:
     m_PersistentCalls:
       m_Calls: []
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Collect 3 Fruits
   m_ScoreRequiredToCompleteTheLevel: 3
   m_FruitType: 1013
 --- !u!1 &1554665489
@@ -20913,10 +20748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdcc548018c71340bc0c06bae61691d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Select 2 Fruits
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 30
   onGameStart:
@@ -20997,9 +20828,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Select 2 Fruits
   m_ScoreRequiredToCompleteTheLevel: 2
   m_FruitType: 1013
   m_FruitSelectList: []
@@ -21495,8 +21330,8 @@ Transform:
   m_GameObject: {fileID: 1751927120}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.38, y: 10.91, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0}
+  m_LocalPosition: {x: -4.38, y: 10.56, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1261172860}
@@ -24429,10 +24264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b092ca8eea445418ccf9da03256482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Tip: Add 2 Yellow Items to Basket
-  onLevelCompleteCheck:
-    m_PersistentCalls:
-      m_Calls: []
   m_CurrentScore: 0
   m_LevelTimer: 40
   onGameStart:
@@ -24465,9 +24296,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
+  m_Tip: Add 2 Yellow Items to Basket
   m_ScoreRequiredToCompleteTheLevel: 2
   m_FruitType: 260
 --- !u!1 &1942390216
@@ -25429,8 +25264,8 @@ Transform:
   m_GameObject: {fileID: 2112429612}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.5, w: 0.8660254}
-  m_LocalPosition: {x: -21.34, y: 10.94, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0}
+  m_LocalPosition: {x: -21.34, y: 10.66, z: 0}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1261172860}
@@ -26142,14 +25977,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3487267546938635987}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.48760277, w: 0.87306565}
-  m_LocalPosition: {x: -27.6, y: 8.83, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7660445, w: 0.64278764}
+  m_LocalPosition: {x: -27.6, y: 8, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2047524597}
   m_Father: {fileID: 141278074}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 58.366}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -100}
 --- !u!1001 &1193676708535291164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26694,7 +26529,7 @@ MonoBehaviour:
   forcedTargetType: 0
   autoPlay: 0
   useTargetAsV3: 0
-  endValueFloat: 1
+  endValueFloat: 0.8
   endValueV3: {x: 0, y: 0, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
@@ -26896,7 +26731,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -26.97, y: -4.45, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 106128137}
@@ -26990,7 +26825,7 @@ MonoBehaviour:
   forcedTargetType: 0
   autoPlay: 0
   useTargetAsV3: 0
-  endValueFloat: 0.83029
+  endValueFloat: 0.75
   endValueV3: {x: 0, y: 0, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
@@ -27121,8 +26956,8 @@ Transform:
   m_GameObject: {fileID: 5041805885228798440}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.5, y: -3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -11.5, y: -3.75, z: 0}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1853630142}
@@ -27522,7 +27357,7 @@ MonoBehaviour:
   forcedTargetType: 0
   autoPlay: 0
   useTargetAsV3: 0
-  endValueFloat: 0.6818
+  endValueFloat: 0.65
   endValueV3: {x: 0, y: 0, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
@@ -27552,7 +27387,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.53729963, w: 0.8433914}
   m_LocalPosition: {x: -9.7, y: 6, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 25748278}
@@ -27646,7 +27481,7 @@ MonoBehaviour:
   forcedTargetType: 0
   autoPlay: 0
   useTargetAsV3: 0
-  endValueFloat: 1
+  endValueFloat: 0.85
   endValueV3: {x: 0, y: 0, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
@@ -27767,7 +27602,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.5, y: -4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1742522783}
@@ -27913,7 +27748,7 @@ MonoBehaviour:
   forcedTargetType: 0
   autoPlay: 0
   useTargetAsV3: 0
-  endValueFloat: 1.1273
+  endValueFloat: 1
   endValueV3: {x: 0, y: 0, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
@@ -27985,8 +27820,8 @@ Transform:
   m_GameObject: {fileID: 1674559625091241341}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.0671477, w: 0.99774307}
-  m_LocalPosition: {x: 5.6, y: 9.33, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.6, y: 8.5, z: 0}
+  m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1737503813}

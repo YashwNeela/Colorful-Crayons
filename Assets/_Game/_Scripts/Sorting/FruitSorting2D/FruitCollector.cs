@@ -41,6 +41,7 @@ namespace TMKOC.Sorting.FruitSorting2D
 
         private List<Tuple<Collectible, bool>> collectibles = new();
 
+        private Coroutine sastaFixCoroutine;
 
         protected override void OnEnable()
         {
@@ -79,7 +80,6 @@ namespace TMKOC.Sorting.FruitSorting2D
             sastaFixCoroutine = StartCoroutine(SastaFix(0.01f));
         }
 
-        private Coroutine sastaFixCoroutine;
 
         private IEnumerator SastaFix(float waitTime)
         {
@@ -93,10 +93,9 @@ namespace TMKOC.Sorting.FruitSorting2D
             {
                 if (!snapPoint.IsOccupied)
                 {
-                    //// collectible.GetComponent<Draggable>().HandleRigidbodyKinematic(true);
                     collectible.transform.parent = snapPoint.transform; // Change parent first
 
-                    collectible.transform.DOLocalJump(Vector3.zero, 10f, 1, .35f).OnComplete(() =>
+                    collectible.transform.DOLocalJump(Vector3.zero, 10f, 1, .25f).OnComplete(() =>
                     {
                         snapPoint.IsOccupied = true;
                         collectible.SetSnapPoint(snapPoint);
@@ -108,37 +107,12 @@ namespace TMKOC.Sorting.FruitSorting2D
 
                             // Add to collectibles
                             collectibles.Add(new(collectible, true));
-
-                            // create a GridItemData
-                            //GridItemData newGridItem = new GridItemData(collectible.GetComponent<SpriteRenderer>().sprite, true, collectible);
-                            //gridItems.Add(newGridItem);
-
-                            //Debug.Log("fruit name: " + collectible.name);
                         } else
                         {
                             collectibles.Add(new(collectible, false));
-
-                            //GridItemData newGridItem = new GridItemData(collectible.GetComponent<SpriteRenderer>().sprite, true, collectible);
-                            //gridItems.Add(newGridItem);
-                            //Debug.Log("incorrect fruit name: " + collectible.name);
                         }
                     });
 
-
-                    //collectible.transform.DOLocalMove(Vector3.zero, 0.75f).OnComplete(() =>
-                    //{
-
-                    //    snapPoint.IsOccupied = true;
-                    //    collectible.SetSnapPoint(snapPoint);
-
-                    //    if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
-                    //    {
-                    //        OnItemCollected(snapPoint);
-                    //        PlacedCorrectly?.Invoke();
-                    //    }
-                    //});
-
-                    //collectible.transform.localPosition = Vector3.zero; // Reset position relative to the new parent
                     break;
                 }
             }
