@@ -174,14 +174,6 @@ namespace TMKOC.Sorting
             FirstTimeGameStart();
         }
 
-
-
-        public void Start()
-        {
-            FirstTimeGameStart();
-          
-        }
-
          private void Update() {
             if(Input.GetKeyDown(KeyCode.P))
             {
