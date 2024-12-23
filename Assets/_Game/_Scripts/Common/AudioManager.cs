@@ -41,7 +41,7 @@ namespace TMKOC
         {
             base.Awake();
 #if PLAYSCHOOL_MAIN
-            switch (PlayerPrefs.GetString("PlaySchoolLanguage"))
+            switch (PlayerPrefs.GetString("PlayschoolLanguageAudio"))
             {
                 case "EnglishUS":
                 SetAudioLanguage(AudioLanguage.English);

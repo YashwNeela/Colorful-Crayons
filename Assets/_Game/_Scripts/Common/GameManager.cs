@@ -207,7 +207,7 @@ namespace TMKOC
         {
 
 #if PLAYSCHOOL_MAIN
-           SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
+         UnityEngine.SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
             // dataManager.SendData(()=>
 #else
             UnityEngine.Debug.Log("Go back to playschool");
