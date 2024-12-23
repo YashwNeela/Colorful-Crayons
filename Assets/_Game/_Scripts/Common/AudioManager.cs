@@ -108,8 +108,8 @@ namespace TMKOC
             if (m_SFXAudioSource.isPlaying)
                 return;
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.intro[Random.Range(0, m_CurrentLocalizedAudio.intro.Count)];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.intro[Random.Range(0, m_CurrentLocalizedAudio.intro.Count)];
+          //  m_SFXAudioSource.Play();
         }
 
         protected virtual void OnGameStart()

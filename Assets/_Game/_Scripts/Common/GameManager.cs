@@ -92,7 +92,7 @@ namespace TMKOC
 
             
 
-         StartCoroutine(StaticCoroutine.Co_GenericCoroutine(3, () =>
+         StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0, () =>
             {
                 GameStart(levelNumber);
 
