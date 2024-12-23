@@ -76,7 +76,7 @@ namespace TMKOC
         }
         public virtual void FirstTimeGameStart()
         {
-            m_CatergoryDataManager = new GameCategoryDataManager(GAMEID);
+            m_CatergoryDataManager = new GameCategoryDataManager(GAMEID,PlayerPrefs.GetString("currentGameName"));
             m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
 
             if (!testLevel)
