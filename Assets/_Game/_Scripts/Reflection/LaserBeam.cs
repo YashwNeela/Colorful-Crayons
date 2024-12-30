@@ -56,12 +56,13 @@ public class LaserBeam
                 Vector3 dir = Vector3.Reflect(direction,hitInfo.normal);
 
                 CastRay(pos,dir,laser);
-            }else
+            }
+        }
+        else
             {
                 laserIndices.Add(hitInfo.point);
                 UpdateLaser();
             }
-        }
     }
     void UpdateLaser()
     {
