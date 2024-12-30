@@ -7,7 +7,8 @@ namespace TMKOC.Reflection{
     [System.Serializable]
     public enum ReflectionTagsEnum
     {
-        Mirror
+        Mirror,
+        Player
     }
 public class ReflectionTags : Tags
 {

@@ -37,7 +37,8 @@ public class PlayerController : MonoBehaviour
     {
         // Check if the player is grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundDistance, groundMask);
-
+        
+        
         // Get input for movement
         float moveX = (int)(m_Joystick.Horizontal);
 

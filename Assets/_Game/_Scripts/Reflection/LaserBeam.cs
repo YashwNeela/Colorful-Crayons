@@ -2,78 +2,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TMKOC.Reflection{
-public class LaserBeam
+namespace TMKOC.Reflection
 {
-    Vector3 pos, dir;
-
-    GameObject laserObj;
-    LineRenderer laser;
-    List<Vector3> laserIndices = new List<Vector3>();
-
-    public LaserBeam(Vector3 pos, Vector3 dir, Material material)
+    public class LaserBeam
     {
-        this.laser = new LineRenderer();
-        this.laserObj = new GameObject();
-        this.laserObj.name = "Laser Beam";
-        this.pos = pos;
-        this.dir = dir;
+        Vector2 pos, dir;
 
-        this.laser = this.laserObj.AddComponent(typeof(LineRenderer)) as LineRenderer;
-        this.laser.startWidth = 0.1f;
-        this.laser.endWidth = 0.1f;
-        this.laser.material = material;
-        this.laser.startColor = Color.green;
+        GameObject laserObj;
+        LineRenderer laser;
+        List<Vector2> laserIndices = new List<Vector2>();
 
-        CastRay(pos,dir,laser);
-    }
-
-    void CastRay(Vector3 pos, Vector3 dir, LineRenderer laser)
-    {
-        laserIndices.Add(pos);
-        Ray ray = new Ray(pos,dir);
-
-        RaycastHit hit;
-
-        if(Physics.Raycast(ray,out hit, 30,1))
+        public LaserBeam(Vector2 pos, Vector2 dir, Material material)
         {
-            CheckHit(hit,dir,laser);
+            this.laser = new LineRenderer();
+            this.laserObj = new GameObject();
+            this.laserObj.name = "Laser Beam 2D";
+            this.pos = pos;
+            this.dir = dir;
+
+            this.laser = this.laserObj.AddComponent(typeof(LineRenderer)) as LineRenderer;
+            this.laser.startWidth = 0.1f;
+            this.laser.endWidth = 0.1f;
+            this.laser.material = material;
+            this.laser.startColor = Color.green;
+
+            CastRay(pos, dir, laser);
         }
-        else
-        {
-            laserIndices.Add(ray.GetPoint(30));
-            UpdateLaser();
-        }
-    }
 
-    void CheckHit(RaycastHit hitInfo, Vector3 direction, LineRenderer laser)
-    {
-        if(hitInfo.transform.TryGetComponent<ReflectionTags>(out ReflectionTags t))
+        void CastRay(Vector2 pos, Vector2 dir, LineRenderer laser)
         {
-            if(t.m_Tag == ReflectionTagsEnum.Mirror)
+            laserIndices.Add(pos);
+            RaycastHit2D hit = Physics2D.Raycast(pos, dir, 30);
+
+            if (hit.collider != null)
             {
-                Vector3 pos = hitInfo.point;
-                Vector3 dir = Vector3.Reflect(direction,hitInfo.normal);
-
-                CastRay(pos,dir,laser);
+                CheckHit(hit, dir, laser);
+            }
+            else
+            {
+                laserIndices.Add(pos + dir * 30);
+                UpdateLaser();
             }
         }
-        else
+
+        void CheckHit(RaycastHit2D hitInfo, Vector2 direction, LineRenderer laser)
+        {
+            if (hitInfo.transform.name == "Mirror")
+            {
+                
+                {
+                    Vector2 pos = hitInfo.point;
+                    Vector2 dir = Vector2.Reflect(direction, hitInfo.normal);
+
+                    CastRay(pos, dir, laser);
+                }
+            }
+            else
             {
                 laserIndices.Add(hitInfo.point);
                 UpdateLaser();
             }
-    }
-    void UpdateLaser()
-    {
-        int count = 0;
-        laser.positionCount = laserIndices.Count;
+        }
 
-        foreach(Vector3 idx in laserIndices)
+        void UpdateLaser()
         {
-            laser.SetPosition(count, idx);
-            count++;
+            int count = 0;
+            laser.positionCount = laserIndices.Count;
+
+            foreach (Vector2 idx in laserIndices)
+            {
+                laser.SetPosition(count, idx);
+                count++;
+            }
         }
     }
-}
 }
