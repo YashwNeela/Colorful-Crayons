@@ -44,7 +44,7 @@ public class ShootLaser : MonoBehaviour
                 {
                     mirrorHitPoint = (Vector2)hitInfo.point;
                     mirrorHitNormal = (Vector2)hitInfo.normal;
-                    hitInfo = Physics2D.Raycast((Vector2)hitInfo.point  - ray.direction * -0.1f, Vector2.Reflect(hitInfo.point,
+                    hitInfo = Physics2D.Raycast((Vector2)hitInfo.point  - ray.direction * -0.1f, Vector2.Reflect(hitInfo.point  - ray.direction * -0.1f,
                     hitInfo.normal),m_MaxRayDistance,m_LayerDetection);
                     isMirror = true;
                 }else
