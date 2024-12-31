@@ -8,7 +8,7 @@ namespace TMKOC.Reflection{
     public enum ReflectionTagsEnum
     {
         Mirror,
-        Player
+        Player, CameraTransform
     }
 public class ReflectionTags : Tags
 {

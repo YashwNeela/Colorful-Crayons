@@ -8,7 +8,7 @@ namespace TMKOC
     public class Level : MonoBehaviour
     {
         public string m_Tip;
-        
+
         [SerializeField]
         public UnityEvent onLevelCompleteCheck;
         protected virtual void Awake()
@@ -26,7 +26,7 @@ namespace TMKOC
 
         protected virtual void OnDisable()
         {
-               GameManager.OnGameStart -= OnGameStart;
+            GameManager.OnGameStart -= OnGameStart;
 
             GameManager.OnGameRestart -= OnGameRestart;
             GameManager.OnGameWin -= OnGameWin;
@@ -34,13 +34,13 @@ namespace TMKOC
             GameManager.OnLevelCompleteCheck -= OnLevelCompleteCheck;
         }
 
-         protected virtual void OnGameWin()
+        protected virtual void OnGameWin()
         {
-            
+
         }
         protected virtual void OnGameStart()
         {
-            
+
         }
 
         protected virtual void OnGameRestart()
@@ -48,10 +48,14 @@ namespace TMKOC
 
         }
 
-          protected virtual void OnLevelCompleteCheck()
+        protected virtual void OnLevelCompleteCheck()
         {
             onLevelCompleteCheck?.Invoke();
-            
+
         }
+
+        public virtual void OnLevelLoaded(){}
+
+        public virtual void OnLevelUnloaded(){}
     }
 }

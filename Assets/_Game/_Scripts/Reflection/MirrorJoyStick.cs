@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace TMKOC.Reflection
 {
+    [System.Serializable]
     public class MirrorJoyStick : FixedJoystick
     {
          [SerializeField] protected bool m_ShouldDestroyOnLoad = false;
         private static MirrorJoyStick _instance;
+
+        [SerializeField] public GameObject m_Container;
 
         public static MirrorJoyStick Instance
         {
@@ -43,6 +46,22 @@ namespace TMKOC.Reflection
             {
                 Destroy(gameObject);
             }
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            DisableJoystick();
+        }
+
+        public void EnableJoystick()
+        {
+            m_Container.SetActive(true);
+        }
+
+        public void DisableJoystick()
+        {
+            m_Container.SetActive(false);
         }
     }
 }

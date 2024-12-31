@@ -15,13 +15,14 @@ namespace TMKOC.Reflection
         {
             base.OnPlayerEnterZone();
             m_MirrorJoystick = MirrorJoyStick.Instance;
+            m_MirrorJoystick.EnableJoystick();
         }
 
         protected override void OnPlayerExitZone()
         {
             base.OnPlayerExitZone();
+            m_MirrorJoystick.DisableJoystick();
             m_MirrorJoystick = null;
-
         }
 
         protected override void Update()

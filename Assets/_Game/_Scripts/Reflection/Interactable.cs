@@ -6,7 +6,7 @@ namespace TMKOC.Reflection
 {
     public class Interactable : MonoBehaviour
     {   
-        public Canvas m_UICanvas;
+       // public Canvas m_UICanvas;
         public float m_PlayerCheckRadius;
         protected bool m_IsPlayerWithin;
         protected bool m_PreviousPlayerState = false;
@@ -14,7 +14,7 @@ namespace TMKOC.Reflection
 
         protected virtual void Start()
         {
-            m_UICanvas.gameObject.SetActive(false);
+          //  m_UICanvas.gameObject.SetActive(false);
         }
         protected virtual void Update()
         {
@@ -80,7 +80,7 @@ namespace TMKOC.Reflection
         protected virtual void OnPlayerEnterZone()
         {
             m_IsPlayerWithin = true;
-            m_UICanvas.gameObject.SetActive(true);
+           // m_UICanvas.gameObject.SetActive(true);
             Debug.Log("Player entered the zone!");
         }
 
@@ -88,7 +88,7 @@ namespace TMKOC.Reflection
         protected virtual void OnPlayerExitZone()
         {
             m_IsPlayerWithin = false;
-            m_UICanvas.gameObject.SetActive(false);
+          //  m_UICanvas.gameObject.SetActive(false);
             
             Debug.Log("Player exited the zone!");
         }

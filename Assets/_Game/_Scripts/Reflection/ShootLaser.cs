@@ -40,13 +40,15 @@ public class ShootLaser : MonoBehaviour
             {
                 m_LaserLine.SetPosition(m_LaserLine.positionCount - 1, hitInfo.point - ray.direction * -0.1f);
                 isMirror =false;
-                if(hitInfo.collider.CompareTag("Mirror"))
+                if(hitInfo.transform.TryGetComponent<ReflectionTags>(out ReflectionTags tag))
                 {
+                    if(tag.m_Tag == ReflectionTagsEnum.Mirror){
                     mirrorHitPoint = (Vector2)hitInfo.point;
                     mirrorHitNormal = (Vector2)hitInfo.normal;
                     hitInfo = Physics2D.Raycast((Vector2)hitInfo.point  - ray.direction * -0.1f, Vector2.Reflect(hitInfo.point  - ray.direction * -0.1f,
                     hitInfo.normal),m_MaxRayDistance,m_LayerDetection);
                     isMirror = true;
+                    }
                 }else
 
                     break;
