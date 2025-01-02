@@ -9,6 +9,7 @@ namespace TMKOC.Reflection{
     {
         Mirror,
         Player, CameraTransform
+        
     }
 public class ReflectionTags : Tags
 {

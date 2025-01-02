@@ -59,11 +59,13 @@ namespace TMKOC.Sorting.ShapeSorting
 
         public override void OnCollectibleExited(Collectible collectible)
         {
+            if(collectible.IsPlacedInsideCollector){
             collectible.RemoveFromSnapPoint();
             if (m_ShapeType.HasFlag((collectible as ShapeCollectible).ShapeType))
             {
                 if (collectedItems > 0)
                     OnItemRemoved();
+            }
             }
         }
     }

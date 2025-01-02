@@ -50,6 +50,7 @@ namespace TMKOC.Reflection
             if (hitInfo.transform.name == "Mirror")
             {
                 
+                
                 {
                     Vector2 pos = hitInfo.point;
                     Vector2 dir = Vector2.Reflect(direction, hitInfo.normal);
