@@ -508,7 +508,8 @@ namespace TMKOC.Sorting.FruitSorting
         {
             base.OnCollectibleExited(collectible);
             Debug.Log("Collectible Exited");
-            if(currentSelectedSmallBoxAnimation != null){
+            if(currentSelectedSmallBoxAnimation != null)
+            {
             currentSelectedSmallBoxAnimation.DOComplete();
             currentSelectedSmallBoxAnimation.DOPlayBackwards();
             }
