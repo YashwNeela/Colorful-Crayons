@@ -25,6 +25,10 @@ namespace TMKOC.Reflection
             m_MirrorJoystick = null;
         }
 
+        public virtual void OnSunglightEnter(){}
+
+        public virtual void OnSunlightExit(){}
+
         protected override void Update()
         {
             base.Update();

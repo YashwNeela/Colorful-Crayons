@@ -17,9 +17,9 @@ namespace TMKOC.PlantLifeCycle
 
         protected virtual void OnPlayerExitTrigger(){}
 
-        protected virtual void OnSunlightTriggerEnter(){}
+        public virtual void OnSunlightTriggerEnter(){}
 
-        protected virtual void OnSunlightTriggerExit(){}
+        public virtual void OnSunlightTriggerExit(){}
 
 
     }
