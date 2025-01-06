@@ -53,13 +53,15 @@ namespace TMKOC.Reflection
             {
                 m_SunlightLine.positionCount += 1;
 
+                // Perform raycast
                 RaycastHit2D hitInfo = Physics2D.Raycast(currentRayOrigin, currentRayDirection, m_MaxRayDistance, m_LayerDetection);
 
                 if (hitInfo.collider != null)
                 {
+                    // Update the ray's position
                     m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, hitInfo.point);
 
-                    // Handle Mirrors
+                    // Check the object type
                     if (hitInfo.transform.TryGetComponent<ReflectionTags>(out ReflectionTags tag))
                     {
                         if (tag.m_Tag == ReflectionTagsEnum.Mirror)
@@ -67,63 +69,43 @@ namespace TMKOC.Reflection
                             Mirror mirror = tag.GetComponentInParent<Mirror>();
                             newMirrors.Add(mirror);
 
-                            // Store mirror hit details
-                            mirrorHitPoint = hitInfo.point;
-                            mirrorHitNormal = hitInfo.normal;
-                            isMirror = true;
-
-                            // Update ray for next reflection
-                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f); // Small offset to avoid self-hit
+                            // Reflect the ray
+                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f); // Offset to avoid self-hit
                             currentRayDirection = Vector2.Reflect(currentRayDirection, hitInfo.normal);
-                            continue; // Proceed to next reflection
+                            continue; // Continue to the next reflection
                         }
-                        if (tag.m_Tag == ReflectionTagsEnum.Fragment)
+                        else if (tag.m_Tag == ReflectionTagsEnum.Fragment)
                         {
                             Fragment fragment = tag.GetComponentInParent<Fragment>();
-                            isMirror = false;
                             newFragments.Add(fragment);
-                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f);
-                            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
-                           currentRayOrigin + currentRayDirection * m_MaxRayDistance);
-                            // Fragments don't reflect, so stop further reflections
 
-                            
-                            continue;
+                            // Update ray origin to continue through the fragment
+                            currentRayOrigin = hitInfo.point + (Vector2)(currentRayDirection * 0.01f);
+                            continue; // Continue propagating
                         }
-
-                        if (tag.m_Tag == ReflectionTagsEnum.FragmentCollecter)
+                        else if (tag.m_Tag == ReflectionTagsEnum.FragmentCollecter)
                         {
-                                FragmentCollector fragmentCollector = tag.GetComponent<FragmentCollector>();
-                            isMirror = false;
+                            FragmentCollector fragmentCollector = tag.GetComponentInParent<FragmentCollector>();
+                            newFragmentCollector.Add(fragmentCollector);
 
-                                newFragmentCollector.Add(fragmentCollector);
-                           currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f);
-                                m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
-                               currentRayOrigin + currentRayDirection * m_MaxRayDistance);
-                                continue;
+                            // Update ray origin to continue through the fragment
+                            currentRayOrigin = hitInfo.point + (Vector2)(currentRayDirection * 0.01f);
+                            continue; // Continue propagating
                         }
-
                     }
 
-                    // Stop processing if not a mirror or fragment
+                    // If the object is not a mirror or fragment, stop further reflections
                     break;
                 }
                 else
                 {
-                    // Handle cases where the ray doesn't hit any collider
-                    if (isMirror)
-                    {
-                        m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
-                            mirrorHitPoint + Vector2.Reflect(currentRayDirection, mirrorHitNormal) * m_MaxRayDistance);
-                    }
-                    else
-                    {
-                        m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
-                            currentRayOrigin + currentRayDirection * m_MaxRayDistance);
-                    }
+                    // If no collider is hit, extend the ray to its maximum distance
+                    m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
+                        currentRayOrigin + currentRayDirection * m_MaxRayDistance);
                     break;
                 }
             }
+
 
             // Handle Mirror Events
             foreach (var mirror in newMirrors)
