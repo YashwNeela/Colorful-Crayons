@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Security;
+using System.Security.Cryptography;
 using MoreMountains.Tools;
 using TMKOC.PlantLifeCycle;
 using Unity.VisualScripting;
@@ -22,6 +23,8 @@ namespace TMKOC.Reflection
 
         private HashSet<Fragment> currentFragments = new HashSet<Fragment>();
 
+        private HashSet<FragmentCollector> currentragmentCollector = new HashSet<FragmentCollector>();
+
 
 
         private void Start()
@@ -32,113 +35,142 @@ namespace TMKOC.Reflection
         // Update is called once per frame
         void Update()
         {
-             m_SunlightLine.positionCount = 1;
-    m_SunlightLine.SetPosition(0, transform.position);
+            m_SunlightLine.positionCount = 1;
+            m_SunlightLine.SetPosition(0, transform.position);
 
-    Vector2 currentRayOrigin = transform.position;
-    Vector2 currentRayDirection = transform.right;
+            Vector2 currentRayOrigin = transform.position;
+            Vector2 currentRayDirection = transform.right;
 
-    HashSet<Mirror> newMirrors = new HashSet<Mirror>();
-    HashSet<Fragment> newFragments = new HashSet<Fragment>();
+            HashSet<Mirror> newMirrors = new HashSet<Mirror>();
+            HashSet<Fragment> newFragments = new HashSet<Fragment>();
+            HashSet<FragmentCollector> newFragmentCollector = new HashSet<FragmentCollector>();
 
-    bool isMirror = false;
-    Vector2 mirrorHitPoint = Vector2.zero;
-    Vector2 mirrorHitNormal = Vector2.zero;
+            bool isMirror = false;
+            Vector2 mirrorHitPoint = Vector2.zero;
+            Vector2 mirrorHitNormal = Vector2.zero;
 
-    for (int i = 0; i < m_Reflections; i++)
-    {
-        m_SunlightLine.positionCount += 1;
-
-        RaycastHit2D hitInfo = Physics2D.Raycast(currentRayOrigin, currentRayDirection, m_MaxRayDistance, m_LayerDetection);
-
-        if (hitInfo.collider != null)
-        {
-            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, hitInfo.point);
-
-            // Handle Mirrors
-            if (hitInfo.transform.TryGetComponent<ReflectionTags>(out ReflectionTags tag))
+            for (int i = 0; i < m_Reflections; i++)
             {
-                if (tag.m_Tag == ReflectionTagsEnum.Mirror)
+                m_SunlightLine.positionCount += 1;
+
+                RaycastHit2D hitInfo = Physics2D.Raycast(currentRayOrigin, currentRayDirection, m_MaxRayDistance, m_LayerDetection);
+
+                if (hitInfo.collider != null)
                 {
-                    Mirror mirror = tag.GetComponentInParent<Mirror>();
-                    newMirrors.Add(mirror);
+                    m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, hitInfo.point);
 
-                    // Store mirror hit details
-                    mirrorHitPoint = hitInfo.point;
-                    mirrorHitNormal = hitInfo.normal;
-                    isMirror = true;
+                    // Handle Mirrors
+                    if (hitInfo.transform.TryGetComponent<ReflectionTags>(out ReflectionTags tag))
+                    {
+                        if (tag.m_Tag == ReflectionTagsEnum.Mirror)
+                        {
+                            Mirror mirror = tag.GetComponentInParent<Mirror>();
+                            newMirrors.Add(mirror);
 
-                    // Update ray for next reflection
-                    currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f); // Small offset to avoid self-hit
-                    currentRayDirection = Vector2.Reflect(currentRayDirection, hitInfo.normal);
-                    continue; // Proceed to next reflection
+                            // Store mirror hit details
+                            mirrorHitPoint = hitInfo.point;
+                            mirrorHitNormal = hitInfo.normal;
+                            isMirror = true;
+
+                            // Update ray for next reflection
+                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f); // Small offset to avoid self-hit
+                            currentRayDirection = Vector2.Reflect(currentRayDirection, hitInfo.normal);
+                            continue; // Proceed to next reflection
+                        }
+                        else if (tag.m_Tag == ReflectionTagsEnum.Fragment)
+                        {
+                            Fragment fragment = tag.GetComponentInParent<Fragment>();
+                            newFragments.Add(fragment);
+                             m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
+                            currentRayOrigin + currentRayDirection * m_MaxRayDistance);
+                            // Fragments don't reflect, so stop further reflections
+                            break;
+                        }else if(tag.m_Tag == ReflectionTagsEnum.FragmentCollecter)
+                        {
+                            FragmentCollector fragmentCollector = tag.GetComponent<FragmentCollector>();
+                            newFragmentCollector.Add(fragmentCollector);
+                             m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
+                            currentRayOrigin + currentRayDirection * m_MaxRayDistance);
+                            break;
+                        }
+                    }
+
+                    // Stop processing if not a mirror or fragment
+                    break;
                 }
-                else if (tag.m_Tag == ReflectionTagsEnum.Fragment)
+                else
                 {
-                    Fragment fragment = tag.GetComponentInParent<Fragment>();
-                    newFragments.Add(fragment);
-                    // Fragments don't reflect, so stop further reflections
+                    // Handle cases where the ray doesn't hit any collider
+                    if (isMirror)
+                    {
+                        m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
+                            mirrorHitPoint + Vector2.Reflect(currentRayDirection, mirrorHitNormal) * m_MaxRayDistance);
+                    }
+                    else
+                    {
+                        m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
+                            currentRayOrigin + currentRayDirection * m_MaxRayDistance);
+                    }
                     break;
                 }
             }
 
-            // Stop processing if not a mirror or fragment
-            break;
-        }
-        else
-        {
-            // Handle cases where the ray doesn't hit any collider
-            if (isMirror)
+            // Handle Mirror Events
+            foreach (var mirror in newMirrors)
             {
-                m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
-                    mirrorHitPoint + Vector2.Reflect(currentRayDirection, mirrorHitNormal) * m_MaxRayDistance);
+                if (!currentMirrors.Contains(mirror))
+                {
+                    OnMirrorTriggerEnter(mirror);
+                }
             }
-            else
+
+            foreach (var mirror in currentMirrors)
             {
-                m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
-                    currentRayOrigin + currentRayDirection * m_MaxRayDistance);
+                if (!newMirrors.Contains(mirror))
+                {
+                    OnMirrorTriggerExit(mirror);
+                }
             }
-            break;
-        }
-    }
 
-    // Handle Mirror Events
-    foreach (var mirror in newMirrors)
-    {
-        if (!currentMirrors.Contains(mirror))
-        {
-            OnMirrorTriggerEnter(mirror);
-        }
-    }
+            currentMirrors = newMirrors;
 
-    foreach (var mirror in currentMirrors)
-    {
-        if (!newMirrors.Contains(mirror))
-        {
-            OnMirrorTriggerExit(mirror);
-        }
-    }
+            // Handle Fragment Events
+            foreach (var fragment in newFragments)
+            {
+                if (!currentFragments.Contains(fragment))
+                {
+                    OnFragmentTriggerEnter(fragment);
+                }
+            }
 
-    currentMirrors = newMirrors;
+            foreach (var fragment in currentFragments)
+            {
+                if (!newFragments.Contains(fragment))
+                {
+                    OnFragmentTriggerExit(fragment);
+                }
+            }
 
-    // Handle Fragment Events
-    foreach (var fragment in newFragments)
-    {
-        if (!currentFragments.Contains(fragment))
-        {
-            OnFragmentTriggerEnter(fragment);
-        }
-    }
+            currentFragments = newFragments;
 
-    foreach (var fragment in currentFragments)
-    {
-        if (!newFragments.Contains(fragment))
-        {
-            OnFragmentTriggerExit(fragment);
-        }
-    }
+              // Handle Fragment Collector Events
+            foreach (var fragmentCollector in newFragmentCollector)
+            {
+                if (!currentragmentCollector.Contains(fragmentCollector))
+                {
+                    OnFragmentCollectorEnter(fragmentCollector);
+                }
+            }
 
-    currentFragments = newFragments;
+            foreach (var fragmentCollector in currentragmentCollector)
+            {
+                if (!newFragmentCollector.Contains(fragmentCollector))
+                {
+                    OnFragmentCollectorExit(fragmentCollector);
+                }
+            }
+
+            currentragmentCollector = newFragmentCollector;
         }
 
         public virtual void OnMirrorTriggerEnter(Mirror mirror)
@@ -152,21 +184,33 @@ namespace TMKOC.Reflection
         {
 
             Debug.Log("Exit Mirror " + mirror.name);
-                        mirror.OnSunlightExit();
+            mirror.OnSunlightExit();
 
 
         }
 
-        public virtual void OnFragmentTriggerEnter(Fragment fragment) 
+        public virtual void OnFragmentTriggerEnter(Fragment fragment)
         {
-             Debug.Log("Enter Fragment " + fragment.name);
-                        fragment.OnSunlightTriggerEnter();
-         }
+            Debug.Log("Enter Fragment " + fragment.name);
+            fragment.OnSunlightTriggerEnter();
+        }
 
         public virtual void OnFragmentTriggerExit(Fragment fragment)
-         {
+        {
             Debug.Log("Exit Fragment " + fragment.name);
-                        fragment.OnSunlightTriggerExit();
-          }
+            fragment.OnSunlightTriggerExit();
+        }
+
+        public virtual void OnFragmentCollectorEnter(FragmentCollector fragmentCollector)
+        {
+            Debug.Log("Enter fragmentCollector" + fragmentCollector.name);
+            fragmentCollector.OnSunlightEnter();
+        }
+
+        public virtual void OnFragmentCollectorExit(FragmentCollector fragmentCollector)
+        {
+            Debug.Log("Exit FragmentCollecter" + fragmentCollector.name);
+            fragmentCollector.OnSunlightExit(); 
+        }
     }
 }
