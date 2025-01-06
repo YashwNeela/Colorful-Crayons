@@ -14,6 +14,10 @@ namespace TMKOC.PlantLifeCycle
     {
         public FragmentType m_FragmentType;
 
+        protected bool m_IsCollected;
+
+        public bool IsCollected => m_IsCollected;
+
         protected virtual void OnPlayerTriggerEnter(){}
 
         protected virtual void OnPlayerExitTrigger(){}
@@ -21,11 +25,13 @@ namespace TMKOC.PlantLifeCycle
         public virtual void OnSunlightTriggerEnter()
         {
             transform.DOScale(transform.localScale * 1.1f, 0.5f);
+            m_IsCollected = true;
         }
 
         public virtual void OnSunlightTriggerExit()
         {
             transform.DOScale(transform.localScale / 1.1f, 0.5f);
+            m_IsCollected = false;
 
         }
 

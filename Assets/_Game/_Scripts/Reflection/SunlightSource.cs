@@ -77,22 +77,32 @@ namespace TMKOC.Reflection
                             currentRayDirection = Vector2.Reflect(currentRayDirection, hitInfo.normal);
                             continue; // Proceed to next reflection
                         }
-                        else if (tag.m_Tag == ReflectionTagsEnum.Fragment)
+                        if (tag.m_Tag == ReflectionTagsEnum.Fragment)
                         {
                             Fragment fragment = tag.GetComponentInParent<Fragment>();
+                            isMirror = false;
                             newFragments.Add(fragment);
-                             m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
-                            currentRayOrigin + currentRayDirection * m_MaxRayDistance);
+                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f);
+                            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
+                           currentRayOrigin + currentRayDirection * m_MaxRayDistance);
                             // Fragments don't reflect, so stop further reflections
-                            break;
-                        }else if(tag.m_Tag == ReflectionTagsEnum.FragmentCollecter)
-                        {
-                            FragmentCollector fragmentCollector = tag.GetComponent<FragmentCollector>();
-                            newFragmentCollector.Add(fragmentCollector);
-                             m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
-                            currentRayOrigin + currentRayDirection * m_MaxRayDistance);
-                            break;
+
+                            
+                            continue;
                         }
+
+                        if (tag.m_Tag == ReflectionTagsEnum.FragmentCollecter)
+                        {
+                                FragmentCollector fragmentCollector = tag.GetComponent<FragmentCollector>();
+                            isMirror = false;
+
+                                newFragmentCollector.Add(fragmentCollector);
+                           currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f);
+                                m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
+                               currentRayOrigin + currentRayDirection * m_MaxRayDistance);
+                                continue;
+                        }
+
                     }
 
                     // Stop processing if not a mirror or fragment
@@ -153,7 +163,7 @@ namespace TMKOC.Reflection
 
             currentFragments = newFragments;
 
-              // Handle Fragment Collector Events
+            // Handle Fragment Collector Events
             foreach (var fragmentCollector in newFragmentCollector)
             {
                 if (!currentragmentCollector.Contains(fragmentCollector))
@@ -210,7 +220,7 @@ namespace TMKOC.Reflection
         public virtual void OnFragmentCollectorExit(FragmentCollector fragmentCollector)
         {
             Debug.Log("Exit FragmentCollecter" + fragmentCollector.name);
-            fragmentCollector.OnSunlightExit(); 
+            fragmentCollector.OnSunlightExit();
         }
     }
 }
