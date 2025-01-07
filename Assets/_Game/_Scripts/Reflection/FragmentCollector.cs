@@ -21,6 +21,7 @@ namespace TMKOC.Reflection
 
         public void OnSunlightEnter()
         {
+            transform.DOComplete();
             transform.DOScale(transform.localScale * 1.1f, 0.5f);
             Debug.Log("Sunlight enter Collector");
             if(IsLevelCompleted())
@@ -29,6 +30,7 @@ namespace TMKOC.Reflection
 
         public void OnSunlightExit()
         {
+            transform.DOComplete();
             transform.DOScale(transform.localScale / 1.1f, 0.5f);
         }
         

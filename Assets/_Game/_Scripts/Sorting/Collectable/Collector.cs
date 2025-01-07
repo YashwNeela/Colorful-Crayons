@@ -153,6 +153,7 @@ namespace TMKOC.Sorting
         public virtual void OnCollectibleExited(Collectible collectible)
         {
 
+
         }
 
         protected virtual void OnItemCollected(SnapPoint snapPoint)

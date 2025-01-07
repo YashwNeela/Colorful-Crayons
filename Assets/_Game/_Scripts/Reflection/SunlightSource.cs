@@ -25,11 +25,19 @@ namespace TMKOC.Reflection
 
         private HashSet<FragmentCollector> currentragmentCollector = new HashSet<FragmentCollector>();
 
+        public float m_StartZRotation;
+
 
 
         private void Start()
         {
             Physics2D.queriesStartInColliders = false;
+            Invoke(nameof(SetStartRotation),1);
+        }
+
+        private void SetStartRotation()
+        {
+            transform.Rotate(0,0,m_StartZRotation);
         }
 
         // Update is called once per frame
@@ -92,6 +100,8 @@ namespace TMKOC.Reflection
                             currentRayOrigin = hitInfo.point + (Vector2)(currentRayDirection * 0.01f);
                             continue; // Continue propagating
                         }
+
+
                     }
 
                     // If the object is not a mirror or fragment, stop further reflections
