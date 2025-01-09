@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using MoreMountains.Tools;
 using TMKOC.PlantLifeCycle;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace TMKOC.Reflection
@@ -64,6 +65,7 @@ namespace TMKOC.Reflection
                 // Perform raycast
                 RaycastHit2D hitInfo = Physics2D.Raycast(currentRayOrigin, currentRayDirection, m_MaxRayDistance, m_LayerDetection);
 
+                
                 if (hitInfo.collider != null)
                 {
                     // Update the ray's position
@@ -78,7 +80,7 @@ namespace TMKOC.Reflection
                             newMirrors.Add(mirror);
 
                             // Reflect the ray
-                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * 0.01f); // Offset to avoid self-hit
+                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal); // Offset to avoid self-hit
                             currentRayDirection = Vector2.Reflect(currentRayDirection, hitInfo.normal);
                             continue; // Continue to the next reflection
                         }
