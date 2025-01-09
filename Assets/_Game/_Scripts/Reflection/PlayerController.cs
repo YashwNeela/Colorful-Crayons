@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     {
         m_JumpButton.onClick.AddListener(()=>
         {
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
+            if(isGrounded)
+                rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
             
         });
     }
