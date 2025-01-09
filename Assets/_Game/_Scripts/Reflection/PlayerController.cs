@@ -1,3 +1,5 @@
+using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,8 +45,15 @@ public class PlayerController : MonoBehaviour
         // Get input for movement
         float moveX = (int)(m_Joystick.Horizontal);
 
-        Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
-        rb.velocity = move;
+        if(Mathf.Abs(moveX)> 0.1f && isGrounded && m_CanJump)
+        {
+            if(moveX > 0)
+            DoJump(1);
+            else
+            DoJump(-1);
+        }
+        // Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
+        // rb.velocity = move;
 
         // Jumping
         // if (Input.GetButtonDown("Jump") && isGrounded)
@@ -56,10 +65,26 @@ public class PlayerController : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         // Draw the ground check circle in the editor for debugging
-        if (groundCheck != null)
-        {
+        
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
-        }
+  
+    }
+
+    bool m_CanJump = true;
+
+    [Button]
+    public void DoJump(int direction)
+    {
+        m_CanJump = false;
+        if(direction == 1)
+            transform.GetComponent<SpriteRenderer>().flipX = false;
+        else
+            transform.GetComponent<SpriteRenderer>().flipX = true;
+
+        transform.DOJump((Vector2)transform.position + ( Vector2.right * direction *1.5f), 0.5f,1,0.5f).OnComplete(()=>
+        {
+            m_CanJump = true;
+        });
     }
 }
