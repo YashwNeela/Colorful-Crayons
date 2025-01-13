@@ -42,7 +42,7 @@ namespace TMKOC.PlantLifeCycle
             transform.DOComplete();
 
 
-            transform.DOScale(1 * 1.1f, 0.5f).OnComplete(() => m_IsScaling = false);
+            transform.DOScale(transform.localScale * 1.1f, 0.5f);
 
 
             m_IsCollected = true;
@@ -54,6 +54,7 @@ namespace TMKOC.PlantLifeCycle
         {
             transform.DOComplete();
 
+            transform.DOScale(transform.localScale / 1.1f, 0.5f);
 
             m_IsCollected = false;
 
@@ -61,15 +62,7 @@ namespace TMKOC.PlantLifeCycle
 
         }
 
-        IEnumerator Co_Scale(Action callback)
-        {
-            Debug.Log("Scaling");
-
-            yield return new WaitUntil(() => !m_IsScaling);
-            Debug.Log("Scaling callback");
-            callback?.Invoke();
-
-        }
+        
 
 
 

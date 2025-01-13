@@ -54,13 +54,14 @@ public class ParallaxController : MonoBehaviour
     }
 
     private void LateUpdate() {
-       Invoke(nameof(UpdateParallax),0.1f);
+       //Invoke(nameof(UpdateParallax),0.1f);
+       UpdateParallax();
     }
     
     private  void UpdateParallax() 
     {
         m_Distance = m_Cam.position.x - m_CamStartPos.x;
-        transform.position = new Vector3(m_Cam.position.x,transform.position.y,0);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(m_Cam.position.x,transform.position.y,0), 0.1f);
         for(int i =0;i< m_Backgrounds.Length;i++)
         {
             float speed = m_BackSpeed[i] * m_ParallaxSpeed;

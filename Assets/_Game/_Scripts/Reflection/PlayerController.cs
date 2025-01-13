@@ -45,21 +45,21 @@ public class PlayerController : MonoBehaviour
         // Get input for movement
         float moveX = (int)(m_Joystick.Horizontal);
 
-        if(Mathf.Abs(moveX)> 0.1f && isGrounded && m_CanJump)
+        if(Mathf.Abs(moveX)> 0.1f && isGrounded && m_CanMove)
         {
             if(moveX > 0)
-            DoJump(1);
+            DoMove(1);
             else
-            DoJump(-1);
+            DoMove(-1);
         }
-        // Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
-        // rb.velocity = move;
+        Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
+        rb.velocity = move;
 
-        // Jumping
-        // if (Input.GetButtonDown("Jump") && isGrounded)
-        // {
-        //     rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
-        // }
+      //  Jumping
+        if (Input.GetButtonDown("Jump"))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
+        }
     }
 
     void OnDrawGizmosSelected()
@@ -71,12 +71,12 @@ public class PlayerController : MonoBehaviour
   
     }
 
-    bool m_CanJump = true;
+    bool m_CanMove = true;
 
     [Button]
-    public void DoJump(int direction)
+    public void DoMove(int direction)
     {
-        m_CanJump = false;
+        m_CanMove = false;
         if(direction == 1)
             transform.GetComponent<SpriteRenderer>().flipX = false;
         else
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
         transform.DOJump((Vector2)transform.position + ( Vector2.right * direction *1.5f), 0.5f,1,0.5f).OnComplete(()=>
         {
-            m_CanJump = true;
+            m_CanMove = true;
         });
     }
 }

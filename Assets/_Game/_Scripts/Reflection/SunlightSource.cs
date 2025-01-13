@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using MoreMountains.Tools;
 using TMKOC.PlantLifeCycle;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace TMKOC.Reflection
@@ -143,6 +142,7 @@ namespace TMKOC.Reflection
             {
                 if (!currentFragments.Contains(fragment))
                 {
+                    Debug.Log("Fragment Enter");
                     OnFragmentTriggerEnter(fragment);
                 }
             }

@@ -10,13 +10,13 @@ namespace TMKOC.Reflection
     {
         protected FragmentType m_FragmentType;
 
-         Fragment[] m_FragmentsArray;
+        [SerializeField] Fragment[] m_FragmentsArray;
 
         Fragment[] FragmentArray => m_FragmentsArray;
 
         protected virtual void Awake()
         {
-            m_FragmentsArray = transform.GetComponentsInChildren<Fragment>();
+          //  m_FragmentsArray = transform.GetComponentsInChildren<Fragment>();
         }
 
         public void OnSunlightEnter()
