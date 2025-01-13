@@ -11,7 +11,7 @@ namespace TMKOC.Reflection
 
         MirrorJoyStick m_MirrorJoystick;
 
-       [SerializeField] ParticleSystem m_SunlightEnterPE;
+        [SerializeField] ParticleSystem m_SunlightEnterPE;
 
 
 
@@ -29,62 +29,62 @@ namespace TMKOC.Reflection
             m_MirrorJoystick = null;
         }
 
-        public virtual void OnSunglightEnter() 
+        public virtual void OnSunglightEnter()
         {
             m_SunlightEnterPE.Play();
-         }
+        }
 
-        public virtual void OnSunlightExit() 
+        public virtual void OnSunlightExit()
         {
             m_SunlightEnterPE.Stop();
-         }
+        }
 
         protected override void Update()
         {
             base.Update();
             if (m_MirrorJoystick != null)
             {
-
                 Vector2 direction = m_MirrorJoystick.Direction;
                 Debug.Log("Direction is " + direction);
+
                 if (direction != Vector2.zero)
                 {
                     // Calculate the angle from the direction vector
                     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-                    // Clamp the angle to the range of -180 to 180
-                    angle = Mathf.Clamp(angle, -45, 0);
+                    // Clamp the angle to a desired range, e.g., -180 to 180
+                    float zRotation = Mathf.Clamp(angle, -45, 45);
 
-                    // Apply the clamped angle to the mirror object
-                    m_MirrorObject.transform.rotation = Quaternion.Euler(0, 0, angle);
+                    // Apply the calculated rotation to the mirror object on the Z-axis
+                    m_MirrorObject.transform.rotation = Quaternion.Euler(0, 180, zRotation);
                 }
             }
         }
 
-            void OnMouseDown()
+        void OnMouseDown()
+        {
+            if (m_IsPlayerWithin)
             {
-                if (m_IsPlayerWithin)
-                {
-                    initialMousePosition = Input.mousePosition; // Store the initial mouse position
-                }
+                initialMousePosition = Input.mousePosition; // Store the initial mouse position
             }
+        }
 
-            void OnMouseDrag()
+        void OnMouseDrag()
+        {
+            if (m_IsPlayerWithin)
             {
-                if (m_IsPlayerWithin)
-                {
-                    Vector2 currentMousePosition = Input.mousePosition;
-                    RotateObject(initialMousePosition, currentMousePosition);
-                    initialMousePosition = currentMousePosition; // Update for the next frame
-                }
+                Vector2 currentMousePosition = Input.mousePosition;
+                RotateObject(initialMousePosition, currentMousePosition);
+                initialMousePosition = currentMousePosition; // Update for the next frame
             }
+        }
 
-            void RotateObject(Vector2 initialPosition, Vector2 currentPosition)
-            {
-                Vector2 direction = currentPosition - initialPosition;
-                float rotationAngle = direction.magnitude; // Use the distance moved to determine the rotation
-                m_MirrorObject.transform.Rotate(0f, 0f, rotationAngle);
-            }
+        void RotateObject(Vector2 initialPosition, Vector2 currentPosition)
+        {
+            Vector2 direction = currentPosition - initialPosition;
+            float rotationAngle = direction.magnitude; // Use the distance moved to determine the rotation
+            m_MirrorObject.transform.Rotate(0f, 0f, rotationAngle);
+        }
 
         public void RotateObject()
         {

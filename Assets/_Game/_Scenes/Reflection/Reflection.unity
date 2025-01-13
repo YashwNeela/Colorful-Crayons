@@ -133,6 +133,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3519693564054037724, guid: c52faf70b50e3451c8c9cd79125fb467,
         type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519693564054037724, guid: c52faf70b50e3451c8c9cd79125fb467,
+        type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 26c570efbb3be408b97cf1ac7da9694d,
@@ -7949,6 +7954,61 @@ LineRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 328726922}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1197468654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1197468656}
+  - component: {fileID: 1197468655}
+  m_Layer: 0
+  m_Name: Playschool_CustomLayerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1197468655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197468654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3589ab52c5bb914ebf83df24629215c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  CustomMatrix: {fileID: 11400000, guid: 0010b37fa2d7ac345bd6224a67024dbf, type: 2}
+  PlaySchoolMatrix: {fileID: 11400000, guid: 5a09cdc2ee87ef844bfa9892ad2517ce, type: 2}
+--- !u!4 &1197468656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197468654}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1275111786
 GameObject:
   m_ObjectHideFlags: 0
@@ -14192,15 +14252,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974175627}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13499832, y: 0.10992954, z: 0.6217919, w: 0.76358753}
-  m_LocalPosition: {x: -0.008411774, y: -0.14258826, z: 9.55797}
+  m_LocalRotation: {x: 0.22505276, y: 0.21989672, z: 0.5680828, w: 0.76044637}
+  m_LocalPosition: {x: -0.2, y: -0.4, z: 9.55797}
   m_LocalScale: {x: 8.664731, y: 11.30236, z: 8.84861}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1887826640}
   - {fileID: 983778948}
   m_Father: {fileID: 1800703056}
-  m_LocalEulerAnglesHint: {x: 3.169, y: 19.81, z: 81.276}
+  m_LocalEulerAnglesHint: {x: 5.304, y: 36.347, z: 75.265}
 --- !u!199 &1974175629
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -19548,3 +19608,4 @@ SceneRoots:
   - {fileID: 1430881192}
   - {fileID: 687563956}
   - {fileID: 1275111789}
+  - {fileID: 1197468656}
