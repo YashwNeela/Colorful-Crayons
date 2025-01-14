@@ -89,7 +89,9 @@ namespace TMKOC.Reflection
                             newFragments.Add(fragment);
 
                             // Update ray origin to continue through the fragment
-                            currentRayOrigin = hitInfo.point + (Vector2)(currentRayDirection * 0.01f);
+                            currentRayOrigin = hitInfo.point;
+                             currentRayOrigin = hitInfo.point + (Vector2)(currentRayDirection); // Small offset forward
+
                             continue; // Continue propagating
                         }
                         else if (tag.m_Tag == ReflectionTagsEnum.FragmentCollecter)
@@ -98,7 +100,7 @@ namespace TMKOC.Reflection
                             newFragmentCollector.Add(fragmentCollector);
 
                             // Update ray origin to continue through the fragment
-                            currentRayOrigin = hitInfo.point + (Vector2)(currentRayDirection * 0.01f);
+                          //  currentRayOrigin = hitInfo.point /*+ (Vector2)(currentRayDirection * 0.01f)*/;
                             continue; // Continue propagating
                         }
 

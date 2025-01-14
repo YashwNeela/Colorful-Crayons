@@ -9,10 +9,20 @@ namespace TMKOC.Reflection
     {
         public Transform m_CameraPosition;
 
+        public GameObject m_DarkEnvironment;
+
+        public GameObject m_LightEnvironment;
+
         protected override void Awake()
         {
             base.Awake();
             FetchCameraTransform();
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            LevelFail();
         }
 
 
@@ -35,6 +45,20 @@ namespace TMKOC.Reflection
             
             Camera.main.transform.position = new Vector3(m_CameraPosition.position.x, m_CameraPosition.position.y,
           Camera.main.transform.position.z);
+        }
+
+        public void LevelPass()
+        {
+            //m_LightEnvironment.gameObject.SetActive(true);
+            //m_DarkEnvironment.gameObject.SetActive(false);
+
+        }
+
+        public void LevelFail()
+        {
+            
+            //m_DarkEnvironment.gameObject.SetActive(true);
+            //m_LightEnvironment.gameObject.SetActive(false);
         }
     }
 }

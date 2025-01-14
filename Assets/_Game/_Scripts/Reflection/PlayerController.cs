@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace TMKOC.Reflection{
 public class PlayerController : MonoBehaviour
 {
    public float moveSpeed = 5f;      // Speed of movement
@@ -87,4 +88,5 @@ public class PlayerController : MonoBehaviour
             m_CanMove = true;
         });
     }
+}
 }

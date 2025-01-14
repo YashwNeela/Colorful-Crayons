@@ -21,6 +21,17 @@ public class ParallaxController : MonoBehaviour
 
     void Start()
     {
+        FetchData();
+    }
+
+    void OnEnable()
+    {
+        FetchData();
+        UpdateParallax();
+    }
+
+    void FetchData()
+    {
         m_Cam = Camera.main.transform;
         m_CamStartPos = m_Cam.position;
 
