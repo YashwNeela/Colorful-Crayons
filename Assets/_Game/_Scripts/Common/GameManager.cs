@@ -208,7 +208,8 @@ namespace TMKOC
 
 #if PLAYSCHOOL_MAIN
          UnityEngine.SceneManagement.SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
-
+            CollisionMatrixManager.Instance.LoadPlayschoolData();
+        
 
             // dataManager.SendData(()=>
 #else
