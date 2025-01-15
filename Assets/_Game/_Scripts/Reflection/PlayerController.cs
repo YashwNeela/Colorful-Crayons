@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace TMKOC.Reflection{
@@ -36,12 +37,24 @@ public class PlayerController : MonoBehaviour
         });
     }
 
+    
+
+       
+
+        public void SetMoveX(float value)
+    {
+        Debug.Log("Moving");
+        moveX = value;
+    }
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         m_Animator = GetComponent<Animator>();
     }
-
+    
+    float moveX;
     void Update()
     {
         // Check if the player is grounded
@@ -49,10 +62,6 @@ public class PlayerController : MonoBehaviour
         
         
         // Get input for movement
-        float moveX = (int)(m_Joystick.Horizontal);
-
-        
-        
 
         if(Mathf.Abs(moveX)> 0.1f && isGrounded && m_CanMove)
         {
