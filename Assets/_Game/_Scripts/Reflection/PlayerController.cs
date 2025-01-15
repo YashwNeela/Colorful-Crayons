@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 namespace TMKOC.Reflection{
 public class PlayerController : MonoBehaviour
 {
+    Animator m_Animator;
    public float moveSpeed = 5f;      // Speed of movement
     public float jumpHeight = 2f;    // Height of the jump
     public float gravity = -9.81f;   // Gravity value
@@ -26,8 +28,10 @@ public class PlayerController : MonoBehaviour
     {
         m_JumpButton.onClick.AddListener(()=>
         {
-            if(isGrounded)
+            if(isGrounded){
                 rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
+                m_Animator.SetTrigger("Jump");
+            }
             
         });
     }
@@ -35,6 +39,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        m_Animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -46,15 +51,23 @@ public class PlayerController : MonoBehaviour
         // Get input for movement
         float moveX = (int)(m_Joystick.Horizontal);
 
+        
+        
+
         if(Mathf.Abs(moveX)> 0.1f && isGrounded && m_CanMove)
         {
             if(moveX > 0)
             DoMove(1);
             else
             DoMove(-1);
+
+
+        }else
+        {
+            m_Animator.SetFloat("Speed",0);
         }
-        Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
-        rb.velocity = move;
+        // Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
+        // rb.velocity = move;
 
       //  Jumping
         if (Input.GetButtonDown("Jump"))
@@ -83,10 +96,19 @@ public class PlayerController : MonoBehaviour
         else
             transform.GetComponent<SpriteRenderer>().flipX = true;
 
-        transform.DOJump((Vector2)transform.position + ( Vector2.right * direction *1.5f), 0.5f,1,0.5f).OnComplete(()=>
+        m_Animator.SetFloat("Speed",Mathf.Abs(1));
+
+        transform.DOJump((Vector2)transform.position + ( Vector2.right * direction *2f), 0.5f,1,0.5f).OnComplete(()=>
         {
-            m_CanMove = true;
+            Invoke(nameof(SetCanMove),0.5f);
         });
     }
+
+    public void SetCanMove()
+    {
+        m_CanMove = true;
+    }
+
+    
 }
 }
