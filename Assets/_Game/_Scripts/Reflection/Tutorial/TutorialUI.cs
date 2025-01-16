@@ -72,6 +72,7 @@ public class TutorialUI : MonoBehaviour
 
     public void ControlsStep(TutorialStep step)
     {
+         m_WorldElementsContainer.SetActive(false);
         m_ControlsContainer.Activate(step);
     }
 

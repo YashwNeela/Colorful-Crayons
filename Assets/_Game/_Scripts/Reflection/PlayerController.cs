@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
         m_JumpButton.onClick.AddListener(()=>
         {
             if(isGrounded){
+                if(TutorialManager.Instance.IsTutorialActive)
+                    TutorialEventManager.Instance.TriggerEvent("event_tutorial_jump");
+
                 rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
                 m_Animator.SetTrigger("Jump");
             }
@@ -41,8 +44,11 @@ public class PlayerController : MonoBehaviour
 
        
 
-        public void SetMoveX(float value)
+    public void SetMoveX(float value)
     {
+        if(TutorialManager.Instance.IsTutorialActive)
+            TutorialEventManager.Instance.TriggerEvent("event_tutorial_movement");
+
         Debug.Log("Moving");
         moveX = value;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TMKOC{
 
 
-public class TutorialManager : MonoBehaviour
+public class TutorialManager : SerializedSingleton<TutorialManager>
 {
     public List<TutorialStep> tutorialSteps; // Steps in the tutorial
     private int currentStepIndex = 0;
@@ -13,12 +13,14 @@ public class TutorialManager : MonoBehaviour
     public TutorialUI tutorialUI;  // Reference to the UI manager
     public Camera mainCamera;      // Main camera for focusing objects
 
+    public bool m_IsTutorialActive;
+
+    public bool IsTutorialActive => m_IsTutorialActive;
+    
+
     private void Start()
     {
         StartTutorial();
-
-
-        
     }
 
 
@@ -27,8 +29,11 @@ public class TutorialManager : MonoBehaviour
         if (tutorialSteps.Count == 0)
         {
             Debug.LogWarning("No tutorial steps found!");
+            m_IsTutorialActive = false;
             return;
         }
+            m_IsTutorialActive = true;
+
         ShowStep(currentStepIndex);
     }
 
@@ -78,7 +83,11 @@ public class TutorialManager : MonoBehaviour
     private void NextStep()
     {
         currentStepIndex++;
-        ShowStep(currentStepIndex);
+        StartCoroutine(StaticCoroutine.Co_GenericCoroutine(tutorialSteps[currentStepIndex].delay,()=>
+        {
+            ShowStep(currentStepIndex);
+        }));
+
     }
 
     private void HighlightObject(GameObject obj)
@@ -95,6 +104,8 @@ public class TutorialManager : MonoBehaviour
     {
         Debug.Log("Tutorial Complete!");
         tutorialUI.Hide();
+        m_IsTutorialActive = false;
+
     }
 }
 }

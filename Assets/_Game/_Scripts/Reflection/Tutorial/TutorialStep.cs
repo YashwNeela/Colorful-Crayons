@@ -22,6 +22,8 @@ public class TutorialStep : ScriptableObject
     public Vector3 cameraFocusPosition; // Optional camera focus
     public float duration = 5f;       // Duration before auto-progressing (if applicable)
 
+    public float delay = 0;
+
     public bool requiresEvent;        // Does the step wait for an event?
     public string eventName;          // Name of the event to wait for (optional)
 }
