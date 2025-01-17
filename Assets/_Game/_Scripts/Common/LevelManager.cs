@@ -25,9 +25,9 @@ namespace TMKOC
             m_GameManager = FindAnyObjectByType<GameManager>();
         }
 
-        public virtual SortingLevel GetCurrentLevel()
+        public virtual Level GetCurrentLevel()
         {
-            return levels[CurrentLevelIndex].GetComponent<SortingLevel>();
+            return levels[CurrentLevelIndex].GetComponent<Level>();
         }
 
         public virtual void CompleteLevel()

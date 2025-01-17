@@ -9,6 +9,8 @@ namespace TMKOC.Reflection
     {
         public Transform m_CameraPosition;
 
+        public Transform m_PlayerSpawnPoint;
+
         public GameObject m_DarkEnvironment;
 
         public GameObject m_LightEnvironment;

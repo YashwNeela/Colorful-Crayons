@@ -62,7 +62,7 @@ namespace TMKOC.Sorting
         // Call this method to start the countdown
         public void StartCountdown()
         {
-            countdownDuration = SortingLevelManager.Instance.GetCurrentLevel().LevelTimer;
+            countdownDuration = (SortingLevelManager.Instance.GetCurrentLevel() as SortingLevel).LevelTimer;
 
             currentTime =countdownDuration;
           //  currentTime = countdownDuration;

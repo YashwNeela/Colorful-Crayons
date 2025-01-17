@@ -46,7 +46,23 @@ public class PlayerController : SerializedMonoBehaviour
         });
     }
 
-    
+    public void OnEnable()
+    {
+        GameManager.OnGameStart +=   OnGameStart;
+    }
+
+        private void OnGameStart()
+        {
+           transform.position = (ReflectionLevelManager.Instance.GetCurrentLevel() as ReflectionLevel).m_PlayerSpawnPoint.position;
+        }
+
+        /// This function is called when the behaviour becomes disabled or inactive.
+        /// </summary>
+    public void OnDisable()
+    {
+        GameManager.OnGameStart -=   OnGameStart;
+        
+    }
 
        
 
@@ -121,7 +137,7 @@ public class PlayerController : SerializedMonoBehaviour
             transform.GetComponent<SpriteRenderer>().flipX = true;
 
         m_Animator.SetFloat("Speed",Mathf.Abs(1));
-
+        
         transform.DOJump((Vector2)transform.position + ( Vector2.right * direction *2f), 0.5f,1,0.5f).OnComplete(()=>
         {
             Invoke(nameof(SetCanMove),0.5f);

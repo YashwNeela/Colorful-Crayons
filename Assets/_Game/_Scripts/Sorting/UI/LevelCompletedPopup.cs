@@ -38,7 +38,7 @@ public class LevelCompletedPopup : MonoBehaviour
 
     private void OnGameOver()
     {
-        SortingLevel currentLevel = SortingLevelManager.Instance.GetCurrentLevel();
+        SortingLevel currentLevel = SortingLevelManager.Instance.GetCurrentLevel() as SortingLevel;
         if(currentLevel.Collectors == null){
             m_LevelFailUI.ToggleDetailContainer(true);
             return;
