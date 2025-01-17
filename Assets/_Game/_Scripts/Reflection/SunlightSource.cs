@@ -68,7 +68,7 @@ namespace TMKOC.Reflection
                 if (hitInfo.collider != null)
                 {
                     // Update the ray's position
-                    m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, hitInfo.point);
+                            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, hitInfo.point);
 
                     // Check the object type
                     if (hitInfo.transform.TryGetComponent<ReflectionTags>(out ReflectionTags tag))
@@ -81,6 +81,7 @@ namespace TMKOC.Reflection
                             // Reflect the ray
                             currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal); // Offset to avoid self-hit
                             currentRayDirection = Vector2.Reflect(currentRayDirection, hitInfo.normal);
+
                             continue; // Continue to the next reflection
                         }
                         else if (tag.m_Tag == ReflectionTagsEnum.Fragment)
@@ -89,8 +90,12 @@ namespace TMKOC.Reflection
                             newFragments.Add(fragment);
 
                             // Update ray origin to continue through the fragment
-                            currentRayOrigin = hitInfo.point;
-                             currentRayOrigin = hitInfo.point + (Vector2)(currentRayDirection); // Small offset forward
+                            //currentRayOrigin = hitInfo.point;
+                            Debug.Log("Ray point " + hitInfo.transform.position);
+                            currentRayOrigin = (Vector2)hitInfo.transform.position; // Small offset forward
+                            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
+
+                           // m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
 
                             continue; // Continue propagating
                         }
@@ -98,10 +103,12 @@ namespace TMKOC.Reflection
                         {
                             FragmentCollector fragmentCollector = tag.GetComponentInParent<FragmentCollector>();
                             newFragmentCollector.Add(fragmentCollector);
+                             currentRayOrigin = (Vector2)hitInfo.transform.position;
+                            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
 
                             // Update ray origin to continue through the fragment
                           //  currentRayOrigin = hitInfo.point /*+ (Vector2)(currentRayDirection * 0.01f)*/;
-                            continue; // Continue propagating
+                            break; // Continue propagating
                         }
 
 

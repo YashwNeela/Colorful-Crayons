@@ -41,10 +41,10 @@ public class TutorialUI : MonoBehaviour
     {
         switch(step.type)
         {
-            case TutorialStepType.Controls:
+            case TutorialType.Controls:
             ControlsStep(step);
             break;
-            case TutorialStepType.World:
+            case TutorialType.World:
             WorldElementStep(step);
             break;
         }
@@ -79,6 +79,7 @@ public class TutorialUI : MonoBehaviour
     public void Hide()
     {
         m_WorldElementsContainer.SetActive(false);
+        m_ControlsContainer.Deactivate();
     }
 
     

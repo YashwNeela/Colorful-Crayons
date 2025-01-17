@@ -1,13 +1,17 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+
 namespace TMKOC.Reflection{
-public class PlayerController : MonoBehaviour
+public class PlayerController : SerializedMonoBehaviour
 {
+    
     Animator m_Animator;
    public float moveSpeed = 5f;      // Speed of movement
     public float jumpHeight = 2f;    // Height of the jump
@@ -16,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 velocity;
     private bool isGrounded;
+
+    private bool inAir;
 
     public Joystick m_Joystick;
 
@@ -66,11 +72,12 @@ public class PlayerController : MonoBehaviour
         // Check if the player is grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundDistance, groundMask);
         
-        
+        m_Animator.SetBool("Ground",isGrounded);
         // Get input for movement
 
         if(Mathf.Abs(moveX)> 0.1f && isGrounded && m_CanMove)
         {
+            
             if(moveX > 0)
             DoMove(1);
             else
@@ -81,8 +88,10 @@ public class PlayerController : MonoBehaviour
         {
             m_Animator.SetFloat("Speed",0);
         }
-        // Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
-        // rb.velocity = move;
+        if(inAir){
+         Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
+         rb.velocity = move;
+        }
 
       //  Jumping
         if (Input.GetButtonDown("Jump"))
@@ -124,6 +133,20 @@ public class PlayerController : MonoBehaviour
         m_CanMove = true;
     }
 
+    public void SetInAir(int value)
+    {
+        if(value == 1){
+        inAir = true;
+        m_CanMove = false;
+        }
+        else{
+        inAir = false;
+        StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0.75f,()=>
+        {
+            m_CanMove = true;
+        }));
+        }
+    }
     
 }
 }

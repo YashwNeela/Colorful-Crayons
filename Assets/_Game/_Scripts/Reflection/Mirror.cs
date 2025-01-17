@@ -45,7 +45,7 @@ namespace TMKOC.Reflection
             if (m_MirrorJoystick != null)
             {
                 Vector2 direction = m_MirrorJoystick.Direction;
-                Debug.Log("Direction is " + direction);
+            //    Debug.Log("Direction is " + direction);
 
                 if (direction != Vector2.zero)
                 {
