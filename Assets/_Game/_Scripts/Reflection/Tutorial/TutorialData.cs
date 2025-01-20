@@ -10,7 +10,8 @@ public enum TutorialType
 }
 [CreateAssetMenu(fileName = "TutorialStep", menuName = "ScriptableObject/Tutorial")]
 
-public class TutorialData: SerializedScriptableObject
+[System.Serializable]
+public class TutorialData
 {
     public TutorialType type;
 
@@ -18,6 +19,8 @@ public class TutorialData: SerializedScriptableObject
 
     public List<TutorialStep> tutorialSteps;
 }
+
+[System.Serializable]
 public class TutorialStep
 {
     public TutorialType type;
@@ -29,6 +32,14 @@ public class TutorialStep
 
    // [ShowIf("@type == TutorialStepType.Controls")]
     public GameObject controlObjects; // Object to highlight (optional)
+
+    public Vector3 controlObjectPos;
+
+    [Button]
+    public void FectWorldPosOfControlObject()
+    {
+        controlObjectPos = controlObjects.transform.position;
+    }
     public Vector3 cameraFocusPosition; // Optional camera focus
     public float duration = 5f;       // Duration before auto-progressing (if applicable)
 
@@ -41,9 +52,11 @@ public static class TutorialIds
 {
     public static int movementTutorial = 1;
 
-    public static int mirrorTutorial = 2;
+    public static int jumpTutorial = 2;
 
-    public static int objectsTutorial = 3;
+    public static int mirrorTutorial = 3;
+
+    public static int objectsTutorial = 4;
 }
 }
 

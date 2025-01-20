@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -49,11 +50,20 @@ public class PlayerController : SerializedMonoBehaviour
     public void OnEnable()
     {
         GameManager.OnGameStart +=   OnGameStart;
+        GameManager.OnGameOver += OnGameOver;
     }
+
+        private void OnGameOver()
+        {
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+        }
 
         private void OnGameStart()
         {
            transform.position = (ReflectionLevelManager.Instance.GetCurrentLevel() as ReflectionLevel).m_PlayerSpawnPoint.position;
+            rb.isKinematic = false;
+
         }
 
         /// This function is called when the behaviour becomes disabled or inactive.
@@ -61,6 +71,7 @@ public class PlayerController : SerializedMonoBehaviour
     public void OnDisable()
     {
         GameManager.OnGameStart -=   OnGameStart;
+        GameManager.OnGameOver -= OnGameOver;
         
     }
 
@@ -85,6 +96,9 @@ public class PlayerController : SerializedMonoBehaviour
     float moveX;
     void Update()
     {
+        if(GameManager.Instance.CurrentGameState != GameState.Playing){
+            return;
+        }
         // Check if the player is grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundDistance, groundMask);
         
@@ -162,6 +176,17 @@ public class PlayerController : SerializedMonoBehaviour
             m_CanMove = true;
         }));
         }
+    }
+
+    
+    /// Sent when another object enters a trigger collider attached to this
+    /// object (2D physics only).
+    /// </summary>
+    /// <param name="other">The other Collider2D involved in this collision.</param>
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.TryGetComponent<TutorialTriggerer>(out TutorialTriggerer triggerer))
+            TutorialManager.Instance.StartTutorial(triggerer.TutorialTriggererId);
     }
     
 }

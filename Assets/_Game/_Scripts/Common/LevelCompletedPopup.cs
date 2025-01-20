@@ -8,65 +8,36 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace TMKOC{
 public class LevelCompletedPopup : MonoBehaviour
 {
-    [SerializeField] private GameObject m_LooseContainer, m_WinContainer;
-    [SerializeField] private TextMeshProUGUI m_LevelCompletedText;
+    [SerializeField] protected GameObject m_LooseContainer, m_WinContainer;
+    [SerializeField] protected TextMeshProUGUI m_LevelCompletedText;
 
-    [SerializeField] private Button m_LevelCompletedButton;
+    [SerializeField] protected Button m_LevelCompletedButton;
 
-    [SerializeField] private TextMeshProUGUI m_LevelCompletedButtonText;
+    [SerializeField] protected TextMeshProUGUI m_LevelCompletedButtonText;
 
-    [SerializeField] private GameObject[] m_WinText;
+    [SerializeField] protected GameObject[] m_WinText;
 
-    [SerializeField] private LevelFailUI m_LevelFailUI;
+    [SerializeField] protected LevelFailUI m_LevelFailUI;
 
 
-    void Awake()
+    protected virtual void Awake()
     {
        
     }
-    void OnEnable()
+    protected virtual void OnEnable()
     {
-        SortingGameManager.OnGameOver += OnGameOver;
-        SortingGameManager.OnGameStart += OnGameStart;
-        SortingGameManager.OnGameLoose += OnGameLoose;
-        SortingGameManager.OnGameWin += OnGameWin;
-        SortingGameManager.OnGameCompleted += OnGameCompleted;
+        GameManager.OnGameOver += OnGameOver;
+        GameManager.OnGameStart += OnGameStart;
+        GameManager.OnGameLoose += OnGameLoose;
+        GameManager.OnGameWin += OnGameWin;
+        GameManager.OnGameCompleted += OnGameCompleted;
 
     }
 
-    private void OnGameOver()
-    {
-        SortingLevel currentLevel = SortingLevelManager.Instance.GetCurrentLevel() as SortingLevel;
-        if(currentLevel.Collectors == null){
-            m_LevelFailUI.ToggleDetailContainer(true);
-            return;
-        }
-       List<Collector> collectors = currentLevel.Collectors.ToList();
-        List<SnapPoint> snapPoints = new List<SnapPoint>();
-
-        for(int i =0;i<collectors.Count;i++)
-        {
-            if(!collectors[i].ShouldIncludeScore)
-                continue;
-            for(int j = 0;j<collectors[i].SnapPoints.Length;j++)
-            {
-                snapPoints.Add(collectors[i].SnapPoints[j]);
-            }
-        }
-        m_LevelFailUI.ClearChildren();
-        for(int i =0;i<snapPoints.Count;i++)
-        {
-            if(snapPoints[i].CurrentCollectible != null)
-            m_LevelFailUI.SetLevelFailData(snapPoints[i].CurrentCollectible.spriteRenderer.sprite,
-            snapPoints[i].CurrentCollectible.spriteRenderer.color,snapPoints[i].HasValidCollectible());
-            else
-            m_LevelFailUI.SetLevelFailData(null,Color.white, false,true);
-
-            
-        }
-    }
+   
 
     private void OnGameCompleted()
     {
@@ -74,15 +45,20 @@ public class LevelCompletedPopup : MonoBehaviour
         HidePopup();
     }
 
-    void OnDisable()
+    protected virtual void OnDisable()
     {
-        SortingGameManager.OnGameOver -= OnGameOver;
+        GameManager.OnGameOver -= OnGameOver;
 
-        SortingGameManager.OnGameStart -= OnGameStart;
-        SortingGameManager.OnGameLoose -= OnGameLoose;
-        SortingGameManager.OnGameWin -= OnGameWin;
-        SortingGameManager.OnGameCompleted -= OnGameCompleted;
+        GameManager.OnGameStart -= OnGameStart;
+        GameManager.OnGameLoose -= OnGameLoose;
+        GameManager.OnGameWin -= OnGameWin;
+        GameManager.OnGameCompleted -= OnGameCompleted;
 
+
+    }
+
+    protected virtual void OnGameOver()
+    {
 
     }
 
@@ -176,4 +152,5 @@ public class LevelCompletedPopup : MonoBehaviour
     }
 
 
+}
 }

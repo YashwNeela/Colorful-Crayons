@@ -49,6 +49,7 @@ public class TutorialDataSaver: SaveLoadBase
         {
             m_tutorialCompletedDictKey = new List<int>();
             m_tutorialCompletedDictKey.Add(TutorialIds.movementTutorial);
+            m_tutorialCompletedDictKey.Add(TutorialIds.jumpTutorial);
             m_tutorialCompletedDictKey.Add(TutorialIds.mirrorTutorial);
             m_tutorialCompletedDictKey.Add(TutorialIds.objectsTutorial);
 
@@ -58,9 +59,9 @@ public class TutorialDataSaver: SaveLoadBase
         if(m_tutorialCompletedDictBool == null)
         {
             m_tutorialCompletedDictBool = new List<bool>();
+            for(int i = 0;i< m_tutorialCompletedDictKey.Count;i++){
             m_tutorialCompletedDictBool.Add(false);
-            m_tutorialCompletedDictBool.Add(false);
-            m_tutorialCompletedDictBool.Add(false);
+            }
         }
 
         for(int i = 0;i< m_tutorialCompletedDictKey.Count;i++)
@@ -90,9 +91,13 @@ public class TutorialDataSaver: SaveLoadBase
 
 }
 
+
+
 public class TutorialManager : SerializedSingleton<TutorialManager>
 {
     public TutorialDataSaver m_TutorialDataSaver;
+
+    
     public List<TutorialData> tutorialData; // Steps in the tutorial
 
     public TutorialData currentTutorialData;
@@ -110,7 +115,7 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
     private void Start()
     {
         FetchTutorialData();
-        StartTutorial(TutorialIds.movementTutorial);
+       // StartTutorial(TutorialIds.movementTutorial);
     }
 
     void FetchTutorialData()
@@ -120,7 +125,10 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
             // Serializer.SaveJsonData<TutorialDataSaver>(m_TutorialDataSaver,true);
             Dictionary<int,bool> tempDict = new Dictionary<int, bool>();
             tempDict.Add(TutorialIds.movementTutorial,false);
+            tempDict.Add(TutorialIds.jumpTutorial,false);
+
             tempDict.Add(TutorialIds.mirrorTutorial,false);
+
             tempDict.Add(TutorialIds.objectsTutorial,false);
 
             m_TutorialDataSaver.Save(tempDict);
@@ -163,6 +171,7 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
 
     private void ShowStep(int index)
     {
+        
         if (index >= currentTutorialData.tutorialSteps.Count)
         {
             EndTutorial();
@@ -234,6 +243,7 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
         m_TutorialDataSaver.TutorialCompletedDict()[currentTutorialData.tutorialId] = true;
         m_TutorialDataSaver.Save(m_TutorialDataSaver.TutorialCompletedDict());
         currentTutorialData = null;
+        currentStepIndex = 0;
         Debug.Log("Tutorial Complete!");
         tutorialUI.Hide();
         m_IsTutorialActive = false;
