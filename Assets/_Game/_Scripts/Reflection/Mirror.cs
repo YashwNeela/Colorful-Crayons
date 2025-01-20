@@ -9,7 +9,7 @@ namespace TMKOC.Reflection
         public GameObject m_MirrorObject;
         private Vector2 initialMousePosition;
 
-        MirrorJoyStick m_MirrorJoystick;
+        MirrorSlider m_MirrorSlider;
 
         [SerializeField] ParticleSystem m_SunlightEnterPE;
 
@@ -18,15 +18,15 @@ namespace TMKOC.Reflection
         protected override void OnPlayerEnterZone()
         {
             base.OnPlayerEnterZone();
-            m_MirrorJoystick = MirrorJoyStick.Instance;
-            m_MirrorJoystick.EnableJoystick();
+            m_MirrorSlider = MirrorSlider.Instance;
+            m_MirrorSlider.EnableSlider();
         }
 
         protected override void OnPlayerExitZone()
         {
             base.OnPlayerExitZone();
-            m_MirrorJoystick.DisableJoystick();
-            m_MirrorJoystick = null;
+            m_MirrorSlider.DisableSlider();
+            m_MirrorSlider = null;
         }
 
         public virtual void OnSunglightEnter()
@@ -42,20 +42,18 @@ namespace TMKOC.Reflection
         protected override void Update()
         {
             base.Update();
-            if (m_MirrorJoystick != null)
+
+            if (m_MirrorSlider != null)
             {
-                Vector2 direction = m_MirrorJoystick.Direction;
-            //    Debug.Log("Direction is " + direction);
+                // Get the current value of the slider
+                float sliderValue = m_MirrorSlider.m_Slider.value;
 
-                if (direction != Vector2.zero)
+                // Map the slider value to the desired angle range, e.g., -45 to 45
+                float zRotation = Mathf.Lerp(-45f, 45f, sliderValue);
+
+                // Apply the calculated rotation to the mirror object on the Z-axis
+                if (m_MirrorObject != null)
                 {
-                    // Calculate the angle from the direction vector
-                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-                    // Clamp the angle to a desired range, e.g., -180 to 180
-                    float zRotation = Mathf.Clamp(angle, -45, 45);
-
-                    // Apply the calculated rotation to the mirror object on the Z-axis
                     m_MirrorObject.transform.rotation = Quaternion.Euler(0, 180, zRotation);
                 }
             }

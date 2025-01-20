@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace TMKOC{
@@ -40,7 +41,7 @@ public class TutorialStep
     {
         controlObjectPos = controlObjects.transform.position;
     }
-    public Vector3 cameraFocusPosition; // Optional camera focus
+    public CinemachineCamera cameraToEnable; // Optional camera focus
     public float duration = 5f;       // Duration before auto-progressing (if applicable)
 
     public float delay = 0;

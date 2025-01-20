@@ -26,7 +26,8 @@ public class TutorialUI : MonoBehaviour
     {
         m_NextButton.onClick.AddListener(()=>
         {
-            TutorialEventManager.Instance.TriggerEvent("event_tutorial_next_button");
+            
+            TutorialEventManager.Instance.TriggerEvent(TutorialManager.Instance.GetCurrentTutorialStep().eventName);
             m_NextButton.gameObject.SetActive(false);
         });
     }

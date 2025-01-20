@@ -12,7 +12,6 @@ namespace TMKOC.Reflection
     public class SunlightSource : MonoBehaviour
     {
         public LineRenderer m_SunlightLine;
-
         public int m_Reflections;
         public float m_MaxRayDistance;
         public LayerMask m_LayerDetection;
@@ -27,22 +26,46 @@ namespace TMKOC.Reflection
 
         public float m_StartZRotation;
 
+        public bool m_IsPartOfTutorial;
+
+        private bool m_ShouldEnable = false;
 
 
         private void Start()
         {
             Physics2D.queriesStartInColliders = false;
-            Invoke(nameof(SetStartRotation),1);
+            if(!m_IsPartOfTutorial)
+                Invoke(nameof(SetStartRotation),1);
+        }
+
+        private void OnEnable()
+        {
+            if(m_IsPartOfTutorial)
+            {
+                TutorialEventManager.Instance.Subscribe("event_mirror_info",()=> SetStartRotation());
+            }
+        }
+
+        private void OnDisable()
+        {
+            if(m_IsPartOfTutorial)
+            {
+                TutorialEventManager.Instance.Unsubscribe("event_mirror_info",()=> SetStartRotation());
+            }
         }
 
         private void SetStartRotation()
         {
-            transform.Rotate(0,0,m_StartZRotation);
+             m_ShouldEnable = true;
+            StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=> transform.rotation = Quaternion.Euler(0, 0, m_StartZRotation)));  ;
+           
         }
 
         // Update is called once per frame
         void Update()
         {
+            if(!m_ShouldEnable)
+                return;
             m_SunlightLine.positionCount = 1;
             m_SunlightLine.SetPosition(0, transform.position);
 

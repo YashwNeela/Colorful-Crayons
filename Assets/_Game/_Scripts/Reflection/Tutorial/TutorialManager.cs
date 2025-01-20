@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.Cinemachine;
+using UnityEditor;
 using UnityEngine;
 
 namespace TMKOC{
@@ -101,6 +103,11 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
     public List<TutorialData> tutorialData; // Steps in the tutorial
 
     public TutorialData currentTutorialData;
+
+    public TutorialStep GetCurrentTutorialStep()
+    {
+        return currentTutorialData.tutorialSteps[currentStepIndex];
+    }
     private int currentStepIndex = 0;
 
     public TutorialUI tutorialUI;  // Reference to the UI manager
@@ -109,11 +116,14 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
     public bool m_IsTutorialActive;
 
     public bool IsTutorialActive => m_IsTutorialActive;
+
+    private CinemachineCamera m_DefaultCinemachineCamera;
     
 
 
     private void Start()
     {
+        m_DefaultCinemachineCamera = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineCamera;
         FetchTutorialData();
        // StartTutorial(TutorialIds.movementTutorial);
     }
@@ -177,18 +187,19 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
             EndTutorial();
             return;
         }
-
+        
         var step = currentTutorialData.tutorialSteps[index];
-        tutorialUI.ShowStep(step);
+        StartCoroutine(StaticCoroutine.Co_GenericCoroutine(step.delay,
+       ()=> tutorialUI.ShowStep(step))) ;
 
         if (step.imageSprite != null)
         {
             //HighlightObject(step.highlightObject);
         }
 
-        if (step.cameraFocusPosition != Vector3.zero)
+        if (step.cameraToEnable != null)
         {
-            FocusCamera(step.cameraFocusPosition);
+            FocusCamera(step.cameraToEnable);
         }
 
         if (step.requiresEvent)
@@ -233,9 +244,10 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
         // Implement object highlighting logic here (e.g., using a shader or outline effect)
     }
 
-    private void FocusCamera(Vector3 position)
+    private void FocusCamera(CinemachineCamera cinemachineCamera)
     {
-        mainCamera.transform.position = position; // Add smoothing if needed
+        m_DefaultCinemachineCamera.Priority = -1;
+        cinemachineCamera.Priority = 1;
     }
 
     private void EndTutorial()
@@ -247,6 +259,8 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
         Debug.Log("Tutorial Complete!");
         tutorialUI.Hide();
         m_IsTutorialActive = false;
+        (Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineCamera).Priority = -1;
+        m_DefaultCinemachineCamera.Priority = 1;
 
     }
 
