@@ -55,7 +55,10 @@ namespace TMKOC.Reflection
         {
             GameManager.OnGameStart += OnGameStart;
             GameManager.OnGameOver += OnGameOver;
+            
         }
+
+       
 
         private void OnGameOver()
         {
@@ -76,6 +79,7 @@ namespace TMKOC.Reflection
         {
             GameManager.OnGameStart -= OnGameStart;
             GameManager.OnGameOver -= OnGameOver;
+            
 
         }
 
@@ -83,10 +87,10 @@ namespace TMKOC.Reflection
 
         public void SetMoveX(float value)
         {
-            if (TutorialManager.Instance.IsTutorialActive)
+            if (TutorialManager.Instance.IsTutorialActive && value == 0)
                 TutorialEventManager.Instance.TriggerEvent("event_tutorial_movement");
 
-            Debug.Log("Moving");
+            Debug.Log("Moving " + value);
             moveX = value;
         }
 
@@ -180,9 +184,6 @@ namespace TMKOC.Reflection
         [Button]
         public void DoMove(int direction)
         {
-           
-
-            
             if (direction == 1){
                 if(!CanMove(1))
                     return;
@@ -219,7 +220,7 @@ namespace TMKOC.Reflection
             else
             {
                 inAir = false;
-                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0.75f, () =>
+                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1f, () =>
                 {
                     m_CanMove = true;
                 }));
@@ -233,8 +234,10 @@ namespace TMKOC.Reflection
         /// <param name="other">The other Collider2D involved in this collision.</param>
         void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent<TutorialTriggerer>(out TutorialTriggerer triggerer))
+            if (other.TryGetComponent<TutorialTriggerer>(out TutorialTriggerer triggerer)){
+                SetMoveX(0);
                 TutorialManager.Instance.StartTutorial(triggerer.TutorialTriggererId);
+            }
         }
 
     }

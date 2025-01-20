@@ -34,6 +34,10 @@ public class TutorialStep
    // [ShowIf("@type == TutorialStepType.Controls")]
     public GameObject controlObjects; // Object to highlight (optional)
 
+    public List<string> enableControlsId;
+
+    public List<string> disableControlsId;
+
     public Vector3 controlObjectPos;
 
     [Button]

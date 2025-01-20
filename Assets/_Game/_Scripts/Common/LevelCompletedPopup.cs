@@ -72,7 +72,7 @@ public class LevelCompletedPopup : MonoBehaviour
 
     private void OnGameLoose()
     {
-        SetData("Oh no! Try Again!", SortingGameManager.Instance.GameRestart, "Restart");
+        SetData("Oh no! Try Again!", GameManager.Instance.GameRestart, "Restart");
         ShowLoosePopup();
     }
 
@@ -148,7 +148,7 @@ public class LevelCompletedPopup : MonoBehaviour
 
     public void OnNextLevelButtonClicked()
     {
-        CloudUI.Instance.PlayColoudEnterAnimation();
+       // CloudUI.Instance.PlayColoudEnterAnimation();
     }
 
 

@@ -124,7 +124,7 @@ namespace TMKOC
 
             //if (Random.Range(0f, 1f) < 0.5f)
             //{
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[SortingLevelManager.Instance.CurrentLevelIndex];
+            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
             m_SFXAudioSource.Play();
             //}
         }
@@ -141,7 +141,7 @@ namespace TMKOC
             else if (overridePreviousClips && m_SFXAudioSource.isPlaying)
                 m_SFXAudioSource.Stop();
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[SortingLevelManager.Instance.CurrentLevelIndex];
+            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[LevelManager.Instance.CurrentLevelIndex];
             m_SFXAudioSource.Play();
         }
 
@@ -175,7 +175,7 @@ namespace TMKOC
                 m_SFXAudioSource.Stop();
 
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[SortingLevelManager.Instance.CurrentLevelIndex];
+            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[LevelManager.Instance.CurrentLevelIndex];
             m_SFXAudioSource.Play();
         }
 

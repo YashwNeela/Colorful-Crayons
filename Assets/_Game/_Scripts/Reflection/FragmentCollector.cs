@@ -42,8 +42,7 @@ namespace TMKOC.Reflection
              targetSprite.color = new Color(0.5f, 0.5f, 0.5f); // Gray (128, 128, 128)
 
             // Use DOTween to transition to white
-            targetSprite
-                .DOColor(Color.white, lerpDuration) // Tween the color to white
+            targetSprite.DOColor(Color.white, lerpDuration) // Tween the color to white
                 .SetEase(Ease.Linear)
                 .OnComplete(()=> 
                 {

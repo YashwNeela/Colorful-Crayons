@@ -33,7 +33,7 @@ namespace TMKOC
 
         protected virtual void Update()
         {
-            if (isCountingDown && SortingGameManager.Instance.CurrentGameState == GameState.Playing)
+            if (isCountingDown && GameManager.Instance.CurrentGameState == GameState.Playing)
             {
                 // Decrease the time
                 currentTime -= Time.deltaTime;

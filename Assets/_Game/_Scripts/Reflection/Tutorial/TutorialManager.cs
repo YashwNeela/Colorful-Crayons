@@ -97,9 +97,11 @@ public class TutorialDataSaver: SaveLoadBase
 
 public class TutorialManager : SerializedSingleton<TutorialManager>
 {
+    public Action OnTutorialStarted;
+
+    public Action OnTutorialEnded;
     public TutorialDataSaver m_TutorialDataSaver;
 
-    
     public List<TutorialData> tutorialData; // Steps in the tutorial
 
     public TutorialData currentTutorialData;
@@ -174,9 +176,10 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
             m_IsTutorialActive = false;
             return;
         }
-            m_IsTutorialActive = true;
+        m_IsTutorialActive = true;
 
         ShowStep(currentStepIndex);
+        OnTutorialStarted?.Invoke();
     }
 
     private void ShowStep(int index)
@@ -189,8 +192,7 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
         }
         
         var step = currentTutorialData.tutorialSteps[index];
-        StartCoroutine(StaticCoroutine.Co_GenericCoroutine(step.delay,
-       ()=> tutorialUI.ShowStep(step))) ;
+        tutorialUI.ShowStep(step);
 
         if (step.imageSprite != null)
         {
@@ -252,6 +254,7 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
 
     private void EndTutorial()
     {
+        OnTutorialEnded?.Invoke();
         m_TutorialDataSaver.TutorialCompletedDict()[currentTutorialData.tutorialId] = true;
         m_TutorialDataSaver.Save(m_TutorialDataSaver.TutorialCompletedDict());
         currentTutorialData = null;
