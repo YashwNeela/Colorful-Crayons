@@ -131,7 +131,7 @@ namespace TMKOC.Reflection
             m_Animator.SetBool("Ground", isGrounded);
             // Get input for movement
 
-            if (Mathf.Abs(moveX) > 0.1f && isGrounded && m_CanMove)
+            if (Mathf.Abs(moveX) > 0.1f && isGrounded && m_CanMove && !inAir)
             {
 
                 if (moveX > 0)
@@ -237,10 +237,10 @@ namespace TMKOC.Reflection
             else
             {
                 inAir = false;
-               
-                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0.5f, () =>
+                rb.velocity = Vector2.zero;
+                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1f, () =>
                 {
-                    rb.velocity = Vector2.zero;
+                    
                     m_CanMove = true;
                 }));
             }
