@@ -238,9 +238,9 @@ namespace TMKOC.Reflection
             {
                 inAir = false;
                
-                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1f, () =>
+                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0.5f, () =>
                 {
-                     rb.velocity = Vector2.zero;
+                    rb.velocity = Vector2.zero;
                     m_CanMove = true;
                 }));
             }

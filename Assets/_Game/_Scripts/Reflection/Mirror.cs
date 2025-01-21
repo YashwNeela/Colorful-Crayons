@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,13 +21,35 @@ namespace TMKOC.Reflection
             base.OnPlayerEnterZone();
             m_MirrorSlider = MirrorSlider.Instance;
             m_MirrorSlider.EnableSlider();
+            m_MirrorSlider.OnSliderValueChangedAction += OnSliderValueChangedAction;
+        }
+
+        private void OnSliderValueChangedAction(float value)
+        {
+             if (m_MirrorSlider != null)
+            {
+                // Get the current value of the slider
+                float sliderValue = m_MirrorSlider.m_Slider.value;
+
+                // Map the slider value to the desired angle range, e.g., -45 to 45
+                float zRotation = Mathf.Lerp(-45f, 45f, sliderValue);
+
+                // Apply the calculated rotation to the mirror object on the Z-axis
+                if (m_MirrorObject != null)
+                {
+                    m_MirrorObject.transform.rotation = Quaternion.Euler(0, 180, zRotation);
+                }
+            }
         }
 
         protected override void OnPlayerExitZone()
         {
             base.OnPlayerExitZone();
             m_MirrorSlider.DisableSlider();
+            m_MirrorSlider.OnSliderValueChangedAction -= OnSliderValueChangedAction;
+
             m_MirrorSlider = null;
+            
         }
 
         public virtual void OnSunglightEnter()
@@ -42,21 +65,7 @@ namespace TMKOC.Reflection
         protected override void Update()
         {
             base.Update();
-
-            if (m_MirrorSlider != null)
-            {
-                // Get the current value of the slider
-                float sliderValue = m_MirrorSlider.m_Slider.value;
-
-                // Map the slider value to the desired angle range, e.g., -45 to 45
-                float zRotation = Mathf.Lerp(-45f, 45f, sliderValue);
-
-                // Apply the calculated rotation to the mirror object on the Z-axis
-                if (m_MirrorObject != null)
-                {
-                    m_MirrorObject.transform.rotation = Quaternion.Euler(0, 180, zRotation);
-                }
-            }
+           
         }
 
         void OnMouseDown()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace TMKOC.Reflection
     {
         [SerializeField] protected bool m_ShouldDestroyOnLoad = false;
         private static MirrorSlider _instance;
+
+        public Action<float> OnSliderValueChangedAction;
 
         [SerializeField] public GameObject m_Container; // Container for the slider
         [SerializeField] public Slider m_Slider;        // Reference to the Slider component
@@ -79,8 +82,9 @@ namespace TMKOC.Reflection
                 m_Container.SetActive(false);
         }
 
-        private void OnSliderValueChanged(float value)
+        public void OnSliderValueChanged(float value)
         {
+            OnSliderValueChangedAction?.Invoke(value);
             Debug.Log($"Slider Value Changed: {value}");
         }
     }

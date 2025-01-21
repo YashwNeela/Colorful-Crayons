@@ -35,7 +35,7 @@ namespace TMKOC.Reflection
             {
                 if(t.m_Tag == ReflectionTagsEnum.CameraTransform)
                 {
-                    m_CameraPosition = t.transform;
+                 //   m_CameraPosition = t.transform;
                     break;
                 }
             }
@@ -45,8 +45,8 @@ namespace TMKOC.Reflection
         {
             base.OnLevelLoaded();
             
-            Camera.main.transform.position = new Vector3(m_CameraPosition.position.x, m_CameraPosition.position.y,
-          Camera.main.transform.position.z);
+        //     Camera.main.transform.position = new Vector3(m_CameraPosition.position.x, m_CameraPosition.position.y,
+        //   Camera.main.transform.position.z);
         }
 
         public void LevelPass()

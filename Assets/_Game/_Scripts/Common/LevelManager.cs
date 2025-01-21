@@ -11,14 +11,14 @@ namespace TMKOC
         public TextMeshProUGUI m_LevelText;
         public TextMeshProUGUI m_TipText;
 
-        [SerializeField] private List<GameObject> levels; // Array to hold all levels
+        [SerializeField] protected List<GameObject> levels; // Array to hold all levels
 
         public int MaxLevels => levels.Count;
-        private int currentLevelIndex = 0;
+        protected int currentLevelIndex = 0;
 
         public int CurrentLevelIndex => currentLevelIndex;
 
-        private GameManager m_GameManager;
+        protected GameManager m_GameManager;
 
         protected virtual void Start()
         {
