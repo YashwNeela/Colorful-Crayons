@@ -43,6 +43,12 @@ namespace TMKOC.Reflection
             if(m_IsPartOfTutorial)
             {
                 TutorialEventManager.Instance.Subscribe("event_mirror_info",()=> SetStartRotation());
+               StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>{
+                if(TutorialManager.Instance.IsTutorialCompleted(TutorialIds.mirrorTutorial))
+                {
+                    Invoke(nameof(SetStartRotation),1);
+                }
+               }));
             }
         }
 

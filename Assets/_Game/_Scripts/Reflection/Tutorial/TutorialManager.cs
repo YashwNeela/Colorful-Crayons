@@ -16,6 +16,8 @@ public class TutorialDataSaver: SaveLoadBase
     [SerializeField] private List<bool> m_tutorialCompletedDictBool;
     [SerializeField] private Dictionary<int, bool> m_tutorialCompletedDict;
 
+    public Dictionary<int, bool> TutorialCompletedDict => m_tutorialCompletedDict;
+
 
      [SerializeField] float a;
 
@@ -41,7 +43,7 @@ public class TutorialDataSaver: SaveLoadBase
         m_tutorialCompletedDict = tutorialCompletedDict;
     }
 
-    public Dictionary<int,bool> TutorialCompletedDict()
+    public Dictionary<int,bool> SetTutorialCompletedDict()
     { 
         if(m_tutorialCompletedDict != null)
             return m_tutorialCompletedDict;
@@ -97,10 +99,22 @@ public class TutorialDataSaver: SaveLoadBase
 
 public class TutorialManager : SerializedSingleton<TutorialManager>
 {
-    public Action OnTutorialStarted;
+    public Action<int> OnTutorialStarted;
 
-    public Action OnTutorialEnded;
+    public Action<int> OnTutorialEnded;
     public TutorialDataSaver m_TutorialDataSaver;
+
+    public bool IsTutorialCompleted(int tutorialId)
+    {
+        try{
+            return m_TutorialDataSaver.TutorialCompletedDict[tutorialId];
+        }
+        catch
+        {
+            Debug.LogError("No tutorial with id: " + tutorialId + " found");
+            return false;;
+        }
+    }
 
     public List<TutorialData> tutorialData; // Steps in the tutorial
 
@@ -164,7 +178,7 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
     public void StartTutorial(int tutorialId)
     {
         currentTutorialData = tutorialData.Find(data => data.tutorialId == tutorialId);
-        if(m_TutorialDataSaver.TutorialCompletedDict()[currentTutorialData.tutorialId] == true)
+        if(m_TutorialDataSaver.SetTutorialCompletedDict()[currentTutorialData.tutorialId] == true)
         {
             Debug.Log("Tutorial Already completed");
             return;
@@ -179,7 +193,7 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
         m_IsTutorialActive = true;
 
         ShowStep(currentStepIndex);
-        OnTutorialStarted?.Invoke();
+        OnTutorialStarted?.Invoke(tutorialId);
     }
 
     private void ShowStep(int index)
@@ -254,9 +268,9 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
 
     private void EndTutorial()
     {
-        OnTutorialEnded?.Invoke();
-        m_TutorialDataSaver.TutorialCompletedDict()[currentTutorialData.tutorialId] = true;
-        m_TutorialDataSaver.Save(m_TutorialDataSaver.TutorialCompletedDict());
+        OnTutorialEnded?.Invoke(currentTutorialData.tutorialId);
+        m_TutorialDataSaver.SetTutorialCompletedDict()[currentTutorialData.tutorialId] = true;
+        m_TutorialDataSaver.Save(m_TutorialDataSaver.SetTutorialCompletedDict());
         currentTutorialData = null;
         currentStepIndex = 0;
         Debug.Log("Tutorial Complete!");

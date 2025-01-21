@@ -55,10 +55,27 @@ namespace TMKOC.Reflection
         {
             GameManager.OnGameStart += OnGameStart;
             GameManager.OnGameOver += OnGameOver;
-            
+            TutorialManager.Instance.OnTutorialStarted += OnTutorialStarted;
+            TutorialManager.Instance.OnTutorialEnded += OnTutorialEnded;
+
         }
 
-       
+        private void OnTutorialEnded(int obj)
+        {
+            if(obj == TutorialIds.mirrorTutorial)
+            {
+                ControlsUI.Instance.EnableControls(ControlsUIConstants.jump);
+                ControlsUI.Instance.EnableControls(ControlsUIConstants.movememnt);
+                ControlsUI.Instance.EnableControls(ControlsUIConstants.mirror);
+
+
+            }
+        }
+
+        private void OnTutorialStarted(int obj)
+        {
+            
+        }
 
         private void OnGameOver()
         {
