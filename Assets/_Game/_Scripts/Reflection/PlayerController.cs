@@ -237,8 +237,10 @@ namespace TMKOC.Reflection
             else
             {
                 inAir = false;
+               
                 StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1f, () =>
                 {
+                     rb.velocity = Vector2.zero;
                     m_CanMove = true;
                 }));
             }

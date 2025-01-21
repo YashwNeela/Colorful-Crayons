@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMKOC.PlantLifeCycle;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TMKOC.Reflection
 {
@@ -11,6 +13,9 @@ namespace TMKOC.Reflection
         protected FragmentType m_FragmentType;
         public ParticleSystem m_LightEnterPS;
 
+        public UnityEvent OnFragmentCollected;
+
+        public UnityEvent OnFragmentUnCollected;
 
         [SerializeField] Fragment[] m_FragmentsArray;
 
@@ -38,8 +43,8 @@ namespace TMKOC.Reflection
             if(IsLevelCompleted())
             {
                 Debug.Log("Level Completed");
-                transform.DOScale(transform.localScale * 1.1f, 0.5f);
-             targetSprite.color = new Color(0.5f, 0.5f, 0.5f); // Gray (128, 128, 128)
+            transform.DOScale(transform.localScale * 1.1f, 0.5f);
+            targetSprite.color = new Color(0.5f, 0.5f, 0.5f); // Gray (128, 128, 128)
 
             // Use DOTween to transition to white
             targetSprite.DOColor(Color.white, lerpDuration) // Tween the color to white
@@ -48,6 +53,8 @@ namespace TMKOC.Reflection
                 {
                     m_LightEnterPS.Play();
                     m_ReflectionLevel.LevelPass();
+                OnFragmentCollected?.Invoke();
+
                 }); // Smooth linear transition
 
 
@@ -64,6 +71,10 @@ namespace TMKOC.Reflection
 
              targetSprite.color = new Color(0.5f, 0.5f, 0.5f); 
             m_ReflectionLevel.LevelFail();
+
+            OnFragmentUnCollected?.Invoke();
+
+            
 
         }
         
