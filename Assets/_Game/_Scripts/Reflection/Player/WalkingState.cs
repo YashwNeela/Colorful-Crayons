@@ -1,34 +1,39 @@
 using UnityEngine;
 
-namespace TMKOC.Reflection{
-public class WalkingState : IPlayerState
+namespace TMKOC.Reflection
 {
-    public void Enter(PlayerStateMachine player)
+    public class WalkingState : IPlayerState
     {
-        player.SetAnimatorParameters(ground: true, speed: 1);
-    }
-
-    public void Exit(PlayerStateMachine player)
-    {
-        // Any cleanup when exiting Walking state
-    }
-
-    public void Update(PlayerStateMachine player)
-    {
-        float moveX = Input.GetAxis("Horizontal");
-
-        // Move the player
-        player.Move(moveX);
-
-        if (Mathf.Abs(moveX) <= 0.1f)
+        public void Enter(PlayerStateMachine player)
         {
-            player.ChangeState(new IdleState());
+            player.SetAnimatorParameters(ground: true, speed: 1);
         }
-        else if (Input.GetButtonDown("Jump") && player.IsGrounded())
+
+        public void Exit(PlayerStateMachine player)
         {
-            player.Jump();
-            player.ChangeState(new JumpingState());
+            // Any cleanup when exiting Walking state
+        }
+
+        public void Jump(PlayerStateMachine player)
+        {
+            if (player.IsGrounded())
+            {
+                player.Jump();
+                player.ChangeState(new JumpingState());
+            }
+        }
+
+        public void Update(PlayerStateMachine player)
+        {
+            float moveX = player.moveX;
+
+            // Move the player
+            player.Move(moveX);
+
+            if (Mathf.Abs(moveX) <= 0.1f)
+            {
+                player.ChangeState(new IdleState());
+            }
         }
     }
-}
 }

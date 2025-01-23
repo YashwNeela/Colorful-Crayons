@@ -1,38 +1,59 @@
 using UnityEngine;
 
-namespace TMKOC.Reflection{
-public class JumpingState : IPlayerState
+namespace TMKOC.Reflection
 {
-    public void Enter(PlayerStateMachine player)
+    public class JumpingState : IPlayerState
     {
-        player.SetAnimatorParameters(ground: false, speed: 0);
-    }
+        private bool canMoveToIdle;
+        public void Enter(PlayerStateMachine player)
+        {
+            player.SetAnimatorParameters(ground: false, speed: 0);
+            canMoveToIdle = false;
+            player.StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1, () =>
+            {
+                CanMoveToIdle();
+            }));
 
-    public void Exit(PlayerStateMachine player)
-    {
-        // Cleanup when exiting Jumping state
-    }
+        }
 
-    public void Update(PlayerStateMachine player)
-    {
-        float moveX = Input.GetAxis("Horizontal");
+        public void Exit(PlayerStateMachine player)
+        {
+            // Cleanup when exiting Jumping state
+        }
 
-        if (player.IsGrounded())
+        public void Jump(PlayerStateMachine player)
         {
 
-            if (Mathf.Abs(moveX) > 0.1f)
+        }
+
+        public void Update(PlayerStateMachine player)
+        {
+            float moveX = player.moveX;
+
+            if (player.IsGrounded())
             {
-                player.ChangeState(new WalkingState());
+
+                // if (Mathf.Abs(moveX) > 0.1f)
+                // {
+                //     player.Move(moveX);
+                //    // player.ChangeState(new WalkingState());
+                // }
+                
+                {
+                    if (canMoveToIdle)
+                        player.ChangeState(new IdleState());
+                }
             }
             else
             {
-                player.ChangeState(new IdleState());
+                player.Move(moveX);
             }
         }
-        else
-        {
-            player.Move(moveX);
-        }
-    }
 
-}}
+        private void CanMoveToIdle()
+        {
+            canMoveToIdle = true;
+        }
+
+    }
+}

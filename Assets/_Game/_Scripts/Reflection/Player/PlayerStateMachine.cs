@@ -1,29 +1,36 @@
 using UnityEngine;
 
-namespace TMKOC.Reflection{
-public interface IPlayerState
+namespace TMKOC.Reflection
 {
-    void Enter(PlayerStateMachine player);
-    void Exit(PlayerStateMachine player);
-    void Update(PlayerStateMachine player);
-}
+    public interface IPlayerState
+    {
+        void Enter(PlayerStateMachine player);
+        void Exit(PlayerStateMachine player);
+        void Update(PlayerStateMachine player);
 
-public class PlayerStateMachine : MonoBehaviour
-{
-    public float moveSpeed = 5f;
-    public float jumpHeight = 10f;
-    public Transform groundCheck;
-    public LayerMask groundMask;
-    public float groundDistance = 0.2f;
+        void Jump(PlayerStateMachine player);
+    }
 
-    private Rigidbody2D rb;
+    public class PlayerStateMachine : MonoBehaviour
+    {
+        public float moveSpeed = 5f;
+        public float jumpHeight = 10f;
+        public Transform groundCheck;
+        public LayerMask groundMask;
+        public float groundDistance = 0.2f;
 
-    public Rigidbody2D Rb=> rb;
-    private Animator animator;
+        private Rigidbody2D rb;
 
-    private IPlayerState currentState;
+        public Rigidbody2D Rb => rb;
+        private Animator animator;
 
-        
+        private SpriteRenderer m_SpriteRenderer;
+
+        private IPlayerState currentState;
+
+        public float moveX;
+
+
 
         public void OnEnable()
         {
@@ -36,7 +43,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         private void OnTutorialEnded(int obj)
         {
-            if(obj == TutorialIds.mirrorTutorial)
+            if (obj == TutorialIds.mirrorTutorial)
             {
                 ControlsUI.Instance.EnableControls(ControlsUIConstants.jump);
                 ControlsUI.Instance.EnableControls(ControlsUIConstants.movememnt);
@@ -48,7 +55,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         private void OnTutorialStarted(int obj)
         {
-            
+
         }
 
         private void OnGameOver()
@@ -70,58 +77,73 @@ public class PlayerStateMachine : MonoBehaviour
         {
             GameManager.OnGameStart -= OnGameStart;
             GameManager.OnGameOver -= OnGameOver;
-            
+
 
         }
 
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        ChangeState(new IdleState());
-    }
+        private void Start()
+        {
+            rb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+            m_SpriteRenderer = GetComponent<SpriteRenderer>();
+            ChangeState(new IdleState());
+        }
 
-    private void Update()
-    {
-        currentState?.Update(this);
-    }
+        private void Update()
+        {
+            currentState?.Update(this);
+        }
 
-    public void ChangeState(IPlayerState newState)
-    {
-        currentState?.Exit(this);
-        currentState = newState;
-        currentState?.Enter(this);
-    }
+        public void ChangeState(IPlayerState newState)
+        {
+            currentState?.Exit(this);
+            currentState = newState;
+            currentState?.Enter(this);
+        }
 
-    public void Move(float direction)
-    {
-        rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
-    }
+        public void Move(float direction)
+        {
+            if (direction > 0)
+                m_SpriteRenderer.flipX = false;
+            if (direction < 0)
+                m_SpriteRenderer.flipX = true;
+            rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
+        }
 
-    public void Jump()
-    {
-        rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * Physics2D.gravity.y));
-    }
+        public void Jump()
+        {
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * Physics2D.gravity.y));
+        }
 
-    public bool IsGrounded()
-    {
-        return Physics2D.OverlapCircle(groundCheck.position, groundDistance, groundMask);
-    }
+        public bool IsGrounded()
+        {
+            return Physics2D.OverlapCircle(groundCheck.position, groundDistance, groundMask);
+        }
 
-    public void SetAnimatorParameters(bool ground, float speed)
-    {
-        animator.SetBool("Ground", ground);
-        animator.SetFloat("Speed", speed);
-    }
+        public void SetAnimatorParameters(bool ground, float speed)
+        {
+            animator.SetBool("Ground", ground);
+            animator.SetFloat("Speed", speed);
+        }
 
-     void OnDrawGizmosSelected()
+        void OnDrawGizmosSelected()
         {
             // Draw the ground check circle in the editor for debugging
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
-        
+
 
         }
-}
+
+        public void SetMoveX(float direction)
+        {
+            moveX = direction;
+        }
+
+        public void CallJumpOnState()
+        {
+            currentState?.Jump(this);
+        }
+    }
 }
