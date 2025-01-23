@@ -25,6 +25,8 @@ namespace TMKOC.Reflection
         public float lerpDuration = 2.0f;
 
         public ReflectionLevel m_ReflectionLevel;
+
+        public bool m_IsSunlightEnter;
         protected virtual void Awake()
         {
              targetSprite.color = new Color(0.5f, 0.5f, 0.5f);
@@ -38,7 +40,7 @@ namespace TMKOC.Reflection
         public void OnSunlightEnter()
         {
             transform.DOComplete();
-            
+            m_IsSunlightEnter = true;
             Debug.Log("Sunlight enter Collector");
             if(IsLevelCompleted())
             {
@@ -63,6 +65,7 @@ namespace TMKOC.Reflection
 
         public void OnSunlightExit()
         {
+            m_IsSunlightEnter = false;
             transform.DOComplete();
             transform.DOScale(transform.localScale / 1.1f, 0.5f);
             m_LightEnterPS.Stop();
@@ -80,6 +83,7 @@ namespace TMKOC.Reflection
         
         public bool IsLevelCompleted()
         {
+            if(!m_IsSunlightEnter) return false;
             for(int i = 0;i< m_FragmentsArray.Length;i++)
             {
                 if(!m_FragmentsArray[i].IsCollected)

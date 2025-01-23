@@ -14,7 +14,40 @@ namespace TMKOC.Reflection
 
         [SerializeField] ParticleSystem m_SunlightEnterPE;
 
+        private bool m_IsActive;
 
+        public bool IsActive => m_IsActive;
+
+        ReflectionLevel m_ReflectionLevel;
+
+
+        void Awake()
+        {
+            m_ReflectionLevel = GetComponentInParent<ReflectionLevel>();
+        }
+        void OnEnable()
+        {
+            m_ReflectionLevel.OnReflectionLevelLoaded += OnReflectionLevelLoaded;
+
+            m_ReflectionLevel.OnRelectionLevelUnloaded += OnRelectionLevelUnloaded;
+        }
+
+        void OnDisable()
+        {
+            m_ReflectionLevel.OnReflectionLevelLoaded -= OnReflectionLevelLoaded;
+
+            m_ReflectionLevel.OnRelectionLevelUnloaded -= OnRelectionLevelUnloaded;
+        }
+
+        private void OnRelectionLevelUnloaded()
+        {
+            m_IsActive = false;
+        }
+
+        private void OnReflectionLevelLoaded()
+        {
+            m_IsActive = true;
+        }
 
         protected override void OnPlayerEnterZone()
         {

@@ -47605,6 +47605,7 @@ MonoBehaviour:
   targetSprite: {fileID: 953694889}
   lerpDuration: 2
   m_ReflectionLevel: {fileID: 1003275571}
+  m_IsSunlightEnter: 0
 --- !u!114 &666350970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47647,7 +47648,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.18851233, y: 0.087403715}
@@ -48130,6 +48131,7 @@ MonoBehaviour:
   targetSprite: {fileID: 1148451913}
   lerpDuration: 2
   m_ReflectionLevel: {fileID: 2126321402}
+  m_IsSunlightEnter: 0
 --- !u!114 &767487233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48172,7 +48174,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.13438392}
@@ -53318,7 +53320,7 @@ MonoBehaviour:
   m_ShouldDestroyOnLoad: 1
   GAMEID: 0
   testLevel: 1
-  levelNumber: 1
+  levelNumber: 0
   m_CurrentGameState: 0
   m_PlayCloudTransition: 0
 --- !u!4 &845148976
@@ -58597,7 +58599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -73810,6 +73812,7 @@ MonoBehaviour:
   targetSprite: {fileID: 791253911}
   lerpDuration: 2
   m_ReflectionLevel: {fileID: 1408825035}
+  m_IsSunlightEnter: 0
 --- !u!114 &1010188601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73852,7 +73855,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.13438392}
@@ -73929,20 +73932,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 2d01110000004f006e005400750074006f007200690061006c0053007400610072007400650064002d010f0000004f006e005400750074006f007200690061006c0045006e00640065006400
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: OnTutorialStarted
-      Entry: 6
-      Data: 
-    - Name: OnTutorialEnded
-      Entry: 6
-      Data: 
+    SerializationNodes: []
   m_ShouldDestroyOnLoad: 1
   m_TutorialDataSaver:
     m_DirPath: TutorialData
@@ -79843,7 +79840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -81587,8 +81584,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 01010c00000063006f006e00740072006f006c00730044006900630074002f00000000017d000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00440069006300740069006f006e00610072007900600032005b005b00530079007300740065006d002e0053007400720069006e0067002c0020006d00730063006f0072006c00690062005d002c005b0055006e0069007400790045006e00670069006e0065002e00470061006d0065004f0062006a006500630074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c00690062000000000001010800000063006f006d00700061007200650072002f010000000159000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00470065006e00650072006900630045007100750061006c0069007400790043006f006d0070006100720065007200600031005b005b00530079007300740065006d002e0053007400720069006e0067002c0020006d00730063006f0072006c00690062005d005d002c0020006d00730063006f0072006c00690062000100000005060300000000000000042e27010200000024006b00011100000063006f006e00740072006f006c0073005f006d006f00760065006d0065006e0074000b0102000000240076000000000005042e27010200000024006b00010d00000063006f006e00740072006f006c0073005f006a0075006d0070000b0102000000240076000100000005042e27010200000024006b00010f00000063006f006e00740072006f006c0073005f006d006900720072006f0072000b01020000002400760002000000050705
     ReferencedUnityObjects:
     - {fileID: 730811279}
     - {fileID: 1332640061}
@@ -81597,63 +81594,7 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: controlsDict
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: controls_movement
-    - Name: $v
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: controls_jump
-    - Name: $v
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: controls_mirror
-    - Name: $v
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   m_ShouldDestroyOnLoad: 1
 --- !u!1 &1449209666
 GameObject:
@@ -88443,7 +88384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -117582,17 +117523,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 2d010700000061007500640069006f0053004f00
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: audioSO
-      Entry: 6
-      Data: 
+    SerializationNodes: []
   m_ShouldDestroyOnLoad: 1
   m_CurretAudioLanguage: 0
   m_BackGroundAudioSource: {fileID: 1978577481}
@@ -122572,7 +122510,7 @@ Transform:
   m_GameObject: {fileID: 2007183702}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05, y: -1, z: 0}
+  m_LocalPosition: {x: 0.05, y: 6.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

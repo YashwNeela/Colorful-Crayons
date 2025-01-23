@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,6 +15,9 @@ namespace TMKOC.Reflection
         public GameObject m_DarkEnvironment;
 
         public GameObject m_LightEnvironment;
+
+        public Action OnReflectionLevelLoaded;
+        public Action OnRelectionLevelUnloaded;
 
         protected override void Awake()
         {
@@ -44,9 +48,14 @@ namespace TMKOC.Reflection
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-            
-        //     Camera.main.transform.position = new Vector3(m_CameraPosition.position.x, m_CameraPosition.position.y,
-        //   Camera.main.transform.position.z);
+            OnReflectionLevelLoaded?.Invoke();
+        }
+
+        public override void OnLevelUnloaded()
+        {
+            base.OnLevelUnloaded();
+            OnRelectionLevelUnloaded?.Invoke();
+
         }
 
         public void LevelPass()
