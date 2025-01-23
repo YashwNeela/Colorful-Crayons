@@ -7,6 +7,7 @@ namespace TMKOC.Reflection
 {
     public class Mirror : Interactable
     {
+        public bool m_IsFacingLeft;
         public GameObject m_MirrorObject;
         private Vector2 initialMousePosition;
 
@@ -64,8 +65,15 @@ namespace TMKOC.Reflection
                 // Get the current value of the slider
                 float sliderValue = m_MirrorSlider.m_Slider.value;
 
+                    float zRotation = 0;
+
+                if(!m_IsFacingLeft)
                 // Map the slider value to the desired angle range, e.g., -45 to 45
-                float zRotation = Mathf.Lerp(-45f, 45f, sliderValue);
+                    zRotation = Mathf.Lerp(-45f, 45f, sliderValue);
+                else
+                    zRotation = Mathf.Lerp(45f, -45f, sliderValue);
+
+
 
                 // Apply the calculated rotation to the mirror object on the Z-axis
                 if (m_MirrorObject != null)
