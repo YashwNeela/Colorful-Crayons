@@ -45,8 +45,10 @@ namespace TMKOC.Reflection
                         TutorialEventManager.Instance.TriggerEvent("event_tutorial_jump");
 
                     rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
-                    m_Animator.SetTrigger("Jump");
+                 //   m_Animator.SetTrigger("Jump");
+                 m_Animator.Play("VerticalJump");
                 }
+
 
             });
         }
@@ -129,26 +131,62 @@ namespace TMKOC.Reflection
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundDistance, groundMask);
 
             m_Animator.SetBool("Ground", isGrounded);
+
             // Get input for movement
 
             if (Mathf.Abs(moveX) > 0.1f && isGrounded && m_CanMove && !inAir)
             {
+                
+                if(moveX > 0)
+                {
+                    transform.GetComponent<SpriteRenderer>().flipX = false;
 
-                if (moveX > 0)
-                    DoMove(1);
-                else
-                    DoMove(-1);
+                }else
+                {
+                transform.GetComponent<SpriteRenderer>().flipX = true;
+
+                }
+
+                Vector2 move = new Vector2(Mathf.Clamp(moveX,-1,1) * moveSpeed, rb.velocity.y);
+                rb.velocity = move;
+                m_Animator.Play("Walk");
+              //  m_Animator.SetFloat("Speed", Mathf.Abs(1));
+
+                // if (moveX > 0)
+                //     DoMove(1);
+                // else
+                //     DoMove(-1);
 
 
             }
-            else
+            else if(!inAir)
             {
-                m_Animator.SetFloat("Speed", 0);
+
+                rb.velocity = new Vector2(0, rb.velocity.y);
+                m_Animator.Play("Idle");
+
+                // m_Animator.SetFloat("Speed", 0);
             }
+
+            
             if (inAir)
             {
+                if(Mathf.Abs(moveX) > 0.1f){
+                if(moveX > 0)
+                {
+                    transform.GetComponent<SpriteRenderer>().flipX = false;
+
+                }else
+                {
+                transform.GetComponent<SpriteRenderer>().flipX = true;
+
+                }
+                
+                }
                 Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
                 rb.velocity = move;
+                
+               
             }
 
             //  Jumping
@@ -215,10 +253,12 @@ namespace TMKOC.Reflection
           
             m_Animator.SetFloat("Speed", Mathf.Abs(1));
 
-            transform.DOJump((Vector2)transform.position + (Vector2.right * direction * 2f), 0.5f, 1, 0.5f).OnComplete(() =>
-            {
-                Invoke(nameof(SetCanMove), 0.5f);
-            });
+            rb.velocity = new Vector2(rb.velocity.x * direction,gravity);
+
+            // transform.DOJump((Vector2)transform.position + (Vector2.right * direction * 2f), 0.5f, 1, 0.5f).OnComplete(() =>
+            // {
+            //     Invoke(nameof(SetCanMove), 0.5f);
+            // });
             
         }
 
@@ -258,6 +298,16 @@ namespace TMKOC.Reflection
                 TutorialManager.Instance.StartTutorial(triggerer.TutorialTriggererId);
             }
         }
+
+        private string currentAnimation;
+
+
+        void ChangeAnimation(string newAnimation)
+    {
+        if (currentAnimation == newAnimation) return;
+        currentAnimation = newAnimation;
+        if (m_Animator) m_Animator.Play(newAnimation);
+    }
 
     }
 }

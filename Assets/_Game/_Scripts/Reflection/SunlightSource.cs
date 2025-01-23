@@ -96,9 +96,10 @@ namespace TMKOC.Reflection
                 
                 if (hitInfo.collider != null)
                 {
-                    // Update the ray's position
-                            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, hitInfo.point);
+                    Debug.DrawLine(currentRayOrigin, hitInfo.point, Color.red, 0.1f);
 
+                    // Update the ray's position
+                    m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, hitInfo.point);
                     // Check the object type
                     if (hitInfo.transform.TryGetComponent<ReflectionTags>(out ReflectionTags tag))
                     {
@@ -106,9 +107,9 @@ namespace TMKOC.Reflection
                         {
                             Mirror mirror = tag.GetComponentInParent<Mirror>();
                             newMirrors.Add(mirror);
-
+                            float offsetFactor = 0.01f; 
                             // Reflect the ray
-                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal); // Offset to avoid self-hit
+                            currentRayOrigin = hitInfo.point + (Vector2)(hitInfo.normal * offsetFactor); // Offset to avoid self-hit
                             currentRayDirection = Vector2.Reflect(currentRayDirection, hitInfo.normal);
 
                             continue; // Continue to the next reflection
@@ -117,12 +118,15 @@ namespace TMKOC.Reflection
                         {
                             Fragment fragment = tag.GetComponentInParent<Fragment>();
                             newFragments.Add(fragment);
+                            Debug.DrawLine(hitInfo.point, hitInfo.point + (Vector2)(currentRayDirection * m_MaxRayDistance), Color.green, 0.1f);
 
                             // Update ray origin to continue through the fragment
-                            //currentRayOrigin = hitInfo.point;
+                            currentRayOrigin = hitInfo.point;
                             Debug.Log("Ray point " + hitInfo.transform.position);
-                            currentRayOrigin = (Vector2)hitInfo.transform.position; // Small offset forward
-                            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
+                        //     m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
+                        // currentRayOrigin + currentRayDirection * m_MaxRayDistance);
+                           // currentRayOrigin = (Vector2)hitInfo.transform.position; // Small offset forward
+                         //   m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
 
                            // m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
 
@@ -132,8 +136,9 @@ namespace TMKOC.Reflection
                         {
                             FragmentCollector fragmentCollector = tag.GetComponentInParent<FragmentCollector>();
                             newFragmentCollector.Add(fragmentCollector);
-                             currentRayOrigin = (Vector2)hitInfo.transform.position;
-                            m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
+                            Debug.Log("Hitting fragment");
+                           //  currentRayOrigin = (Vector2)hitInfo.transform.position;
+                         //   m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
 
                             // Update ray origin to continue through the fragment
                           //  currentRayOrigin = hitInfo.point /*+ (Vector2)(currentRayDirection * 0.01f)*/;
@@ -148,6 +153,8 @@ namespace TMKOC.Reflection
                 }
                 else
                 {
+                    Debug.DrawLine(currentRayOrigin, currentRayOrigin + (currentRayDirection * m_MaxRayDistance), Color.yellow, 0.1f);
+
                     // If no collider is hit, extend the ray to its maximum distance
                     m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
                         currentRayOrigin + currentRayDirection * m_MaxRayDistance);
