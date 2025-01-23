@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace TMKOC.Reflection
 {
@@ -29,6 +31,8 @@ namespace TMKOC.Reflection
         private IPlayerState currentState;
 
         public float moveX;
+
+        public Button m_LeftButton, m_RightButton;
 
 
 
@@ -103,11 +107,26 @@ namespace TMKOC.Reflection
 
         public void Move(float direction)
         {
+           
+                
             if (direction > 0)
                 m_SpriteRenderer.flipX = false;
             if (direction < 0)
                 m_SpriteRenderer.flipX = true;
             rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
+
+             if (TutorialManager.Instance.IsTutorialActive){
+                TutorialEventManager.Instance.TriggerEvent("event_tutorial_movement");
+                Invoke(nameof(HardCodePointUpOnMovementButton),1);
+                
+            }
+        }
+
+        public void HardCodePointUpOnMovementButton()
+        {
+            m_LeftButton.GetComponent<EventTrigger>().OnPointerUp(new PointerEventData(EventSystem.current));
+            m_RightButton.GetComponent<EventTrigger>().OnPointerUp(new PointerEventData(EventSystem.current));
+
         }
 
         public void Jump()
@@ -143,6 +162,8 @@ namespace TMKOC.Reflection
 
         public void CallJumpOnState()
         {
+            if (TutorialManager.Instance.IsTutorialActive)
+                TutorialEventManager.Instance.TriggerEvent("event_tutorial_jump");
             currentState?.Jump(this);
         }
     }

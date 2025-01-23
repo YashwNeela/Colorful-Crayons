@@ -17,7 +17,7 @@ namespace TMKOC
         // A generic coroutine that waits until the given condition is false, then fires the action
         public static IEnumerator Co_WaitUntil(Func<bool> condition, Action onComplete)
         {
-            yield return new WaitUntil(condition);
+            yield return new WaitUntil(()=> !condition());
             // Wait until the condition is no longer true
             
 

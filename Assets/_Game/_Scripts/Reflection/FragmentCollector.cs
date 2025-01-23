@@ -26,11 +26,14 @@ namespace TMKOC.Reflection
 
         public ReflectionLevel m_ReflectionLevel;
 
+        Vector3 startScale;
+
         public bool m_IsSunlightEnter;
         protected virtual void Awake()
         {
              targetSprite.color = new Color(0.5f, 0.5f, 0.5f);
              m_ReflectionLevel = GetComponentInParent<ReflectionLevel>();
+             startScale = transform.localScale;
 
           //  m_FragmentsArray = transform.GetComponentsInChildren<Fragment>();
         }
@@ -45,7 +48,7 @@ namespace TMKOC.Reflection
             if(IsLevelCompleted())
             {
                 Debug.Log("Level Completed");
-            transform.DOScale(transform.localScale * 1.1f, 0.5f);
+            transform.DOScale(startScale * 1.1f, 0.5f);
             targetSprite.color = new Color(0.5f, 0.5f, 0.5f); // Gray (128, 128, 128)
 
             // Use DOTween to transition to white
@@ -67,7 +70,7 @@ namespace TMKOC.Reflection
         {
             m_IsSunlightEnter = false;
             transform.DOComplete();
-            transform.DOScale(transform.localScale / 1.1f, 0.5f);
+            transform.DOScale(startScale / 1.1f, 0.5f);
             m_LightEnterPS.Stop();
 
              targetSprite.DOKill();

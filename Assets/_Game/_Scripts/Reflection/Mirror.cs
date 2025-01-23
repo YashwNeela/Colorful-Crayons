@@ -60,27 +60,39 @@ namespace TMKOC.Reflection
 
         private void OnSliderValueChangedAction(float value)
         {
-             if (m_MirrorSlider != null)
+            if (m_MirrorSlider != null)
             {
                 // Get the current value of the slider
                 float sliderValue = m_MirrorSlider.m_Slider.value;
 
-                    float zRotation = 0;
+                float zRotation;
 
-                if(!m_IsFacingLeft)
-                // Map the slider value to the desired angle range, e.g., -45 to 45
+                // Map the slider value to the desired angle range
+                if (m_IsFacingLeft)
+                {
                     zRotation = Mathf.Lerp(-45f, 45f, sliderValue);
+                }
                 else
+                {
                     zRotation = Mathf.Lerp(45f, -45f, sliderValue);
-
-
+                }
 
                 // Apply the calculated rotation to the mirror object on the Z-axis
                 if (m_MirrorObject != null)
                 {
-                    m_MirrorObject.transform.rotation = Quaternion.Euler(0, 180, zRotation);
+                    if (m_IsFacingLeft)
+                    {
+                        // Facing right: Normal rotation
+                        m_MirrorObject.transform.rotation = Quaternion.Euler(0, 0, zRotation);
+                    }
+                    else
+                    {
+                        // Facing left: Flip on Y and apply Z rotation
+                        m_MirrorObject.transform.rotation = Quaternion.Euler(0, 180, -zRotation);
+                    }
                 }
             }
+
         }
 
         protected override void OnPlayerExitZone()
@@ -90,7 +102,7 @@ namespace TMKOC.Reflection
             m_MirrorSlider.OnSliderValueChangedAction -= OnSliderValueChangedAction;
 
             m_MirrorSlider = null;
-            
+
         }
 
         public virtual void OnSunglightEnter()
@@ -106,7 +118,7 @@ namespace TMKOC.Reflection
         protected override void Update()
         {
             base.Update();
-           
+
         }
 
         void OnMouseDown()
