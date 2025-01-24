@@ -37,5 +37,10 @@ public class SortingLevelCompletedPopup : LevelCompletedPopup
             
         }
     }
-}
+
+        public override void OnNextLevelButtonClicked()
+        {
+            CloudUI.Instance.PlayColoudEnterAnimation();
+        }
+    }
 }

@@ -16490,12 +16490,12 @@ MonoBehaviour:
     SerializationNodes:
     - Name: audioSO
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[TMKOC.AudioLanguage, Assembly-CSharp],[TMKOC.AudioLocalizationSO,
-        Assembly-CSharp]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[TMKOC.AudioLanguage, TMKOC.common],[TMKOC.AudioLocalizationSO,
+        TMKOC.common]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.AudioLanguage,
-        Assembly-CSharp]], mscorlib
+        TMKOC.common]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -17304,6 +17304,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -650
       objectReference: {fileID: 0}
+    - target: {fileID: 1294027689773893646, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_LevelFailUI
+      value: 
+      objectReference: {fileID: 1452001103}
     - target: {fileID: 1682900415086571774, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_CheckButton
@@ -17347,7 +17352,7 @@ PrefabInstance:
     - target: {fileID: 4566653479042792899, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: _length
-      value: 2118.0984
+      value: 2118.368
       objectReference: {fileID: 0}
     - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -17497,7 +17502,7 @@ PrefabInstance:
     - target: {fileID: 8035462015614188959, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: _length
-      value: 2118.0984
+      value: 2118.368
       objectReference: {fileID: 0}
     - target: {fileID: 8591678786538155432, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -17509,6 +17514,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4029eb771ce6746368afa6b25671a64d, type: 3}
+--- !u!114 &1452001103 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3296942589205929273, guid: 4029eb771ce6746368afa6b25671a64d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1452001102}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5f1fd9606e90425fad6829c6afe7c32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1466988434
 GameObject:
   m_ObjectHideFlags: 0

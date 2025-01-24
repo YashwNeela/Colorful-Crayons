@@ -146,9 +146,9 @@ public class LevelCompletedPopup : MonoBehaviour
 
     }
 
-    public void OnNextLevelButtonClicked()
+    public virtual void OnNextLevelButtonClicked()
     {
-       // CloudUI.Instance.PlayColoudEnterAnimation();
+        //CloudUI.Instance.PlayColoudEnterAnimation();
     }
 
 
