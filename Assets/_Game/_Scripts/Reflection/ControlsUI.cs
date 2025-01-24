@@ -29,6 +29,24 @@ public class ControlsUI : SerializedSingleton<ControlsUI>
             Debug.LogError("No controls with Id: " + controlsId+ "Found");
         }
     }
+
+    public void DisableAllControls()
+    {
+        foreach(KeyValuePair<string,GameObject> valuePair in controlsDict)
+        {
+            DisableControls(valuePair.Key);
+        }
+    }
+
+    public void EnableAllControls()
+    {
+        foreach(KeyValuePair<string,GameObject> valuePair in controlsDict)
+        {
+            EnableControls(valuePair.Key);
+        }
+    }
+
+
 }
 
 public class ControlsUIConstants

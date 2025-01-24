@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,6 +24,10 @@ namespace TMKOC.Reflection
       [SerializeField]  private CinemachineVirtualCameraBase levelCamera;
 
         public CinemachineVirtualCameraBase LevelCamera => levelCamera;
+
+        [SerializeField] private CinemachineVirtualCameraBase levelIntroCam;
+        public CinemachineVirtualCameraBase LevelIntroCam => levelIntroCam;
+
         protected override void Awake()
         {
             base.Awake();
@@ -53,6 +58,31 @@ namespace TMKOC.Reflection
         {
             base.OnLevelLoaded();
             OnReflectionLevelLoaded?.Invoke();
+
+            
+        }
+
+        public void TriggerLevelIntro()
+        {
+            if(!TutorialManager.Instance.IsTutorialActive)
+            
+                ControlsUI.Instance.DisableAllControls();
+                FindAnyObjectByType<PlayerStateMachine>().HardCodePointUpOnMovementButton();
+                CinemachineCameraManager.Instance.ChangeCamera(levelIntroCam,()=>
+                {
+                    CinemachineSplineDolly dolly = levelIntroCam.GetComponent<CinemachineSplineDolly>();
+                    DOTween.To(()=> dolly.SplineSettings.Position, x=>dolly.SplineSettings.Position =x, 1,10f)
+                    .OnComplete(()=>
+                    {
+                        CinemachineCameraManager.Instance.RestoreToDefaultCamera(()=>
+                        {
+                            dolly.SplineSettings.Position = 0;
+                        });
+
+                        ControlsUI.Instance.EnableAllControls();
+
+                    });
+                });
         }
 
         public override void OnLevelUnloaded()

@@ -170,5 +170,7 @@ namespace TMKOC.Reflection
                 TutorialEventManager.Instance.TriggerEvent("event_tutorial_jump");
             currentState?.Jump(this);
         }
+
+        
     }
 }
