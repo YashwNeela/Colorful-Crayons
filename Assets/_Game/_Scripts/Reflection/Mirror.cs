@@ -62,6 +62,8 @@ namespace TMKOC.Reflection
         {
             if (m_MirrorSlider != null)
             {
+                if(!TutorialManager.Instance.IsTutorialActive)
+                    CinemachineCameraManager.Instance.ChangeCamera(m_ReflectionLevel.LevelCamera);
                 // Get the current value of the slider
                 float sliderValue = m_MirrorSlider.m_Slider.value;
 
@@ -98,6 +100,8 @@ namespace TMKOC.Reflection
         protected override void OnPlayerExitZone()
         {
             base.OnPlayerExitZone();
+            if(!TutorialManager.Instance.IsTutorialActive)
+                    CinemachineCameraManager.Instance.RestoreToDefaultCamera();
             m_MirrorSlider.DisableSlider();
             m_MirrorSlider.OnSliderValueChangedAction -= OnSliderValueChangedAction;
 

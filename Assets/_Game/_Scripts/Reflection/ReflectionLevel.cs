@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,6 +20,9 @@ namespace TMKOC.Reflection
         public Action OnReflectionLevelLoaded;
         public Action OnRelectionLevelUnloaded;
 
+      [SerializeField]  private CinemachineVirtualCameraBase levelCamera;
+
+        public CinemachineVirtualCameraBase LevelCamera => levelCamera;
         protected override void Awake()
         {
             base.Awake();

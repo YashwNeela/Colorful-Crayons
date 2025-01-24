@@ -95,6 +95,13 @@ namespace TMKOC.Reflection
 
         private void Update()
         {
+            #if UNITY_EDITOR
+            if(Input.GetButtonDown("Jump"))
+            CallJumpOnState();
+            #endif 
+                
+
+            
             currentState?.Update(this);
         }
 

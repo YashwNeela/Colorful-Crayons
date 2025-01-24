@@ -53,7 +53,7 @@ namespace TMKOC.PlantLifeCycle
             transform.DOScale(transform.localScale * 1.1f, 0.5f)
             .OnComplete(()=>
             {
-                    targetSprite.transform.DOScale(1.1f,0.5f).SetLoops(-1,LoopType.Yoyo);
+                    targetSprite.transform.DOScale(targetSprite.transform.localScale * 1.1f,0.5f).SetLoops(-1,LoopType.Yoyo);
 
             });
 

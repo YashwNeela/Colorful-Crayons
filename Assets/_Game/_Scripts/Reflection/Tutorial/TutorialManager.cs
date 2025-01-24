@@ -216,15 +216,20 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
         if (step.cameraToEnable != null)
         {
             FocusCamera(step.cameraToEnable);
-           StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>
-           {
-            StartCoroutine(StaticCoroutine.Co_WaitUntil(()=> Camera.main.GetComponent<CinemachineBrain>().IsBlending
-            ,()=>
+            CinemachineCameraManager.Instance.ChangeCamera(step.cameraToEnable,
+            ()=>
             {
-            tutorialUI.ShowStep(step);
+                tutorialUI.ShowStep(step);
+            });
+        //    StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>
+        //    {
+        //     StartCoroutine(StaticCoroutine.Co_WaitUntil(()=> Camera.main.GetComponent<CinemachineBrain>().IsBlending
+        //     ,()=>
+        //     {
+        //     tutorialUI.ShowStep(step);
 
-            }));  
-           }));
+        //     }));  
+        //    }));
         }
         else
         {

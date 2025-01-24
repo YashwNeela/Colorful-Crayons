@@ -28,7 +28,12 @@ namespace TMKOC.Reflection
 
         public void Update(PlayerStateMachine player)
         {
-            float moveX = player.moveX;
+            float moveX = 0;
+            #if UNITY_EDITOR
+                moveX = Input.GetAxis("Horizontal");
+            #else
+                moveX = player.moveX;
+            #endif
 
             if (player.IsGrounded())
             {
