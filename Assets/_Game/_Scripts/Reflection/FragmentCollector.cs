@@ -58,7 +58,8 @@ namespace TMKOC.Reflection
                 {
                     m_LightEnterPS.Play();
                     m_ReflectionLevel.LevelPass();
-                OnFragmentCollected?.Invoke();
+                    OnFragmentCollected?.Invoke();
+                    StarCollectorParticleImage.Instance.PlayCollectorParticle(targetSprite.sprite,transform,GemsUI.Instance.m_LigthGemContainer);
 
                 }); // Smooth linear transition
 

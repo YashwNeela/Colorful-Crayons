@@ -99,9 +99,6 @@ namespace TMKOC.Reflection
             if(Input.GetButtonDown("Jump"))
             CallJumpOnState();
             #endif 
-                
-
-            
             currentState?.Update(this);
         }
 
