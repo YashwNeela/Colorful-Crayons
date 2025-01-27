@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AssetKits.ParticleImage;
 using TMKOC.PlantLifeCycle;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class GemsUI : SerializedSingleton<GemsUI>
     public Transform m_LigthGemContainer;
 
     public Image m_LightGem;
+    public ParticleImage particleImageLight;
 
     public Image m_HeartGem;
 
@@ -40,6 +42,16 @@ public class GemsUI : SerializedSingleton<GemsUI>
         switch(fragmentType){
             case FragmentType.Diamond:
             m_LightGem.color = Color.white;
+            particleImageLight.Play();
+            break;
+        }
+    }
+
+    public void OnGemUnCollected(FragmentType fragmentType)
+    {
+        switch(fragmentType){
+            case FragmentType.Diamond:
+            m_LightGem.color = Color.black;
             break;
         }
     }
