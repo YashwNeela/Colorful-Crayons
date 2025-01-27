@@ -28,6 +28,7 @@ public class Trigger : MonoBehaviour
                 break;
                 case TriggerType.LevelIntro:
                 (LevelManager.Instance.GetCurrentLevel() as ReflectionLevel).TriggerLevelIntro();
+                
                 break;
             }
         }

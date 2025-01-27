@@ -39,7 +39,11 @@ namespace TMKOC.Reflection
             base.OnEnable();
             LevelFail();
         }
-
+        protected override void OnGameStart()
+        {
+            base.OnGameStart();
+            canTriggerLeveIntro = true;
+        }
 
         private void FetchCameraTransform()
         {
@@ -61,17 +65,19 @@ namespace TMKOC.Reflection
 
             
         }
-
+        public bool canTriggerLeveIntro;
         public void TriggerLevelIntro()
         {
-            if(!TutorialManager.Instance.IsTutorialActive)
             
+            if(!TutorialManager.Instance.IsTutorialActive && canTriggerLeveIntro){
+                canTriggerLeveIntro = false;
+                 
                 ControlsUI.Instance.DisableAllControls();
                 FindAnyObjectByType<PlayerStateMachine>().HardCodePointUpOnMovementButton();
                 CinemachineCameraManager.Instance.ChangeCamera(levelIntroCam,()=>
                 {
                     CinemachineSplineDolly dolly = levelIntroCam.GetComponent<CinemachineSplineDolly>();
-                    DOTween.To(()=> dolly.SplineSettings.Position, x=>dolly.SplineSettings.Position =x, 1,10f)
+                    DOTween.To(()=> dolly.SplineSettings.Position, x=>dolly.SplineSettings.Position =x, 1,5f)
                     .OnComplete(()=>
                     {
                         CinemachineCameraManager.Instance.RestoreToDefaultCamera(()=>
@@ -83,8 +89,8 @@ namespace TMKOC.Reflection
 
                     });
                 });
+            }
         }
-
         public override void OnLevelUnloaded()
         {
             base.OnLevelUnloaded();

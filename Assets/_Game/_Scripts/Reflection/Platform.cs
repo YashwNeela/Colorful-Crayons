@@ -23,10 +23,12 @@ namespace TMKOC.Reflection
 
         private void OnGameStart()
         {
-            if(!m_FragmentCollector.IsLevelCompleted())
-                m_MoveAblePlatform.transform.localPosition = m_StartPos.position;
+                if(!m_FragmentCollector.IsLevelCompleted())
+                m_MoveAblePlatform.transform.position = m_StartPos.position;
             else
-                m_MoveAblePlatform.transform.localPosition = m_EndPos.position;
+                m_MoveAblePlatform.transform.position = m_EndPos.position;
+            
+            
 
         }
 

@@ -10,7 +10,7 @@ namespace TMKOC.Reflection
 {
     public class FragmentCollector : MonoBehaviour
     {
-        protected FragmentType m_FragmentType;
+        [SerializeField]protected FragmentType m_FragmentType;
         public ParticleSystem m_LightEnterPS;
 
         public UnityEvent OnFragmentCollected;
@@ -59,7 +59,12 @@ namespace TMKOC.Reflection
                     m_LightEnterPS.Play();
                     m_ReflectionLevel.LevelPass();
                     OnFragmentCollected?.Invoke();
-                    StarCollectorParticleImage.Instance.PlayCollectorParticle(targetSprite.sprite,transform,GemsUI.Instance.m_LigthGemContainer);
+                    
+                    StarCollectorParticleImage.Instance.PlayCollectorParticle(targetSprite.sprite,transform,GemsUI.Instance.m_LigthGemContainer,
+                    null,()=>
+                    {
+                        GemsUI.Instance.OnGemCollected(m_FragmentType);
+                    });
 
                 }); // Smooth linear transition
 

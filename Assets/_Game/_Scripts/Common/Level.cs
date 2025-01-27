@@ -24,6 +24,8 @@ namespace TMKOC
             GameManager.OnLevelCompleteCheck += OnLevelCompleteCheck;
         }
 
+        
+
         protected virtual void OnDisable()
         {
             GameManager.OnGameStart -= OnGameStart;

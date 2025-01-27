@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using AssetKits.ParticleImage;
@@ -38,8 +39,11 @@ namespace TMKOC
             m_ParticleImage.attractorTarget = attractorTarget;
         }
 
-        public void PlayCollectorParticle(Sprite sprite, Transform emitterTransform, Transform attractorTarget)
+        public void PlayCollectorParticle(Sprite sprite, Transform emitterTransform, Transform attractorTarget, UnityAction particleStartedAction = null,
+        UnityAction particleFinishedAction = null)
         {
+            OnParticleStartAction = particleStartedAction;
+            OnLastParticleFinishedAction = particleFinishedAction;
             m_ParticleImage.sprite = sprite;
             SetEmitter(emitterTransform);
             SetAttractor(attractorTarget);
