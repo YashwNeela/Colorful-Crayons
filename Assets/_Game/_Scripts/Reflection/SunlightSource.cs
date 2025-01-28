@@ -122,7 +122,6 @@ namespace TMKOC.Reflection
 
                             // Update ray origin to continue through the fragment
                             currentRayOrigin = hitInfo.point;
-                            Debug.Log("Ray point " + hitInfo.transform.position);
                         //     m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1,
                         // currentRayOrigin + currentRayDirection * m_MaxRayDistance);
                            // currentRayOrigin = (Vector2)hitInfo.transform.position; // Small offset forward
@@ -136,7 +135,6 @@ namespace TMKOC.Reflection
                         {
                             FragmentCollector fragmentCollector = tag.GetComponentInParent<FragmentCollector>();
                             newFragmentCollector.Add(fragmentCollector);
-                            Debug.Log("Hitting fragment");
                            //  currentRayOrigin = (Vector2)hitInfo.transform.position;
                          //   m_SunlightLine.SetPosition(m_SunlightLine.positionCount - 1, currentRayOrigin);
 

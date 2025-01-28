@@ -19,7 +19,11 @@ namespace TMKOC
         void Start()
         {
             m_CinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+            
+           StartCoroutine(StaticCoroutine.Co_GenericCoroutine(2,()=>
+           {
             m_DefaultCinemachineCamera = m_CinemachineBrain.ActiveVirtualCamera as CinemachineVirtualCameraBase;
+           })); 
         }
 
         public void ChangeCamera(CinemachineVirtualCameraBase cameraToActivate, Action transitionCompleted = null)

@@ -80,6 +80,7 @@ namespace TMKOC.Reflection
                     DOTween.To(()=> dolly.SplineSettings.Position, x=>dolly.SplineSettings.Position =x, 1,5f)
                     .OnComplete(()=>
                     {
+                        Debug.Log("Musaaa bhai");
                         CinemachineCameraManager.Instance.RestoreToDefaultCamera(()=>
                         {
                             dolly.SplineSettings.Position = 0;
