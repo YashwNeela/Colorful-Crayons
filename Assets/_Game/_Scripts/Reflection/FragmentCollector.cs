@@ -26,6 +26,8 @@ namespace TMKOC.Reflection
 
         public ReflectionLevel m_ReflectionLevel;
 
+        public bool m_IsPartOfTutorial;
+
         Vector3 startScale;
 
         public bool m_IsSunlightEnter;
@@ -59,12 +61,28 @@ namespace TMKOC.Reflection
                     m_LightEnterPS.Play();
                     m_ReflectionLevel.LevelPass();
                     OnFragmentCollected?.Invoke();
-                    
-                    StarCollectorParticleImage.Instance.PlayCollectorParticle(targetSprite.sprite,transform,GemsUI.Instance.m_LigthGemContainer,
+                    if(!m_IsPartOfTutorial)
+                    {
+                        Transform attractor = null;
+                    switch(m_FragmentType)
+                    {
+                        case FragmentType.Light:
+                        attractor = GemsUI.Instance.m_LigthGemContainer;
+                        break;
+                        case FragmentType.Water:
+                        attractor = GemsUI.Instance.m_WaterGemContainer;
+                        break;
+                        case FragmentType.Earth:
+                        attractor = GemsUI.Instance.m_EarthGemContainer;
+
+                        break;
+                    }
+                    StarCollectorParticleImage.Instance.PlayCollectorParticle(targetSprite.sprite,transform,attractor,
                     null,()=>
                     {
                         GemsUI.Instance.OnGemCollected(m_FragmentType);
                     });
+                    }
 
                 }); // Smooth linear transition
 

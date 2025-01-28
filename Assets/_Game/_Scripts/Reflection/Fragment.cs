@@ -10,7 +10,7 @@ namespace TMKOC.PlantLifeCycle
 {
     public enum FragmentType
     {
-        Diamond, Square, Circle, Trianlge, Star
+        Light, Water, Earth
     }
     public class Fragment : MonoBehaviour
     {

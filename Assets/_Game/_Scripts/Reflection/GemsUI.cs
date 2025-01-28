@@ -14,9 +14,18 @@ public class GemsUI : SerializedSingleton<GemsUI>
     public Image m_LightGem;
     public ParticleImage particleImageLight;
 
-    public Image m_HeartGem;
+    public Transform m_WaterGemContainer;
 
-    public Image m_LeafeGem;
+
+    public Image m_WaterGem;
+    public ParticleImage particleImageWater;
+
+
+    public Transform m_EarthGemContainer;
+
+    public Image m_EarthGem;
+    public ParticleImage particleImageEarth;
+
 
     public void OnEnable()
     {
@@ -27,8 +36,8 @@ public class GemsUI : SerializedSingleton<GemsUI>
     private void OnGameStart()
     {
             m_LightGem.color = Color.black;
-            m_HeartGem.color = Color.black;
-            m_LeafeGem.color = Color.black;
+            m_WaterGem.color = Color.black;
+            m_EarthGem.color = Color.black;
     }
 
      public void OnDisable()
@@ -40,9 +49,17 @@ public class GemsUI : SerializedSingleton<GemsUI>
     public void OnGemCollected(FragmentType fragmentType)
     {
         switch(fragmentType){
-            case FragmentType.Diamond:
+            case FragmentType.Light:
             m_LightGem.color = Color.white;
             particleImageLight.Play();
+            break;
+            case FragmentType.Water:
+            m_WaterGem.color = Color.white;
+            particleImageWater.Play();
+            break;
+            case FragmentType.Earth:
+            m_EarthGem.color = Color.white;
+            particleImageEarth.Play();
             break;
         }
     }
@@ -50,8 +67,14 @@ public class GemsUI : SerializedSingleton<GemsUI>
     public void OnGemUnCollected(FragmentType fragmentType)
     {
         switch(fragmentType){
-            case FragmentType.Diamond:
+            case FragmentType.Light:
             m_LightGem.color = Color.black;
+            break;
+            case FragmentType.Water:
+            m_WaterGem.color = Color.black;
+            break;
+             case FragmentType.Earth:
+            m_EarthGem.color = Color.black;
             break;
         }
     }
