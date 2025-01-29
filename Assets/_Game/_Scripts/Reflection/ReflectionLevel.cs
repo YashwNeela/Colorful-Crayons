@@ -87,6 +87,7 @@ namespace TMKOC.Reflection
                         });
 
                         ControlsUI.Instance.EnableAllControls();
+                        
 
                     });
                 });

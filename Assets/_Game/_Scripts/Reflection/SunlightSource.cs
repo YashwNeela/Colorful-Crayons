@@ -34,22 +34,30 @@ namespace TMKOC.Reflection
         private void Start()
         {
             Physics2D.queriesStartInColliders = false;
+            //Invoke(nameof(SetStartRotation),1);
             if(!m_IsPartOfTutorial)
                 Invoke(nameof(SetStartRotation),1);
         }
 
         private void OnEnable()
         {
+            StartCoroutine(StaticCoroutine.Co_GenericCoroutine(2,()=>
+            {
             if(m_IsPartOfTutorial)
             {
+
                 TutorialEventManager.Instance.Subscribe("event_mirror_info",()=> SetStartRotation());
-               StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>{
+
+
+                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>{
                 if(TutorialManager.Instance.IsTutorialCompleted(TutorialIds.mirrorTutorial))
                 {
                     Invoke(nameof(SetStartRotation),1);
                 }
                }));
             }
+            }));
+            
         }
 
         private void OnDisable()

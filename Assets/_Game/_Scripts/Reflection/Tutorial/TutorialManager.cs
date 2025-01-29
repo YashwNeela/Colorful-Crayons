@@ -139,7 +139,11 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
 
     private void Start()
     {
+        StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>
+        {
         m_DefaultCinemachineCamera = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineCamera;
+
+        }));
         FetchTutorialData();
        // StartTutorial(TutorialIds.movementTutorial);
     }
