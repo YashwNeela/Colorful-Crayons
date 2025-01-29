@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -34,15 +35,34 @@ namespace TMKOC.Reflection
 
         public Button m_LeftButton, m_RightButton;
 
+        public bool m_IsDead = true;
+
 
 
         public void OnEnable()
         {
+            rb = GetComponent<Rigidbody2D>();
+
+            GameManager.OnFirstTimeGameStartAction += OnFirstTimeGameStartAction;
             GameManager.OnGameStart += OnGameStart;
+            GameManager.OnGameLoose += OnGameLoose;
             GameManager.OnGameOver += OnGameOver;
             TutorialManager.Instance.OnTutorialStarted += OnTutorialStarted;
             TutorialManager.Instance.OnTutorialEnded += OnTutorialEnded;
 
+        }
+
+        private void OnFirstTimeGameStartAction()
+        {
+             rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+        }
+
+        private void OnGameLoose()
+        {
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+            m_IsDead = true;
         }
 
         private void OnTutorialEnded(int obj)
@@ -64,14 +84,16 @@ namespace TMKOC.Reflection
 
         private void OnGameOver()
         {
-            rb.isKinematic = true;
-            rb.velocity = Vector2.zero;
+            
         }
 
         private void OnGameStart()
         {
+            if(m_IsDead){
             transform.position = (ReflectionLevelManager.Instance.GetCurrentLevel() as ReflectionLevel).m_PlayerSpawnPoint.position;
             rb.isKinematic = false;
+            m_IsDead = false;
+            }
 
         }
 
@@ -79,15 +101,18 @@ namespace TMKOC.Reflection
         /// </summary>
         public void OnDisable()
         {
+            GameManager.OnFirstTimeGameStartAction -= OnFirstTimeGameStartAction;
             GameManager.OnGameStart -= OnGameStart;
+            GameManager.OnGameLoose -= OnGameLoose;
             GameManager.OnGameOver -= OnGameOver;
+            TutorialManager.Instance.OnTutorialStarted -= OnTutorialStarted;
+            TutorialManager.Instance.OnTutorialEnded -= OnTutorialEnded;
 
 
         }
 
         private void Start()
         {
-            rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             m_SpriteRenderer = GetComponent<SpriteRenderer>();
             ChangeState(new IdleState());

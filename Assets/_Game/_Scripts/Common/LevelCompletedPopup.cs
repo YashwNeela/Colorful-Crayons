@@ -62,7 +62,7 @@ public class LevelCompletedPopup : MonoBehaviour
 
     }
 
-    private void OnGameWin()
+    protected virtual void OnGameWin()
     {
         // SetData("Level Completed", Gamemanager.Instance.LoadNextLevel, "Next Level");
         EnableRandomWinText();

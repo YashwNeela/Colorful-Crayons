@@ -37,11 +37,9 @@ namespace TMKOC.Reflection
             //Invoke(nameof(SetStartRotation),1);
             if(!m_IsPartOfTutorial)
                 Invoke(nameof(SetStartRotation),1);
-        }
-
-        private void OnEnable()
-        {
-            StartCoroutine(StaticCoroutine.Co_GenericCoroutine(2,()=>
+            else
+            {
+                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(2,()=>
             {
             if(m_IsPartOfTutorial)
             {
@@ -57,8 +55,16 @@ namespace TMKOC.Reflection
                }));
             }
             }));
+            }
+        }
+
+        private void OnEnable()
+        {
+            
             
         }
+
+       
 
         private void OnDisable()
         {

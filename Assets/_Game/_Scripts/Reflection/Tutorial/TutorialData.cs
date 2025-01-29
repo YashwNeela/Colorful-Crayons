@@ -40,6 +40,8 @@ public class TutorialStep
 
     public Vector3 controlObjectPos;
 
+    public AudioClip audioClip;
+
     [Button]
     public void FectWorldPosOfControlObject()
     {

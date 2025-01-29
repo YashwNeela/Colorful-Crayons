@@ -34,12 +34,18 @@ public class CameraTrigger : MonoBehaviour
             break;
             
             case CameraTriggerType.NextLevel:
-            LevelManager.Instance.LoadNextLevel();
+         //   LevelManager.Instance.LoadNextLevel();
+         GameManager.Instance.GameOver();
+
+         GameManager.Instance.GameWin();
+             GameManager.Instance.LoadNextLevel(LevelManager.Instance.CurrentLevelIndex + 1);
             m_CameraTriggerType = CameraTriggerType.PreviousLevel;
             break;
 
             case CameraTriggerType.PreviousLevel:
-            LevelManager.Instance.LoadPreviousLevel();
+            GameManager.Instance.LoadNextLevel(LevelManager.Instance.CurrentLevelIndex -1 );
+
+         //   LevelManager.Instance.LoadPreviousLevel();
             m_CameraTriggerType = CameraTriggerType.NextLevel;
             break;
 

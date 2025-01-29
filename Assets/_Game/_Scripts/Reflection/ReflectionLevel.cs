@@ -70,6 +70,8 @@ namespace TMKOC.Reflection
         {
             
             if(!TutorialManager.Instance.IsTutorialActive && canTriggerLeveIntro){
+                (ReflectionAudioManager.Instance as ReflectionAudioManager).PlayAudio
+                (AudioManager.Instance.CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex],AudioManager.Instance.SFXAudioSource);
                 canTriggerLeveIntro = false;
                  
                 ControlsUI.Instance.DisableAllControls();

@@ -27,7 +27,8 @@ public class Trigger : MonoBehaviour
                 case TriggerType.None:
                 break;
                 case TriggerType.LevelIntro:
-                (LevelManager.Instance.GetCurrentLevel() as ReflectionLevel).TriggerLevelIntro();
+                if(TutorialManager.Instance.IsTutorialCompleted(TutorialIds.mirrorTutorial))
+                    (LevelManager.Instance.GetCurrentLevel() as ReflectionLevel).TriggerLevelIntro();
                 
                 break;
             }
