@@ -39,7 +39,7 @@ namespace TMKOC.Reflection
                 Invoke(nameof(SetStartRotation),1);
             else
             {
-                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(2,()=>
+                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(6,()=>
             {
             if(m_IsPartOfTutorial)
             {

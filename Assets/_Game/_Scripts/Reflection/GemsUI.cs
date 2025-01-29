@@ -29,11 +29,11 @@ public class GemsUI : SerializedSingleton<GemsUI>
 
     public void OnEnable()
     {
-        GameManager.OnGameStart += OnGameStart;
+        GameManager.OnFirstTimeGameStartAction += OnFirstTimeGameStartAction;
 
     }
 
-    private void OnGameStart()
+    private void OnFirstTimeGameStartAction()
     {
             m_LightGem.color = Color.black;
             m_WaterGem.color = Color.black;
@@ -42,7 +42,8 @@ public class GemsUI : SerializedSingleton<GemsUI>
 
      public void OnDisable()
     {
-        GameManager.OnGameStart -= OnGameStart;
+                GameManager.OnFirstTimeGameStartAction -= OnFirstTimeGameStartAction;
+
 
     }
 
