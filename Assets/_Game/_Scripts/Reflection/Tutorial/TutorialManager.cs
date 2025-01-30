@@ -43,6 +43,16 @@ public class TutorialDataSaver: SaveLoadBase
         m_tutorialCompletedDict = tutorialCompletedDict;
     }
 
+      public void ConvertKeyValuePairToDict()
+    {
+        m_tutorialCompletedDict = new Dictionary<int, bool>();
+
+        for(int i =0;i<m_tutorialCompletedDictKey.Count;i++)
+        {
+            m_tutorialCompletedDict.Add(m_tutorialCompletedDictKey[i],m_tutorialCompletedDictBool[i]);
+        }
+    }
+
     public Dictionary<int,bool> SetTutorialCompletedDict()
     { 
         if(m_tutorialCompletedDict != null)
@@ -106,6 +116,10 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
 
     public bool IsTutorialCompleted(int tutorialId)
     {
+        foreach(KeyValuePair<int,bool> keyValuePair in m_TutorialDataSaver.TutorialCompletedDict)
+        {
+            Debug.Log("Key value pair is " + keyValuePair.Key + " " + keyValuePair.Value);
+        }
         try{
             return m_TutorialDataSaver.TutorialCompletedDict[tutorialId];
         }
@@ -165,6 +179,7 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
             return;
             
         }
+        TutorialDataSaverTemp.ConvertKeyValuePairToDict();
         m_TutorialDataSaver = TutorialDataSaverTemp;
     }
 
