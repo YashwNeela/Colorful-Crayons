@@ -64,20 +64,26 @@ namespace TMKOC.Reflection
                     if(!m_IsPartOfTutorial)
                     {
                         Transform attractor = null;
+                        Sprite starSprite = null;
                     switch(m_FragmentType)
                     {
                         case FragmentType.Light:
                         attractor = GemsUI.Instance.m_LigthGemContainer;
+                        starSprite = GemsUI.Instance.m_LightStar;
                         break;
                         case FragmentType.Water:
                         attractor = GemsUI.Instance.m_WaterGemContainer;
+                        starSprite = GemsUI.Instance.m_WaterStar;
+
                         break;
                         case FragmentType.Earth:
                         attractor = GemsUI.Instance.m_EarthGemContainer;
+                        starSprite = GemsUI.Instance.m_EarthStar;
+
 
                         break;
                     }
-                    StarCollectorParticleImage.Instance.PlayCollectorParticle(targetSprite.sprite,transform,attractor,
+                    StarCollectorParticleImage.Instance.PlayCollectorParticle(starSprite,transform,attractor,
                     null,()=>
                     {
                         GemsUI.Instance.OnGemCollected(m_FragmentType);
