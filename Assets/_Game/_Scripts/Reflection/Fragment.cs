@@ -10,7 +10,7 @@ namespace TMKOC.PlantLifeCycle
 {
     public enum FragmentType
     {
-        Light, Water, Earth
+        Light, Water, Earth, Mixed
     }
     public class Fragment : MonoBehaviour
     {

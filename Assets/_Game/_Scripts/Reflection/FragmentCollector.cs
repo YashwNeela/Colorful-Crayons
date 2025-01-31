@@ -82,6 +82,13 @@ namespace TMKOC.Reflection
 
 
                         break;
+
+                        case FragmentType.Mixed:
+                        attractor = GemsUI.Instance.m_MixedGemContainer;
+                        starSprite = GemsUI.Instance.m_MixedStar;
+
+
+                        break;
                     }
                     StarCollectorParticleImage.Instance.PlayCollectorParticle(starSprite,transform,attractor,
                     null,()=>

@@ -34,6 +34,15 @@ public class GemsUI : SerializedSingleton<GemsUI>
 
     public ParticleImage particleImageEarth;
 
+    [Space(10)]
+
+    public Transform m_MixedGemContainer;
+
+    public Image m_MixedGem;
+    public Sprite m_MixedStar;
+
+    public ParticleImage particleImageMixed;
+
 
     public void OnEnable()
     {
@@ -60,20 +69,27 @@ public class GemsUI : SerializedSingleton<GemsUI>
         switch(fragmentType){
             case FragmentType.Light:
             m_LightGem.color = Color.white;
-            m_LightGem.fillAmount += 0.5f;
+            m_LightGem.fillAmount = 1f;
             particleImageLight.Play();
             break;
             case FragmentType.Water:
             m_WaterGem.color = Color.white;
-            m_WaterGem.fillAmount += 0.5f;
+            m_WaterGem.fillAmount = 1f;
 
             particleImageWater.Play();
             break;
             case FragmentType.Earth:
             m_EarthGem.color = Color.white;
-            m_EarthGem.fillAmount += 0.5f;
+            m_EarthGem.fillAmount = 1f;
 
             particleImageEarth.Play();
+            break;
+
+            case FragmentType.Mixed:
+            m_MixedGem.color = Color.white;
+            m_MixedGem.fillAmount = 1f;
+
+            particleImageMixed.Play();
             break;
         }
     }
@@ -83,17 +99,23 @@ public class GemsUI : SerializedSingleton<GemsUI>
         switch(fragmentType){
             case FragmentType.Light:
             m_LightGem.color = Color.black;
-            m_LightGem.fillAmount -= 0.5f;
+            m_LightGem.fillAmount = 0f;
 
             break;
             case FragmentType.Water:
             m_WaterGem.color = Color.black;
-            m_WaterGem.fillAmount -= 0.5f;
+            m_WaterGem.fillAmount = 0f;
 
             break;
              case FragmentType.Earth:
             m_EarthGem.color = Color.black;
-            m_EarthGem.fillAmount -= 0.5f;
+            m_EarthGem.fillAmount = 0f;
+            
+            break;
+
+            case FragmentType.Mixed:
+            m_MixedGem.color = Color.black;
+            m_MixedGem.fillAmount = 0f;
             
             break;
         }
