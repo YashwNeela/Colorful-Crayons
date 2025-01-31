@@ -6,7 +6,7 @@ namespace TMKOC.Reflection
 {
     public enum TriggerType
     {
-        None, LevelIntro
+        None, LevelIntro, GameEnd
     }
 public class Trigger : MonoBehaviour
 {
@@ -26,9 +26,14 @@ public class Trigger : MonoBehaviour
             {
                 case TriggerType.None:
                 break;
+
                 case TriggerType.LevelIntro:
                 if(TutorialManager.Instance.IsTutorialCompleted(TutorialIds.mirrorTutorial))
                     (LevelManager.Instance.GetCurrentLevel() as ReflectionLevel).TriggerLevelIntro();
+                break;
+
+                case TriggerType.GameEnd:
+                GameManager.Instance.GameCompleted();
                 
                 break;
             }
