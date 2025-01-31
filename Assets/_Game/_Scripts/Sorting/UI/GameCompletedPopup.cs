@@ -34,8 +34,15 @@ namespace TMKOC.Sorting
 
         private void OnGameCompleted()
         {
-            SetData("GameCompleted", ()=> {}, "GoBack");
-            ShowPopup();
+            #if PLAYSCHOOL_MAIN
+                      EffectParticleControll.Instance.SpawnGameEndPanel();
+                        GameOverEndPanel.Instance.AddTheListnerRetryGame();
+                      #else
+                           SetData("GameCompleted", ()=> {}, "GoBack");
+                            ShowPopup();
+                      #endif
+
+            
         }
 
         private void OnGameStart()
