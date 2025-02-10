@@ -65,20 +65,31 @@ namespace TMKOC.Reflection
                     {
                         Transform attractor = null;
                         Sprite starSprite = null;
+                        Color trailColor = Color.white;
                     switch(m_FragmentType)
                     {
                         case FragmentType.Light:
                         attractor = GemsUI.Instance.m_LigthGemContainer;
                         starSprite = GemsUI.Instance.m_LightStar;
+                        trailColor = Color.yellow;
+                        
                         break;
                         case FragmentType.Water:
                         attractor = GemsUI.Instance.m_WaterGemContainer;
                         starSprite = GemsUI.Instance.m_WaterStar;
+                        trailColor =  new Color(128f / 255f, 214f / 255f, 253f / 255f);
+
+                        
+
+
 
                         break;
                         case FragmentType.Earth:
                         attractor = GemsUI.Instance.m_EarthGemContainer;
                         starSprite = GemsUI.Instance.m_EarthStar;
+                        trailColor = Color.green;
+
+                        trailColor = new Color(18f / 255f, 255f / 255f, 11f / 255f);
 
 
                         break;
@@ -86,11 +97,12 @@ namespace TMKOC.Reflection
                         case FragmentType.Mixed:
                         attractor = GemsUI.Instance.m_MixedGemContainer;
                         starSprite = GemsUI.Instance.m_MixedStar;
+                        trailColor = Color.yellow;
 
 
                         break;
                     }
-                    StarCollectorParticleImage.Instance.PlayCollectorParticle(starSprite,transform,attractor,
+                    StarCollectorParticleImage.Instance.PlayCollectorParticle(starSprite,trailColor,transform,attractor,
                     null,()=>
                     {
                         GemsUI.Instance.OnGemCollected(m_FragmentType);

@@ -10,6 +10,8 @@ namespace TMKOC
     public class StarCollectorParticleImage : SerializedSingleton<StarCollectorParticleImage>
     {
         [SerializeField] private ParticleImage m_ParticleImage;
+
+        
         public UnityAction OnParticleStartAction;
 
         public UnityAction OnLastParticleFinishedAction;
@@ -39,6 +41,19 @@ namespace TMKOC
             m_ParticleImage.attractorTarget = attractorTarget;
         }
 
+        public void PlayCollectorParticle(Sprite sprite, Color trailColor, Transform emitterTransform, Transform attractorTarget, UnityAction particleStartedAction = null,
+        UnityAction particleFinishedAction = null)
+        {
+            OnParticleStartAction = particleStartedAction;
+            OnLastParticleFinishedAction = particleFinishedAction;
+            m_ParticleImage.sprite = sprite;
+            SetTrailColor(trailColor);
+            SetEmitter(emitterTransform);
+            SetAttractor(attractorTarget);
+
+            PlayParticle();
+        }
+
         public void PlayCollectorParticle(Sprite sprite, Transform emitterTransform, Transform attractorTarget, UnityAction particleStartedAction = null,
         UnityAction particleFinishedAction = null)
         {
@@ -49,6 +64,11 @@ namespace TMKOC
             SetAttractor(attractorTarget);
 
             PlayParticle();
+        }
+
+        public void SetTrailColor(Color color)
+        {
+            m_ParticleImage.trailColorOverTrail = color;
         }
     }
 }
