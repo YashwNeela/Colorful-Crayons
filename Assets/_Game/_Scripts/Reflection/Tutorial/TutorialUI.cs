@@ -41,7 +41,6 @@ namespace TMKOC
 
         public void ShowStep(TutorialStep step)
         {
-            AudioManager.Instance.PlayAudio(step.audioClip,AudioManager.Instance.SFXAudioSource);
 
             HandleGameobjectsVisibilityBasedOnCurrentStep(step);
 
@@ -56,6 +55,8 @@ namespace TMKOC
                         WorldElementStep(step);
                         break;
                 }
+                AudioManager.Instance.PlayAudio(step.audioClip,AudioManager.Instance.SFXAudioSource);
+
             }));
 
         }

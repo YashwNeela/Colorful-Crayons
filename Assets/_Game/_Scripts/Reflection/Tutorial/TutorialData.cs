@@ -42,6 +42,8 @@ public class TutorialStep
 
     public AudioClip audioClip;
 
+    public bool goBackToDefaultCamera = false;
+
     [Button]
     public void FectWorldPosOfControlObject()
     {

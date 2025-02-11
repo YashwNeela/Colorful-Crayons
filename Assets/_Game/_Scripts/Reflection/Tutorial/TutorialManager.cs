@@ -200,6 +200,8 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
     public void StartTutorial(int tutorialId)
     {
         currentTutorialData = tutorialData.Find(data => data.tutorialId == tutorialId);
+
+        
         if(m_TutorialDataSaver.SetTutorialCompletedDict()[currentTutorialData.tutorialId] == true)
         {
             Debug.Log("Tutorial Already completed");
@@ -290,7 +292,16 @@ public class TutorialManager : SerializedSingleton<TutorialManager>
         }
         StartCoroutine(StaticCoroutine.Co_GenericCoroutine(currentTutorialData.tutorialSteps[currentStepIndex].delay,()=>
         {
-            ShowStep(currentStepIndex);
+            if(!currentTutorialData.tutorialSteps[currentStepIndex].goBackToDefaultCamera)
+                ShowStep(currentStepIndex);
+            else
+            {
+                CinemachineCameraManager.Instance.RestoreToDefaultCamera(()=>
+                {
+                ShowStep(currentStepIndex);
+
+                }) ;
+            }
         }));
 
     }
