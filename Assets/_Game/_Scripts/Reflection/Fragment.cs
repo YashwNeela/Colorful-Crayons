@@ -35,7 +35,7 @@ namespace TMKOC.PlantLifeCycle
         {
             m_OriginalScale = transform.lossyScale;
             m_IsScaling = false;
-             targetSprite.color = new Color(0.5f, 0.5f, 0.5f); 
+            // targetSprite.color = new Color(0.5f, 0.5f, 0.5f); 
 
         }
 
@@ -57,7 +57,7 @@ namespace TMKOC.PlantLifeCycle
 
             });
 
-             targetSprite.color = new Color(0.5f, 0.5f, 0.5f); // Gray (128, 128, 128)
+            // targetSprite.color = new Color(0.5f, 0.5f, 0.5f); // Gray (128, 128, 128)
             // Use DOTween to transition to white
             targetSprite
                 .DOColor(Color.white, lerpDuration) // Tween the color to white
@@ -80,7 +80,7 @@ namespace TMKOC.PlantLifeCycle
             targetSprite.DOKill();
             targetSprite.transform.DOKill();
             //DOTween.Kill(breath);
-             targetSprite.color = new Color(0.5f, 0.5f, 0.5f); 
+             //targetSprite.color = new Color(0.5f, 0.5f, 0.5f); 
              m_LightEnterPS.Stop();
 
             m_IsCollected = false;

@@ -28,6 +28,10 @@ namespace TMKOC.Reflection
         [SerializeField] private CinemachineVirtualCameraBase levelIntroCam;
         public CinemachineVirtualCameraBase LevelIntroCam => levelIntroCam;
 
+        [SerializeField] protected bool m_HasTutorial;
+
+        [SerializeField] protected int m_TuorialId = -1;
+
         protected override void Awake()
         {
             base.Awake();
@@ -83,9 +87,18 @@ namespace TMKOC.Reflection
                     .OnComplete(()=>
                     {
                         Debug.Log("Musaaa bhai");
+
                         CinemachineCameraManager.Instance.RestoreToDefaultCamera(()=>
                         {
                             dolly.SplineSettings.Position = 0;
+                            if(m_HasTutorial)
+                            {
+                                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>
+                                {
+                                TutorialManager.Instance.StartTutorial(m_TuorialId);
+
+                                }));
+                            }
                         });
 
                         ControlsUI.Instance.EnableAllControls();
