@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TMKOC.Reflection{
-public class ReflectionGameManager : GameManager
+namespace TMKOC.Reflection
 {
-    public override void FirstTimeGameStart()
+    public class ReflectionGameManager : GameManager
+    {
+
+
+        public override void Start()
         {
-            m_CatergoryDataManager = new GameCategoryDataManager(GAMEID,PlayerPrefs.GetString("currentGameName"));
+            FirstTimeGameStart();
+        }
+        public override void FirstTimeGameStart()
+        {
+            m_CurrentGameState = GameState.FirstTimeGameStart;
+            m_CatergoryDataManager = new GameCategoryDataManager(GAMEID, PlayerPrefs.GetString("currentGameName"));
             m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
 
             if (!testLevel)
@@ -19,18 +27,26 @@ public class ReflectionGameManager : GameManager
             else
                 levelNumber = levelNumber;
 
+
             OnFirstTimeGameStartAction?.Invoke();
+            StartIntroCutScene();
+        }
 
-            
-
-         StartCoroutine(StaticCoroutine.Co_GenericCoroutine(5, () =>
+        public override void StartIntroCutScene()
+        {
+            base.StartIntroCutScene();
+            CinematicCutSceneManager.Instance.StartCutScene(1, () =>
             {
-                GameStart(levelNumber);
-
-            }));
-
+                Debug.Log("Cut scene ended");
+                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(5, () =>
+                {
+                    GameStart(levelNumber);
+                }));
+            });
 
         }
-        
+
     }
+
+
 }

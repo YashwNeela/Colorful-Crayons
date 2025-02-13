@@ -9,6 +9,9 @@ namespace TMKOC
     public enum GameState
     {
         FirstTimeGameStart,
+
+        IntroCutScene,
+        OutroCutScene,
         Start,
         Playing,
         Paused,
@@ -45,6 +48,11 @@ namespace TMKOC
         public bool m_PlayCloudTransition;
 
         public static UnityAction OnFirstTimeGameStartAction;
+
+        public static UnityAction OnIntroCutSceneStartedAction;
+
+        public static UnityAction OnOutroCutSceneEndAction;
+
         public static UnityAction OnGameWin;
 
         public static UnityAction OnGameLoose;
@@ -69,13 +77,14 @@ namespace TMKOC
 
         public static UnityAction OnLevelCompleteCheck;
 
-         public void Start()
+        public virtual void Start()
         {
             FirstTimeGameStart();
           
         }
         public virtual void FirstTimeGameStart()
         {
+            m_CurrentGameState = GameState.FirstTimeGameStart;
             m_CatergoryDataManager = new GameCategoryDataManager(GAMEID,PlayerPrefs.GetString("currentGameName"));
             m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
 
@@ -92,13 +101,16 @@ namespace TMKOC
 
             
 
-         StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0, () =>
-            {
-                GameStart(levelNumber);
-
-            }));
+        
 
 
+        }
+
+        public virtual void StartIntroCutScene()
+        {
+            OnIntroCutSceneStartedAction?.Invoke();
+            m_CurrentGameState = GameState.IntroCutScene;
+            
         }
         private void OnApplicationQuit()
         {
