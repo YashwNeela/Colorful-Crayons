@@ -25745,13 +25745,14 @@ PrefabInstance:
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"audioSO","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":1,"$rcontent":[{"$id":1,"$type":"TMKOC.AudioLanguage,
-        Assembly-CSharp",3}]},"remove_keys":null'
+      value: '"path":"audioSO","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":4,"$rcontent":[{"$id":1,"$type":"TMKOC.AudioLanguage,
+        Assembly-CSharp",3},{"$id":2,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",4},{"$id":3,"$type":"TMKOC.AudioLanguage,
+        Assembly-CSharp",3},{"$id":4,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",4}]},"remove_keys":null'
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
@@ -25770,8 +25771,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      value: '"path":"audioSO.{4es}","value":$eref:3'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
@@ -25790,6 +25796,12 @@ PrefabInstance:
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 07cfdce3432e24e9b9551934df3e9e1b,
+        type: 2}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: a4f6e0d240faa4a018f82b3935320cb7,
         type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
