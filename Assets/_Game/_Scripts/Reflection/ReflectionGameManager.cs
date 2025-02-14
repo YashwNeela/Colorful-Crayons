@@ -10,7 +10,7 @@ namespace TMKOC.Reflection
 
         public override void Start()
         {
-            FirstTimeGameStart();
+            StartIntroCutScene();
         }
         public override void FirstTimeGameStart()
         {
@@ -29,7 +29,8 @@ namespace TMKOC.Reflection
 
 
             OnFirstTimeGameStartAction?.Invoke();
-            StartIntroCutScene();
+            GameStart(levelNumber);
+            
         }
 
         public override void StartIntroCutScene()
@@ -38,12 +39,20 @@ namespace TMKOC.Reflection
             CinematicCutSceneManager.Instance.StartCutScene(1, () =>
             {
                 Debug.Log("Cut scene ended");
-                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(5, () =>
+                PlaySplashScreen();
+
+                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1, () =>
                 {
-                    GameStart(levelNumber);
+                    //GameStart(levelNumber);
                 }));
             });
 
+        }
+
+        public override void PlaySplashScreen()
+        {
+            base.PlaySplashScreen();
+            SplashScreenUI.Instance.EnableSplashScreen();
         }
 
     }

@@ -9,7 +9,7 @@ namespace TMKOC
     public enum GameState
     {
         FirstTimeGameStart,
-
+        SplashScreen,
         IntroCutScene,
         OutroCutScene,
         Start,
@@ -52,6 +52,8 @@ namespace TMKOC
         public static UnityAction OnIntroCutSceneStartedAction;
 
         public static UnityAction OnOutroCutSceneEndAction;
+
+        public static UnityAction OnSplashScreenAction;
 
         public static UnityAction OnGameWin;
 
@@ -104,6 +106,12 @@ namespace TMKOC
         
 
 
+        }
+
+        public virtual void PlaySplashScreen()
+        {
+            OnSplashScreenAction?.Invoke();
+            m_CurrentGameState = GameState.SplashScreen;
         }
 
         public virtual void StartIntroCutScene()
