@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using TMKOC.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TMKOC
 {
@@ -18,6 +19,9 @@ namespace TMKOC
 
 
         public List<CutSceneStep> cutSceneSteps;
+
+        [SerializeField] public UnityAction OnCutSceneEndAction;
+
     }
 
     public class CutSceneStep
@@ -41,6 +45,8 @@ namespace TMKOC
 
         public bool requiresEvent;        // Does the step wait for an event?
         public string eventName;          // Name of the event to wait for (optional)
+
+
     }
     public class CinematicCutSceneManager : SerializedSingleton<CinematicCutSceneManager>
     {
@@ -65,6 +71,7 @@ namespace TMKOC
         public bool IsCutSceneActive => m_IsCutSceneActive;
 
         protected Action CurrentCutSceneFinishedCallback;
+
 
 
         public CutSceneStep GetCurrentTutorialStep()
@@ -139,6 +146,8 @@ namespace TMKOC
         public void EndCutScene()
         {
             OnCinematicCutSceneEnded?.Invoke(CurrentCutSceneData.cutSceneId);
+            if(m_CurrentCutSceneData.OnCutSceneEndAction != null)
+                m_CurrentCutSceneData?.OnCutSceneEndAction();
             if (m_CurrentCutSceneData.shouldEnableControlsUIOnFinished)
             {
                 foreach (string controlId in m_CurrentCutSceneData.enableControlsId)

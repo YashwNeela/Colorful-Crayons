@@ -49,6 +49,26 @@ namespace TMKOC.Reflection
 
         }
 
+        public override void StartOutroCutScene()
+        {
+            base.StartOutroCutScene();
+            CinematicCutSceneManager.Instance.StartCutScene(2, () =>
+            {
+                Debug.Log("outro Cut scene ended");
+                
+
+                
+            });
+        }
+
+        public override void GameWin()
+        {
+            m_CurrentGameState = GameState.Win;
+            OnGameWin?.Invoke();
+        }
+
+
+
         public override void PlaySplashScreen()
         {
             base.PlaySplashScreen();

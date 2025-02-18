@@ -33,7 +33,10 @@ public class Trigger : MonoBehaviour
                 break;
 
                 case TriggerType.GameEnd:
-                GameManager.Instance.GameCompleted();
+                GameManager.Instance.GameOver();
+                GameManager.Instance.GameWin();
+                GameManager.Instance.StartOutroCutScene();
+              //  GameManager.Instance.GameCompleted();
                 
                 break;
             }

@@ -51,7 +51,7 @@ namespace TMKOC
 
         public static UnityAction OnIntroCutSceneStartedAction;
 
-        public static UnityAction OnOutroCutSceneEndAction;
+        public static UnityAction OnOutroCutSceneStartedAction;
 
         public static UnityAction OnSplashScreenAction;
 
@@ -119,6 +119,12 @@ namespace TMKOC
             OnIntroCutSceneStartedAction?.Invoke();
             m_CurrentGameState = GameState.IntroCutScene;
             
+        }
+
+        public virtual void StartOutroCutScene()
+        {   
+            OnOutroCutSceneStartedAction?.Invoke();
+            m_CurrentGameState = GameState.OutroCutScene;
         }
         private void OnApplicationQuit()
         {
