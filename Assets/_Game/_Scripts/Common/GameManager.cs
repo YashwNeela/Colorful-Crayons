@@ -143,11 +143,11 @@ namespace TMKOC
             int star = m_CatergoryDataManager.Getstar;
             if (star >= 5)
             {
-                m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 0, 5);
+                m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
             }
             else
             {
-                m_UpdateCategoryApiManager.SetGameDataMore(level, LevelManager.Instance.MaxLevels, 0, star);
+                m_UpdateCategoryApiManager.SetGameDataMore(level, LevelManager.Instance.MaxLevels, star);
             }
 
 
@@ -212,7 +212,7 @@ namespace TMKOC
         public virtual void GameLoose()
         {
             m_CurrentGameState = GameState.Loose;
-
+            m_UpdateCategoryApiManager.SetAttemps();
             OnGameLoose?.Invoke();
         }
 
@@ -280,7 +280,7 @@ namespace TMKOC
             //    dataManager.SetCompletedLevel(dataManager.StudentGameData.data.totalLevel);
             //     dataManager.OnGameCompleted();
 
-            m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 0, 5);
+            m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
             m_CatergoryDataManager.SaveLevel(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels);
             OnGameCompleted?.Invoke();
         }
