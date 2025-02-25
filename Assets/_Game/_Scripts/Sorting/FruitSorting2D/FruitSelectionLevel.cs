@@ -36,8 +36,9 @@ namespace TMKOC.Sorting.FruitSorting2D
             }
             else
             {
-                SortingGameManager.Instance.GameOver();
-                SortingGameManager.Instance.GameLoose();
+                (SortingGameManager.Instance as SortingGameManager).WrongAnswer();
+             //   SortingGameManager.Instance.GameOver();
+              //  SortingGameManager.Instance.GameLoose();
             }
             OnGameEnd?.Invoke();
         }

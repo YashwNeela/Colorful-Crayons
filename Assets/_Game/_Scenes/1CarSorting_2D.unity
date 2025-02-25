@@ -3887,7 +3887,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   m_ShouldDestroyOnLoad: 1
-  m_CurretAudioLanguage: 4
+  m_CurretAudioLanguage: 1
   m_BackGroundAudioSource: {fileID: 491736923}
   m_SFXAudioSource: {fileID: 1484475687}
   m_ExtraAudioSource: {fileID: 1856180034}
@@ -4718,7 +4718,7 @@ MonoBehaviour:
   m_LevelCheckButton: {fileID: 460608101}
   m_LevelManager: {fileID: 2116294047}
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
-  m_MaxLives: 1
+  m_MaxLives: 5
   m_RemaningLivesText: {fileID: 547800514}
   m_CurrentScoreText: {fileID: 795046606}
   m_LevelCompletedBlastOffset: {x: 0, y: 0, z: 0}
@@ -9874,75 +9874,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1010419451445607676, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3957112341757298859}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnNextLevelButtonClicked
-      objectReference: {fileID: 0}
     - target: {fileID: 1682900415086571774, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_CheckButton
       value: 
       objectReference: {fileID: 957601523}
-    - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
+    - target: {fileID: 2823944270263258009, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 2823944270263258009, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4566653479042792899, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: _length
-      value: 2119.6226
-      objectReference: {fileID: 0}
-    - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 2118.368
       objectReference: {fileID: 0}
     - target: {fileID: 5814089035050786521, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -10052,30 +9998,13 @@ PrefabInstance:
     - target: {fileID: 8035462015614188959, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: _length
-      value: 2119.6226
-      objectReference: {fileID: 0}
-    - target: {fileID: 8493546855142673807, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: 2118.368
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4029eb771ce6746368afa6b25671a64d, type: 3}
---- !u!114 &3957112341757298859 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1294027689773893646, guid: 4029eb771ce6746368afa6b25671a64d,
-    type: 3}
-  m_PrefabInstance: {fileID: 3957112341757298856}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66cf5101c288049fca3942cd645a7518, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8073498594802956677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10262,7 +10191,7 @@ SceneRoots:
   - {fileID: 1033244711}
   - {fileID: 864475556}
   - {fileID: 1062305889}
-  - {fileID: 3957112341757298856}
   - {fileID: 1533521854}
   - {fileID: 91489646852027126}
   - {fileID: 849273399}
+  - {fileID: 3957112341757298856}

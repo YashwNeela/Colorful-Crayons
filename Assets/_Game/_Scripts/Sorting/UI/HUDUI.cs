@@ -14,19 +14,24 @@ namespace TMKOC.Sorting
 
         [SerializeField] private Button m_CheckButton;
 
+
         void OnEnable()
         {
+           // SortingGameManager.OnWrongAnswerAction += OnWrongAnswerAction;
             SortingGameManager.OnGameStart += OnGameStart;
             SortingGameManager.OnLevelCompleteCheck +=OnLevelCompleteCheck;
         }
 
+        
+
         private void OnLevelCompleteCheck()
         {
-            m_CheckButton.interactable = false;
+          //  m_CheckButton.interactable = false;
         }
 
         void OnDisable()
         {
+            //SortingGameManager.OnWrongAnswerAction -= OnWrongAnswerAction;
             SortingGameManager.OnGameStart -= OnGameStart;
             SortingGameManager.OnLevelCompleteCheck -=OnLevelCompleteCheck;
 
