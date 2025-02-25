@@ -36,7 +36,7 @@ namespace TMKOC.Sorting
 
         private void OnWrongAnswerAction()
         {
-            StartCountdown();
+            //StartCountdown();
         }
 
         protected override void OnDisable()
