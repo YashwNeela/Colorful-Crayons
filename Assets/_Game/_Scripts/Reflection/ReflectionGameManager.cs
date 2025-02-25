@@ -10,7 +10,9 @@ namespace TMKOC.Reflection
 
         public override void Start()
         {
-            StartIntroCutScene();
+            //StartIntroCutScene();
+            PlaySplashScreen();
+
         }
         public override void FirstTimeGameStart()
         {

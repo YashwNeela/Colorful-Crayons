@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using TMKOC.Sorting;
+using System;
 
 namespace TMKOC.Sorting
 {
@@ -29,13 +30,19 @@ namespace TMKOC.Sorting
         protected override void OnEnable()
         {
             base.OnEnable();
+            SortingGameManager.OnWrongAnswerAction += OnWrongAnswerAction;
             SortingGameManager.OnGameStart += StartCountdown;
         }
 
+        private void OnWrongAnswerAction()
+        {
+            StartCountdown();
+        }
 
         protected override void OnDisable()
         {
             base.OnDisable();
+            SortingGameManager.OnWrongAnswerAction -= OnWrongAnswerAction;
             SortingGameManager.OnGameStart -= StartCountdown;
         }
 
@@ -80,6 +87,7 @@ namespace TMKOC.Sorting
         protected override void TimerEnded()
         {
             base.TimerEnded();
+            
             hudUI.LevelCompleteCheck();
             // Additional code for when the countdown reaches zero
         }

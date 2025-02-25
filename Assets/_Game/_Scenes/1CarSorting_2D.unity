@@ -3887,7 +3887,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   m_ShouldDestroyOnLoad: 1
-  m_CurretAudioLanguage: 4
+  m_CurretAudioLanguage: 1
   m_BackGroundAudioSource: {fileID: 491736923}
   m_SFXAudioSource: {fileID: 1484475687}
   m_ExtraAudioSource: {fileID: 1856180034}
@@ -4718,7 +4718,7 @@ MonoBehaviour:
   m_LevelCheckButton: {fileID: 460608101}
   m_LevelManager: {fileID: 2116294047}
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
-  m_MaxLives: 1
+  m_MaxLives: 2
   m_RemaningLivesText: {fileID: 547800514}
   m_CurrentScoreText: {fileID: 795046606}
   m_LevelCompletedBlastOffset: {x: 0, y: 0, z: 0}
@@ -9894,6 +9894,16 @@ PrefabInstance:
       propertyPath: m_CheckButton
       value: 
       objectReference: {fileID: 957601523}
+    - target: {fileID: 4202695610230911249, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202695610230911249, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -217
+      objectReference: {fileID: 0}
     - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -9918,6 +9928,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _length
       value: 2119.6226
+      objectReference: {fileID: 0}
+    - target: {fileID: 5061831737544080458, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5061831737544080458, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5551500088909348287, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -10058,6 +10078,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920480700323114588, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
