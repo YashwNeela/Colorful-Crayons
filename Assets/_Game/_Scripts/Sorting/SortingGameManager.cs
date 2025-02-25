@@ -105,6 +105,7 @@ namespace TMKOC.Sorting
           base.FirstTimeGameStart();
            
             m_LevelCheckButton.GetComponentInChildren<Button>().interactable = false;
+            GameStart(levelNumber);
 
             Invoke(nameof(EnableLevelCheckButton),2);
             
