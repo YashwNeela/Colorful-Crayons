@@ -20,7 +20,7 @@ namespace TMKOC.Reflection
 
         protected override void OnFirstTimeGameStart()
         {
-            
+            SetAudioLanguage(AudioLanguage.English);
         }
 
         protected override void OnDisable()
