@@ -44,6 +44,7 @@ namespace TMKOC.Reflection
             rb = GetComponent<Rigidbody2D>();
 
             GameManager.OnFirstTimeGameStartAction += OnFirstTimeGameStartAction;
+            GameManager.OnSplashScreenAction += OnSplashScreenAction;
             GameManager.OnIntroCutSceneStartedAction += OnIntroCutSceneStartedAction;
             GameManager.OnGameStart += OnGameStart;
             GameManager.OnGameLoose += OnGameLoose;
@@ -53,9 +54,15 @@ namespace TMKOC.Reflection
 
         }
 
+        private void OnSplashScreenAction()
+        {
+             rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+        }
+
         private void OnFirstTimeGameStartAction()
         {
-         
+           
         }
 
         private void OnGameLoose()
@@ -103,6 +110,7 @@ namespace TMKOC.Reflection
         {
             GameManager.OnFirstTimeGameStartAction -= OnFirstTimeGameStartAction;
             GameManager.OnIntroCutSceneStartedAction -= OnIntroCutSceneStartedAction;
+            GameManager.OnSplashScreenAction -= OnSplashScreenAction;
 
             GameManager.OnGameStart -= OnGameStart;
             GameManager.OnGameLoose -= OnGameLoose;
