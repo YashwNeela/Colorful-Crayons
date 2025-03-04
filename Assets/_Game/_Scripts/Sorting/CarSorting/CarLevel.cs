@@ -57,8 +57,8 @@ namespace TMKOC.Sorting.CarSorting
             {
                 (SortingGameManager.Instance as SortingGameManager).WrongAnswer();
 
-                //SortingGameManager.Instance.GameOver();
-                //SortingGameManager.Instance.GameLoose();
+                SortingGameManager.Instance.GameOver();
+                SortingGameManager.Instance.GameLoose();
             }
         }
 

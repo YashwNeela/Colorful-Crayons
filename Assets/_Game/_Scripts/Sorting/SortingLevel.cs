@@ -127,6 +127,7 @@ namespace TMKOC.Sorting
 
         protected override void OnLevelCompleteCheck()
         {
+
             base.OnLevelCompleteCheck();
             if (m_CurrentScore == m_ScoreRequiredToCompleteTheLevel)
             {
@@ -137,10 +138,11 @@ namespace TMKOC.Sorting
             {
                 (SortingGameManager.Instance as SortingGameManager).WrongAnswer();
 
-              //  SortingGameManager.Instance.GameOver();
-               // SortingGameManager.Instance.GameLoose();
+                SortingGameManager.Instance.GameOver();
+                SortingGameManager.Instance.GameLoose();
             }
         }
+
 
         public virtual void OnLevelAnimationFinished()
         {

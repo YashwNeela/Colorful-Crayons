@@ -17,9 +17,8 @@ public class LevelShapeSelect : SortingLevel
         {
             m_ShapeSelectList = GetComponentsInChildren<ShapeSelect>().ToList();
         }
-        protected override  void OnEnable() {
-          
-           
+        protected override  void OnEnable() 
+        {
             SortingGameManager.OnGameStart += OnGameStart;
             SortingGameManager.OnGameRestart += OnGameRestart;
             SortingGameManager.OnGameWin += OnGameWin;
