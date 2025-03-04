@@ -35,8 +35,8 @@ public class Trigger : MonoBehaviour
                 case TriggerType.GameEnd:
                 GameManager.Instance.GameOver();
                 GameManager.Instance.GameWin();
-                GameManager.Instance.StartOutroCutScene();
-              //  GameManager.Instance.GameCompleted();
+              //  GameManager.Instance.StartOutroCutScene();
+                GameManager.Instance.GameCompleted();
                 
                 break;
             }
