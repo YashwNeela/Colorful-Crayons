@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -112,6 +112,9 @@ namespace TMKOC.Reflection
         public virtual void OnSunglightEnter()
         {
             m_SunlightEnterPE.Play();
+            ReflectionAudioManager.Instance.PlayAudio(
+               (ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_LightReflects[Random.Range(0,(ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_LightReflects.Count)],
+               ReflectionAudioManager.Instance.ExtraAudioSource);
         }
 
         public virtual void OnSunlightExit()

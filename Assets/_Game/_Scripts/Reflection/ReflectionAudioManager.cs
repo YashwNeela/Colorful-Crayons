@@ -6,7 +6,9 @@ namespace TMKOC.Reflection
 {
     public class ReflectionAudioManager : AudioManager
     {
+        [SerializeField] private ReflectionAudioSfx m_ReflectionAudioSfx;
 
+        public ReflectionAudioSfx ReflectionAudioSfx => m_ReflectionAudioSfx;
         protected override void OnEnable()
         {
             base.OnEnable();
