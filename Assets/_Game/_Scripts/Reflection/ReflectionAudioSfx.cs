@@ -8,5 +8,9 @@ namespace TMKOC.Reflection
     public class ReflectionAudioSfx : ScriptableObject
     {
         public List<AudioClip> m_LightReflects;
+
+        public List<AudioClip> m_Jump;
+
+        public List<AudioClip> m_Walk;
     }
 }
