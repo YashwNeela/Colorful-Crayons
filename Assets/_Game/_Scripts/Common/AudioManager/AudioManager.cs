@@ -56,9 +56,11 @@ namespace TMKOC
                 break;
                 case "French":
                 SetAudioLanguage(AudioLanguage.French);
+                break;
                 case "German":
                 SetAudioLanguage(AudioLanguage.German);
                 default:
+                break;
                 SetAudioLanguage(AudioLanguage.English);
                 break;
             }

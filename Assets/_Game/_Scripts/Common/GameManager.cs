@@ -87,6 +87,12 @@ namespace TMKOC
         public virtual void FirstTimeGameStart()
         {
             m_CurrentGameState = GameState.FirstTimeGameStart;
+            #if PLAYSCHOOL_MAIN
+             // assign varaible in this to get the  game ID from main app
+              GAMEID =  PlayerPrefs.GetInt("currentGameId");
+            #endif
+
+
             m_CatergoryDataManager = new GameCategoryDataManager(GAMEID,PlayerPrefs.GetString("currentGameName"));
             m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
 
