@@ -12,5 +12,11 @@ namespace TMKOC.Reflection
         public List<AudioClip> m_Jump;
 
         public List<AudioClip> m_Walk;
+
+        public AudioClip m_ButtonClick;
+
+        public List<AudioClip> m_OnMirrorInteracted;
+
+        public AudioClip m_FragmentCollected;
     }
 }

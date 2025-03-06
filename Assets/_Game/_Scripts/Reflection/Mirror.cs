@@ -58,6 +58,7 @@ namespace TMKOC.Reflection
             m_MirrorSlider.OnSliderValueChangedAction += OnSliderValueChangedAction;
         }
 
+        private bool m_IsInteractionSoundPlayed;
         private void OnSliderValueChangedAction(float value)
         {
             if (m_MirrorSlider != null)
@@ -93,6 +94,12 @@ namespace TMKOC.Reflection
                         m_MirrorObject.transform.rotation = Quaternion.Euler(0, 180, -zRotation);
                     }
                 }
+                if(!m_IsInteractionSoundPlayed){
+                 ReflectionAudioManager.Instance.PlayAudio(
+               (ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_OnMirrorInteracted[UnityEngine.Random.Range(0,(ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_OnMirrorInteracted.Count)],
+               ReflectionAudioManager.Instance.ExtraAudioSource,true,true);
+               m_IsInteractionSoundPlayed = true;
+                }
             }
 
         }
@@ -100,6 +107,8 @@ namespace TMKOC.Reflection
         protected override void OnPlayerExitZone()
         {
             base.OnPlayerExitZone();
+               m_IsInteractionSoundPlayed = false;
+
             if(!TutorialManager.Instance.IsTutorialActive)
                     CinemachineCameraManager.Instance.RestoreToDefaultCamera();
             m_MirrorSlider.DisableSlider();

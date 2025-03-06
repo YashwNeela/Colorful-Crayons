@@ -10,5 +10,7 @@ namespace TMKOC.Reflection{
 public class ReflectionAudioLocalizationSO : AudioLocalizationSO
 {
     public List<AudioClip> tutorialAudio;
+
+    public List<AudioClip> gemCollection;
 }
 }
