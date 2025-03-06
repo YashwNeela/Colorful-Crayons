@@ -40,7 +40,11 @@ public class TutorialStep
 
     public Vector3 controlObjectPos;
 
-    public AudioClip audioClip;
+    // [SerializeField]
+    // public Dictionary<string,AudioClip> audioClip;
+
+    public List<TutorialAudioClip> audioClip;
+    //public AudioClip audioClip;
 
     public bool goBackToDefaultCamera = false;
 
@@ -56,6 +60,13 @@ public class TutorialStep
 
     public bool requiresEvent;        // Does the step wait for an event?
     public string eventName;          // Name of the event to wait for (optional)
+}
+
+[System.Serializable]
+public struct TutorialAudioClip
+{
+    public AudioLanguage language;
+    public AudioClip clip;
 }
 public static class TutorialIds
 {
