@@ -29,6 +29,25 @@ namespace TMKOC.Sorting.CarSorting
 
         public CarType CarType => m_CarType;
 
+        // public override void OnCollectibleEntered(Collectible collectible)
+        // {
+        //     base.OnCollectibleEntered(collectible);
+        //     foreach (var snapPoint in snapPoints)
+        //     {
+        //         if (!snapPoint.IsOccupied)
+        //         {
+                   
+        //              if (m_CarType.HasFlag((collectible as CarTire).CarType))
+        //             {
+        //                     OnItemCollected(snapPoint);
+
+        //             }
+
+        //             break;
+        //         }
+        //     }
+        // }
+
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
             foreach (var snapPoint in snapPoints)

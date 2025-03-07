@@ -209,7 +209,17 @@ namespace TMKOC.Reflection
         {
             if (TutorialManager.Instance.IsTutorialActive)
                 TutorialEventManager.Instance.TriggerEvent("event_tutorial_jump");
+            ReflectionAudioManager.Instance.PlayAudio(
+               (ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_Jump[UnityEngine.Random.Range(0,(ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_Jump.Count)],
+               ReflectionAudioManager.Instance.ExtraAudioSource);
             currentState?.Jump(this);
+        }
+
+        public void PlayWalkAudio()
+        {
+            ReflectionAudioManager.Instance.PlayAudio(
+               (ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_Walk[UnityEngine.Random.Range(0,(ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_Walk.Count)],
+               ReflectionAudioManager.Instance.ExtraAudioSource);
         }
 
         

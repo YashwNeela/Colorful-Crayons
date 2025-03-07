@@ -20,6 +20,9 @@ namespace TMKOC.Reflection
             m_PlayButton.onClick.AddListener(()=>
             {
                 GameManager.Instance.FirstTimeGameStart();
+                 ReflectionAudioManager.Instance.PlayAudio(
+                (ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_ButtonClick,
+                ReflectionAudioManager.Instance.ExtraAudioSource);
                 DisableSplashScreen();
             });
         }

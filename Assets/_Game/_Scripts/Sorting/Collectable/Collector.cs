@@ -147,7 +147,7 @@ namespace TMKOC.Sorting
 
         public virtual void OnCollectibleEntered(Collectible collectible)
         {
-
+            
         }
 
         public virtual void OnCollectibleExited(Collectible collectible)

@@ -21,6 +21,8 @@ namespace TMKOC
 
         [SerializeField] protected AudioLanguage m_CurretAudioLanguage;
 
+        public AudioLanguage CurrentAudioLanguage => m_CurretAudioLanguage;
+
         protected AudioLocalizationSO m_CurrentLocalizedAudio;
 
         public AudioLocalizationSO CurrentLocalizedAudio => m_CurrentLocalizedAudio;
