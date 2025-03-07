@@ -51,6 +51,25 @@ namespace TMKOC.Sorting.ColorfulCrayons
             }
         }
 
+        public override void OnCollectibleEntered(Collectible collectible)
+        {
+            base.OnCollectibleEntered(collectible);
+            foreach (var snapPoint in snapPoints)
+            {
+                if (!snapPoint.IsOccupied)
+                {
+                   
+                    if (m_CrayonColor.HasFlag((collectible as Crayon2D).CrayonColor))
+                    {
+                            OnItemCollected(snapPoint);
+
+                    }
+
+                    break;
+                }
+            }
+        }
+
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
             foreach (var snapPoint in snapPoints)
@@ -66,7 +85,6 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
                     if (m_CrayonColor.HasFlag((collectible as Crayon2D).CrayonColor))
                     {
-                        OnItemCollected(snapPoint);
                         PlacedCorrectly?.Invoke();
                     }
 

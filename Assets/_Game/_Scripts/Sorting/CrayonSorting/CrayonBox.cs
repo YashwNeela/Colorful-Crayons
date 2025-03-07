@@ -126,6 +126,8 @@ namespace TMKOC.Sorting.ColorfulCrayons
         {
             base.OnCollectibleEntered(collectible);
             Debug.Log("Collectible entered");
+            
+
            // m_OnCrayonEnteredAnimation.DOPlayForward();
         }
 

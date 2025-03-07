@@ -86,7 +86,24 @@ namespace TMKOC.Sorting.FruitSorting2D
             yield return new WaitForSeconds(waitTime);
             OnLevelOver?.Invoke(gridItems);
         }
+        // public override void OnCollectibleEntered(Collectible collectible)
+        // {
+        //     base.OnCollectibleEntered(collectible);
+        //     foreach (var snapPoint in snapPoints)
+        //     {
+        //         if (!snapPoint.IsOccupied)
+        //         {
+                   
+        //             if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
+        //             {
+        //                     OnItemCollected(snapPoint);
 
+        //             }
+
+        //             break;
+        //         }
+        //     }
+        // }
         public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
             foreach (var snapPoint in snapPoints)

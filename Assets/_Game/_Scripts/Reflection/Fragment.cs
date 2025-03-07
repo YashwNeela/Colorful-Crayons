@@ -6,7 +6,8 @@ using DG.Tweening;
 using System.Threading.Tasks;
 using System;
 
-namespace TMKOC.PlantLifeCycle
+
+namespace TMKOC.Reflection
 {
     public enum FragmentType
     {
@@ -48,7 +49,9 @@ namespace TMKOC.PlantLifeCycle
         {
 
             transform.DOComplete();
-
+            ReflectionAudioManager.Instance.PlayAudio(
+               (ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_FragmentCollected,
+               ReflectionAudioManager.Instance.ExtraAudioSource,false,true);
 
             transform.DOScale(transform.localScale * 1.1f, 0.5f)
             .OnComplete(()=>
