@@ -30,6 +30,25 @@ namespace TMKOC.Sorting.ShapeSorting
 
         public ShapeType ShapeType => m_ShapeType;
 
+        // public override void OnCollectibleEntered(Collectible collectible)
+        // {
+        //     base.OnCollectibleEntered(collectible);
+        //     foreach (var snapPoint in snapPoints)
+        //     {
+        //         if (!snapPoint.IsOccupied)
+        //         {
+                   
+        //             if(m_ShouldIncludeScore && m_ShapeType.HasFlag((collectible as ShapeCollectible).ShapeType))
+        //             {
+        //                     OnItemCollected(snapPoint);
+
+        //             }
+
+        //             break;
+        //         }
+        //     }
+        // }
+
           public override void SnapCollectibleToCollector(Collectible collectible, Action PlacedCorrectly)
         {
             foreach (var snapPoint in snapPoints)
