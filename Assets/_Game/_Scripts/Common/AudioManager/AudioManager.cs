@@ -12,7 +12,7 @@ namespace TMKOC
         Hindi,
         Tamil,
         German,
-        French
+        French, Marathi
     }
     public class AudioManager : SerializedSingleton<AudioManager>
     {
@@ -61,6 +61,9 @@ namespace TMKOC
                 break;
                 case "German":
                 SetAudioLanguage(AudioLanguage.German);
+                default:
+                case "Marathi":
+                SetAudioLanguage(AudioLanguage.Marathi);
                 default:
                 break;
                 SetAudioLanguage(AudioLanguage.English);
