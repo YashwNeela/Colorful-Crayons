@@ -12,7 +12,7 @@ namespace TMKOC
         Hindi,
         Tamil,
         German,
-        French, Marathi
+        French, Marathi, Bengali
     }
     public class AudioManager : SerializedSingleton<AudioManager>
     {
