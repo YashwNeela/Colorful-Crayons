@@ -68,6 +68,11 @@ namespace TMKOC.Sorting.FruitSorting2D
         }
         protected override void HandleDragEnd()
         {
+            if (m_IsPlacedInsideCollector)
+            {
+                draggable.ResetToStartDraggingValues();
+                return;
+            }
             this.GetComponent<SpriteRenderer>().sortingOrder = 0;
 
             if (m_IsPlacedInsideCollector)
@@ -79,13 +84,21 @@ namespace TMKOC.Sorting.FruitSorting2D
             {
                 if (m_ValidCollector != null)
                 {
-
-                    if ((m_CurrentCollector as FruitCollector).FruitType.HasFlag(m_FruitType))
-                        m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                    if (m_ValidCollector.IsSlotAvailable())
+                    {
+                        if ((m_CurrentCollector as FruitCollector).FruitType.HasFlag(m_FruitType))
+                            m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                        else
+                            m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
+                        PlaceInCorrectly(m_CurrentCollector);
+                    }
                     else
-                        m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
-                    PlaceInCorrectly(m_CurrentCollector);
+                    {
+                        draggable.ResetToStartDraggingValues();
 
+                        m_ValidCollector = null;
+                        m_CurrentCollector = null;
+                    }
                 }
             }
         }
