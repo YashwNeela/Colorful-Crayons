@@ -61,11 +61,15 @@ namespace TMKOC
                 break;
                 case "German":
                 SetAudioLanguage(AudioLanguage.German);
-                default:
+                break;
                 case "Marathi":
                 SetAudioLanguage(AudioLanguage.Marathi);
-                default:
                 break;
+                case "Bengali":
+                SetAudioLanguage(AudioLanguage.Bengali);
+                break;
+
+                default:
                 SetAudioLanguage(AudioLanguage.English);
                 break;
             }
