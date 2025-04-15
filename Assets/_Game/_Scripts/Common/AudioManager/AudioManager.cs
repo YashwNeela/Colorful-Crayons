@@ -83,6 +83,7 @@ namespace TMKOC
         {
             if(audioLanguage == AudioLanguage.None)
                 return;
+            m_CurretAudioLanguage = audioLanguage;
             m_CurrentLocalizedAudio = audioSO[audioLanguage];
             PlayBackgroundAudio();
         }
