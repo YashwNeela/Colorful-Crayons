@@ -191,7 +191,7 @@ namespace TMKOC.Sorting
 
 
 
-            if (m_CurrentCollector != null && draggable.IsDragging)
+            if (m_CurrentCollector != null && draggable.IsDragging && m_IsPlacedCorrectly)
             {
                 m_CurrentCollector.OnCollectibleExited(this);
                 m_IsPlacedCorrectly = false;
