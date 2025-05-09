@@ -40,6 +40,8 @@ namespace TMKOC.Sorting
 
         public bool IsPlacedInsideCollector => m_IsPlacedInsideCollector;
 
+        public bool m_IsDefaultPlaced;
+
         protected Component m_Collider;
 
 
@@ -191,7 +193,7 @@ namespace TMKOC.Sorting
 
 
 
-            if (m_CurrentCollector != null && draggable.IsDragging && m_IsPlacedCorrectly)
+            if (m_CurrentCollector != null && draggable.IsDragging && (m_IsPlacedInsideCollector || m_IsDefaultPlaced))
             {
                 m_CurrentCollector.OnCollectibleExited(this);
                 m_IsPlacedCorrectly = false;

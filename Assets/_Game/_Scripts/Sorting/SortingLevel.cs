@@ -47,7 +47,7 @@ namespace TMKOC.Sorting
             m_Collectors = GetComponentsInChildren<Collector>();
             m_Collectibles = GetComponentsInChildren<Collectible>();
             m_Draggables = GetComponentsInChildren<Draggable>();
-            Invoke(nameof(SetScoreRequiredToCompleteTheLevel), 2);
+            Invoke(nameof(SetScoreRequiredToCompleteTheLevel), 0.25f);
         }
 
         protected override void OnEnable()

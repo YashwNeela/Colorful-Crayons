@@ -90,9 +90,10 @@ public class Crayon2D : Crayon
                 {
                     if ((m_CurrentCollector as CrayonBox2D).CrayonColor.HasFlag(m_CrayonColor))
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
-                    else
+                    else{
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
-                    PlaceInCorrectly(m_CurrentCollector);
+                        PlaceInCorrectly(m_CurrentCollector);
+                    }
                 }
                 else
                 {
