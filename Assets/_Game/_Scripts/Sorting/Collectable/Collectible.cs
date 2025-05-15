@@ -162,8 +162,7 @@ namespace TMKOC.Sorting
                 return;
 
             Debug.Log("Trigger Entered");
-            if (m_CurrentCollector != null && !m_IsPlacedCorrectly && draggable.IsDragging)
-                m_CurrentCollector.OnCollectibleEntered(this);
+            
         }
 
         protected virtual void OnTriggerStay(Collider other)
@@ -208,6 +207,9 @@ namespace TMKOC.Sorting
 
         protected virtual void HandleDragEnd()
         {
+            if (m_CurrentCollector != null && !m_IsPlacedCorrectly)
+                m_CurrentCollector.OnCollectibleEntered(this);
+                
             if (m_IsPlacedInsideCollector)
             {
                 draggable.ResetToStartDraggingValues();

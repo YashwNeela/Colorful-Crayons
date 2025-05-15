@@ -104,7 +104,9 @@ namespace TMKOC.Sorting.ShapeSorting
 
         protected override void HandleDragEnd()
         {
-
+            if (m_CurrentCollector != null && !m_IsPlacedCorrectly)
+                m_CurrentCollector.OnCollectibleEntered(this);
+                
             Debug.Log("Handle drag end");
             if (m_IsPlacedInsideCollector)
             {

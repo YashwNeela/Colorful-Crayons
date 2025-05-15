@@ -68,6 +68,9 @@ namespace TMKOC.Sorting.FruitSorting2D
         }
         protected override void HandleDragEnd()
         {
+            if (m_CurrentCollector != null && !m_IsPlacedCorrectly)
+                m_CurrentCollector.OnCollectibleEntered(this);
+                
             if (m_IsPlacedInsideCollector)
             {
                 draggable.ResetToStartDraggingValues();

@@ -107,9 +107,13 @@ namespace TMKOC.Sorting.CarSorting
 
         protected override void HandleDragEnd()
         {
+            
+            if (m_CurrentCollector != null && !m_IsPlacedCorrectly)
+                m_CurrentCollector.OnCollectibleEntered(this);
+                
             if (m_IsPlacedInsideCollector)
             {
-              //  draggable.ResetToStartDraggingValues();
+                //  draggable.ResetToStartDraggingValues();
                 draggable.ResetToPointValues(m_CurrentSnapPoint.transform.position);
                 return;
             }

@@ -76,6 +76,9 @@ public class Crayon2D : Crayon
 
     protected override void HandleDragEnd()
     {
+        if (m_CurrentCollector != null && !m_IsPlacedCorrectly)
+                m_CurrentCollector.OnCollectibleEntered(this);
+                
         if (m_IsPlacedInsideCollector)
         {
             draggable.ResetToStartDraggingValues();
@@ -90,7 +93,8 @@ public class Crayon2D : Crayon
                 {
                     if ((m_CurrentCollector as CrayonBox2D).CrayonColor.HasFlag(m_CrayonColor))
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
-                    else{
+                    else
+                    {
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
                         PlaceInCorrectly(m_CurrentCollector);
                     }
@@ -107,6 +111,7 @@ public class Crayon2D : Crayon
 
 
         }
+      
     }
 
     protected override void OnDragStartedStaticAction(Transform transform)
