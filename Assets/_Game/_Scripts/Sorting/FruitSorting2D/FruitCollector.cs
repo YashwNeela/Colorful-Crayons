@@ -112,7 +112,7 @@ namespace TMKOC.Sorting.FruitSorting2D
                 {
                     collectible.transform.parent = snapPoint.transform; // Change parent first
 
-                    collectible.transform.DOLocalJump(Vector3.zero, 10f, 1, .25f).OnComplete(() =>
+                    collectible.transform.DOLocalJump(Vector3.zero, 8f, 1, .25f).OnComplete(() =>
                     {
                         snapPoint.IsOccupied = true;
                         collectible.SetSnapPoint(snapPoint);
@@ -124,7 +124,8 @@ namespace TMKOC.Sorting.FruitSorting2D
 
                             // Add to collectibles
                             collectibles.Add(new(collectible, true));
-                        } else
+                        }
+                        else
                         {
                             collectibles.Add(new(collectible, false));
                         }

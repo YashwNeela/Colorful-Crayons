@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18018535, g: 0.22559482, b: 0.30677685, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1451,6 +1451,55 @@ Transform:
   - {fileID: 1370076552}
   m_Father: {fileID: 2116294046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &62178221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 62178222}
+  - component: {fileID: 62178223}
+  m_Layer: 0
+  m_Name: 7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &62178222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62178221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.31, y: -3.99, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1311102645}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &62178223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62178221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05bdd50a2bce1c43973593ccaef1f8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOccupied: 0
+  m_HasCustomCollectible: 0
+  m_CustomCollectible: {fileID: 0}
+  m_CurrentCollectible: {fileID: 0}
+  m_FruitType: 32768
 --- !u!1 &90190783
 GameObject:
   m_ObjectHideFlags: 0
@@ -9263,6 +9312,7 @@ MonoBehaviour:
   - {fileID: 2141353697}
   - {fileID: 2056608961}
   - {fileID: 216129102}
+  - {fileID: 463884829}
   collectedItems: 0
   m_ShouldIncludeScore: 1
   m_FruitType: 33
@@ -11637,6 +11687,13 @@ MonoBehaviour:
   - {fileID: 1905034497}
   - {fileID: 1860290366}
   - {fileID: 838993692}
+  - {fileID: 719815233}
+  - {fileID: 1205026208}
+  - {fileID: 1711005464}
+  - {fileID: 1276841926}
+  - {fileID: 736675383}
+  - {fileID: 1106017493}
+  - {fileID: 1896552515}
   collectedItems: 0
   m_ShouldIncludeScore: 1
   m_FruitType: 32768
@@ -13572,8 +13629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShouldDestroyOnLoad: 1
   GAMEID: 54
-  testLevel: 0
-  levelNumber: 0
+  testLevel: 1
+  levelNumber: 3
   m_CurrentGameState: 0
   m_PlayCloudTransition: 1
   m_LevelCheckButton: {fileID: 1986864592}
@@ -15679,7 +15736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1260117130
 Transform:
   m_ObjectHideFlags: 0
@@ -15949,6 +16006,7 @@ Transform:
   - {fileID: 2143328619}
   - {fileID: 1519968989}
   - {fileID: 24053910}
+  - {fileID: 62178222}
   m_Father: {fileID: 1504189308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1317580035
@@ -16502,8 +16560,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 01010700000061007500640069006f0053004f002f000000000186000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00440069006300740069006f006e00610072007900600032005b005b0054004d004b004f0043002e0041007500640069006f004c0061006e00670075006100670065002c00200041007300730065006d0062006c0079002d004300530068006100720070005d002c005b0054004d004b004f0043002e0041007500640069006f004c006f00630061006c0069007a006100740069006f006e0053004f002c00200041007300730065006d0062006c0079002d004300530068006100720070005d005d002c0020006d00730063006f0072006c00690062000000000001010800000063006f006d00700061007200650072002f010000000163000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e0045006e0075006d0045007100750061006c0069007400790043006f006d0070006100720065007200600031005b005b0054004d004b004f0043002e0041007500640069006f004c0061006e00670075006100670065002c00200041007300730065006d0062006c0079002d004300530068006100720070005d005d002c0020006d00730063006f0072006c0069006200010000000600000000000000000705060600000000000000042e1d010200000024006b0001000000000000000b0102000000240076000000000005042e1d010200000024006b0002000000000000000b0102000000240076000100000005042e1d010200000024006b0003000000000000000b0102000000240076000200000005042e1d010200000024006b0006000000000000000b0102000000240076000300000005042e1d010200000024006b0005000000000000000b0102000000240076000400000005042e1d010200000024006b0007000000000000000b01020000002400760005000000050705
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: f02532ed4b4f1a848ab53a71acc41a94, type: 2}
     - {fileID: 11400000, guid: a3679d3ac3b72f4438a2863c0794fe18, type: 2}
@@ -16515,105 +16573,7 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: audioSO
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[TMKOC.AudioLanguage, Assembly-CSharp],[TMKOC.AudioLocalizationSO,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TMKOC.AudioLanguage,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 6
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 2
-    - Name: $v
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
-    - Name: $v
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 6
-    - Name: $v
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 5
-    - Name: $v
-      Entry: 10
-      Data: 4
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 7
-    - Name: $v
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   m_ShouldDestroyOnLoad: 1
   m_CurretAudioLanguage: 2
   m_BackGroundAudioSource: {fileID: 1308434590}
@@ -17418,7 +17378,7 @@ PrefabInstance:
     - target: {fileID: 4566653479042792899, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: _length
-      value: 2118.368
+      value: 2118.0984
       objectReference: {fileID: 0}
     - target: {fileID: 5061831737544080458, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -18126,7 +18086,7 @@ Transform:
   m_GameObject: {fileID: 1504189307}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: -1}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -18154,6 +18114,7 @@ MonoBehaviour:
   - {fileID: 2143328620}
   - {fileID: 1519968990}
   - {fileID: 24053911}
+  - {fileID: 62178223}
   collectedItems: 0
   m_ShouldIncludeScore: 1
   m_FruitType: 65536

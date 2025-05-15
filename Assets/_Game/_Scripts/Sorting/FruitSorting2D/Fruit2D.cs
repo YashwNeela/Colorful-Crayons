@@ -44,7 +44,6 @@ namespace TMKOC.Sorting.FruitSorting2D
         protected override void OnPlacedCorrectly()
         {
             base.OnPlacedCorrectly();
-
         }
         protected virtual void OnTriggerStay2D(Collider2D other)
         {
@@ -62,24 +61,18 @@ namespace TMKOC.Sorting.FruitSorting2D
 
         protected override void HandleDragStart()
         {
-            this.GetComponent<SpriteRenderer>().sortingOrder = 101;
-
-
+            spriteRenderer.sortingOrder = 101;
         }
         protected override void HandleDragEnd()
         {
+            spriteRenderer.sortingOrder = 0;
+            
             if (m_IsPlacedInsideCollector)
             {
                 draggable.ResetToStartDraggingValues();
                 return;
             }
-            this.GetComponent<SpriteRenderer>().sortingOrder = 0;
 
-            if (m_IsPlacedInsideCollector)
-            {
-                draggable.ResetToStartDraggingValues();
-                return;
-            }
             if (m_CurrentCollector != null)
             {
                 if (m_ValidCollector != null)
