@@ -44,7 +44,7 @@ namespace TMKOC.Reflection
                     if (TutorialManager.Instance.IsTutorialActive)
                         TutorialEventManager.Instance.TriggerEvent("event_tutorial_jump");
 
-                    rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
                  //   m_Animator.SetTrigger("Jump");
                  m_Animator.Play("VerticalJump");
                 }
@@ -82,7 +82,7 @@ namespace TMKOC.Reflection
         private void OnGameOver()
         {
             rb.isKinematic = true;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
 
         private void OnGameStart()
@@ -147,8 +147,8 @@ namespace TMKOC.Reflection
 
                 }
 
-                Vector2 move = new Vector2(Mathf.Clamp(moveX,-1,1) * moveSpeed, rb.velocity.y);
-                rb.velocity = move;
+                Vector2 move = new Vector2(Mathf.Clamp(moveX,-1,1) * moveSpeed, rb.linearVelocity.y);
+                rb.linearVelocity = move;
                 m_Animator.Play("Walk");
               //  m_Animator.SetFloat("Speed", Mathf.Abs(1));
 
@@ -162,7 +162,7 @@ namespace TMKOC.Reflection
             else if(!inAir)
             {
 
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 m_Animator.Play("Idle");
 
                 // m_Animator.SetFloat("Speed", 0);
@@ -183,8 +183,8 @@ namespace TMKOC.Reflection
                 }
                 
                 }
-                Vector2 move = new Vector2(moveX * moveSpeed, rb.velocity.y);
-                rb.velocity = move;
+                Vector2 move = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
+                rb.linearVelocity = move;
                 
                
             }
@@ -192,7 +192,7 @@ namespace TMKOC.Reflection
             //  Jumping
             if (Input.GetButtonDown("Jump"))
             {
-                rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Sqrt(jumpHeight * -2f * gravity));
             }
         }
 
@@ -253,7 +253,7 @@ namespace TMKOC.Reflection
           
             m_Animator.SetFloat("Speed", Mathf.Abs(1));
 
-            rb.velocity = new Vector2(rb.velocity.x * direction,gravity);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x * direction,gravity);
 
             // transform.DOJump((Vector2)transform.position + (Vector2.right * direction * 2f), 0.5f, 1, 0.5f).OnComplete(() =>
             // {
@@ -277,7 +277,7 @@ namespace TMKOC.Reflection
             else
             {
                 inAir = false;
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
                 StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1f, () =>
                 {
                     

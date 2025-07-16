@@ -57,7 +57,7 @@ namespace TMKOC.Reflection
         private void OnSplashScreenAction()
         {
              rb.isKinematic = true;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
 
         private void OnFirstTimeGameStartAction()
@@ -68,7 +68,7 @@ namespace TMKOC.Reflection
         private void OnGameLoose()
         {
             rb.isKinematic = true;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             m_IsDead = true;
         }
 
@@ -124,7 +124,7 @@ namespace TMKOC.Reflection
         private void OnIntroCutSceneStartedAction()
         {
             rb.isKinematic = true;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
 
         private void Start()
@@ -158,7 +158,7 @@ namespace TMKOC.Reflection
                 m_SpriteRenderer.flipX = false;
             if (direction < 0)
                 m_SpriteRenderer.flipX = true;
-            rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
 
              if (TutorialManager.Instance.IsTutorialActive){
                 TutorialEventManager.Instance.TriggerEvent("event_tutorial_movement");
@@ -176,7 +176,7 @@ namespace TMKOC.Reflection
 
         public void Jump()
         {
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -2f * Physics2D.gravity.y));
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Sqrt(jumpHeight * -2f * Physics2D.gravity.y));
         }
 
         public bool IsGrounded()

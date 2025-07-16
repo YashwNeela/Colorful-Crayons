@@ -38,7 +38,7 @@ public class ObjectReseter : MonoBehaviour
         if (m_Rigidbody != null)
         {
             m_Rigidbody.isKinematic = m_IsKinematic;
-            m_Rigidbody.velocity = Vector3.zero; // Reset velocity
+            m_Rigidbody.linearVelocity = Vector3.zero; // Reset velocity
             m_Rigidbody.angularVelocity = Vector3.zero; // Reset angular velocity
         }
     }
