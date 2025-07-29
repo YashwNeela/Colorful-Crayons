@@ -20179,15 +20179,18 @@ PrefabInstance:
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
-      value: '"path":"audioSO","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":5,"$rcontent":[{"$id":1,"$type":"TMKOC.AudioLanguage,
+      value: '"path":"audioSO","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":12,"$rcontent":[{"$id":1,"$type":"TMKOC.AudioLanguage,
         Assembly-CSharp",3},{"$id":2,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",4},{"$id":3,"$type":"TMKOC.AudioLanguage,
         Assembly-CSharp",6},{"$id":4,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",5},{"$id":5,"$type":"TMKOC.AudioLanguage,
-        Assembly-CSharp",7}]},"remove_keys":null'
+        Assembly-CSharp",7},{"$id":6,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",8},{"$id":7,"$type":"TMKOC.AudioLanguage,
+        Assembly-CSharp",3},{"$id":8,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",4},{"$id":9,"$type":"TMKOC.AudioLanguage,
+        Assembly-CSharp",6},{"$id":10,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",5},{"$id":11,"$type":"TMKOC.AudioLanguage,
+        Assembly-CSharp",7},{"$id":12,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",8}]},"remove_keys":null'
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
@@ -20221,8 +20224,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[7]'
+      value: '"path":"audioSO.{8es}","value":$eref:6'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
@@ -20259,6 +20267,12 @@ PrefabInstance:
       propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[5]'
       value: 
       objectReference: {fileID: 11400000, guid: 4f66b7c3a6e0d48dba3427826ebf97af,
+        type: 2}
+    - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
+        type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 707206b4b741c420abfe9e557821e858,
         type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
