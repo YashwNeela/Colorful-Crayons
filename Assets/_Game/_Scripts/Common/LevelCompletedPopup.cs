@@ -91,12 +91,26 @@ public class LevelCompletedPopup : MonoBehaviour
     {
         m_WinContainer.SetActive(false);
         m_LooseContainer.SetActive(true);
+        m_LevelCompletedButton.enabled = true;
+        
+        Button[] buttons = m_LooseContainer.GetComponentsInChildren<Button>(true);
+        foreach (Button btn in buttons)
+        {
+            btn.enabled = true;
+        }
     }
 
     private void ShowWinPopup()
     {
         m_LooseContainer.SetActive(false);
         m_WinContainer.SetActive(true);
+        m_LevelCompletedButton.enabled = true;
+
+        Button[] buttons = m_WinContainer.GetComponentsInChildren<Button>(true);
+        foreach (Button btn in buttons)
+        {
+            btn.enabled = true;
+        }
 
         ParticleImage[] particleImages = m_WinContainer.GetComponentsInChildren<ParticleImage>();
 
@@ -119,9 +133,14 @@ public class LevelCompletedPopup : MonoBehaviour
         m_LevelCompletedText.text = levelCompletedText;
 
         m_LevelCompletedButton.onClick.RemoveAllListeners();
+        m_LevelCompletedButton.enabled = true;
 
         // Add the listener correctly by passing a lambda that invokes the action
-        m_LevelCompletedButton.onClick.AddListener(() => levelCompletedButtonAction?.Invoke());
+        m_LevelCompletedButton.onClick.AddListener(() => 
+        {
+            m_LevelCompletedButton.enabled = false;
+            levelCompletedButtonAction?.Invoke();
+        });
 
         m_LevelCompletedButtonText.text = levelCompletedButtonText; // Assuming you want to set the button text as well
 
@@ -148,6 +167,20 @@ public class LevelCompletedPopup : MonoBehaviour
 
     public virtual void OnNextLevelButtonClicked()
     {
+        if (UnityEngine.EventSystems.EventSystem.current != null)
+        {
+            GameObject selectedObj = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            if (selectedObj != null)
+            {
+                Button btn = selectedObj.GetComponent<Button>();
+                if (btn != null)
+                {
+                    btn.enabled = false;
+                }
+            }
+        }
+        
+        m_LevelCompletedButton.enabled = false;
         //CloudUI.Instance.PlayColoudEnterAnimation();
     }
 

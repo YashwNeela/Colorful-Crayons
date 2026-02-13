@@ -23,12 +23,12 @@ namespace TMKOC.Reflection
             #endif
 
 
-            //m_CatergoryDataManager = new GameCategoryDataManager(GAMEID, PlayerPrefs.GetString("currentGameName"));
-            //m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
+            m_CatergoryDataManager = new GameCategoryDataManager(GAMEID, PlayerPrefs.GetString("currentGameName"));
+            m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
 
             if (!testLevel)
             {
-                //levelNumber = m_CatergoryDataManager.GetCompletedLevel;
+                levelNumber = m_CatergoryDataManager.GetCompletedLevel;
                 if (levelNumber == LevelManager.Instance.MaxLevels)
                     levelNumber = 0;
             }

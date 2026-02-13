@@ -90,6 +90,9 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void OnMouseDown() 
         {
+            if(SortingGameManager.Instance.CurrentGameState != GameState.Playing)
+                return;
+
             if(!m_CanSelect)
                 return;
         
