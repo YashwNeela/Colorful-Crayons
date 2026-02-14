@@ -119,7 +119,6 @@ public class LevelCompletedPopup : MonoBehaviour
         m_LevelCompletedText.text = levelCompletedText;
 
         m_LevelCompletedButton.onClick.RemoveAllListeners();
-
         // Add the listener correctly by passing a lambda that invokes the action
         m_LevelCompletedButton.onClick.AddListener(() => levelCompletedButtonAction?.Invoke());
 

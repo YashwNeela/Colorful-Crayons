@@ -12,7 +12,7 @@ public class CrayonSnapPoint : SnapPoint
 
         public override bool HasValidCollectible()
         {
-            if(m_CurrentCollectible != null &&(m_CurrentCollectible as Crayon).CrayonColor.HasFlag(m_CrayonColor))
+            if(m_CurrentCollectible != null && m_CrayonColor.HasFlag((m_CurrentCollectible as Crayon).CrayonColor))
                 return true;
             else
                 return false;

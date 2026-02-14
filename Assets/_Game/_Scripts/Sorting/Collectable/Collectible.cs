@@ -39,6 +39,7 @@ namespace TMKOC.Sorting
         protected bool m_IsPlacedInsideCollector = false;
 
         public bool IsPlacedInsideCollector => m_IsPlacedInsideCollector;
+        public SnapPoint CurrentSnapPoint => m_CurrentSnapPoint;
 
         public bool m_IsDefaultPlaced;
 

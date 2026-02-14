@@ -61,8 +61,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
                    
                     if (m_CrayonColor.HasFlag((collectible as Crayon2D).CrayonColor))
                     {
-                            OnItemCollected(snapPoint);
-
+                           // OnItemCollected(snapPoint);
                     }
 
                     break;
@@ -85,6 +84,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
                     if (m_CrayonColor.HasFlag((collectible as Crayon2D).CrayonColor))
                     {
+                        OnItemCollected(snapPoint);
                         PlacedCorrectly?.Invoke();
                     }
 
@@ -95,6 +95,25 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         public override void OnCollectibleExited(Collectible collectible)
         {
+            bool belongsToBox = false;
+
+            if (collectible.CurrentSnapPoint != null)
+            {
+                foreach (var sp in snapPoints)
+                {
+                    if (sp == collectible.CurrentSnapPoint)
+                    {
+                        belongsToBox = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!belongsToBox)
+            {
+                return;
+            }
+
             collectible.RemoveFromSnapPoint();
             if (m_CrayonColor.HasFlag((collectible as Crayon).CrayonColor))
             {
