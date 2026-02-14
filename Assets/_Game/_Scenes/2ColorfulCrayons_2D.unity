@@ -6283,18 +6283,6 @@ Transform:
   - {fileID: 1188061987}
   m_Father: {fileID: 1842431814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &666873592 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-    type: 3}
-  m_PrefabInstance: {fileID: 3957112341757298856}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &674466768
 GameObject:
   m_ObjectHideFlags: 0
@@ -20196,10 +20184,13 @@ PrefabInstance:
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
-      value: '"path":"audioSO","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":6,"$rcontent":[{"$id":1,"$type":"TMKOC.AudioLanguage,
+      value: '"path":"audioSO","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":12,"$rcontent":[{"$id":1,"$type":"TMKOC.AudioLanguage,
         Assembly-CSharp",3},{"$id":2,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",4},{"$id":3,"$type":"TMKOC.AudioLanguage,
         Assembly-CSharp",6},{"$id":4,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",5},{"$id":5,"$type":"TMKOC.AudioLanguage,
-        Assembly-CSharp",7},{"$id":6,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",8}]},"remove_keys":null'
+        Assembly-CSharp",7},{"$id":6,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",8},{"$id":7,"$type":"TMKOC.AudioLanguage,
+        Assembly-CSharp",3},{"$id":8,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",4},{"$id":9,"$type":"TMKOC.AudioLanguage,
+        Assembly-CSharp",6},{"$id":10,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",5},{"$id":11,"$type":"TMKOC.AudioLanguage,
+        Assembly-CSharp",7},{"$id":12,"$type":"TMKOC.AudioLanguage, Assembly-CSharp",8}]},"remove_keys":null'
       objectReference: {fileID: 0}
     - target: {fileID: 8155958364254749772, guid: 6baae7f66356945ebaaaada5936c1c5a,
         type: 3}
@@ -20434,41 +20425,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 82
       objectReference: {fileID: 0}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 666873592}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: set_enabled
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UnityEngine.UI.Button, UnityEngine.UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245232193288149894, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 1533951359961081639, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -20570,11 +20526,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2823944270263258009, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
-    - target: {fileID: 3413372517818399826, guid: 4029eb771ce6746368afa6b25671a64d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4319750251038016055, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_AnchorMax.y

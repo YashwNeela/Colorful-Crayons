@@ -40,8 +40,7 @@ public class SortingLevelCompletedPopup : LevelCompletedPopup
 
         public override void OnNextLevelButtonClicked()
         {
-            base.OnNextLevelButtonClicked();
-            m_LevelFailUI.ClearChildren();
+        m_LevelFailUI.ClearChildren();
 
             CloudUI.Instance.PlayColoudEnterAnimation();
         }

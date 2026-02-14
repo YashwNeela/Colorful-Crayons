@@ -45,9 +45,6 @@ namespace TMKOC.Sorting.FruitSorting2D
         }
         private void OnMouseDown()
         {
-            if (SortingGameManager.Instance.CurrentGameState != GameState.Playing)
-                return;
-
             m_IsSelected = m_IsSelected ? false : true;
 
             if (m_IsSelected)
