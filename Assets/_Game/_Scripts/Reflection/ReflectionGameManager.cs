@@ -83,28 +83,6 @@ namespace TMKOC.Reflection
             SplashScreenUI.Instance.EnableSplashScreen();
         }
 
-        public override void GoBackToPlayschool()
-        {
-            #if PLAYSCHOOL_MAIN
-            UnityEngine.SceneManagement.SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
-            
-            // Safe Check: Only load data if the Manager still exists (prevents Ghost creation)
-            if(FindObjectOfType<CollisionMatrixManager>())
-                CollisionMatrixManager.Instance.LoadPlayschoolData();
-            #else
-            UnityEngine.Debug.Log("Go back to playschool");
-            #endif
-        }
-
-        private void OnDestroy()
-        {
-            if(TutorialEventManager.Instance != null)
-                TutorialEventManager.Instance.Reset();
-            
-            if(MirrorSlider.Instance != null)
-                Destroy(MirrorSlider.Instance.gameObject);
-        }
-
     }
 
 

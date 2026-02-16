@@ -117,13 +117,8 @@ namespace TMKOC.Reflection
             GameManager.OnGameOver -= OnGameOver;
             GameManager.OnGameLoose -= OnGameLoose;
             GameManager.OnGameOver -= OnGameOver;
-
-            var tm = FindObjectOfType<TutorialManager>();
-            if (tm != null)
-            {
-                tm.OnTutorialStarted -= OnTutorialStarted;
-                tm.OnTutorialEnded -= OnTutorialEnded;
-            }
+            TutorialManager.Instance.OnTutorialStarted -= OnTutorialStarted;
+            TutorialManager.Instance.OnTutorialEnded -= OnTutorialEnded;
 
 
         }

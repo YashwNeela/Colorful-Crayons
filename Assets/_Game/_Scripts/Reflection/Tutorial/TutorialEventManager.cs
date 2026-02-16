@@ -38,11 +38,5 @@ public class TutorialEventManager
             eventDictionary[eventName]?.Invoke();
         }
     }
-
-    public void Reset()
-    {
-        eventDictionary.Clear();
-        _instance = null;
-    }
 }
 }
