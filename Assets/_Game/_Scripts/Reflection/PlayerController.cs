@@ -98,6 +98,13 @@ namespace TMKOC.Reflection
         {
             GameManager.OnGameStart -= OnGameStart;
             GameManager.OnGameOver -= OnGameOver;
+
+            var tm = FindObjectOfType<TutorialManager>();
+            if (tm != null)
+            {
+                tm.OnTutorialStarted -= OnTutorialStarted;
+                tm.OnTutorialEnded -= OnTutorialEnded;
+            }
             
 
         }

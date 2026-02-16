@@ -31,6 +31,13 @@ namespace TMKOC.Reflection
         private bool m_ShouldEnable = false;
 
 
+        private System.Action m_SetStartRotationAction;
+
+        private void Awake()
+        {
+             m_SetStartRotationAction = SetStartRotation;
+        }
+
         private void Start()
         {
             Physics2D.queriesStartInColliders = false;
@@ -47,7 +54,7 @@ namespace TMKOC.Reflection
                 if (m_IsPartOfTutorial)
                 {
 
-                    TutorialEventManager.Instance.Subscribe("event_mirror_info", () => SetStartRotation());
+                    TutorialEventManager.Instance.Subscribe("event_mirror_info", m_SetStartRotationAction);
 
 
                     StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1, () =>
@@ -74,7 +81,7 @@ namespace TMKOC.Reflection
         {
             if(m_IsPartOfTutorial)
             {
-                TutorialEventManager.Instance.Unsubscribe("event_mirror_info",()=> SetStartRotation());
+                TutorialEventManager.Instance.Unsubscribe("event_mirror_info", m_SetStartRotationAction);
             }
         }
 

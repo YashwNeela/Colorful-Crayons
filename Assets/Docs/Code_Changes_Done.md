@@ -122,3 +122,108 @@ private void OnMouseDown()
 ```
 
 ---
+
+## 5. Reflection Game Crash Fixes (Ghost & Leak Prevention)
+
+**Objective:** Fix `NullReferenceException` crashes caused by Singleton re-creation ("Ghosting") during scene unload and memory leaks from persistent event listeners.
+
+**Constraints:** No changes allowed to `SerializedSingleton` base class or `PlaySchoolAPI`. All fixes implemented in `ReflectionRequest`.
+
+### A. CollisionMatrixManager Ghost Fix
+
+**File:** `Assets/_Game/_Scripts/Reflection/ReflectionGameManager.cs`
+**Change:** Overrode `GoBackToPlayschool` to include a safety check before accessing `CollisionMatrixManager.Instance`.
+
+```csharp
+public override void GoBackToPlayschool()
+{
+    // ... Load Scene ...
+    // [NEW] Check existence before access
+    if(FindObjectOfType<CollisionMatrixManager>())
+        CollisionMatrixManager.Instance.LoadPlayschoolData();
+}
+```
+
+### B. TutorialManager Ghost Fix
+
+**Files:** `PlayerStateMachine.cs`, `PlayerController.cs`
+**Change:** Replaced unsafe `TutorialManager.Instance` access in `OnDisable` with `FindObjectOfType` check.
+
+```csharp
+public void OnDisable()
+{
+    // [NEW] Check existence before unsubscribe
+    var tm = FindObjectOfType<TutorialManager>();
+    if (tm != null)
+    {
+        tm.OnTutorialStarted -= OnTutorialStarted;
+        // ...
+    }
+}
+```
+
+### C. SunlightSource Memory Leak
+
+**File:** `SunlightSource.cs`
+**Change:** Cached the lambda `Action` to ensure correct unsubscription from `TutorialEventManager`.
+
+### D. Static State Cleanup
+
+**File:** `ReflectionGameManager.cs`
+**Change:** Added `OnDestroy` to call `TutorialEventManager.Reset()` and destroy `MirrorSlider`.
+
+---
+
+## 6. Critical Note for Main App Developer (Playschool API Bugs)
+
+**To:** Main App Developer / API Maintainer
+**From:** Integration Team
+**Context:** We encountered crashes in the specific game integration due to Singleton behavior in the Core API. We worked around this by overriding methods in our local managers, but the core issue remains in the API.
+
+### Issue 1: Singleton "Ghosting" on Unload
+
+**Class:** `SerializedSingleton<T>` and `Singleton<T>`
+**Problem:** The `Instance` getter creates a new `GameObject` if `_instance` is null. It does **not** check if the application is quitting or if the scene is unloading.
+**Result:** When scripts call `.Instance` inside `OnDestroy` or `OnDisable` (during scene transition), a new "Ghost" Singleton is created after the original was destroyed. This Ghost often crashes because it initializes with missing dependencies (e.g., null `Camera.main`).
+
+**Recommended Fix (In Base Class):**
+
+```csharp
+// SerializedSingleton.cs
+private static bool m_ApplicationIsQuitting = false;
+
+public void OnDestroy() {
+    m_ApplicationIsQuitting = true;
+}
+
+public static T Instance {
+    get {
+        if (m_ApplicationIsQuitting) return null; // [FIX] Don't create if quitting
+        // ... existing creation logic ...
+    }
+}
+```
+
+### Issue 2: CollisionMatrixManager Resurrection
+
+**Class:** `CollisionMatrixManager.cs`
+**Problem:** The `OnDestroy` method calls `LoadPlayschoolData()`, which calls `.Instance` on itself (indirectly or via other managers).
+**Result:** This guarantees that even if destroyed correctly, the object resurrects itself during the destruction phase.
+
+**Recommended Fix:**
+Remove logic from `OnDestroy` that requires the Singleton instance to exist.
+
+```csharp
+// CollisionMatrixManager.cs
+private void OnDestroy()
+{
+    // REMOVE THIS:
+    // LoadPlayschoolData(); 
+}
+```
+
+**Alternate Fix / Root Cause Node:**
+The **Lazy-Loading** pattern in the `Instance` getter is the primary culprit.
+- **Problem:** `get { if (_instance == null) _instance = new GameObject... }`
+- **Why it fails here:** When `OnDestroy` calls `Instance`, the original is already destroyed (or marked for destruction), so the getter assumes it needs to create a *new* one.
+- **Solution:** Removing the lazy instantiation (or adding an `isQuitting` check) prevents this "Zombie" creation loop.
