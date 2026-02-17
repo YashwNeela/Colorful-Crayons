@@ -1,4 +1,4 @@
-# Code Changes Documentation
+# TMKOC Code Changes Documentation
 
 This document serves as the official changelog for the code modifications applied to resolve critical crashes, gameplay bugs, and UI issues in the project.
 
@@ -12,12 +12,21 @@ This document serves as the official changelog for the code modifications applie
 
 **File:** `Assets/_Game/_Scripts/Common/SerializedSingleton.cs`
 **Issue:** The `Instance` getter used "Lazy Loading" (auto-creation) without checking if the application was quitting. This caused destroyed Singletons (like `TutorialManager` or `CollisionMatrixManager`) to be resurrected as empty "Ghost" objects during the destruction phase, leading to crashes in other scenes.
-**Fix:** Implemented an `m_applicationIsQuitting` flag to abort Lazy Loading during shutdown.
+**Fix:** Implemented an `m_applicationIsQuitting` flag (using `Application.quitting` event) to abort Lazy Loading during shutdown.
 
 ```csharp
 private static bool m_applicationIsQuitting = false;
 
-public void OnDestroy() {
+protected virtual void OnEnable() {
+    Application.quitting -= OnApplicationQuitting;
+    Application.quitting += OnApplicationQuitting;
+}
+
+protected virtual void OnDisable() {
+    Application.quitting -= OnApplicationQuitting;
+}
+
+private void OnApplicationQuitting() {
     m_applicationIsQuitting = true;
 }
 
@@ -27,6 +36,17 @@ public static T Instance {
         // ... existing creation logic ...
     }
 }
+```
+
+### B. GameManager Safety Update
+
+**File:** `Assets/_Game/_Scripts/Common/GameManager.cs`
+**Issue:** `GameManager` unconditionally called `CollisionMatrixManager` during transitions, forcing Ghost creation.
+**Fix:** Added `FindObjectOfType` check to prevent access if the manager doesn't exist.
+
+```csharp
+if(Object.FindObjectOfType<CollisionMatrixManager>() != null)
+    CollisionMatrixManager.Instance.LoadPlayschoolData();
 ```
 
 ---
