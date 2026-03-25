@@ -7816,6 +7816,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1678296138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1678296140}
+  - component: {fileID: 1678296139}
+  m_Layer: 0
+  m_Name: PCommon
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1678296139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678296138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597d20f0c0f8afd4aaf6bce43258dd77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playschoolWinLosePanel: {fileID: 1195928650251805598, guid: 613c40221eaca4344a2fe753117f94bf,
+    type: 3}
+--- !u!4 &1678296140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678296138}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1710028032
 GameObject:
   m_ObjectHideFlags: 0
@@ -10197,6 +10243,11 @@ PrefabInstance:
       propertyPath: _length
       value: 2118.368
       objectReference: {fileID: 0}
+    - target: {fileID: 9205458354828183738, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10387,8 +10438,9 @@ SceneRoots:
   - {fileID: 2116294046}
   - {fileID: 1033244711}
   - {fileID: 864475556}
+  - {fileID: 3957112341757298856}
   - {fileID: 1062305889}
   - {fileID: 1533521854}
   - {fileID: 91489646852027126}
   - {fileID: 849273399}
-  - {fileID: 3957112341757298856}
+  - {fileID: 1678296140}

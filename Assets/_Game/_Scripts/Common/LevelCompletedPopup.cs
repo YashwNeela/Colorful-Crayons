@@ -62,18 +62,30 @@ public class LevelCompletedPopup : MonoBehaviour
 
     }
 
-    protected virtual void OnGameWin()
-    {
-        // SetData("Level Completed", Gamemanager.Instance.LoadNextLevel, "Next Level");
-        EnableRandomWinText();
-        ShowWinPopup();
+        protected virtual void OnGameWin()
+        {
+            //SetData("Level Completed",()=> 
+            //{
+            //    GameManager.Instance.LoadNextLevel(GameManager.Instance.levelNumber);
+            //} , "Next Level");
+
+            WinLosePanelScript.Instance.ShowNextLevelPopUp(() => 
+            {
+                SortingGameManager.Instance.LoadNextLevel(SortingLevelManager.Instance.CurrentLevelIndex + 1);
+            });
+       // EnableRandomWinText();
+         //   ShowWinPopup();
 
     }
 
     private void OnGameLoose()
     {
-        SetData("Oh no! Try Again!", GameManager.Instance.GameRestart, "Restart");
-        ShowLoosePopup();
+            WinLosePanelScript.Instance.ShowRetryPopUp(() =>
+            {
+                GameManager.Instance.GameRestart();
+            });
+       // SetData("Oh no! Try Again!", GameManager.Instance.GameRestart, "Restart");
+     //   ShowLoosePopup();
     }
 
     private void OnGameStart()
@@ -84,34 +96,40 @@ public class LevelCompletedPopup : MonoBehaviour
 
     void Start()
     {
+        PlayschoolCommon.Instance.SpawnplayschoolWinLosePanel();
         HidePopup();
     }
 
     private void ShowLoosePopup()
     {
+            //WinLosePanelScript.Instance.ShowRetryPopUp(() => 
+            //{
+            
+            //});
         m_WinContainer.SetActive(false);
         m_LooseContainer.SetActive(true);
     }
 
     private void ShowWinPopup()
     {
-        m_LooseContainer.SetActive(false);
-        m_WinContainer.SetActive(true);
+          //  WinLosePanelScript.Instance.ShowNextLevelPopUp(() => { });
+            m_LooseContainer.SetActive(false);
+            m_WinContainer.SetActive(true);
 
-        ParticleImage[] particleImages = m_WinContainer.GetComponentsInChildren<ParticleImage>();
+            ParticleImage[] particleImages = m_WinContainer.GetComponentsInChildren<ParticleImage>();
 
-        for (int i = 0; i < particleImages.Length; i++)
-        {
-            particleImages[i].Stop();
-            particleImages[i].Play();
+            for (int i = 0; i < particleImages.Length; i++)
+            {
+                particleImages[i].Stop();
+                particleImages[i].Play();
+            }
+
         }
-
-    }
 
     private void HidePopup()
     {
-        m_LooseContainer.SetActive(false);
-        m_WinContainer.SetActive(false);
+      //  m_LooseContainer.SetActive(false);
+      //  m_WinContainer.SetActive(false);
     }
 
     private void SetData(string levelCompletedText, Action levelCompletedButtonAction, string levelCompletedButtonText)
