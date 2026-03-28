@@ -3832,15 +3832,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 863460e4d05e14d49b73080bc75312e1, type: 2}
-    - {fileID: 11400000, guid: b2b69035f810b43ab866f47346f7fabf, type: 2}
-    - {fileID: 11400000, guid: 3cd6dd9e83fbb4cdb864a9b4867be7ef, type: 2}
-    - {fileID: 11400000, guid: 950a856eb2bc04eb5804d0b18821535f, type: 2}
-    - {fileID: 11400000, guid: 9d4a3017420bc4cebaddd10a3ba176b4, type: 2}
-    - {fileID: 11400000, guid: adae067a9658f48ac9f7cf5a930b71c4, type: 2}
-    - {fileID: 11400000, guid: d28f39d9967254db4ad5f476e42cd8e2, type: 2}
-    - {fileID: 11400000, guid: a2f100598f63b412fb2a762ffc8c634c, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -3873,8 +3865,8 @@ MonoBehaviour:
       Entry: 3
       Data: 1
     - Name: $v
-      Entry: 10
-      Data: 0
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3885,8 +3877,8 @@ MonoBehaviour:
       Entry: 3
       Data: 2
     - Name: $v
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3897,8 +3889,8 @@ MonoBehaviour:
       Entry: 3
       Data: 3
     - Name: $v
-      Entry: 10
-      Data: 2
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3909,8 +3901,8 @@ MonoBehaviour:
       Entry: 3
       Data: 4
     - Name: $v
-      Entry: 10
-      Data: 3
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3921,8 +3913,8 @@ MonoBehaviour:
       Entry: 3
       Data: 6
     - Name: $v
-      Entry: 10
-      Data: 4
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3933,8 +3925,8 @@ MonoBehaviour:
       Entry: 3
       Data: 5
     - Name: $v
-      Entry: 10
-      Data: 5
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3945,8 +3937,8 @@ MonoBehaviour:
       Entry: 3
       Data: 7
     - Name: $v
-      Entry: 10
-      Data: 6
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3957,8 +3949,8 @@ MonoBehaviour:
       Entry: 3
       Data: 8
     - Name: $v
-      Entry: 10
-      Data: 7
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3969,10 +3961,17 @@ MonoBehaviour:
       Entry: 8
       Data: 
   m_ShouldDestroyOnLoad: 1
-  m_CurretAudioLanguage: 7
+  m_CurretAudioLanguage: 1
   m_BackGroundAudioSource: {fileID: 491736923}
   m_SFXAudioSource: {fileID: 1484475687}
   m_ExtraAudioSource: {fileID: 1856180034}
+  _bgMusic: {fileID: 8300000, guid: 31c843ccf042346b9b7ac3ef0045f374, type: 3}
+  _correctMusic: {fileID: 0}
+  _incorrectMusic: {fileID: 8300000, guid: 57ab060f0725648a6b771d6f4b853640, type: 3}
+  wheelsAttachedSFX: {fileID: 8300000, guid: 41b9e29c9d26d461386db765a9fd2f3c, type: 3}
+  muscleCarAudioSFX: {fileID: 8300000, guid: adf2a3ff15b8c4cc48be5511b88d3852, type: 3}
+  normalCarAudioSFX: {fileID: 8300000, guid: fe7866498c35343f1b750e084023a569, type: 3}
+  sportsCarAudioSFX: {fileID: 8300000, guid: 20f275d153b4848e1a24d9f72dba9270, type: 3}
 --- !u!1 &841124215
 GameObject:
   m_ObjectHideFlags: 0
@@ -4638,6 +4637,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957601521}
   m_CullTransparentMesh: 1
+--- !u!1 &978930087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 978930089}
+  - component: {fileID: 978930088}
+  m_Layer: 0
+  m_Name: AudioMapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &978930088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978930087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da70fa58208f02643a73403e03f873ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShouldDestroyOnLoad: 1
+  GameStart: GameIntro
+  GameComplete: GameComplete
+  LevelIntro:
+  - LevelIntro1
+  - LevelIntro2
+  - LevelIntro3
+  - LevelIntro4
+  - LevelIntro5
+  LevelComplete:
+  - LevelComplete1
+  - LevelComplete2
+  - LevelComplete3
+  - LevelComplete4
+  - LevelComplete5
+  LevelFail:
+  - LevelFail1
+  - LevelFail2
+  - LevelFail3
+  - LevelFail4
+  - LevelFail5
+--- !u!4 &978930089
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978930087}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &999198197
 GameObject:
   m_ObjectHideFlags: 0
@@ -10433,6 +10497,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 978930089}
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 2116294046}

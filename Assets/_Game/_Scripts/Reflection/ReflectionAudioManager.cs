@@ -38,6 +38,7 @@ namespace TMKOC.Reflection
                 return;
 
             m_SFXAudioSource.clip = m_CurrentLocalizedAudio.intro[Random.Range(0, m_CurrentLocalizedAudio.intro.Count)];
+            //RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GameStart);
             m_SFXAudioSource.Play();
         }
 

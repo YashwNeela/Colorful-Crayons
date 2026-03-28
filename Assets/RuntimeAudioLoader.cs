@@ -33,9 +33,9 @@ public class RuntimeAudioLoader : MonoBehaviour
     //public string audiofolderName;
     Dictionary<string, AudioClip> audioDict = new Dictionary<string, AudioClip>();
     [SerializeField] private Language selectedLanguage;
-    [SerializeField] string CurentSelectedLanguage; 
-    [SerializeField] string CurrentCategoryName; 
-     
+    [SerializeField] string CurentSelectedLanguage;
+    [SerializeField] string CurrentCategoryName;
+
 
     void Awake()
     {
@@ -45,12 +45,12 @@ public class RuntimeAudioLoader : MonoBehaviour
             return;
         }
 
-    Instance = this;
-    DontDestroyOnLoad(gameObject);
-        
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
     }
 
-    public IEnumerator CategoryAudioDownlaodAndLoader(string currentCategory , bool isCommon = false) 
+    public IEnumerator CategoryAudioDownlaodAndLoader(string currentCategory, bool isCommon = false)
     {
         CurrentCategoryName = currentCategory;
         string langStr = PlayerPrefs.GetString("PlayschoolLanguageAudio");
@@ -65,29 +65,29 @@ public class RuntimeAudioLoader : MonoBehaviour
             selectedLanguage = Language.English;
         }
 
-         CurentSelectedLanguage =  selectedLanguage.ToString();
+        CurentSelectedLanguage = selectedLanguage.ToString();
         Debug.Log("Enum as String: " + CurentSelectedLanguage);
         yield return StartCoroutine(CheckDownloadExtract());
         StartCoroutine(LoadAllAudio(isCommon));
     }
 
-   void Start()
-   {
-      StartCoroutine(CategoryAudioDownlaodAndLoader("common",true));
+    void Start()
+    {
+        StartCoroutine(CategoryAudioDownlaodAndLoader("common", true));
 
-   }
-  
+    }
 
-       IEnumerator CheckDownloadExtract()
+
+    IEnumerator CheckDownloadExtract()
     {
         string bundleFolder = Path.Combine(Application.persistentDataPath, "AudioBundles");
-         string categoryFolder = Path.Combine(bundleFolder, CurrentCategoryName);
+        string categoryFolder = Path.Combine(bundleFolder, CurrentCategoryName);
 
         string zipPath = Path.Combine(categoryFolder, CurentSelectedLanguage + ".zip");
         string extractPath = Path.Combine(categoryFolder, CurentSelectedLanguage);
 
-       if (!Directory.Exists(bundleFolder))
-        Directory.CreateDirectory(bundleFolder);
+        if (!Directory.Exists(bundleFolder))
+            Directory.CreateDirectory(bundleFolder);
 
         if (!Directory.Exists(categoryFolder))
             Directory.CreateDirectory(categoryFolder);
@@ -98,7 +98,7 @@ public class RuntimeAudioLoader : MonoBehaviour
             {
                 yield return StartCoroutine(DownloadZip(zipPath));
 
-                 if (!File.Exists(zipPath))
+                if (!File.Exists(zipPath))
                 {
                     Debug.LogWarning("Zip not found on server for: " + CurentSelectedLanguage);
                     yield break;
@@ -115,13 +115,13 @@ public class RuntimeAudioLoader : MonoBehaviour
             {
                 Debug.LogWarning("Extraction failed: " + e.Message);
                 yield break;
-             }
+            }
         }
     }
 
-      IEnumerator DownloadZip(string savePath)
+    IEnumerator DownloadZip(string savePath)
     {
-        string url = $"https://playschool-audio.s3.ap-south-1.amazonaws.com/{CurrentCategoryName}/{CurentSelectedLanguage}.zip";
+        string url = $"https://d2r38fn3ydtrfq.cloudfront.net/{CurrentCategoryName}/{CurentSelectedLanguage}.zip";
 
         UnityWebRequest www = UnityWebRequest.Get(url);
 
@@ -139,16 +139,16 @@ public class RuntimeAudioLoader : MonoBehaviour
     {
 
         audioDict.Clear();
-          //string path = Path.Combine(Application.persistentDataPath, "AudioBundles", CurentSelectedLanguage);
+        //string path = Path.Combine(Application.persistentDataPath, "AudioBundles", CurentSelectedLanguage);
 
-         string path = Path.Combine(
-            Application.persistentDataPath,
-            "AudioBundles",
-            CurrentCategoryName,
-            CurentSelectedLanguage
-        );
+        string path = Path.Combine(
+           Application.persistentDataPath,
+           "AudioBundles",
+           CurrentCategoryName,
+           CurentSelectedLanguage
+       );
 
-         if (!Directory.Exists(path))
+        if (!Directory.Exists(path))
         {
             Debug.LogWarning("Audio folder missing: " + path);
             yield break;
@@ -161,28 +161,25 @@ public class RuntimeAudioLoader : MonoBehaviour
             Debug.LogError("Audio folder not found: " + path);
             yield break;
         }
-    
+
         string[] files = Directory.GetFiles(path, "*.mp3");
 
         foreach (string file in files)
         {
-            yield return LoadClip(file , isCommon);
+            yield return LoadClip(file, isCommon);
         }
     }
 
-    IEnumerator LoadClip(string filePath , bool isCommon)
+    IEnumerator LoadClip(string filePath, bool isCommon)
     {
         UnityWebRequest www =
             UnityWebRequestMultimedia.GetAudioClip("file://" + filePath, AudioType.MPEG);
-
+        yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.LogWarning("Clip load failed: " + filePath);
             yield break;
         }
-
-
-        yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -191,7 +188,7 @@ public class RuntimeAudioLoader : MonoBehaviour
         }
         AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
         string key = Path.GetFileNameWithoutExtension(filePath);
-        if(isCommon)
+        if (isCommon)
         {
             CommonaudioDict[key] = clip;
         }
@@ -199,7 +196,7 @@ public class RuntimeAudioLoader : MonoBehaviour
         {
             audioDict[key] = clip;
         }
-       
+
     }
 
     public float PlayRuntimeAudio(string key)
@@ -229,16 +226,16 @@ public class RuntimeAudioLoader : MonoBehaviour
         return null;
     }
 
-#region  CommonAudio
+    #region  CommonAudio
     //Common
     Dictionary<string, AudioClip> CommonaudioDict = new Dictionary<string, AudioClip>();
     public void PlayNumberClip(int number)
     {
 
         _commonAudioSource.Stop();
-        _commonAudioSource.PlayOneShot(GetCommonAudioClip(number.ToString()+".0"));
+        _commonAudioSource.PlayOneShot(GetCommonAudioClip(number.ToString() + ".0"));
     }
-    
+
     public void PlayAlphabetClip(string Alphabet)
     {
         _commonAudioSource.Stop();
@@ -248,7 +245,7 @@ public class RuntimeAudioLoader : MonoBehaviour
     {
 
         _commonAudioSource.Stop();
-        string randoms = "retry" + UnityEngine.Random.Range(1,7);
+        string randoms = "retry" + UnityEngine.Random.Range(1, 7);
         _commonAudioSource.PlayOneShot(GetCommonAudioClip(randoms));
     }
 
@@ -256,30 +253,30 @@ public class RuntimeAudioLoader : MonoBehaviour
     {
 
         _commonAudioSource.Stop();
-        string randoms = "nextlevel" + UnityEngine.Random.Range(1,7);
+        string randoms = "nextlevel" + UnityEngine.Random.Range(1, 7);
         _commonAudioSource.PlayOneShot(GetCommonAudioClip(randoms));
     }
 
-     public void PlaytimesupAudioClip()
+    public void PlaytimesupAudioClip()
     {
 
         _commonAudioSource.Stop();
-        string randoms = "timesup" + UnityEngine.Random.Range(1,7);
+        string randoms = "timesup" + UnityEngine.Random.Range(1, 7);
         _commonAudioSource.PlayOneShot(GetCommonAudioClip(randoms));
     }
     public void PlayCorrectAudioClip()
     {
 
         _commonAudioSource.Stop();
-        string randoms = "correct" + UnityEngine.Random.Range(1,7);
+        string randoms = "correct" + UnityEngine.Random.Range(1, 7);
         _commonAudioSource.PlayOneShot(GetCommonAudioClip(randoms));
     }
 
-     public void PlayIncorrectAudioClip()
+    public void PlayIncorrectAudioClip()
     {
 
         _commonAudioSource.Stop();
-        string randoms = "incorrect" + UnityEngine.Random.Range(1,7);
+        string randoms = "incorrect" + UnityEngine.Random.Range(1, 7);
         _commonAudioSource.PlayOneShot(GetCommonAudioClip(randoms));
     }
 

@@ -151,7 +151,7 @@ namespace TMKOC.Sorting.CarSorting
             //     PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).wheelsAttached,CarSortingAudioManager.Instance.SFXAudioSource);
             // }
             CarSortingAudioManager.Instance.
-                PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).wheelsAttached,CarSortingAudioManager.Instance.SFXAudioSource);
+                PlayAudio((CarSortingAudioManager.Instance as CarSortingAudioManager).wheelsAttachedSFX, CarSortingAudioManager.Instance.SFXAudioSource);
             
         }
 

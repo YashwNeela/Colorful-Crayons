@@ -23,26 +23,35 @@ namespace TMKOC.Sorting
 
         public override void PlayLevelStartSfx(bool overridePreviousClips = false)
         {
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.LevelIntro[LevelManager.Instance.CurrentLevelIndex]);
         }
 
         public override void PlayLevelFailSfx(bool overridePreviousClips = false)
         {
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[LevelManager.Instance.CurrentLevelIndex];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[LevelManager.Instance.CurrentLevelIndex];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.LevelFail[LevelManager.Instance.CurrentLevelIndex]);
         }
 
         public override void PlayGameCompleteSfx(bool overridePreviousClips = false)
         {
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.gameComplete[Random.Range(0, m_CurrentLocalizedAudio.gameComplete.Count)];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.gameComplete[Random.Range(0, m_CurrentLocalizedAudio.gameComplete.Count)];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GameComplete);
+
         }
 
         public override void PlayLevelCompleteSfx(bool overridePreviousClips = false)
         {
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[LevelManager.Instance.CurrentLevelIndex];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[LevelManager.Instance.CurrentLevelIndex];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.LevelComplete[LevelManager.Instance.CurrentLevelIndex]);
         }
 
     }

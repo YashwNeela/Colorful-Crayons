@@ -39,6 +39,8 @@ namespace TMKOC
 
         public AudioSource ExtraAudioSource => m_ExtraAudioSource;
 
+        public AudioClip _bgMusic;
+
         #endregion
 
         protected override void Awake()
@@ -87,7 +89,7 @@ namespace TMKOC
         }
         protected virtual void SetAudioLanguage(AudioLanguage audioLanguage)
         {
-            if(audioLanguage == AudioLanguage.None)
+            if (audioLanguage == AudioLanguage.None)
                 return;
             m_CurretAudioLanguage = audioLanguage;
             m_CurrentLocalizedAudio = audioSO[audioLanguage];
@@ -98,7 +100,12 @@ namespace TMKOC
         {
             m_BackGroundAudioSource.loop = looping;
 
-            m_BackGroundAudioSource.clip = m_CurrentLocalizedAudio.background[Random.Range(0, m_CurrentLocalizedAudio.background.Count)];
+            //m_BackGroundAudioSource.clip = m_CurrentLocalizedAudio.background[Random.Range(0, m_CurrentLocalizedAudio.background.Count)];
+
+            if (_bgMusic != null)
+            {
+                m_BackGroundAudioSource.clip = _bgMusic;
+            }
 
             m_BackGroundAudioSource.Play();
         }
@@ -133,7 +140,7 @@ namespace TMKOC
                 return;
 
             //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.intro[Random.Range(0, m_CurrentLocalizedAudio.intro.Count)];
-          //  m_SFXAudioSource.Play();
+            //  m_SFXAudioSource.Play();
         }
 
         protected virtual void OnGameStart()
@@ -146,11 +153,15 @@ namespace TMKOC
             if (m_SFXAudioSource.isPlaying)
                 return;
 
-            //if (Random.Range(0f, 1f) < 0.5f)
-            //{
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
-            m_SFXAudioSource.Play();
-            //}
+            if (Random.Range(0f, 1f) < 0.5f)
+            {
+
+                //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
+                //m_SFXAudioSource.Play();
+
+                RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.LevelIntro[LevelManager.Instance.CurrentLevelIndex]);
+            }
+
         }
 
         protected virtual void OnGameLoose()
@@ -165,8 +176,10 @@ namespace TMKOC
             else if (overridePreviousClips && m_SFXAudioSource.isPlaying)
                 m_SFXAudioSource.Stop();
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[LevelManager.Instance.CurrentLevelIndex];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[LevelManager.Instance.CurrentLevelIndex];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.LevelFail[LevelManager.Instance.CurrentLevelIndex]);
         }
 
         protected virtual void OnGameCompleted()
@@ -187,8 +200,10 @@ namespace TMKOC
             else if (overridePreviousClips && m_SFXAudioSource.isPlaying)
                 m_SFXAudioSource.Stop();
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.gameComplete[Random.Range(0, m_CurrentLocalizedAudio.gameComplete.Count)];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.gameComplete[Random.Range(0, m_CurrentLocalizedAudio.gameComplete.Count)];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GameComplete);
         }
 
         public virtual void PlayLevelCompleteSfx(bool overridePreviousClips = false)
@@ -199,8 +214,11 @@ namespace TMKOC
                 m_SFXAudioSource.Stop();
 
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[LevelManager.Instance.CurrentLevelIndex];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelComplete[LevelManager.Instance.CurrentLevelIndex];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.LevelComplete[LevelManager.Instance.CurrentLevelIndex]);
+
         }
 
         public virtual void PlayLevelRetrySfx(bool overridePreviousClips = false)

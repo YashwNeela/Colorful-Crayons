@@ -3927,6 +3927,80 @@ MonoBehaviour:
   m_CustomCollectible: {fileID: 0}
   m_CurrentCollectible: {fileID: 0}
   m_FruitType: 131036
+--- !u!1 &247938262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 247938264}
+  - component: {fileID: 247938263}
+  m_Layer: 0
+  m_Name: AudioMapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &247938263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247938262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da70fa58208f02643a73403e03f873ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShouldDestroyOnLoad: 1
+  GameStart: GameIntro
+  GameComplete: GameComplete
+  LevelIntro:
+  - LevelIntro1
+  - LevelIntro2
+  - LevelIntro3
+  - LevelIntro4
+  - LevelIntro5
+  - LevelIntro6
+  - LevelIntro7
+  - LevelIntro8
+  LevelComplete:
+  - LevelComplete1
+  - LevelComplete2
+  - LevelComplete3
+  - LevelComplete4
+  - LevelComplete5
+  - LevelComplete6
+  - LevelComplete7
+  - LevelComplete8
+  LevelFail:
+  - LevelFail1
+  - LevelFail2
+  - LevelFail3
+  - LevelFail4
+  - LevelFail5
+  - LevelFail6
+  - LevelFail7
+  - LevelFail8
+--- !u!4 &247938264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247938262}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &276099998
 GameObject:
   m_ObjectHideFlags: 0
@@ -16677,14 +16751,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: f02532ed4b4f1a848ab53a71acc41a94, type: 2}
-    - {fileID: 11400000, guid: a3679d3ac3b72f4438a2863c0794fe18, type: 2}
-    - {fileID: 11400000, guid: 10f8e900c9aff4e5c8bb6b3c51e09f37, type: 2}
-    - {fileID: 11400000, guid: 06ca35bc91acb49608632ea471299cb3, type: 2}
-    - {fileID: 11400000, guid: 8a9a1c4c33b764e54a6abb968abbcc19, type: 2}
-    - {fileID: 11400000, guid: b308fe7005b9f412eaad13ac18a0b6e5, type: 2}
-    - {fileID: 11400000, guid: e682347f97b4c44919d659a76335ad5b, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -16717,8 +16784,8 @@ MonoBehaviour:
       Entry: 3
       Data: 1
     - Name: $v
-      Entry: 10
-      Data: 0
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -16729,8 +16796,8 @@ MonoBehaviour:
       Entry: 3
       Data: 2
     - Name: $v
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -16741,8 +16808,8 @@ MonoBehaviour:
       Entry: 3
       Data: 3
     - Name: $v
-      Entry: 10
-      Data: 2
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -16753,8 +16820,8 @@ MonoBehaviour:
       Entry: 3
       Data: 6
     - Name: $v
-      Entry: 10
-      Data: 3
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -16765,8 +16832,8 @@ MonoBehaviour:
       Entry: 3
       Data: 5
     - Name: $v
-      Entry: 10
-      Data: 4
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -16777,8 +16844,8 @@ MonoBehaviour:
       Entry: 3
       Data: 7
     - Name: $v
-      Entry: 10
-      Data: 5
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -16789,8 +16856,8 @@ MonoBehaviour:
       Entry: 3
       Data: 8
     - Name: $v
-      Entry: 10
-      Data: 6
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -16801,10 +16868,13 @@ MonoBehaviour:
       Entry: 8
       Data: 
   m_ShouldDestroyOnLoad: 1
-  m_CurretAudioLanguage: 2
+  m_CurretAudioLanguage: 1
   m_BackGroundAudioSource: {fileID: 1308434590}
   m_SFXAudioSource: {fileID: 1745853780}
   m_ExtraAudioSource: {fileID: 22291312}
+  _bgMusic: {fileID: 0}
+  _correctMusic: {fileID: 0}
+  _incorrectMusic: {fileID: 0}
 --- !u!1 &1390909298
 GameObject:
   m_ObjectHideFlags: 0
@@ -17569,6 +17639,21 @@ PrefabInstance:
       propertyPath: m_LevelFailUI
       value: 
       objectReference: {fileID: 1452001103}
+    - target: {fileID: 1442550951322343423, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442550951322343423, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442550951322343423, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 1682900415086571774, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_CheckButton
@@ -17578,6 +17663,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823944270263258009, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 2823944270263258009, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+    - target: {fileID: 2924500566247323949, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924500566247323949, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924500566247323949, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924500566247323949, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 3413372517818399826, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -17758,6 +17869,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115055082634875866, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115055082634875866, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7371049726981865527, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
@@ -26407,13 +26528,28 @@ PrefabInstance:
     - target: {fileID: 1918340597596438356, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -16.000004
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 2743982807592997576, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 3382803010670687905, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298570840252148721, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298570840252148721, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6716573221172225749, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
         type: 3}
       propertyPath: m_Pivot.x
@@ -26525,6 +26661,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7591038236117835668, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
         type: 3}
+    - target: {fileID: 8044642367356680003, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044642367356680003, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044642367356680003, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28266,6 +28417,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 247938264}
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 2116294046}
