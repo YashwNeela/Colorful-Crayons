@@ -13,14 +13,15 @@ namespace TMKOC.Reflection
             //StartIntroCutScene();
             PlaySplashScreen();
 
+            HelperGameCategoryDataSaver.Init(LevelManager.Instance.MaxLevels); // Add The Max level
         }
         public override void FirstTimeGameStart()
         {
             m_CurrentGameState = GameState.FirstTimeGameStart;
-            #if PLAYSCHOOL_MAIN
+#if PLAYSCHOOL_MAIN
              // assign varaible in this to get the  game ID from main app
               GAMEID =  PlayerPrefs.GetInt("currentGameId");
-            #endif
+#endif
 
 
             //m_CatergoryDataManager = new GameCategoryDataManager(GAMEID, PlayerPrefs.GetString("currentGameName"));
@@ -29,6 +30,7 @@ namespace TMKOC.Reflection
             if (!testLevel)
             {
                 //levelNumber = m_CatergoryDataManager.GetCompletedLevel;
+                levelNumber = HelperGameCategoryDataSaver.GetStartLevel(); // Get Current Level
                 if (levelNumber == LevelManager.Instance.MaxLevels)
                     levelNumber = 0;
             }
@@ -36,9 +38,10 @@ namespace TMKOC.Reflection
                 levelNumber = levelNumber;
 
 
+
             OnFirstTimeGameStartAction?.Invoke();
             GameStart(levelNumber);
-            
+
         }
 
         public override void StartIntroCutScene()
@@ -63,9 +66,9 @@ namespace TMKOC.Reflection
             CinematicCutSceneManager.Instance.StartCutScene(2, () =>
             {
                 Debug.Log("outro Cut scene ended");
-                
 
-                
+
+
             });
         }
 

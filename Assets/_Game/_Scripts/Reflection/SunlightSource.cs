@@ -68,7 +68,12 @@ namespace TMKOC.Reflection
             
         }
 
-       
+        private void OnDestroy()
+        {
+            Physics2D.queriesStartInColliders = true;
+
+        }
+
 
         private void OnDisable()
         {

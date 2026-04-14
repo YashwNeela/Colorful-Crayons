@@ -51,7 +51,8 @@ namespace TMKOC.Reflection
             transform.DOComplete();
             ReflectionAudioManager.Instance.PlayAudio(
                (ReflectionAudioManager.Instance as ReflectionAudioManager).ReflectionAudioSfx.m_FragmentCollected,
-               ReflectionAudioManager.Instance.ExtraAudioSource,false,true);
+               ReflectionAudioManager.Instance.ExtraAudioSource, false, true);
+
 
             transform.DOScale(transform.localScale * 1.1f, 0.5f)
             .OnComplete(()=>

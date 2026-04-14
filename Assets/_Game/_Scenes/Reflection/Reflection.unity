@@ -16892,7 +16892,7 @@ Transform:
   m_GameObject: {fileID: 103508005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.70710677, z: 0.70710677, w: 0}
-  m_LocalPosition: {x: 44.60513, y: -1, z: -1.42}
+  m_LocalPosition: {x: 44.32079, y: -1, z: -1.42}
   m_LocalScale: {x: 9.3, y: 0.93, z: 0.93}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -44907,7 +44907,7 @@ Transform:
   m_GameObject: {fileID: 231804095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.0360992, y: 0.19999999, z: -2}
+  m_LocalPosition: {x: -4.457776, y: 0.19999999, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -89693,7 +89693,7 @@ Transform:
   m_GameObject: {fileID: 571506882}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.70710677, z: 0.70710677, w: 0}
-  m_LocalPosition: {x: 96.09986, y: -2.7, z: 11.1}
+  m_LocalPosition: {x: 95.38902, y: -2.7, z: 11.1}
   m_LocalScale: {x: 40, y: 2.384, z: 2.384}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -89930,7 +89930,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -36, y: -10}
+  m_AnchoredPosition: {x: -36, y: -20}
   m_SizeDelta: {x: 256, y: 256}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &615761657
@@ -90071,15 +90071,15 @@ RectTransform:
   m_GameObject: {fileID: 664754746}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 730811280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -28, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: -175, y: 0}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &664754748
 MonoBehaviour:
@@ -90145,7 +90145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 599c86ef18a6b4477807296cc0949ffe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6739532354aeb44b0a0b111ad72bda91, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -147520,6 +147520,7 @@ MonoBehaviour:
     tutorialId: 1
     tutorialSteps:
     - type: 1
+      stepId: 0
       stepTitle: Movement
       description: 'Use these arrows to move the frog forward or backward.
 
@@ -147554,6 +147555,7 @@ MonoBehaviour:
     tutorialId: 2
     tutorialSteps:
     - type: 1
+      stepId: 0
       stepTitle: Jump
       description: 'Press this button to make the frog jump!
 
@@ -147587,6 +147589,7 @@ MonoBehaviour:
     tutorialId: 3
     tutorialSteps:
     - type: 0
+      stepId: 0
       stepTitle: Sun
       description: This is a light source. It emits light, which helps us see in
         the dark. Without light, everything would be dark and invisible!
@@ -147618,6 +147621,7 @@ MonoBehaviour:
       requiresEvent: 1
       eventName: event_sun_info
     - type: 0
+      stepId: 0
       stepTitle: Mirror
       description: These are mirrors! They reflect light by bouncing it in a different
         direction.
@@ -147646,6 +147650,7 @@ MonoBehaviour:
       requiresEvent: 1
       eventName: event_mirror_info
     - type: 1
+      stepId: 0
       stepTitle: Mirror Rotation
       description: Use these sliders to adjust the mirrors. Move them to reflect
         the light onto the gems to complete the level!
@@ -147675,6 +147680,7 @@ MonoBehaviour:
       requiresEvent: 0
       eventName: 
     - type: 0
+      stepId: 0
       stepTitle: Fragment Collector
       description: "Collect the gems to complete each level! The jungle needs your
         help let\u2019s light it up and save the day!"
@@ -147706,6 +147712,7 @@ MonoBehaviour:
       requiresEvent: 1
       eventName: event_fragmentCollector_info
     - type: 1
+      stepId: 0
       stepTitle: Fragments To Collect
       description: Collect four unique fragments and save the jungle
       imageSprite: {fileID: 0}
@@ -147736,6 +147743,7 @@ MonoBehaviour:
     tutorialId: 4
     tutorialSteps:
     - type: 0
+      stepId: 0
       stepTitle: Fragments
       description: Make sure sunlight passes through these fragments
       imageSprite: {fileID: 21300000, guid: 6d4eb2dfbcf9b420082dcef60b6ed77c, type: 3}
@@ -159744,10 +159752,10 @@ MonoBehaviour:
         z: 9.711589
       Rotation:
         value:
-          x: -0.109191395
-          y: 0.69862527
-          z: -0.22271562
-          w: -0.6711167
+          x: -0.1091914
+          y: 0.6986253
+          z: -0.22271563
+          w: -0.67111677
     - Position:
         x: 11.35
         y: -2.4
@@ -184158,7 +184166,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1349538195
 MonoBehaviour:
@@ -188148,6 +188156,81 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!1 &1452562765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1452562767}
+  - component: {fileID: 1452562766}
+  m_Layer: 0
+  m_Name: AudioMapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1452562766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452562765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da70fa58208f02643a73403e03f873ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShouldDestroyOnLoad: 1
+  GameStart: GameIntro
+  GameComplete: GameComplete
+  LevelIntro:
+  - LevelIntro1
+  - LevelIntro2
+  - LevelIntro3
+  - LevelIntro4
+  - LevelIntro5
+  LevelComplete: []
+  LevelFail:
+  - LevelFail1
+  - LevelFail2
+  - LevelFail3
+  - LevelFail4
+  TutorialAudio:
+  - TutorialAudio1
+  - TutorialAudio2
+  - TutorialAudio3
+  - TutorialAudio4
+  - TutorialAudio5
+  - TutorialAudio6
+  - TutorialAudio7
+  - TutorialAudio8
+  GemCollection:
+  - GemCollection1
+  - GemCollection2
+  - GemCollection3
+  - GemCollection4
+  - GemCollection5
+  - GemCollection6
+--- !u!4 &1452562767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452562765}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455977731
 GameObject:
   m_ObjectHideFlags: 0
@@ -259277,6 +259360,7 @@ MonoBehaviour:
   m_BackGroundAudioSource: {fileID: 5528243409744988415}
   m_SFXAudioSource: {fileID: 642901768563265835}
   m_ExtraAudioSource: {fileID: 1214396517135411677}
+  _bgMusic: {fileID: 8300000, guid: 7a2af40fda8f247b39129ca6d7adf366, type: 3}
   m_ReflectionAudioSfx: {fileID: 11400000, guid: 6dc9bb5cbfa814b1cbee89e372eb8043,
     type: 2}
 --- !u!1001 &1979362959
@@ -265301,7 +265385,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 50.00001, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1988138454
 MonoBehaviour:
@@ -303671,7 +303755,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8a87bad4fa9264ed9b08c1d84b4e1957,
+      objectReference: {fileID: 21300000, guid: c92a5d6f05f1a3443a87de4dbc177517,
         type: 3}
     - target: {fileID: 9112957903062235229, guid: 8690c3645c67043c6910929d4b5e9c90,
         type: 3}
@@ -303800,11 +303884,88 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas-Tutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 1342668865161401630, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6739532354aeb44b0a0b111ad72bda91,
+        type: 3}
+    - target: {fileID: 4614849377732936921, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176240448293811090, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 827129935bb9a3149a50ed58eddefa12,
+        type: 3}
+    - target: {fileID: 6176240448293811090, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.85098046
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176240448293811090, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.85098046
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176240448293811090, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.85098046
+      objectReference: {fileID: 0}
+    - target: {fileID: 6539634214169921747, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529152297132924286, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529152297132924286, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
     - target: {fileID: 7703688665660035988, guid: d2c1f7aa68dea41768677ddcb8433eb5,
         type: 3}
       propertyPath: 'interactableGraphicRaycasters.Array.data[0]'
       value: 
       objectReference: {fileID: 1430881189}
+    - target: {fileID: 8107356607376513953, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107356607376513953, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107356607376513953, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107356607376513953, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107356607376513953, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107356607376513953, guid: d2c1f7aa68dea41768677ddcb8433eb5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -303943,3 +304104,4 @@ SceneRoots:
   - {fileID: 247551772}
   - {fileID: 183750624}
   - {fileID: 1054727982}
+  - {fileID: 1452562767}

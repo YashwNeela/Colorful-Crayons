@@ -108,10 +108,13 @@ namespace TMKOC.Reflection
                         null, () =>
                         {
                             GemsUI.Instance.OnGemCollected(m_FragmentType);
-                            ReflectionAudioManager audioManager = ReflectionAudioManager.Instance as ReflectionAudioManager;
-                            ReflectionAudioLocalizationSO reflectionAudioLocalizationSO = audioManager.CurrentLocalizedAudio as ReflectionAudioLocalizationSO;
+                            //ReflectionAudioManager audioManager = ReflectionAudioManager.Instance as ReflectionAudioManager;
+                            //ReflectionAudioLocalizationSO reflectionAudioLocalizationSO = audioManager.CurrentLocalizedAudio as ReflectionAudioLocalizationSO;
 
-                            audioManager.PlayAudio(reflectionAudioLocalizationSO.gemCollection[UnityEngine.Random.Range(0, reflectionAudioLocalizationSO.gemCollection.Count)], audioManager.ExtraAudioSource, true);
+                            //audioManager.PlayAudio(reflectionAudioLocalizationSO.gemCollection[UnityEngine.Random.Range(0, reflectionAudioLocalizationSO.gemCollection.Count)], audioManager.ExtraAudioSource, true);
+
+                            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GetRandomGemCollection());
+
                         });
                         }
 

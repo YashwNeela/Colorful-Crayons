@@ -248,7 +248,8 @@ namespace TMKOC
             UnityEngine.Debug.Log("Go back to playschool");
 #endif
             // {
-            //     LoadSceneToMainMenu();
+            //LoadSceneToMainMenu(); 
+            UnityEngine.SceneManagement.SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
             // });
         }
 

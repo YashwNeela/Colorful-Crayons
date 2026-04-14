@@ -8,6 +8,19 @@ namespace TMKOC
 
         public string[] LevelIntro, LevelComplete, LevelFail;
 
+        public string[] TutorialAudio, GemCollection;
+
+
+        public string GetRandomGemCollection() => GemCollection[Random.Range(0, GemCollection.Length - 1)];
+
+        public string GetLevelIntro(int level)
+        {
+            return LevelIntro[level];
+        }
+
+        public string GetRandomLevelFail() => LevelFail[Random.Range(0, LevelFail.Length - 1)];
+
+        public string GetTutorialAudio(int level) => TutorialAudio[level];
     }
 
 }

@@ -14,8 +14,8 @@ namespace TMKOC
         //Level start, retry and Right answer nnot using
 
 
-         public AudioLanguage audioLanguage;
+        public AudioLanguage audioLanguage;
 
-        public List<AudioClip> intro, background,levelStart, levelComplete, levelFail,levelIntro, gameComplete, retry, rightAnswer, wrongAnswer;
+        public List<AudioClip> intro, background, levelStart, levelComplete, levelFail, levelIntro, gameComplete, retry, rightAnswer, wrongAnswer;
     }
 }

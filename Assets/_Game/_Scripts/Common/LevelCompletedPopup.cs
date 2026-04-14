@@ -84,9 +84,12 @@ public class LevelCompletedPopup : MonoBehaviour
             {
                 GameManager.Instance.GameRestart();
             });
-       // SetData("Oh no! Try Again!", GameManager.Instance.GameRestart, "Restart");
-     //   ShowLoosePopup();
-    }
+
+            HelperGameCategoryDataSaver.AddAttempt();
+
+            // SetData("Oh no! Try Again!", GameManager.Instance.GameRestart, "Restart");
+            //   ShowLoosePopup();
+        }
 
     private void OnGameStart()
     {

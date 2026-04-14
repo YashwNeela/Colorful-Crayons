@@ -34,6 +34,7 @@ namespace TMKOC
         {
             levels[currentLevelIndex].gameObject.SetActive(false);
 
+            Debug.Log("Level incrementing here");
 
             // Increment level index
             currentLevelIndex++;
@@ -86,6 +87,8 @@ namespace TMKOC
             if(currentLevelIndex < MaxLevels-1)
             {
                 LoadLevel(currentLevelIndex + 1);
+                Debug.Log("Level incrementing here");
+
             }
         }
 

@@ -18,11 +18,12 @@ namespace TMKOC.Reflection
         private void OnSplashScreen()
         {
             PlayIntroSfx();
+
         }
 
         protected override void OnFirstTimeGameStart()
         {
-           // SetAudioLanguage(AudioLanguage.English);
+            // SetAudioLanguage(AudioLanguage.English);
         }
 
         protected override void OnDisable()
@@ -34,12 +35,15 @@ namespace TMKOC.Reflection
 
         public override void PlayIntroSfx(bool overridePreviousClips = false)
         {
-            if (m_SFXAudioSource.isPlaying)
-                return;
+            Debug.Log($"Playing Audio from RAM");
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.intro[Random.Range(0, m_CurrentLocalizedAudio.intro.Count)];
-            //RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GameStart);
-            m_SFXAudioSource.Play();
+            //if (m_SFXAudioSource.isPlaying)
+            //    return;
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.intro[Random.Range(0, m_CurrentLocalizedAudio.intro.Count)];
+            //m_SFXAudioSource.Play();
+
+            if (!RuntimeAudioLoader.Instance._commonAudioSource.isPlaying)
+                RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GameStart);
         }
 
         public override void PlayLevelStartSfx(bool overridePreviousClips = false)
@@ -59,8 +63,10 @@ namespace TMKOC.Reflection
             else if (overridePreviousClips && m_SFXAudioSource.isPlaying)
                 m_SFXAudioSource.Stop();
 
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[Random.Range(0, m_CurrentLocalizedAudio.levelFail.Count)];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[Random.Range(0, m_CurrentLocalizedAudio.levelFail.Count)];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GetRandomLevelFail());
         }
     }
 }
