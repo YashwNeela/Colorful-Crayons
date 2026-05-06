@@ -238,9 +238,11 @@ namespace TMKOC
         public virtual void GoBackToPlayschool()
         {
 
+
+            
 #if PLAYSCHOOL_MAIN
          UnityEngine.SceneManagement.SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
-            CollisionMatrixManager.Instance.LoadPlayschoolData();
+          //  CollisionMatrixManager.Instance.LoadPlayschoolData();
         
 
             // dataManager.SendData(()=>
