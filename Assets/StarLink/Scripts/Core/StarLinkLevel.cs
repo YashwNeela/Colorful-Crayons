@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMKOC;
+using Sirenix.OdinInspector;
 
 namespace TMKOC.StarLink
 {
@@ -9,9 +10,11 @@ namespace TMKOC.StarLink
     {
         [Header("Star-Link Settings")]
         public List<Star> starSequence; // The sequence of stars the comet needs to hit
-        public SpriteRenderer constellationArt; // The artwork to reveal at the end
+
         
         private int currentTargetIndex = 1; // 0 is the starting star, 1 is the first target
+
+        public Sprite constellationImage;
 
         protected override void Awake()
         {
@@ -28,16 +31,11 @@ namespace TMKOC.StarLink
         {
             currentTargetIndex = 1;
             
-            if (constellationArt != null)
-            {
-                // Hide constellation art initially
-                Color c = constellationArt.color;
-                c.a = 0f;
-                constellationArt.color = c;
-            }
+            
 
             if (starSequence != null && starSequence.Count > 0)
             {
+                LineDrawer.Instance.DrawDottedLine(starSequence[0].transform.position, starSequence[1].transform.position);
                 // Setup the initial state
                 starSequence[0].SetAsActive(true);
                 
@@ -48,38 +46,48 @@ namespace TMKOC.StarLink
             }
         }
 
-        public virtual void OnStarHit(Star hitStar)
+      public virtual void OnStarHit(Star hitStar)
+{
+    if (currentTargetIndex >= starSequence.Count) return;
+
+    if (hitStar == starSequence[currentTargetIndex])
+    {
+        hitStar.SetAsTarget(false);
+        hitStar.SetAsActive(true);
+
+        int previousIndex = currentTargetIndex - 1;
+
+        if (previousIndex >= 0)
         {
-            if (currentTargetIndex >= starSequence.Count) return;
+            starSequence[previousIndex].SetAsActive(false);
 
-            // Check if the hit star is the target star
-            if (hitStar == starSequence[currentTargetIndex])
-            {
-                // Correct star hit!
-                hitStar.SetAsTarget(false);
-                hitStar.SetAsActive(true);
-                
-                // Previous star is no longer active
-                starSequence[currentTargetIndex - 1].SetAsActive(false);
-
-                currentTargetIndex++;
-
-                if (currentTargetIndex < starSequence.Count)
-                {
-                    // Set next target
-                    starSequence[currentTargetIndex].SetAsTarget(true);
-                }
-                else
-                {
-                    // Level Completed! All stars hit.
-                    OnConstellationComplete();
-                }
-            }
-            else
-            {
-                // Wrong star hit (optional behavior: maybe ignore or reset)
-            }
+            LineDrawer.Instance.DrawHighlightedLine(
+                starSequence[previousIndex].transform.position,
+                starSequence[currentTargetIndex].transform.position
+            );
         }
+
+        currentTargetIndex++;
+
+        if (currentTargetIndex < starSequence.Count)
+        {
+            LineDrawer.Instance.DrawDottedLine(
+                starSequence[currentTargetIndex - 1].transform.position,
+                starSequence[currentTargetIndex].transform.position
+            );
+
+            starSequence[currentTargetIndex].SetAsTarget(true);
+        }
+        else
+        {
+            OnConstellationComplete();
+        }
+    }
+    else
+    {
+        // Wrong star hit
+    }
+}
 
         public virtual void OnCometMissed()
         {
@@ -92,10 +100,12 @@ namespace TMKOC.StarLink
             }
         }
 
+        [Button]
         protected virtual void OnConstellationComplete()
         {
+            Debug.Log("On Constellation Completed");
             // Reveal the art and win the game
-            if (constellationArt != null)
+            if (constellationImage != null)
             {
                 StartCoroutine(RevealArtCoroutine());
             }
@@ -107,23 +117,15 @@ namespace TMKOC.StarLink
 
         private IEnumerator RevealArtCoroutine()
         {
-            // Simple fade in
-            float duration = 1.5f;
-            float elapsed = 0f;
-            Color c = constellationArt.color;
+           
+            
 
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                c.a = Mathf.Lerp(0f, 1f, elapsed / duration);
-                constellationArt.color = c;
-                yield return null;
-            }
 
-            c.a = 1f;
-            constellationArt.color = c;
+     
 
             yield return new WaitForSeconds(1f); // Wait a bit before showing win screen
+
+            StarlinkUI.Instance.Show(constellationImage);
 
             GameManager.Instance.GameWin();
         }

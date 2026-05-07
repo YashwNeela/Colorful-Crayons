@@ -25,6 +25,7 @@ namespace TMKOC.StarLink
             rb.isKinematic = true; // We control movement manually
         }
 
+    
         private void Start()
         {
             if (currentStar != null)
@@ -35,7 +36,7 @@ namespace TMKOC.StarLink
 
         private void Update()
         {
-            if (isOrbiting)
+            if (isOrbiting && StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
             {
                 HandleOrbiting();
 
