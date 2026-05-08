@@ -8,6 +8,8 @@ public class StarlinkUI : SerializedSingleton<StarlinkUI>
 {
     public GameObject Container;
 
+    public GameObject HUDUI;
+
     public Image image;
 
     public Button nextButton;
@@ -24,12 +26,15 @@ public class StarlinkUI : SerializedSingleton<StarlinkUI>
 
     public void Show(Sprite img)
         {
+            HUDUI.SetActive(false);
             image.sprite = img;
             Container.SetActive(true);
         }
 
         public void Hide()
         {
+            HUDUI.SetActive(true);
+
             Container.SetActive(false);
             
         }
