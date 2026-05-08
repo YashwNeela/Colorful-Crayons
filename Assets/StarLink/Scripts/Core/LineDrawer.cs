@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace TMKOC.StarLink
@@ -24,6 +25,22 @@ namespace TMKOC.StarLink
             SetupLineRendererHighlighted();
         }
 
+        private void OnEnable() 
+        {
+            StarLinkGameManager.OnGameStart += OnGameStart;    
+        }
+
+        private void OnGameStart()
+        {
+            ClearAllLines();
+        }
+
+        void OnDisable()
+        {
+            StarLinkGameManager.OnGameStart -= OnGameStart;    
+            
+        }
+
         private void SetupLineRendererDotted()
         {
             if (lineRendererDotted == null)
@@ -40,7 +57,7 @@ namespace TMKOC.StarLink
             lineRendererDotted.startColor = dottedLineColor;
             lineRendererDotted.endColor = dottedLineColor;
 
-            lineRendererDotted.material = new Material(Shader.Find("Sprites/Default"));
+           // lineRendererDotted.material = new Material(Shader.Find("Sprites/Default"));
 
             lineRendererDotted.enabled = false;
         }

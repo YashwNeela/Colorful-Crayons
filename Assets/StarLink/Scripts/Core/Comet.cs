@@ -15,6 +15,8 @@ namespace TMKOC.StarLink
         private bool isOrbiting = false;
         private float currentAngle = 0f; // Angle in degrees
 
+        public TrailRenderer trailRenderer;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -50,6 +52,12 @@ namespace TMKOC.StarLink
 
         public void AttachToStar(Star star)
         {
+               StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0.5f,()=>
+               {
+                   trailRenderer.emitting = true;
+               })) ;
+                
+
             currentStar = star;
             isOrbiting = true;
             rb.linearVelocity = Vector2.zero; // Stop any existing movement
@@ -145,6 +153,7 @@ namespace TMKOC.StarLink
             if (!isOrbiting)
             {
                 // Comet flew off screen
+                trailRenderer.emitting = false;
                 StarLinkLevel currentLevel = FindObjectOfType<StarLinkLevel>();
                 if (currentLevel != null)
                 {
@@ -154,7 +163,10 @@ namespace TMKOC.StarLink
                 // Reset to current active star
                 if (currentStar != null)
                 {
-                    AttachToStar(currentStar);
+                  StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>
+                  {
+                      AttachToStar(currentStar);
+                  }))  ;
                 }
             }
         }

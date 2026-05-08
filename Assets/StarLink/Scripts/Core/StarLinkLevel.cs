@@ -59,7 +59,7 @@ namespace TMKOC.StarLink
 
         if (previousIndex >= 0)
         {
-            starSequence[previousIndex].SetAsActive(false);
+            starSequence[previousIndex].SetAsActive(true);
 
             LineDrawer.Instance.DrawHighlightedLine(
                 starSequence[previousIndex].transform.position,

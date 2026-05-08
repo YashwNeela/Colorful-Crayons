@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using AssetKits.ParticleImage;
 using UnityEngine;
 
 namespace TMKOC.StarLink
@@ -15,6 +16,8 @@ namespace TMKOC.StarLink
         
         [SerializeField]private bool isActiveStar = false;
         [SerializeField]private bool isTargetStar = false;
+
+        [SerializeField] private ParticleSystem vfxOnActive;
 
         private float pulseTimer = 0f;
 
@@ -40,7 +43,13 @@ namespace TMKOC.StarLink
             {
                 Color c = glowRenderer.color;
                 c.a = active ? 1f : 0f;
+                Debug.Log("zero alpha" + gameObject.name);
                 glowRenderer.color = c;
+            }
+
+            if(active)
+            {
+                vfxOnActive.Play();
             }
         }
 
@@ -49,15 +58,19 @@ namespace TMKOC.StarLink
             isTargetStar = target;
             if (!target && glowRenderer != null)
             {
-                // Reset alpha if no longer target
+            //    Reset alpha if no longer target
                 Color c = glowRenderer.color;
                 c.a = 0f;
+                Debug.Log("zero alpha" + gameObject.name);
+
                 glowRenderer.color = c;
             }
         }
 
         public bool IsTarget()
         {
+               // vfxOnActive.Stop();
+
             return isTargetStar;
         }
 
