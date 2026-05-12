@@ -11,10 +11,13 @@ namespace TMKOC.StarLink
         [Header("Star-Link Settings")]
         public List<Star> starSequence; // The sequence of stars the comet needs to hit
 
-        
         private int currentTargetIndex = 1; // 0 is the starting star, 1 is the first target
 
         public Sprite constellationImage;
+
+        public string title;
+
+        public string discription;
 
         protected override void Awake()
         {
@@ -125,7 +128,7 @@ namespace TMKOC.StarLink
 
             yield return new WaitForSeconds(1f); // Wait a bit before showing win screen
 
-            StarlinkUI.Instance.Show(constellationImage);
+            StarlinkUI.Instance.Show(constellationImage,title,discription);
 
             GameManager.Instance.GameWin();
         }

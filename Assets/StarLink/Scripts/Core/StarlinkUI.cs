@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -14,6 +15,10 @@ public class StarlinkUI : SerializedSingleton<StarlinkUI>
 
     public Button nextButton;
 
+    public TextMeshProUGUI m_Title;
+
+    public TextMeshProUGUI m_Discription;
+
 
     protected override void Awake()
         {
@@ -24,9 +29,11 @@ public class StarlinkUI : SerializedSingleton<StarlinkUI>
             });
         }
 
-    public void Show(Sprite img)
+    public void Show(Sprite img, string title, string discription)
         {
             HUDUI.SetActive(false);
+            m_Title.text = title;
+            m_Discription.text = discription;
             image.sprite = img;
             Container.SetActive(true);
         }
