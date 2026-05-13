@@ -8,6 +8,9 @@ namespace TMKOC.StarLink
         public override void Start()
         {
             base.Start();
+            #if PLAYSCHOOL_MAIN
+            PlayschoolCommon.Instance.SpawnplayschoolWinLosePanel();
+            #endif
         }
 
         public override void FirstTimeGameStart()
@@ -26,13 +29,37 @@ namespace TMKOC.StarLink
         public override void GameWin()
         {
             base.GameWin();
-            // Custom win logic for StarLink
+            // WinLosePanelScript.Instance.ShowNextLevelPopUp(()=>
+            // {
+            //     m_CurrentGameState = GameState.Win;
+            // OnGameWin?.Invoke();
+
+            // if (LevelManager.Instance.CurrentLevelIndex + 1 >= LevelManager.Instance.MaxLevels)
+            // {
+            //     GameCompleted();
+            //     return;
+            // }
+            // GameNotCompleted();
+            // });
+            
         }
 
         public override void GameLoose()
         {
             base.GameLoose();
             // Custom lose logic for StarLink
+        }
+
+        public override void GameCompleted()
+        {
+            base.GameCompleted();
+            #if PLAYSCHOOL_MAIN
+                    EffectParticleControll.Instance.SpawnGameEndPanel();
+                  //  GameManager.Instance.SoundManager.PlayFinalOutro();
+                    GameOverEndPanel.Instance.AddTheListnerRetryGame();
+                    return;
+#endif
+
         }
     }
 }
