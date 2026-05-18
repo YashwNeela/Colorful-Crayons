@@ -650,7 +650,7 @@ MonoBehaviour:
   - {fileID: 1227160141}
   - {fileID: 1722444429}
   - {fileID: 108368677}
-  constellationImage: {fileID: 21300000, guid: 7df0a4b0de8214e5086692bc077593c3, type: 3}
+  constellationImage: {fileID: 21300000, guid: 2f160761eba3d40059010b3b4c9f00c0, type: 3}
   title: Cygnus
   discription: Taking Flight! The Great Swan is now awake. Its long neck is flying
     right through the Milky Way, our home galaxy made of billions of stars!
@@ -827,7 +827,7 @@ MonoBehaviour:
   - {fileID: 1303475892}
   - {fileID: 2107675236}
   - {fileID: 1141353062}
-  constellationImage: {fileID: 21300000, guid: aea69e175d8ec45d59af26a58a12e51c, type: 3}
+  constellationImage: {fileID: 21300000, guid: a03c2bbdf50024e8d995bdde1f15309d, type: 3}
   title: Ashwini
   discription: "Gallop Away! You\u2019ve found the Twin Horses. These are the fast
     doctors of the sky who race across the clouds to help anyone in need!"
@@ -890,7 +890,7 @@ MonoBehaviour:
   - {fileID: 1148734074}
   - {fileID: 1972269833}
   - {fileID: 1086695336}
-  constellationImage: {fileID: 21300000, guid: 694b38f20ec1640c6a6316038cd364e5, type: 3}
+  constellationImage: {fileID: 21300000, guid: 7d3b0745c60504aacb2f08580e4446a1, type: 3}
   title: 'Saptarishi '
   discription: "Shining Bright! You\u2019ve found the Saptarishi. These seven wise
     teachers have been watching over us for thousands of years. They are the map-makers
@@ -1415,13 +1415,12 @@ RectTransform:
   m_Children:
   - {fileID: 1580246721}
   - {fileID: 1656108151}
-  - {fileID: 2074581076}
   m_Father: {fileID: 2019150121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -18.725891}
-  m_SizeDelta: {x: 893.4907, y: 851.6609}
+  m_AnchoredPosition: {x: -28, y: -14}
+  m_SizeDelta: {x: 2746.8982, y: 1207.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &323948828
 MonoBehaviour:
@@ -1443,7 +1442,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e897587c8db09426188792fc20db9973, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2fe5e73c609ae43b28b270c312d7ea56, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6803,6 +6802,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462321634}
+  m_CullTransparentMesh: 1
+--- !u!1 &465772286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 465772287}
+  - component: {fileID: 465772289}
+  - component: {fileID: 465772288}
+  m_Layer: 5
+  m_Name: Image - Tapu (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &465772287
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465772286}
+  m_LocalRotation: {x: -0, y: -0, z: -0.30777925, w: 0.95145786}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2019150121}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -35.851}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -933, y: -439}
+  m_SizeDelta: {x: 871.1213, y: 1019.2325}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &465772288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465772286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: d45dee380da8e41cba642da3b84e06bd, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &465772289
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465772286}
   m_CullTransparentMesh: 1
 --- !u!1001 &476340926
 PrefabInstance:
@@ -15703,17 +15777,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158351153}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.07408101, w: 0.9972522}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2019150121}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 8.497}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 796, y: -309}
-  m_SizeDelta: {x: 1045.8, y: 1045.8}
+  m_AnchoredPosition: {x: 870, y: -216}
+  m_SizeDelta: {x: 1292.095, y: 1292.095}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158351155
 MonoBehaviour:
@@ -16398,7 +16472,7 @@ MonoBehaviour:
   - {fileID: 1498953360}
   - {fileID: 540188762}
   - {fileID: 260089783}
-  constellationImage: {fileID: 21300000, guid: cd39ce86751244c61a0dbcc288e85b75, type: 3}
+  constellationImage: {fileID: 21300000, guid: f7a60d95131ca41859fe279c8623ba4d, type: 3}
   title: Aquila
   discription: "Master of the Sky! You\u2019ve completed the Eagle. Even with the
     pull of gravity, you soared true. You are now a Grand Astronomer of the Universe!"
@@ -16659,7 +16733,7 @@ MonoBehaviour:
   - {fileID: 51161873}
   - {fileID: 606847697}
   - {fileID: 529197896}
-  constellationImage: {fileID: 21300000, guid: e897587c8db09426188792fc20db9973, type: 3}
+  constellationImage: {fileID: 21300000, guid: 2fe5e73c609ae43b28b270c312d7ea56, type: 3}
   title: Dhanishtha
   discription: "Dhin-Dhin-Da! You\u2019ve completed the Drum of the Heavens. Can
     you hear the stars dancing to your beat? This star-drum brings music to the night!"
@@ -16951,7 +17025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1352361539
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17773,7 +17847,7 @@ MonoBehaviour:
   - {fileID: 1562348755}
   - {fileID: 1200216336}
   - {fileID: 308340994}
-  constellationImage: {fileID: 21300000, guid: aea69e175d8ec45d59af26a58a12e51c, type: 3}
+  constellationImage: {fileID: 21300000, guid: e9143fa6b4a0d4300a834782b1755e16, type: 3}
   title: Leo
   discription: "Hear the Roar! You\u2019ve found the King of the Stars. That hook
     shape you just built is the Lion\u2019s powerful mane. You are brave like a lion!"
@@ -18759,7 +18833,7 @@ MonoBehaviour:
   - {fileID: 930825041}
   - {fileID: 1353824822}
   - {fileID: 1970700187}
-  constellationImage: {fileID: 21300000, guid: aea69e175d8ec45d59af26a58a12e51c, type: 3}
+  constellationImage: {fileID: 21300000, guid: c7685dfe0b43140959c98f5ec0c9b158, type: 3}
   title: Hasta
   discription: "High Five! You\u2019ve lit up the Celestial Hand. In India, this
     hand represents a clever artist or a hard-working builder. You\u2019ve got great
@@ -18798,7 +18872,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 279}
+  m_AnchoredPosition: {x: 0, y: 403}
   m_SizeDelta: {x: 515.3491, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1580246722
@@ -19508,8 +19582,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -271}
-  m_SizeDelta: {x: 515.3491, y: 50}
+  m_AnchoredPosition: {x: 24.8464, y: -384}
+  m_SizeDelta: {x: 1078.6282, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1656108152
 MonoBehaviour:
@@ -20002,7 +20076,7 @@ MonoBehaviour:
   - {fileID: 296413963}
   - {fileID: 778309099}
   - {fileID: 1441352664}
-  constellationImage: {fileID: 21300000, guid: 3fe247763609a478b9f3e408b7f5ec16, type: 3}
+  constellationImage: {fileID: 21300000, guid: 99fb1ec0ded8c4d25996b4b96b5b5a0f, type: 3}
   title: Cassiopeia
   discription: "Majestic! You\u2019ve built the Queen\u2019s Throne. This giant \u2018W\u2019
     is like a crown in the sky. She sits high above the North Star to watch the world!"
@@ -20911,7 +20985,7 @@ MonoBehaviour:
   - {fileID: 1010256980}
   - {fileID: 1543923988}
   - {fileID: 412248060}
-  constellationImage: {fileID: 21300000, guid: 694b38f20ec1640c6a6316038cd364e5, type: 3}
+  constellationImage: {fileID: 21300000, guid: 6860e0cd4a9064537acc8cf75994bd93, type: 3}
   title: Mriga
   discription: "Fast as a Deer! You\u2019ve connected the Deer\u2019s Belt. These
     three stars are so bright they look like diamonds on a hunter\u2019s path. Go,
@@ -21604,7 +21678,7 @@ MonoBehaviour:
   - {fileID: 1319820304}
   - {fileID: 275020819}
   - {fileID: 2145414941}
-  constellationImage: {fileID: 21300000, guid: e1d79c8631cb846859da0a4a72f960c8, type: 3}
+  constellationImage: {fileID: 21300000, guid: 53f97ac119ed049cb84a4d7cc8a08dac, type: 3}
   title: Crux
   discription: "Point the Way! You\u2019ve found the Southern Cross. For hundreds
     of years, sailors looked for this tiny cross to find their way home across the
@@ -27011,6 +27085,8 @@ RectTransform:
   - {fileID: 1531606650}
   - {fileID: 323948827}
   - {fileID: 1158351154}
+  - {fileID: 465772287}
+  - {fileID: 2074581076}
   m_Father: {fileID: 1185317749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -27226,18 +27302,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074581075}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1352361539}
-  m_Father: {fileID: 323948827}
+  m_Father: {fileID: 2019150121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 243, y: -429}
-  m_SizeDelta: {x: 214.2488, y: 53.5078}
+  m_AnchoredPosition: {x: 993, y: -432}
+  m_SizeDelta: {x: 283.3, y: 224.0558}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2074581077
 MonoBehaviour:
@@ -27303,9 +27379,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
+  m_Sprite: {fileID: 21300000, guid: eaba9d54c83ed4f75acd0c0f5c2b6076, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
