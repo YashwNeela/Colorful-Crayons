@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace TMKOC.StarLink{
 
 [System.Serializable]
 public class TutorialStepUI: MonoBehaviour
@@ -13,4 +14,5 @@ public class TutorialStepUI: MonoBehaviour
     public TutorialHighlightClickHandler tutorialHighlightClickHandler;
 
     
+}
 }

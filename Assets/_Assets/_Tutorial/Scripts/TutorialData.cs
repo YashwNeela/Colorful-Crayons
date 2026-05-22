@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+namespace TMKOC.StarLink{
 
 public enum TutorialPlayMode
 {
@@ -41,3 +42,4 @@ public class TutorialStep
 }
 
 
+}

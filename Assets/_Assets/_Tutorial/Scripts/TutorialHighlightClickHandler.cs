@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
+namespace TMKOC.StarLink{
 
 public class TutorialHighlightClickHandler : MonoBehaviour, IPointerDownHandler
 {
@@ -25,3 +26,4 @@ public class TutorialHighlightClickHandler : MonoBehaviour, IPointerDownHandler
         }
         }
     }
+}

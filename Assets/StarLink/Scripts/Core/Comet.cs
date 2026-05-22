@@ -73,51 +73,38 @@ namespace TMKOC.StarLink
             }
         }
 
-        private void CheckLaunchAlignment()
-        {
-            if (cachedLevel == null)
-            {
-                cachedLevel = FindObjectOfType<StarLinkLevel>();
-                if (cachedLevel == null) return;
-            }
+       private void CheckLaunchAlignment()
+{
+    if (cachedLevel == null)
+    {
+        cachedLevel = FindObjectOfType<StarLinkLevel>();
+        if (cachedLevel == null) return;
+    }
 
-            Star target = cachedLevel.CurrentTargetStar;
-            if (target == null)
-            {
-                LineDrawer.Instance.SetDottedLineAligned(false);
-                return;
-            }
+    Star target = cachedLevel.CurrentTargetStar;
+    if (target == null)
+    {
+        LineDrawer.Instance.SetDottedLineAligned(false);
+        return;
+    }
 
-            // Tangent direction (same formula used in Launch)
-            float rad = currentAngle * Mathf.Deg2Rad;
-            Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
+    float rad = currentAngle * Mathf.Deg2Rad;
+    Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
 
-            Vector2 cometPos = transform.position;
-            Vector2 targetPos = target.transform.position;
-            Vector2 toTarget = targetPos - cometPos;
+    Vector2 toTarget = (Vector2)target.transform.position - (Vector2)transform.position;
 
-            // How far along the ray the target lies (negative = behind comet -> miss)
-            float along = Vector2.Dot(toTarget, tangent);
+    // Target must be in front of the launch direction
+    if (Vector2.Dot(tangent, toTarget) <= 0f)
+    {
+        LineDrawer.Instance.SetDottedLineAligned(false);
+        return;
+    }
 
-            bool aligned = false;
-            if (along > 0f)
-            {
-                Vector2 closestPoint = cometPos + tangent * along;
-                float perpDist = Vector2.Distance(targetPos, closestPoint);
+    float angleOff = Vector2.Angle(tangent, toTarget.normalized);
+    bool aligned = angleOff <= forgivenessAngle * greenZoneFraction;
 
-                // Target's effective hit radius
-                float targetRadius = 0.5f;
-                CircleCollider2D tCol = target.GetComponent<CircleCollider2D>();
-                if (tCol != null)
-                    targetRadius = tCol.radius * Mathf.Max(target.transform.lossyScale.x, target.transform.lossyScale.y);
-
-                // Comet body + target body + a little forgiveness
-                float hitThreshold = targetRadius + cometRadius + alignmentTolerance;
-                aligned = perpDist <= hitThreshold;
-            }
-
-            LineDrawer.Instance.SetDottedLineAligned(aligned);
-        }
+    LineDrawer.Instance.SetDottedLineAligned(aligned);
+}
 
         public void AttachToStar(Star star)
         {

@@ -9,7 +9,7 @@ using TMKOC.Cases_of_Popatlal.Tutorial;
 using System;
 
 
-
+namespace TMKOC.StarLink{
 public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager Instance;
@@ -161,4 +161,5 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         NextStep();
     }
+}
 }
