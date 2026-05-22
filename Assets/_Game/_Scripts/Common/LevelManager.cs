@@ -8,6 +8,7 @@ namespace TMKOC
 {
     public class LevelManager : Singleton<LevelManager>
     {
+        
         public TextMeshProUGUI m_LevelText;
         public TextMeshProUGUI m_TipText;
 

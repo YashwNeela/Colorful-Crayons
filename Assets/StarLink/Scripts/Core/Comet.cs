@@ -38,12 +38,12 @@ namespace TMKOC.StarLink
 
         private void Update()
         {
-            if (isOrbiting && StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
+            if (isOrbiting)
             {
                 HandleOrbiting();
 
                 // Tap to launch
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
                 {
                     Launch();
                 }

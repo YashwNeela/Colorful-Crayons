@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5fc980e29ce4bdc9d7b9c4c411d920, type: 3}
+  m_Name: FTUE
+  m_EditorClassIdentifier: 
+  tutorialId: FTUE
+  playMode: 1
+  steps:
+  - stepUI: {fileID: 3011207596948986051, guid: 3c104651ed8fd4e9b823d34609c3bc2b,
+      type: 3}
+    message: Let's learn about the constillations by fun activity
+    clickAnywhere: 1
+    targetObject: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 7e2a7ccdb054c4db7b789ec5e3af8246, type: 3}
+    waitForClickOnTarget: 1
+    autoNextDelay: 0
+  - stepUI: {fileID: 3011207596948986051, guid: 1bdbbab3954434377b8647dca38144f9,
+      type: 3}
+    message: Great! There is comet revolving around the star
+    clickAnywhere: 1
+    targetObject: {fileID: 9184625121805880449, guid: 1bdbbab3954434377b8647dca38144f9,
+      type: 3}
+    audioClip: {fileID: 8300000, guid: 38df522896e504243ba6df7dd97b291c, type: 3}
+    waitForClickOnTarget: 1
+    autoNextDelay: 0

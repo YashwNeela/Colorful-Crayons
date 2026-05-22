@@ -23,7 +23,9 @@ namespace TMKOC
 
         NotCompleted,
 
-        Replay
+        Replay,
+
+        Tutorial
     }
     public class GameManager : Singleton<GameManager>
     {
@@ -78,6 +80,11 @@ namespace TMKOC
         public static UnityAction OnGameReplay;
 
         public static UnityAction OnLevelCompleteCheck;
+
+        public static UnityAction<string> OnTutorialStarted;
+
+        public static UnityAction<string> OnTutorialFinished;
+
 
         public virtual void Start()
         {
@@ -171,6 +178,20 @@ namespace TMKOC
             m_CurrentGameState = GameState.Restart;
             OnGameRestart?.Invoke();
             GameStart(LevelManager.Instance.CurrentLevelIndex);
+        }
+
+        public virtual void StartTutorial(string id)
+        {
+            m_CurrentGameState = GameState.Tutorial;
+
+            OnTutorialStarted?.Invoke(id);
+        }
+
+         public virtual void EndTutorial(string id)
+        {
+            GamePlaying();
+
+            OnTutorialFinished?.Invoke(id);
         }
 
         public virtual void GamePlaying()
