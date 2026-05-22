@@ -7,6 +7,12 @@ namespace TMKOC.StarLink
 {
     public class Comet : MonoBehaviour
     {
+
+        private StarLinkLevel cachedLevel;
+        private float cometRadius = 0f;
+
+        [Header("Alignment Check")]
+        [SerializeField] private float alignmentTolerance = 0.05f;  // small forgiveness
         [Header("Settings")]
         public float launchSpeed = 10f;
         public Star currentStar;
@@ -17,6 +23,17 @@ namespace TMKOC.StarLink
 
         public TrailRenderer trailRenderer;
 
+        [Header("Launch Forgiveness")]
+        [SerializeField] private bool useAimAssist = true;
+        [SerializeField] private float forgivenessAngle = 15f;
+
+        [Range(0f, 1f)]
+[SerializeField] private float greenZoneFraction = 1f;
+// 1.0 = green covers the entire forgiveness band (green = "will hit, period")
+// 0.7 = green covers inner 70%, outer 30% is silent assist
+// 0.5 = green is strict, assist quietly catches the rest
+
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -25,11 +42,17 @@ namespace TMKOC.StarLink
                 rb = gameObject.AddComponent<Rigidbody2D>();
             }
             rb.isKinematic = true; // We control movement manually
+
+            CircleCollider2D myCol = GetComponent<CircleCollider2D>();
+            if (myCol != null)
+                cometRadius = myCol.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y);
         }
 
-    
+
         private void Start()
         {
+
+            cachedLevel = FindObjectOfType<StarLinkLevel>();
             if (currentStar != null)
             {
                 AttachToStar(currentStar);
@@ -41,7 +64,7 @@ namespace TMKOC.StarLink
             if (isOrbiting)
             {
                 HandleOrbiting();
-
+                CheckLaunchAlignment();
                 // Tap to launch
                 if (Input.GetMouseButtonDown(0) && StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
                 {
@@ -50,18 +73,64 @@ namespace TMKOC.StarLink
             }
         }
 
+        private void CheckLaunchAlignment()
+        {
+            if (cachedLevel == null)
+            {
+                cachedLevel = FindObjectOfType<StarLinkLevel>();
+                if (cachedLevel == null) return;
+            }
+
+            Star target = cachedLevel.CurrentTargetStar;
+            if (target == null)
+            {
+                LineDrawer.Instance.SetDottedLineAligned(false);
+                return;
+            }
+
+            // Tangent direction (same formula used in Launch)
+            float rad = currentAngle * Mathf.Deg2Rad;
+            Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
+
+            Vector2 cometPos = transform.position;
+            Vector2 targetPos = target.transform.position;
+            Vector2 toTarget = targetPos - cometPos;
+
+            // How far along the ray the target lies (negative = behind comet -> miss)
+            float along = Vector2.Dot(toTarget, tangent);
+
+            bool aligned = false;
+            if (along > 0f)
+            {
+                Vector2 closestPoint = cometPos + tangent * along;
+                float perpDist = Vector2.Distance(targetPos, closestPoint);
+
+                // Target's effective hit radius
+                float targetRadius = 0.5f;
+                CircleCollider2D tCol = target.GetComponent<CircleCollider2D>();
+                if (tCol != null)
+                    targetRadius = tCol.radius * Mathf.Max(target.transform.lossyScale.x, target.transform.lossyScale.y);
+
+                // Comet body + target body + a little forgiveness
+                float hitThreshold = targetRadius + cometRadius + alignmentTolerance;
+                aligned = perpDist <= hitThreshold;
+            }
+
+            LineDrawer.Instance.SetDottedLineAligned(aligned);
+        }
+
         public void AttachToStar(Star star)
         {
-               StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0.5f,()=>
-               {
-                   trailRenderer.emitting = true;
-               })) ;
-                
+            StartCoroutine(StaticCoroutine.Co_GenericCoroutine(0.5f, () =>
+            {
+                trailRenderer.emitting = true;
+            }));
+
 
             currentStar = star;
             isOrbiting = true;
             rb.linearVelocity = Vector2.zero; // Stop any existing movement
-            
+
             // Calculate initial angle based on current position relative to star, or just default to 0
             Vector2 dir = transform.position - star.transform.position;
             if (dir.sqrMagnitude > 0.01f)
@@ -103,25 +172,53 @@ namespace TMKOC.StarLink
         private void Launch()
         {
             isOrbiting = false;
-            
-            // Tangential direction is perpendicular to radius
+
             float rad = currentAngle * Mathf.Deg2Rad;
             Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
 
-            // Apply velocity
-            rb.linearVelocity = tangent * launchSpeed;
+            Vector2 launchDirection = tangent;
+
+            // --- Aim assist: nudge near-misses into guaranteed hits ---
+            if (useAimAssist && cachedLevel != null)
+            {
+                Star target = cachedLevel.CurrentTargetStar;
+                if (target != null)
+                {
+                    Vector2 toTarget = (Vector2)target.transform.position - (Vector2)transform.position;
+                    float dist = toTarget.magnitude;
+
+                    if (dist > 0.01f)
+                    {
+                        Vector2 toTargetDir = toTarget / dist;
+
+                        // Only assist if target is generally in front of the launch direction
+                        if (Vector2.Dot(tangent, toTargetDir) > 0f)
+                        {
+                            float angleOff = Vector2.Angle(tangent, toTargetDir);
+                            if (angleOff <= forgivenessAngle)
+                            {
+                                launchDirection = toTargetDir;
+                            }
+                        }
+                    }
+                }
+            }
+
+            rb.linearVelocity = launchDirection * launchSpeed;
+
+            LineDrawer.Instance.SetDottedLineAligned(false);
         }
 
-         /// <summary>
+        /// <summary>
         /// Sent when another object enters a trigger collider attached to this
         /// object (2D physics only).
         /// </summary>
         /// <param name="other">The other Collider2D involved in this collision.</param>
         void OnTriggerEnter2D(Collider2D other)
         {
-                            
-              
-              if (!isOrbiting) // Only detect hits while flying
+
+
+            if (!isOrbiting) // Only detect hits while flying
             {
                 Star hitStar = other.GetComponent<Star>();
                 if (hitStar != null)
@@ -146,7 +243,7 @@ namespace TMKOC.StarLink
                 }
             }
         }
-        
+
 
         private void OnBecameInvisible()
         {
@@ -159,14 +256,14 @@ namespace TMKOC.StarLink
                 {
                     currentLevel.OnCometMissed();
                 }
-                
+
                 // Reset to current active star
                 if (currentStar != null)
                 {
-                  StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>
-                  {
-                      AttachToStar(currentStar);
-                  }))  ;
+                    StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1, () =>
+                    {
+                        AttachToStar(currentStar);
+                    }));
                 }
             }
         }

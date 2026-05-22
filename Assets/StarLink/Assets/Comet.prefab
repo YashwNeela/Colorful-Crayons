@@ -103,9 +103,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbfaf31f4ceec4bbd89ce84b412601d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alignmentTolerance: 1
   launchSpeed: 10
   currentStar: {fileID: 0}
   trailRenderer: {fileID: 7131906580949639789}
+  useAimAssist: 1
+  forgivenessAngle: 100
 --- !u!50 &8484079437628017865
 Rigidbody2D:
   serializedVersion: 5

@@ -13,6 +13,10 @@ namespace TMKOC.StarLink
         [SerializeField] private float dottedLineWidth = 0.1f;
         [SerializeField] private Color dottedLineColor = Color.white;
 
+        [SerializeField] private Color dottedLineAlignedColor = Color.green;
+
+        private bool isDottedAligned = false;       
+
         [Header("Highlighted Line Settings")]
         [SerializeField] private float highlightedLineWidth = 0.15f;
         [SerializeField] private Color highlightedLineColor = Color.yellow;
@@ -25,9 +29,9 @@ namespace TMKOC.StarLink
             SetupLineRendererHighlighted();
         }
 
-        private void OnEnable() 
+        private void OnEnable()
         {
-            StarLinkGameManager.OnGameStart += OnGameStart;    
+            StarLinkGameManager.OnGameStart += OnGameStart;
         }
 
         private void OnGameStart()
@@ -37,8 +41,8 @@ namespace TMKOC.StarLink
 
         void OnDisable()
         {
-            StarLinkGameManager.OnGameStart -= OnGameStart;    
-            
+            StarLinkGameManager.OnGameStart -= OnGameStart;
+
         }
 
         private void SetupLineRendererDotted()
@@ -57,7 +61,7 @@ namespace TMKOC.StarLink
             lineRendererDotted.startColor = dottedLineColor;
             lineRendererDotted.endColor = dottedLineColor;
 
-           // lineRendererDotted.material = new Material(Shader.Find("Sprites/Default"));
+            // lineRendererDotted.material = new Material(Shader.Find("Sprites/Default"));
 
             lineRendererDotted.enabled = false;
         }
@@ -91,6 +95,19 @@ namespace TMKOC.StarLink
             lineRendererDotted.positionCount = 2;
             lineRendererDotted.SetPosition(0, startPoint);
             lineRendererDotted.SetPosition(1, endPoint);
+
+            SetDottedLineAligned(false);
+        }
+
+        public void SetDottedLineAligned(bool aligned)
+        {
+            if (lineRendererDotted == null) return;
+            if (isDottedAligned == aligned) return;   // avoid spamming color assignments
+            isDottedAligned = aligned;
+
+            Color c = aligned ? dottedLineAlignedColor : dottedLineColor;
+            lineRendererDotted.startColor = c;
+            lineRendererDotted.endColor = c;
         }
 
         public void DrawHighlightedLine(Vector3 startPoint, Vector3 endPoint)

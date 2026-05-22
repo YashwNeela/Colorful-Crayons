@@ -13,6 +13,16 @@ namespace TMKOC.StarLink
 
         private int currentTargetIndex = 1; // 0 is the starting star, 1 is the first target
 
+        public Star CurrentTargetStar
+        {
+            get
+            {
+                if (starSequence == null) return null;
+                if (currentTargetIndex < 0 || currentTargetIndex >= starSequence.Count) return null;
+                return starSequence[currentTargetIndex];
+            }
+        }
+
         public Sprite constellationImage;
 
         public string title;
@@ -33,15 +43,15 @@ namespace TMKOC.StarLink
         public virtual void InitializeLevel()
         {
             currentTargetIndex = 1;
-            
-            
+
+
 
             if (starSequence != null && starSequence.Count > 0)
             {
                 LineDrawer.Instance.DrawDottedLine(starSequence[0].transform.position, starSequence[1].transform.position);
                 // Setup the initial state
                 starSequence[0].SetAsActive(true);
-                
+
                 if (starSequence.Count > 1)
                 {
                     starSequence[1].SetAsTarget(true);
@@ -49,48 +59,48 @@ namespace TMKOC.StarLink
             }
         }
 
-      public virtual void OnStarHit(Star hitStar)
-{
-    if (currentTargetIndex >= starSequence.Count) return;
-
-    if (hitStar == starSequence[currentTargetIndex])
-    {
-        hitStar.SetAsTarget(false);
-        hitStar.SetAsActive(true);
-
-        int previousIndex = currentTargetIndex - 1;
-
-        if (previousIndex >= 0)
+        public virtual void OnStarHit(Star hitStar)
         {
-            starSequence[previousIndex].SetAsActive(true);
+            if (currentTargetIndex >= starSequence.Count) return;
 
-            LineDrawer.Instance.DrawHighlightedLine(
-                starSequence[previousIndex].transform.position,
-                starSequence[currentTargetIndex].transform.position
-            );
+            if (hitStar == starSequence[currentTargetIndex])
+            {
+                hitStar.SetAsTarget(false);
+                hitStar.SetAsActive(true);
+
+                int previousIndex = currentTargetIndex - 1;
+
+                if (previousIndex >= 0)
+                {
+                    starSequence[previousIndex].SetAsActive(true);
+
+                    LineDrawer.Instance.DrawHighlightedLine(
+                        starSequence[previousIndex].transform.position,
+                        starSequence[currentTargetIndex].transform.position
+                    );
+                }
+
+                currentTargetIndex++;
+
+                if (currentTargetIndex < starSequence.Count)
+                {
+                    LineDrawer.Instance.DrawDottedLine(
+                        starSequence[currentTargetIndex - 1].transform.position,
+                        starSequence[currentTargetIndex].transform.position
+                    );
+
+                    starSequence[currentTargetIndex].SetAsTarget(true);
+                }
+                else
+                {
+                    OnConstellationComplete();
+                }
+            }
+            else
+            {
+                // Wrong star hit
+            }
         }
-
-        currentTargetIndex++;
-
-        if (currentTargetIndex < starSequence.Count)
-        {
-            LineDrawer.Instance.DrawDottedLine(
-                starSequence[currentTargetIndex - 1].transform.position,
-                starSequence[currentTargetIndex].transform.position
-            );
-
-            starSequence[currentTargetIndex].SetAsTarget(true);
-        }
-        else
-        {
-            OnConstellationComplete();
-        }
-    }
-    else
-    {
-        // Wrong star hit
-    }
-}
 
         public virtual void OnCometMissed()
         {
@@ -120,15 +130,15 @@ namespace TMKOC.StarLink
 
         private IEnumerator RevealArtCoroutine()
         {
-           
-            
 
 
-     
+
+
+
 
             yield return new WaitForSeconds(1f); // Wait a bit before showing win screen
 
-            StarlinkUI.Instance.Show(constellationImage,title,discription);
+            StarlinkUI.Instance.Show(constellationImage, title, discription);
 
             GameManager.Instance.GameWin();
         }
