@@ -33,8 +33,10 @@ namespace TMKOC.StarLink
         [Header("Inactivity Hint")]
         [SerializeField] private float inactivityThreshold = 5f;
         [SerializeField] private UnityEvent onPlayerInactive;
+        [SerializeField] private UnityEvent onPlayerResumed;
 
-        [SerializeField] private UnityEvent onPlayerResumed;   // NEW
+        [Header("Auto-Pause After Misses")]
+        [SerializeField] private int missesBeforeAutoPause = 5;
 
         // --- Internal state ---
         private Rigidbody2D rb;
@@ -52,10 +54,11 @@ namespace TMKOC.StarLink
         private float timeSinceOrbitStart = 0f;
         private bool inactivityFired = false;
 
-
         private float originalTrailTime = 0f;
         private bool trailFrozen = false;
         private bool wasPaused = false;
+
+        private int consecutiveMisses = 0;
 
         // ============================================================
         //  Lifecycle
@@ -68,7 +71,6 @@ namespace TMKOC.StarLink
                 rb = gameObject.AddComponent<Rigidbody2D>();
             rb.isKinematic = true;
 
-            // NEW — remember the trail's normal fade time
             if (trailRenderer != null)
                 originalTrailTime = trailRenderer.time;
         }
@@ -111,7 +113,8 @@ namespace TMKOC.StarLink
                 isAlignedCached &&
                 !waitingForUnalignFirst &&
                 meetsRotationRequirement;
-            // NEW — freeze/unfreeze the trail on pause transitions
+
+            // Freeze/unfreeze the trail on pause transitions
             if (shouldPause && !wasPaused) FreezeTrail();
             else if (!shouldPause && wasPaused) UnfreezeTrail();
             wasPaused = shouldPause;
@@ -125,7 +128,6 @@ namespace TMKOC.StarLink
             if (Input.GetMouseButtonDown(0) &&
                 StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
             {
-
                 // Any tap resets the inactivity timer (player is engaged)
                 timeSinceOrbitStart = 0f;
 
@@ -135,6 +137,7 @@ namespace TMKOC.StarLink
                     inactivityFired = false;
                     OnPlayerResumed();
                 }
+
                 // In pause mode, ignore taps unless comet is at the sweet spot
                 if (pauseAtSweetSpot && !isAlignedCached)
                 {
@@ -155,7 +158,6 @@ namespace TMKOC.StarLink
         {
             if (currentStar == null) return;
 
-
             float delta = currentStar.orbitSpeed * Time.deltaTime;
             currentAngle += delta;
             angleTraveledThisOrbit += Mathf.Abs(delta);
@@ -164,17 +166,8 @@ namespace TMKOC.StarLink
             UpdatePositionFromAngle();
         }
 
-        protected virtual void OnPlayerResumed()
-        {
-            onPlayerResumed?.Invoke();
-
-            StarlinkUI.Instance.fingerObj.SetActive(false);
-
-        }
-
         private void UpdatePositionFromAngle()
         {
-
             float rad = currentAngle * Mathf.Deg2Rad;
             float x = Mathf.Cos(rad) * currentStar.orbitRadius;
             float y = Mathf.Sin(rad) * currentStar.orbitRadius;
@@ -326,13 +319,41 @@ namespace TMKOC.StarLink
 
         /// <summary>
         /// Called once when the player hasn't launched within the inactivity threshold.
-        /// Invokes the inspector UnityEvent and can be overridden in subclasses.
         /// </summary>
         protected virtual void OnPlayerInactive()
         {
             onPlayerInactive?.Invoke();
             if (StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
                 StarlinkUI.Instance.fingerObj.SetActive(true);
+        }
+
+        /// <summary>
+        /// Called when the player taps after the inactivity event had fired.
+        /// </summary>
+        protected virtual void OnPlayerResumed()
+        {
+            onPlayerResumed?.Invoke();
+            StarlinkUI.Instance.fingerObj.SetActive(false);
+        }
+
+        // ============================================================
+        //  Trail helpers
+        // ============================================================
+
+        private void FreezeTrail()
+        {
+            if (trailRenderer == null || trailFrozen) return;
+            trailRenderer.time = Mathf.Infinity;
+            trailRenderer.emitting = false;
+            trailFrozen = true;
+        }
+
+        private void UnfreezeTrail()
+        {
+            if (trailRenderer == null || !trailFrozen) return;
+            trailRenderer.time = originalTrailTime;
+            trailRenderer.emitting = true;
+            trailFrozen = false;
         }
 
         // ============================================================
@@ -351,6 +372,7 @@ namespace TMKOC.StarLink
 
             if (hitStar.IsTarget())
             {
+                consecutiveMisses = 0;   // Reset on successful hit
                 Debug.Log("Attaching to star");
                 AttachToStar(hitStar);
                 currentLevel.OnStarHit(hitStar);
@@ -365,6 +387,16 @@ namespace TMKOC.StarLink
             // Comet flew off screen
             trailRenderer.emitting = false;
 
+            // Count this miss and auto-pause at sweet spot if threshold reached
+            consecutiveMisses++;
+            if (consecutiveMisses >= missesBeforeAutoPause)
+            {
+                PauseAtNextSweetSpot();
+                SetSweetSpotPauseMode(true);
+                consecutiveMisses = 0;   // reset so it doesn't fire every miss after
+                Debug.Log("Triggered sweet-spot pause after repeated misses");
+            }
+
             StarLinkLevel currentLevel = FindObjectOfType<StarLinkLevel>();
             if (currentLevel != null)
                 currentLevel.OnCometMissed();
@@ -377,22 +409,6 @@ namespace TMKOC.StarLink
                     AttachToStar(currentStar);
                 }));
             }
-        }
-
-        private void FreezeTrail()
-        {
-            if (trailRenderer == null || trailFrozen) return;
-            trailRenderer.time = Mathf.Infinity;   // points never fade
-            trailRenderer.emitting = false;        // don't pile up new points at the pause spot
-            trailFrozen = true;
-        }
-
-        private void UnfreezeTrail()
-        {
-            if (trailRenderer == null || !trailFrozen) return;
-            trailRenderer.time = originalTrailTime;
-            trailRenderer.emitting = true;
-            trailFrozen = false;
         }
     }
 }
