@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TMKOC.StarLink
 {
@@ -11,6 +12,8 @@ namespace TMKOC.StarLink
         public float launchSpeed = 10f;
         public Star currentStar;
         public TrailRenderer trailRenderer;
+
+        public bool canLaunch = true;
 
         [Header("Launch Forgiveness")]
         [SerializeField] private bool useAimAssist = true;
@@ -27,6 +30,12 @@ namespace TMKOC.StarLink
         [Header("Easy Mode Settings")]
         [SerializeField] private float requiredRotationsInEasyMode = 2f;
 
+        [Header("Inactivity Hint")]
+        [SerializeField] private float inactivityThreshold = 5f;
+        [SerializeField] private UnityEvent onPlayerInactive;
+
+        [SerializeField] private UnityEvent onPlayerResumed;   // NEW
+
         // --- Internal state ---
         private Rigidbody2D rb;
         private bool isOrbiting = false;
@@ -40,6 +49,14 @@ namespace TMKOC.StarLink
         private bool easyModeActive = false;
         private float angleTraveledThisOrbit = 0f;
 
+        private float timeSinceOrbitStart = 0f;
+        private bool inactivityFired = false;
+
+
+        private float originalTrailTime = 0f;
+        private bool trailFrozen = false;
+        private bool wasPaused = false;
+
         // ============================================================
         //  Lifecycle
         // ============================================================
@@ -50,6 +67,10 @@ namespace TMKOC.StarLink
             if (rb == null)
                 rb = gameObject.AddComponent<Rigidbody2D>();
             rb.isKinematic = true;
+
+            // NEW — remember the trail's normal fade time
+            if (trailRenderer != null)
+                originalTrailTime = trailRenderer.time;
         }
 
         private void Start()
@@ -68,11 +89,19 @@ namespace TMKOC.StarLink
             isAlignedCached = ComputeAlignment();
             LineDrawer.Instance.SetDottedLineAligned(isAlignedCached);
 
-            // 2. Once the comet has left the alignment window, arm the real pause
+            // 2. Inactivity tracking — fire once if player hasn't launched in N seconds
+            timeSinceOrbitStart += Time.deltaTime;
+            if (!inactivityFired && timeSinceOrbitStart >= inactivityThreshold)
+            {
+                inactivityFired = true;
+                OnPlayerInactive();
+            }
+
+            // 3. Once the comet has left the alignment window, arm the real pause
             if (waitingForUnalignFirst && !isAlignedCached)
                 waitingForUnalignFirst = false;
 
-            // 3. In easy mode, require N full rotations before allowing pause
+            // 4. In easy mode, require N full rotations before allowing pause
             bool meetsRotationRequirement =
                 !easyModeActive ||
                 angleTraveledThisOrbit >= requiredRotationsInEasyMode * 360f;
@@ -82,16 +111,30 @@ namespace TMKOC.StarLink
                 isAlignedCached &&
                 !waitingForUnalignFirst &&
                 meetsRotationRequirement;
+            // NEW — freeze/unfreeze the trail on pause transitions
+            if (shouldPause && !wasPaused) FreezeTrail();
+            else if (!shouldPause && wasPaused) UnfreezeTrail();
+            wasPaused = shouldPause;
 
             if (shouldPause)
                 UpdatePositionFromAngle();
             else
                 HandleOrbiting();
 
-            // 4. Tap handling
+            // 5. Tap handling
             if (Input.GetMouseButtonDown(0) &&
                 StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
             {
+
+                // Any tap resets the inactivity timer (player is engaged)
+                timeSinceOrbitStart = 0f;
+
+                // If the inactive event had fired, fire the resume event now
+                if (inactivityFired)
+                {
+                    inactivityFired = false;
+                    OnPlayerResumed();
+                }
                 // In pause mode, ignore taps unless comet is at the sweet spot
                 if (pauseAtSweetSpot && !isAlignedCached)
                 {
@@ -112,6 +155,7 @@ namespace TMKOC.StarLink
         {
             if (currentStar == null) return;
 
+
             float delta = currentStar.orbitSpeed * Time.deltaTime;
             currentAngle += delta;
             angleTraveledThisOrbit += Mathf.Abs(delta);
@@ -120,8 +164,17 @@ namespace TMKOC.StarLink
             UpdatePositionFromAngle();
         }
 
+        protected virtual void OnPlayerResumed()
+        {
+            onPlayerResumed?.Invoke();
+
+            StarlinkUI.Instance.fingerObj.SetActive(false);
+
+        }
+
         private void UpdatePositionFromAngle()
         {
+
             float rad = currentAngle * Mathf.Deg2Rad;
             float x = Mathf.Cos(rad) * currentStar.orbitRadius;
             float y = Mathf.Sin(rad) * currentStar.orbitRadius;
@@ -178,10 +231,15 @@ namespace TMKOC.StarLink
 
             // Reset rotation counter for the new orbit
             angleTraveledThisOrbit = 0f;
+
+            // Reset inactivity timer for the new orbit
+            timeSinceOrbitStart = 0f;
+            inactivityFired = false;
         }
 
         public void Launch()
         {
+            UnfreezeTrail();
             isOrbiting = false;
 
             float rad = currentAngle * Mathf.Deg2Rad;
@@ -222,7 +280,7 @@ namespace TMKOC.StarLink
         }
 
         // ============================================================
-        //  Public API — Pause control
+        //  Public API
         // ============================================================
 
         public void SetForgivenessAngle(float value)
@@ -264,6 +322,17 @@ namespace TMKOC.StarLink
             consumePauseOnLaunch = false;
             waitingForUnalignFirst = false;
             easyModeActive = false;
+        }
+
+        /// <summary>
+        /// Called once when the player hasn't launched within the inactivity threshold.
+        /// Invokes the inspector UnityEvent and can be overridden in subclasses.
+        /// </summary>
+        protected virtual void OnPlayerInactive()
+        {
+            onPlayerInactive?.Invoke();
+            if (StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
+                StarlinkUI.Instance.fingerObj.SetActive(true);
         }
 
         // ============================================================
@@ -308,6 +377,22 @@ namespace TMKOC.StarLink
                     AttachToStar(currentStar);
                 }));
             }
+        }
+
+        private void FreezeTrail()
+        {
+            if (trailRenderer == null || trailFrozen) return;
+            trailRenderer.time = Mathf.Infinity;   // points never fade
+            trailRenderer.emitting = false;        // don't pile up new points at the pause spot
+            trailFrozen = true;
+        }
+
+        private void UnfreezeTrail()
+        {
+            if (trailRenderer == null || !trailFrozen) return;
+            trailRenderer.time = originalTrailTime;
+            trailRenderer.emitting = true;
+            trailFrozen = false;
         }
     }
 }

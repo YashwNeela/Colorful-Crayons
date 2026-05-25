@@ -9413,7 +9413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &658965197
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18404,6 +18404,7 @@ MonoBehaviour:
   nextButton: {fileID: 2074581077}
   m_Title: {fileID: 1580246722}
   m_Discription: {fileID: 1656108152}
+  fingerObj: {fileID: 658965196}
 --- !u!1001 &1190292255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38704,13 +38705,18 @@ PrefabInstance:
       objectReference: {fileID: 1791816286}
     - target: {fileID: 7700217112272732377, guid: fea3a7413458549e7b3887ebadc16a04,
         type: 3}
+      propertyPath: useAimAssist
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700217112272732377, guid: fea3a7413458549e7b3887ebadc16a04,
+        type: 3}
       propertyPath: forgivenessAngle
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7700217112272732377, guid: fea3a7413458549e7b3887ebadc16a04,
         type: 3}
       propertyPath: requiredRotationsInEasyMode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8276785352629074265, guid: fea3a7413458549e7b3887ebadc16a04,
         type: 3}
