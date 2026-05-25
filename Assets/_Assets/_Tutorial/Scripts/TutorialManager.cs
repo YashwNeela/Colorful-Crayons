@@ -143,6 +143,7 @@ namespace TMKOC.StarLink
 
             OnTutorialFinished?.Invoke(currentTutorial.tutorialId);
 
+            StarLinkGameManager.Instance.GamePlaying();
 
 
             tutorialPanel.SetActive(false);

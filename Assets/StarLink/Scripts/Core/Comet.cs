@@ -8,6 +8,7 @@ namespace TMKOC.StarLink
     public class Comet : MonoBehaviour
     {
 
+private bool waitingForUnalignFirst = false;
         [Header("Sweet Spot Pause")]
         [SerializeField] private bool pauseAtSweetSpot = false;
         private bool consumePauseOnLaunch = false;
@@ -37,6 +38,10 @@ namespace TMKOC.StarLink
         // 0.7 = green covers inner 70%, outer 30% is silent assist
         // 0.5 = green is strict, assist quietly catches the rest
 
+        public void SetForgivenessAngle(float value)
+        {
+            forgivenessAngle = value;
+        }
 
         private void Awake()
         {
@@ -63,31 +68,30 @@ namespace TMKOC.StarLink
             }
         }
 
-        private void Update()
-        {
-            if (!isOrbiting) return;
+      private void Update()
+{
+    if (!isOrbiting) return;
 
-            // 1. Compute alignment (drives both the green line and the pause)
-            isAlignedCached = ComputeAlignment();
-            LineDrawer.Instance.SetDottedLineAligned(isAlignedCached);
+    isAlignedCached = ComputeAlignment();
+    LineDrawer.Instance.SetDottedLineAligned(isAlignedCached);
 
-            // 2. Advance the orbit unless we're parked at the sweet spot
-            if (pauseAtSweetSpot && isAlignedCached)
-            {
-                UpdatePositionFromAngle();   // hold position
-            }
-            else
-            {
-                HandleOrbiting();
-            }
+    // Once the comet has left the alignment window, arm the real pause
+    if (waitingForUnalignFirst && !isAlignedCached)
+        waitingForUnalignFirst = false;
 
-            // 3. Handle player tap
-            if (Input.GetMouseButtonDown(0) &&
-                StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
-            {
-                Launch();
-            }
-        }
+    bool shouldPause = pauseAtSweetSpot && isAlignedCached && !waitingForUnalignFirst;
+
+    if (shouldPause)
+        UpdatePositionFromAngle();
+    else
+        HandleOrbiting();
+
+    if (Input.GetMouseButtonDown(0) &&
+        StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
+    {
+        Launch();
+    }
+}
 
         private bool ComputeAlignment()
         {
@@ -193,54 +197,79 @@ namespace TMKOC.StarLink
             transform.up = tangent;
         }
 
-        public void Launch()
+       public void Launch()
+{
+    isOrbiting = false;
+
+    float rad = currentAngle * Mathf.Deg2Rad;
+    Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
+    Vector2 launchDirection = tangent;
+
+    // --- Aim assist: snap near-misses into guaranteed hits ---
+    if (useAimAssist && cachedLevel != null)
+    {
+        Star target = cachedLevel.CurrentTargetStar;
+        if (target != null)
         {
-            isOrbiting = false;
+            Vector2 toTarget = (Vector2)target.transform.position - (Vector2)transform.position;
+            float dist = toTarget.magnitude;
 
-            float rad = currentAngle * Mathf.Deg2Rad;
-            Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
-            Vector2 launchDirection = tangent;
-
-            // (your existing aim-assist block here, unchanged)
-
-            rb.linearVelocity = launchDirection * launchSpeed;
-            LineDrawer.Instance.SetDottedLineAligned(false);
-
-            // Consume one-shot pause so subsequent orbits don't pause again
-            if (consumePauseOnLaunch)
+            if (dist > 0.01f)
             {
-                pauseAtSweetSpot = false;
-                consumePauseOnLaunch = false;
+                Vector2 toTargetDir = toTarget / dist;
+
+                // Only assist if the target is in front of the launch direction
+                if (Vector2.Dot(tangent, toTargetDir) > 0f)
+                {
+                    float angleOff = Vector2.Angle(tangent, toTargetDir);
+                    if (angleOff <= forgivenessAngle)
+                    {
+                        launchDirection = toTargetDir;
+                    }
+                }
             }
         }
+    }
 
+    rb.linearVelocity = launchDirection * launchSpeed;
+    LineDrawer.Instance.SetDottedLineAligned(false);
+
+    if (consumePauseOnLaunch)
+    {
+        pauseAtSweetSpot = false;
+        consumePauseOnLaunch = false;
+    }
+}
         /// <summary>
         /// Comet will stop at the next sweet spot and wait for a tap.
         /// Auto-disables after the player launches.
         /// </summary>
-        public void PauseAtNextSweetSpot()
-        {
-            pauseAtSweetSpot = true;
-            consumePauseOnLaunch = true;
-        }
-
+       public void PauseAtNextSweetSpot()
+{
+    pauseAtSweetSpot = true;
+    consumePauseOnLaunch = true;
+    // If comet is already inside the sweet spot, force it to leave before pausing
+    waitingForUnalignFirst = isAlignedCached;
+}
         /// <summary>
         /// Comet will always pause at sweet spots until disabled. Use for "easy mode."
         /// </summary>
-        public void SetSweetSpotPauseMode(bool enabled)
-        {
-            pauseAtSweetSpot = enabled;
-            consumePauseOnLaunch = false;
-        }
+public void SetSweetSpotPauseMode(bool enabled)
+{
+    pauseAtSweetSpot = enabled;
+    consumePauseOnLaunch = false;
+    waitingForUnalignFirst = enabled && isAlignedCached;
+}
 
         /// <summary>
         /// Force-resume the orbit immediately, even if paused at a sweet spot.
         /// </summary>
-        public void ResumeOrbit()
-        {
-            pauseAtSweetSpot = false;
-            consumePauseOnLaunch = false;
-        }
+      public void ResumeOrbit()
+{
+    pauseAtSweetSpot = false;
+    consumePauseOnLaunch = false;
+    waitingForUnalignFirst = false;
+}
 
         /// <summary>
         /// Sent when another object enters a trigger collider attached to this
