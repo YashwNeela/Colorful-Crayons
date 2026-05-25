@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace TMKOC.Cases_of_Popatlal.Tutorial{
+namespace TMKOC.StarLink{
 
 public class TutorialHighlighter : MonoBehaviour
 {
-    private GameObject currentTarget;
+        private GameObject currentTarget;
 
     public void Highlight(GameObject target)
     {
@@ -26,5 +26,4 @@ public class TutorialHighlighter : MonoBehaviour
         return currentTarget;
     }
 }
-
 }

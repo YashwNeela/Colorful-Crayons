@@ -10393,7 +10393,6 @@ MonoBehaviour:
   levelNumber: 0
   m_CurrentGameState: 0
   m_PlayCloudTransition: 0
-  tutorialData: {fileID: 0}
 --- !u!4 &818991371
 Transform:
   m_ObjectHideFlags: 0
@@ -25680,64 +25679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef6a5846d0d7dd4cbd6f20c6dd91216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TutorialID: 0
-  PlayOnAwake: 1
-  ShowText: 1
-  textDelayCall: 0
-  textDuration: 5
-  TutorialInstruction: Tap on the screen to release the comet and connect with next
-    star
-  PointTheObject: 1
-  pointerDelayCall: 0
-  PointThisObj: {fileID: 1715095946}
-  NeedToClick: 1
-  HasBeenClicked: 0
-  IsDragType: 0
-  dragDelayCall: 0
-  DragObjectA: {fileID: 0}
-  IsObjectAMoving: 0
-  DragObjectB: {fileID: 0}
-  IsObjectBMoving: 0
-  NeedToDrag: 0
-  IsHighlightObject: 0
-  highlightDelayCall: 0
-  HighlightThisObj: {fileID: 0}
-  AddAudio: 0
-  TutorialAudio: {fileID: 0}
-  delayAudioCall: 0
-  extraAudioTime: 0
-  displayDuration: 0
-  delayCall: 0
-  SlowTheGame: 0
-  GameSpeed: 1
-  PlayOnce: 0
-  UsedOnPrefab: 0
-  WaitForMyCompletion: 0
-  TutorialCompleted: 0
-  NextTutorialToPlay: {fileID: 0}
-  OnTextAnimationComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  OnPointObjectComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  OnDragTutorialComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  OnMediaComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  OnTutorialComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 1704697174}, m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine, m_MethodName: SetActive, m_Mode: 6, m_Arguments: {m_ObjectArgument: {fileID: 0},
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, m_IntArgument: 0,
-          m_FloatArgument: 0, m_StringArgument: , m_BoolArgument: 1}, m_CallState: 2}
-    m_CallsDirty: 1
 --- !u!1001 &1808928510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26103,60 +26044,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef6a5846d0d7dd4cbd6f20c6dd91216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TutorialID: 0
-  PlayOnAwake: 0
-  ShowText: 1
-  textDelayCall: 0
-  textDuration: 0
-  TutorialInstruction: 
-  PointTheObject: 1
-  pointerDelayCall: 0
-  PointThisObj: {fileID: 772485972}
-  NeedToClick: 1
-  HasBeenClicked: 0
-  IsDragType: 0
-  dragDelayCall: 0
-  DragObjectA: {fileID: 0}
-  IsObjectAMoving: 0
-  DragObjectB: {fileID: 0}
-  IsObjectBMoving: 0
-  NeedToDrag: 0
-  IsHighlightObject: 1
-  highlightDelayCall: 0
-  HighlightThisObj: {fileID: 0}
-  AddAudio: 0
-  TutorialAudio: {fileID: 0}
-  delayAudioCall: 0
-  extraAudioTime: 0
-  displayDuration: 0
-  delayCall: 0
-  SlowTheGame: 0
-  GameSpeed: 1
-  PlayOnce: 0
-  UsedOnPrefab: 0
-  WaitForMyCompletion: 0
-  TutorialCompleted: 0
-  NextTutorialToPlay: {fileID: 0}
-  OnTextAnimationComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  OnPointObjectComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  OnDragTutorialComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  OnMediaComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  OnTutorialComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
 --- !u!1 &1845106135
 GameObject:
   m_ObjectHideFlags: 0
@@ -32201,6 +32088,111 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].playMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].tutorialId
+      value: FTUE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[0].stepUI
+      value: 
+      objectReference: {fileID: 944846076777631005, guid: 3c104651ed8fd4e9b823d34609c3bc2b,
+        type: 3}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[1].stepUI
+      value: 
+      objectReference: {fileID: 2870899260166942620, guid: 60ab7e5ad0f744e77903fb24d426427e,
+        type: 3}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[2].stepUI
+      value: 
+      objectReference: {fileID: 795691591621035314, guid: 5812be0c29cce42e2867cb261b4c46e1,
+        type: 3}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[3].stepUI
+      value: 
+      objectReference: {fileID: 4732120627768116232, guid: fc47e2066cc9246fcbc2092d482fe4f0,
+        type: 3}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[4].stepUI
+      value: 
+      objectReference: {fileID: 6864694076447852786, guid: d98365c2da8c949a1bcb0781d1c7cfc3,
+        type: 3}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[0].message
+      value: Hi friend! Let's go on the space journey!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[1].message
+      value: See the spinning sky-rock? Whoosh, whoosh!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[2].message
+      value: It wants to visit the twinkly star!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[3].message
+      value: Tap the screen to send it flying!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[4].message
+      value: Ready? Let's go!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[2].targetObject
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[0].waitForClickOnTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[1].waitForClickOnTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[2].waitForClickOnTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[3].waitForClickOnTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420457614536517424, guid: 49beb8cdf5de142d892510b5a0539413,
+        type: 3}
+      propertyPath: tutorialDatas.Array.data[0].steps.Array.data[4].waitForClickOnTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3979777570097946520, guid: 49beb8cdf5de142d892510b5a0539413,
         type: 3}
       propertyPath: m_Name

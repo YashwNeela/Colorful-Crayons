@@ -99,7 +99,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508017092503096530}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ac85e8a300004f73a4980c6145934fd, type: 3}
   m_Name: 
@@ -226,8 +226,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7304246636648617171}
-        m_TargetAssemblyTypeName: TutorialHighlightClickHandler, Assembly-CSharp
-        m_MethodName: OnClick
+        m_TargetAssemblyTypeName: TMKOC.StarLink.TutorialHighlightClickHandler, Assembly-CSharp
+        m_MethodName: OnHighlightedAreaClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.8282523, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -513,8 +513,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -513, y: -53}
-  m_SizeDelta: {x: 381.2897, y: 381.2897}
+  m_AnchoredPosition: {x: -560, y: -122}
+  m_SizeDelta: {x: 1148.5922, y: 1148.5922}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8807928736866899348
 CanvasRenderer:
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ae97763c6dba0472fa16bf0dad2507ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: df75563b6a02d48259756f17bb9223f3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -6,7 +6,6 @@ namespace TMKOC.StarLink
     public class StarLinkGameManager : GameManager
     {
 
-        public TutorialData tutorialData;
         public override void Start()
         {
             base.Start();
@@ -29,7 +28,8 @@ namespace TMKOC.StarLink
         
             //Start tutorial
 
-            TMKOC.StarLink.TutorialManager.Instance.StartTutorial(tutorialData);
+            TMKOC.StarLink.TutorialManager.Instance.StartTutorial("FTUE");
+            base.StartTutorial("FTUE");
             }
 
             // Custom start logic for StarLink, if any.

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+
 namespace TMKOC.StarLink{
 
 public enum TutorialPlayMode
@@ -9,9 +10,8 @@ public enum TutorialPlayMode
     PlayEveryTime,
     PlayUntilCompleted
 }
-
-[CreateAssetMenu(menuName = "Tutorial/Tutorial Data")]
-public class TutorialData : ScriptableObject
+[System.Serializable]
+public class TutorialData
 {
     public string tutorialId;
     public TutorialPlayMode playMode;
@@ -40,6 +40,7 @@ public class TutorialStep
 
     public float autoNextDelay = 0f;
 }
+
 
 
 }

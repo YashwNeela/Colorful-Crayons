@@ -3,163 +3,187 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using Sirenix.OdinInspector;
-using System.Linq;
-using TMKOC.StarLink;
-using TMKOC.Cases_of_Popatlal.Tutorial;
 using System;
+using System.Collections.Generic;
 
 
-namespace TMKOC.StarLink{
-public class TutorialManager : MonoBehaviour
+namespace TMKOC.StarLink
 {
-    public static TutorialManager Instance;
-
-
-    [Header("Highlight")]
-    public TutorialHighlighter highlighter;
-
-    [Header("UI")]
-    public GameObject tutorialPanel;
-
-    [Header("Audio")]
-    public AudioSource audioSource;
-
-    private TutorialData currentTutorial;
-
-    private GameObject currentStepGO;
-    private int currentStepIndex;
-    private bool waitingForTargetClick;
-
-    public Action<string> OnTutorialStarted;
-    public Action<string> OnTutorialFinished;
-
-    
-
-    private void Awake()
+    public class TutorialManager : MonoBehaviour
     {
-        Instance = this;
-        tutorialPanel.SetActive(false);
-    }
+        public static TutorialManager Instance;
 
-    [Button]
-    public void StartTutorial(TutorialData tutorialData)
-    {
-        if (!CanPlayTutorial(tutorialData))
-            return;
+        public List<TutorialData> tutorialDatas;
 
-        currentTutorial = tutorialData;
-        currentStepIndex = 0;
 
-        tutorialPanel.SetActive(true);
-        PlayStep();
-        OnTutorialStarted?.Invoke(tutorialData.tutorialId);
-        StarLinkGameManager.Instance.StartTutorial(tutorialData.tutorialId);
-    }
+        [Header("Highlight")]
+        public TutorialHighlighter highlighter;
 
-    public void PlayStep()
-    {
-        TutorialStep step = currentTutorial.steps[currentStepIndex];
-        TutorialStepUI stepUI = step.stepUI;
-        currentStepGO =  Instantiate(step.stepUI.gameObject,tutorialPanel.transform);
-       // stepUIGO.GetComponent<TutorialStepUI>().tutorialHighlightClickHandler.target = step.targetObject;
+        [Header("UI")]
+        public GameObject tutorialPanel;
 
-        
-    
+        [Header("Audio")]
+        public AudioSource audioSource;
 
-        stepUI.tutorialText.text = step.message.ToString();
-       // Helper.TypeWriterAnimation(stepUI.tutorialText,step.message,20f);
-       
-        PlayAudio(step.audioClip);
+        private TutorialData currentTutorial;
 
-        waitingForTargetClick = step.waitForClickOnTarget;
+        private GameObject currentStepGO;
+        private int currentStepIndex;
+        private bool waitingForTargetClick;
 
-        if (!step.waitForClickOnTarget && step.autoNextDelay > 0)
+        public Action<string> OnTutorialStarted;
+        public Action<string> OnTutorialFinished;
+
+
+
+        private void Awake()
         {
-            StartCoroutine(AutoNext(step.autoNextDelay));
+            Instance = this;
+            tutorialPanel.SetActive(false);
         }
-    }
-
-    public void OnHighlightedAreaClicked(GameObject clickedObject)
-    {
-     
-        TutorialStep step = currentTutorial.steps[currentStepIndex];
-
-        if(!step.clickAnywhere){
-
-        if (!waitingForTargetClick)
-            return;
-
-        if (clickedObject == step.targetObject)
+        [Button]
+        public void StartTutorial(string tutorialId)
         {
+            TutorialData tutorialData = Array.Find<TutorialData>(
+          tutorialDatas.ToArray(),
+          data => data.tutorialId == tutorialId
+      );
+            if (!CanPlayTutorial(tutorialData))
+                return;
+
+            currentTutorial = tutorialData;
+            currentStepIndex = 0;
+
+            tutorialPanel.SetActive(true);
+            PlayStep();
+            OnTutorialStarted?.Invoke(tutorialData.tutorialId);
+
+        }
+        [Button]
+        public void StartTutorial(TutorialData tutorialData)
+        {
+            if (!CanPlayTutorial(tutorialData))
+                return;
+
+            currentTutorial = tutorialData;
+            currentStepIndex = 0;
+
+            tutorialPanel.SetActive(true);
+            PlayStep();
+            OnTutorialStarted?.Invoke(tutorialData.tutorialId);
+
+        }
+
+        public void PlayStep()
+        {
+            TutorialStep step = currentTutorial.steps[currentStepIndex];
+            TutorialStepUI stepUI = step.stepUI;
+            currentStepGO = Instantiate(step.stepUI.gameObject, tutorialPanel.transform);
+            stepUI.GetComponent<TutorialStepUI>().tutorialHighlightClickHandler.target = step.targetObject;
+
+
+
+
+            stepUI.tutorialText.text = step.message.ToString();
+            // Helper.TypeWriterAnimation(stepUI.tutorialText,step.message,20f);
+
+            //PlayAudio(step.audioClip);
+
+            waitingForTargetClick = step.waitForClickOnTarget;
+
+            if (!step.waitForClickOnTarget && step.autoNextDelay > 0)
+            {
+                StartCoroutine(AutoNext(step.autoNextDelay));
+            }
+        }
+
+        public void OnHighlightedAreaClicked(GameObject clickedObject)
+        {
+
+            TutorialStep step = currentTutorial.steps[currentStepIndex];
+
+            if (!step.clickAnywhere)
+            {
+
+                if (!waitingForTargetClick)
+                    return;
+
+                if (clickedObject == step.targetObject)
+                {
+                    NextStep();
+                }
+
+            }
+            else
+                NextStep();
+
+
+        }
+
+        public void NextStep()
+        {
+            Destroy(currentStepGO);
+            currentStepIndex++;
+
+            if (currentStepIndex >= currentTutorial.steps.Length)
+            {
+                CompleteTutorial();
+                return;
+            }
+
+            PlayStep();
+        }
+
+        public void CompleteTutorial()
+        {
+            SaveTutorialCompleted(currentTutorial);
+
+            OnTutorialFinished?.Invoke(currentTutorial.tutorialId);
+
+
+
+            tutorialPanel.SetActive(false);
+
+            Destroy(currentStepGO);
+
+
+            currentTutorial = null;
+
+
+        }
+
+        public bool CanPlayTutorial(TutorialData tutorialData)
+        {
+            if (tutorialData.playMode == TutorialPlayMode.PlayEveryTime)
+                return true;
+
+            return PlayerPrefs.GetInt(tutorialData.tutorialId, 0) == 0;
+        }
+
+        public void SaveTutorialCompleted(TutorialData tutorialData)
+        {
+            if (tutorialData.playMode == TutorialPlayMode.PlayOnce ||
+                tutorialData.playMode == TutorialPlayMode.PlayUntilCompleted)
+            {
+                PlayerPrefs.SetInt(tutorialData.tutorialId, 1);
+                PlayerPrefs.Save();
+            }
+        }
+
+        public void PlayAudio(AudioClip clip)
+        {
+            if (clip == null)
+                return;
+
+            audioSource.Stop();
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
+
+        private IEnumerator AutoNext(float delay)
+        {
+            yield return new WaitForSeconds(delay);
             NextStep();
         }
-
-        }
-        else
-            NextStep();
-
-        
     }
-
-    public void NextStep()
-    {
-        Destroy(currentStepGO);
-        currentStepIndex++;
-
-        if (currentStepIndex >= currentTutorial.steps.Length)
-        {
-            CompleteTutorial();
-            return;
-        }
-
-        PlayStep();
-    }
-
-    public void CompleteTutorial()
-    {
-        SaveTutorialCompleted(currentTutorial);
-
-        OnTutorialFinished?.Invoke(currentTutorial.tutorialId);
-        StarLinkGameManager.Instance.EndTutorial(currentTutorial.tutorialId);
-
-
-        tutorialPanel.SetActive(false);
-
-        currentTutorial = null;
-    }
-
-    public bool CanPlayTutorial(TutorialData tutorialData)
-    {
-        if (tutorialData.playMode == TutorialPlayMode.PlayEveryTime)
-            return true;
-
-        return PlayerPrefs.GetInt(tutorialData.tutorialId, 0) == 0;
-    }
-
-    public void SaveTutorialCompleted(TutorialData tutorialData)
-    {
-        if (tutorialData.playMode == TutorialPlayMode.PlayOnce ||
-            tutorialData.playMode == TutorialPlayMode.PlayUntilCompleted)
-        {
-            PlayerPrefs.SetInt(tutorialData.tutorialId, 1);
-            PlayerPrefs.Save();
-        }
-    }
-
-    public void PlayAudio(AudioClip clip)
-    {
-        if (clip == null)
-            return;
-
-        audioSource.Stop();
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
-
-    private IEnumerator AutoNext(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        NextStep();
-    }
-}
 }
