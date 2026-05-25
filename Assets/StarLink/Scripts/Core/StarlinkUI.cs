@@ -19,6 +19,8 @@ public class StarlinkUI : SerializedSingleton<StarlinkUI>
 
     public TextMeshProUGUI m_Discription;
 
+    public GameObject fingerObj;
+
 
     protected override void Awake()
         {
@@ -45,5 +47,7 @@ public class StarlinkUI : SerializedSingleton<StarlinkUI>
             Container.SetActive(false);
             
         }
+
+        
 }
 }
