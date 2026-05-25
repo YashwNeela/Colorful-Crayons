@@ -77,6 +77,7 @@ namespace TMKOC.StarLink
         public void PlayStep()
         {
             TutorialStep step = currentTutorial.steps[currentStepIndex];
+            step.OnTutorialStepStarted?.Invoke();
             TutorialStepUI stepUI = step.stepUI;
             currentStepGO = Instantiate(step.stepUI.gameObject, tutorialPanel.transform);
             stepUI.GetComponent<TutorialStepUI>().tutorialHighlightClickHandler.target = step.targetObject;
@@ -123,6 +124,8 @@ namespace TMKOC.StarLink
         public void NextStep()
         {
             Destroy(currentStepGO);
+            TutorialStep step = currentTutorial.steps[currentStepIndex];
+            step.OnTutorialStepFinished?.Invoke();
             currentStepIndex++;
 
             if (currentStepIndex >= currentTutorial.steps.Length)

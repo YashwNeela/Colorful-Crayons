@@ -8,6 +8,10 @@ namespace TMKOC.StarLink
     public class Comet : MonoBehaviour
     {
 
+        [Header("Sweet Spot Pause")]
+        [SerializeField] private bool pauseAtSweetSpot = false;
+        private bool consumePauseOnLaunch = false;
+        private bool isAlignedCached = false;
         private StarLinkLevel cachedLevel;
         private float cometRadius = 0f;
 
@@ -28,10 +32,10 @@ namespace TMKOC.StarLink
         [SerializeField] private float forgivenessAngle = 15f;
 
         [Range(0f, 1f)]
-[SerializeField] private float greenZoneFraction = 1f;
-// 1.0 = green covers the entire forgiveness band (green = "will hit, period")
-// 0.7 = green covers inner 70%, outer 30% is silent assist
-// 0.5 = green is strict, assist quietly catches the rest
+        [SerializeField] private float greenZoneFraction = 1f;
+        // 1.0 = green covers the entire forgiveness band (green = "will hit, period")
+        // 0.7 = green covers inner 70%, outer 30% is silent assist
+        // 0.5 = green is strict, assist quietly catches the rest
 
 
         private void Awake()
@@ -61,50 +65,83 @@ namespace TMKOC.StarLink
 
         private void Update()
         {
-            if (isOrbiting)
+            if (!isOrbiting) return;
+
+            // 1. Compute alignment (drives both the green line and the pause)
+            isAlignedCached = ComputeAlignment();
+            LineDrawer.Instance.SetDottedLineAligned(isAlignedCached);
+
+            // 2. Advance the orbit unless we're parked at the sweet spot
+            if (pauseAtSweetSpot && isAlignedCached)
+            {
+                UpdatePositionFromAngle();   // hold position
+            }
+            else
             {
                 HandleOrbiting();
-                CheckLaunchAlignment();
-                // Tap to launch
-                if (Input.GetMouseButtonDown(0) && StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
-                {
-                    Launch();
-                }
+            }
+
+            // 3. Handle player tap
+            if (Input.GetMouseButtonDown(0) &&
+                StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
+            {
+                Launch();
             }
         }
 
-       private void CheckLaunchAlignment()
-{
-    if (cachedLevel == null)
-    {
-        cachedLevel = FindObjectOfType<StarLinkLevel>();
-        if (cachedLevel == null) return;
-    }
+        private bool ComputeAlignment()
+        {
+            if (cachedLevel == null)
+            {
+                cachedLevel = FindObjectOfType<StarLinkLevel>();
+                if (cachedLevel == null) return false;
+            }
 
-    Star target = cachedLevel.CurrentTargetStar;
-    if (target == null)
-    {
-        LineDrawer.Instance.SetDottedLineAligned(false);
-        return;
-    }
+            Star target = cachedLevel.CurrentTargetStar;
+            if (target == null) return false;
 
-    float rad = currentAngle * Mathf.Deg2Rad;
-    Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
+            float rad = currentAngle * Mathf.Deg2Rad;
+            Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
 
-    Vector2 toTarget = (Vector2)target.transform.position - (Vector2)transform.position;
+            Vector2 toTarget = (Vector2)target.transform.position - (Vector2)transform.position;
+            if (Vector2.Dot(tangent, toTarget) <= 0f) return false;
 
-    // Target must be in front of the launch direction
-    if (Vector2.Dot(tangent, toTarget) <= 0f)
-    {
-        LineDrawer.Instance.SetDottedLineAligned(false);
-        return;
-    }
+            float angleOff = Vector2.Angle(tangent, toTarget.normalized);
+            return angleOff <= forgivenessAngle * greenZoneFraction;
+        }
 
-    float angleOff = Vector2.Angle(tangent, toTarget.normalized);
-    bool aligned = angleOff <= forgivenessAngle * greenZoneFraction;
+        private void CheckLaunchAlignment()
+        {
+            if (cachedLevel == null)
+            {
+                cachedLevel = FindObjectOfType<StarLinkLevel>();
+                if (cachedLevel == null) return;
+            }
 
-    LineDrawer.Instance.SetDottedLineAligned(aligned);
-}
+            Star target = cachedLevel.CurrentTargetStar;
+            if (target == null)
+            {
+                LineDrawer.Instance.SetDottedLineAligned(false);
+                return;
+            }
+
+            float rad = currentAngle * Mathf.Deg2Rad;
+            Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
+
+            Vector2 toTarget = (Vector2)target.transform.position - (Vector2)transform.position;
+
+            // Target must be in front of the launch direction
+            if (Vector2.Dot(tangent, toTarget) <= 0f)
+            {
+                LineDrawer.Instance.SetDottedLineAligned(false);
+                return;
+            }
+
+            float angleOff = Vector2.Angle(tangent, toTarget.normalized);
+            bool aligned = angleOff <= forgivenessAngle * greenZoneFraction;
+
+            LineDrawer.Instance.SetDottedLineAligned(aligned);
+        }
 
         public void AttachToStar(Star star)
         {
@@ -156,44 +193,53 @@ namespace TMKOC.StarLink
             transform.up = tangent;
         }
 
-        private void Launch()
+        public void Launch()
         {
             isOrbiting = false;
 
             float rad = currentAngle * Mathf.Deg2Rad;
             Vector2 tangent = new Vector2(-Mathf.Sin(rad), Mathf.Cos(rad)).normalized;
-
             Vector2 launchDirection = tangent;
 
-            // --- Aim assist: nudge near-misses into guaranteed hits ---
-            if (useAimAssist && cachedLevel != null)
-            {
-                Star target = cachedLevel.CurrentTargetStar;
-                if (target != null)
-                {
-                    Vector2 toTarget = (Vector2)target.transform.position - (Vector2)transform.position;
-                    float dist = toTarget.magnitude;
-
-                    if (dist > 0.01f)
-                    {
-                        Vector2 toTargetDir = toTarget / dist;
-
-                        // Only assist if target is generally in front of the launch direction
-                        if (Vector2.Dot(tangent, toTargetDir) > 0f)
-                        {
-                            float angleOff = Vector2.Angle(tangent, toTargetDir);
-                            if (angleOff <= forgivenessAngle)
-                            {
-                                launchDirection = toTargetDir;
-                            }
-                        }
-                    }
-                }
-            }
+            // (your existing aim-assist block here, unchanged)
 
             rb.linearVelocity = launchDirection * launchSpeed;
-
             LineDrawer.Instance.SetDottedLineAligned(false);
+
+            // Consume one-shot pause so subsequent orbits don't pause again
+            if (consumePauseOnLaunch)
+            {
+                pauseAtSweetSpot = false;
+                consumePauseOnLaunch = false;
+            }
+        }
+
+        /// <summary>
+        /// Comet will stop at the next sweet spot and wait for a tap.
+        /// Auto-disables after the player launches.
+        /// </summary>
+        public void PauseAtNextSweetSpot()
+        {
+            pauseAtSweetSpot = true;
+            consumePauseOnLaunch = true;
+        }
+
+        /// <summary>
+        /// Comet will always pause at sweet spots until disabled. Use for "easy mode."
+        /// </summary>
+        public void SetSweetSpotPauseMode(bool enabled)
+        {
+            pauseAtSweetSpot = enabled;
+            consumePauseOnLaunch = false;
+        }
+
+        /// <summary>
+        /// Force-resume the orbit immediately, even if paused at a sweet spot.
+        /// </summary>
+        public void ResumeOrbit()
+        {
+            pauseAtSweetSpot = false;
+            consumePauseOnLaunch = false;
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace TMKOC.StarLink{
@@ -39,6 +40,10 @@ public class TutorialStep
     public bool waitForClickOnTarget = true;
 
     public float autoNextDelay = 0f;
+
+    public UnityEvent OnTutorialStepStarted;
+
+    public UnityEvent OnTutorialStepFinished;
 }
 
 
