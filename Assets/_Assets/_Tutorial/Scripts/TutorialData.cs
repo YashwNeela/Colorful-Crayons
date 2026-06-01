@@ -33,7 +33,7 @@ public class TutorialStep
 
     public GameObject targetObject;
 
-    public AudioClip audioClip;
+    public string audioClipName;
 
     
 

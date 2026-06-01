@@ -324,7 +324,11 @@ namespace TMKOC.StarLink
         {
             onPlayerInactive?.Invoke();
             if (StarLinkGameManager.Instance.CurrentGameState == GameState.Playing)
+            {
                 StarlinkUI.Instance.fingerObj.SetActive(true);
+
+                RuntimeAudioLoader.Instance.PlayRuntimeAudio((StarlinkAudioMapper.Instance as StarlinkAudioMapper).GetRandomTapAudio());
+            }
         }
 
         /// <summary>
@@ -374,6 +378,13 @@ namespace TMKOC.StarLink
             {
                 consecutiveMisses = 0;   // Reset on successful hit
                 Debug.Log("Attaching to star");
+
+                //  RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GetTutorialAudio(clipName));
+
+            if((StarLinkGameManager.Instance as StarLinkGameManager).isPlayingFromPlaySchoolMain)
+{
+                RuntimeAudioLoader.Instance.PlayRuntimeAudio((StarlinkAudioMapper.Instance  as StarlinkAudioMapper).GetRandomSuccesfulHit());
+}
                 AttachToStar(hitStar);
                 currentLevel.OnStarHit(hitStar);
             }
@@ -388,6 +399,13 @@ namespace TMKOC.StarLink
             trailRenderer.emitting = false;
 
             // Count this miss and auto-pause at sweet spot if threshold reached
+
+            if((StarLinkGameManager.Instance as StarLinkGameManager).isPlayingFromPlaySchoolMain)
+{
+                RuntimeAudioLoader.Instance.PlayRuntimeAudio((StarlinkAudioMapper.Instance  as StarlinkAudioMapper).GetRandomMiss());
+
+        }
+
             consecutiveMisses++;
             if (consecutiveMisses >= missesBeforeAutoPause)
             {

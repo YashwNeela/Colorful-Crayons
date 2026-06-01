@@ -117,6 +117,7 @@ namespace TMKOC.StarLink
         protected virtual void OnConstellationComplete()
         {
             Debug.Log("On Constellation Completed");
+            LineDrawer.Instance.HideDottedLine();
             // Reveal the art and win the game
             if (constellationImage != null)
             {
@@ -131,15 +132,15 @@ namespace TMKOC.StarLink
         private IEnumerator RevealArtCoroutine()
         {
 
-
-
-
-
-
-            yield return new WaitForSeconds(1f); // Wait a bit before showing win screen
+            yield return new WaitForSeconds(2f); // Wait a bit before showing win screen
 
             StarlinkUI.Instance.Show(constellationImage, title, discription);
 
+            if((StarLinkGameManager.Instance as StarLinkGameManager).isPlayingFromPlaySchoolMain)
+{
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio((StarlinkAudioMapper.Instance  as StarlinkAudioMapper).LevelComplete[LevelManager.Instance.CurrentLevelIndex]);
+}
             GameManager.Instance.GameWin();
         }
     }

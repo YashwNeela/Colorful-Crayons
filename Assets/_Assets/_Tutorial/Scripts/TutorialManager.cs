@@ -22,8 +22,6 @@ namespace TMKOC.StarLink
         [Header("UI")]
         public GameObject tutorialPanel;
 
-        [Header("Audio")]
-        public AudioSource audioSource;
 
         private TutorialData currentTutorial;
 
@@ -88,7 +86,7 @@ namespace TMKOC.StarLink
             stepUI.tutorialText.text = step.message.ToString();
             // Helper.TypeWriterAnimation(stepUI.tutorialText,step.message,20f);
 
-            //PlayAudio(step.audioClip);
+            PlayAudio(step.audioClipName);
 
             waitingForTargetClick = step.waitForClickOnTarget;
 
@@ -174,14 +172,19 @@ namespace TMKOC.StarLink
             }
         }
 
-        public void PlayAudio(AudioClip clip)
+       
+
+         public void PlayAudio(string clipName)
         {
-            if (clip == null)
+            if (clipName == null)
                 return;
 
-            audioSource.Stop();
-            audioSource.clip = clip;
-            audioSource.Play();
+            if((StarLinkGameManager.Instance as StarLinkGameManager).isPlayingFromPlaySchoolMain)
+            {
+                RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GetTutorialAudio(clipName));
+            }
+            
+      
         }
 
         private IEnumerator AutoNext(float delay)

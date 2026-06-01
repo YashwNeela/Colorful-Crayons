@@ -5,7 +5,7 @@ namespace TMKOC.StarLink
 {
     public class StarLinkGameManager : GameManager
     {
-
+        public bool isPlayingFromPlaySchoolMain;
         public override void Start()
         {
             base.Start();
@@ -38,18 +38,18 @@ namespace TMKOC.StarLink
         public override void GameWin()
         {
             base.GameWin();
-            // WinLosePanelScript.Instance.ShowNextLevelPopUp(()=>
-            // {
-            //     m_CurrentGameState = GameState.Win;
-            // OnGameWin?.Invoke();
+            WinLosePanelScript.Instance.ShowNextLevelPopUp(()=>
+            {
+                m_CurrentGameState = GameState.Win;
+            OnGameWin?.Invoke();
 
-            // if (LevelManager.Instance.CurrentLevelIndex + 1 >= LevelManager.Instance.MaxLevels)
-            // {
-            //     GameCompleted();
-            //     return;
-            // }
-            // GameNotCompleted();
-            // });
+            if (LevelManager.Instance.CurrentLevelIndex + 1 >= LevelManager.Instance.MaxLevels)
+            {
+                GameCompleted();
+                return;
+            }
+            GameNotCompleted();
+            });
             
         }
 
@@ -64,7 +64,6 @@ namespace TMKOC.StarLink
             base.GameCompleted();
             #if PLAYSCHOOL_MAIN
                     EffectParticleControll.Instance.SpawnGameEndPanel();
-                  //  GameManager.Instance.SoundManager.PlayFinalOutro();
                     GameOverEndPanel.Instance.AddTheListnerRetryGame();
                     return;
 #endif

@@ -24,6 +24,7 @@ namespace TMKOC.StarLink
         protected override void Awake()
         {
             base.Awake();
+            
 
             SetupLineRendererDotted();
             SetupLineRendererHighlighted();

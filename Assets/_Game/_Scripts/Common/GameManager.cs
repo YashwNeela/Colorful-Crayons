@@ -35,12 +35,12 @@ namespace TMKOC
         public int levelNumber;
 
 
-        //protected GameCategoryDataManager m_CatergoryDataManager;
-        //public GameCategoryDataManager GameCategoryDataManager => m_CatergoryDataManager;
+        protected GameCategoryDataManager m_CatergoryDataManager;
+        public GameCategoryDataManager GameCategoryDataManager => m_CatergoryDataManager;
 
-        //protected UpdateCategoryApiManager m_UpdateCategoryApiManager;
+        protected UpdateCategoryApiManager m_UpdateCategoryApiManager;
 
-        //public UpdateCategoryApiManager UpdateCategoryApiManager => m_UpdateCategoryApiManager;
+        public UpdateCategoryApiManager UpdateCategoryApiManager => m_UpdateCategoryApiManager;
 
 
         [SerializeField] protected GameState m_CurrentGameState;
@@ -100,12 +100,12 @@ namespace TMKOC
             #endif
 
 
-            //m_CatergoryDataManager = new GameCategoryDataManager(GAMEID,PlayerPrefs.GetString("currentGameName"));
-            //m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
+            m_CatergoryDataManager = new GameCategoryDataManager(GAMEID,PlayerPrefs.GetString("currentGameName"));
+            m_UpdateCategoryApiManager = new UpdateCategoryApiManager(GAMEID);
 
             if (!testLevel)
             {
-                //levelNumber = m_CatergoryDataManager.GetCompletedLevel;
+                levelNumber = m_CatergoryDataManager.GetCompletedLevel;
                 if (levelNumber == LevelManager.Instance.MaxLevels)
                     levelNumber = 0;
             }
@@ -141,28 +141,30 @@ namespace TMKOC
         }
         private void OnApplicationQuit()
         {
-            // dataManager.SendData(()=>
-            // {
+                      #if PLAYSCHOOL_MAIN
 
-            // });
-            //m_CatergoryDataManager.SaveLevel(LevelManager.Instance.CurrentLevelIndex, LevelManager.Instance.MaxLevels);
+            m_CatergoryDataManager.SaveLevel(LevelManager.Instance.CurrentLevelIndex, LevelManager.Instance.MaxLevels);
+            #endif
         }
         public virtual void GameStart(int level)
         {
             m_CurrentGameState = GameState.Start;
             LevelManager.Instance.LoadLevel(level);
-            //m_CatergoryDataManager.SaveLevel(level, LevelManager.Instance.MaxLevels);
 
-            //int star = m_CatergoryDataManager.Getstar;
-            //if (star >= 5)
-            //{
-            //    //m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
-            //}
-            //else
-            //{
-            //    //m_UpdateCategoryApiManager.SetGameDataMore(level, LevelManager.Instance.MaxLevels, star);
-            //}
+            #if PLAYSCHOOL_MAIN
 
+            m_CatergoryDataManager.SaveLevel(level, LevelManager.Instance.MaxLevels);
+
+            int star = m_CatergoryDataManager.Getstar;
+            if (star >= 5)
+            {
+               m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
+            }
+            else
+            {
+               m_UpdateCategoryApiManager.SetGameDataMore(level, LevelManager.Instance.MaxLevels, star);
+            }
+            #endif
 
             OnGameStart?.Invoke();
 
@@ -239,7 +241,7 @@ namespace TMKOC
         public virtual void GameLoose()
         {
             m_CurrentGameState = GameState.Loose;
-            //m_UpdateCategoryApiManager.SetAttemps();
+            m_UpdateCategoryApiManager.SetAttemps();
             OnGameLoose?.Invoke();
         }
 
@@ -307,11 +309,10 @@ namespace TMKOC
         public virtual void GameCompleted()
         {
             m_CurrentGameState = GameState.Completed;
-            //    dataManager.SetCompletedLevel(dataManager.StudentGameData.data.totalLevel);
-            //     dataManager.OnGameCompleted();
+               
 
-            //m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
-            //m_CatergoryDataManager.SaveLevel(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels);
+            m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
+            m_CatergoryDataManager.SaveLevel(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels);
             OnGameCompleted?.Invoke();
         }
 
