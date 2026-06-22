@@ -203,9 +203,11 @@ public class RuntimeAudioLoader : MonoBehaviour
     {
         _commonAudioSource.Stop();
         _commonAudioSource.PlayOneShot(GetClip(key));
-
-      //  return 0;
+        #if UNITY_EDITOR
+        return 0;
+      #else
         return GetClip(key).length;
+        #endif
     }
     public AudioClip GetClip(string name)
     {
