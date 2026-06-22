@@ -204,7 +204,7 @@ public class RuntimeAudioLoader : MonoBehaviour
         _commonAudioSource.Stop();
         _commonAudioSource.PlayOneShot(GetClip(key));
 
-        return 0;
+      //  return 0;
         return GetClip(key).length;
     }
     public AudioClip GetClip(string name)

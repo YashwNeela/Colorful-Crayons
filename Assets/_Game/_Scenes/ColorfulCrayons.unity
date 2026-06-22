@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,13 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -97,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1444,7 +1440,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &64728960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2784,6 +2794,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3747,7 +3760,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &219006924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5799,6 +5826,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5878,7 +5908,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &312592232
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6164,12 +6208,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!114 &330585548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7538,9 +7582,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
@@ -7590,8 +7633,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!4 &410087041
 Transform:
   m_ObjectHideFlags: 0
@@ -7761,7 +7808,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &422310428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9686,7 +9747,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &534641862
 GameObject:
   m_ObjectHideFlags: 0
@@ -9963,7 +10038,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &559217039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10863,7 +10952,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &610345600
 GameObject:
   m_ObjectHideFlags: 0
@@ -11353,6 +11456,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -12491,7 +12597,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &721501828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13262,6 +13382,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -14070,7 +14193,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &843637478
 GameObject:
   m_ObjectHideFlags: 0
@@ -14152,7 +14289,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &845147283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15544,6 +15695,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -17994,7 +18148,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1000680549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18575,10 +18743,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShouldDestroyOnLoad: 1
-  m_LevelManager: {fileID: 2116294047}
   GAMEID: 54
   testLevel: 0
   levelNumber: 1
+  m_CurrentGameState: 0
+  m_PlayCloudTransition: 1
+  m_LevelCheckButton: {fileID: 0}
+  m_LevelManager: {fileID: 2116294047}
   m_CameraShakeDotweenAnimation: {fileID: 330585548}
   m_MaxLives: 5
   m_RemaningLivesText: {fileID: 547800514}
@@ -18586,8 +18757,6 @@ MonoBehaviour:
   m_LevelCompletedBlastOffset: {x: 0, y: 0, z: 0}
   m_LevelCompletedBlast: {fileID: 0}
   m_LevelCompleteBlastParent: {fileID: 0}
-  m_CurrentGameState: 0
-  m_PlayCloudTransition: 1
 --- !u!4 &1033244711
 Transform:
   m_ObjectHideFlags: 0
@@ -18728,7 +18897,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1052450563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19530,7 +19713,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1085404183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22550,7 +22747,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1260817682
 GameObject:
   m_ObjectHideFlags: 0
@@ -22906,7 +23117,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1282050062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24965,7 +25190,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1418596590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25492,7 +25731,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1471849748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26622,7 +26875,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1517258273
 GameObject:
   m_ObjectHideFlags: 0
@@ -27299,6 +27566,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -28120,7 +28390,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1585336049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29947,7 +30231,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6300042ea6ad54d5395b3093c6418532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Tip: 
+  onLevelCompleteCheck:
+    m_PersistentCalls:
+      m_Calls: []
   m_CurrentScore: 0
+  m_LevelTimer: 0
+  onGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1694898884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31024,6 +31322,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -32603,6 +32904,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -33105,6 +33409,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -34644,6 +34951,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -37637,6 +37947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShouldDestroyOnLoad: 1
   m_LevelText: {fileID: 1002181170}
+  m_TipText: {fileID: 0}
   levels:
   - {fileID: 1079613816}
   - {fileID: 550443985}
@@ -39389,6 +39700,114 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 888128138463036769, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 888128138463036769, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 1676660269476867627, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 1676660269476867627, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 1861656299585424504, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 1861656299585424504, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 2045837580506936961, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 2045837580506936961, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 2699197257427403677, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 2699197257427403677, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 2724355490123223610, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 2724355490123223610, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 3469173258775504431, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 3469173258775504431, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 3766841451845292622, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 3766841451845292622, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 4236243206938366231, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 4236243206938366231, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
     - target: {fileID: 4566653479042792899, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: _length
@@ -39404,6 +39823,42 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5275195121883303889, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 5275195121883303889, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 5503360709586427213, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 5503360709586427213, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 5565588332551010353, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 5565588332551010353, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
     - target: {fileID: 5814089035050786521, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_Pivot.x
@@ -39504,6 +39959,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6357694098138038084, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 6357694098138038084, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
     - target: {fileID: 6624867831950751191, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -39514,6 +39981,54 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6804510426532358751, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 6804510426532358751, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 7395151627852688819, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 7395151627852688819, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 7628525035804859864, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 7628525035804859864, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 7910362296631369671, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 7910362296631369671, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
     - target: {fileID: 7988087890926442213, guid: 4029eb771ce6746368afa6b25671a64d,
         type: 3}
       propertyPath: m_Name
@@ -39524,6 +40039,42 @@ PrefabInstance:
       propertyPath: _length
       value: 1662.7687
       objectReference: {fileID: 0}
+    - target: {fileID: 8242273892892969899, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 8242273892892969899, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 8755732981633641285, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 8755732981633641285, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 8926671607425607236, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
+    - target: {fileID: 8926671607425607236, guid: 4029eb771ce6746368afa6b25671a64d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39644,6 +40195,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -40014,6 +40568,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

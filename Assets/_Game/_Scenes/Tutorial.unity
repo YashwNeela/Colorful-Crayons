@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,13 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18018535, g: 0.22559482, b: 0.30677685, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -97,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -211,8 +207,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7c4c14f8fae6c1b4fbb4e926a80d085d, type: 2}
-  m_sharedMaterial: {fileID: -3462643136671018270, guid: 7c4c14f8fae6c1b4fbb4e926a80d085d,
+  m_fontAsset: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46, type: 2}
+  m_sharedMaterial: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -253,15 +249,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -1783,9 +1781,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172721879}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -1835,8 +1832,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!4 &172721881
 Transform:
   m_ObjectHideFlags: 0
@@ -3904,8 +3905,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: sdasdasdas
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7c4c14f8fae6c1b4fbb4e926a80d085d, type: 2}
-  m_sharedMaterial: {fileID: -3462643136671018270, guid: 7c4c14f8fae6c1b4fbb4e926a80d085d,
+  m_fontAsset: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46, type: 2}
+  m_sharedMaterial: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3946,15 +3947,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -5443,8 +5446,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7c4c14f8fae6c1b4fbb4e926a80d085d, type: 2}
-  m_sharedMaterial: {fileID: -3462643136671018270, guid: 7c4c14f8fae6c1b4fbb4e926a80d085d,
+  m_fontAsset: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46, type: 2}
+  m_sharedMaterial: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -5485,15 +5488,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -7793,6 +7798,7 @@ MonoBehaviour:
     tutorialId: 1
     tutorialSteps:
     - type: 1
+      stepId: 0
       stepTitle: Movement
       description: Use these arrows to move the player
       imageSprite: {fileID: 0}
@@ -7802,6 +7808,8 @@ MonoBehaviour:
       disableControlsId:
       - controls_jump
       controlObjectPos: {x: 0, y: 0, z: 0}
+      audioClip: []
+      goBackToDefaultCamera: 0
       cameraToEnable: {fileID: 0}
       duration: 5
       delay: 0
@@ -7811,6 +7819,7 @@ MonoBehaviour:
     tutorialId: 2
     tutorialSteps:
     - type: 1
+      stepId: 0
       stepTitle: Jump
       description: Use this button to jump
       imageSprite: {fileID: 0}
@@ -7819,6 +7828,8 @@ MonoBehaviour:
       - controls_jump
       disableControlsId: []
       controlObjectPos: {x: 1653.2715, y: 99.8168, z: 0}
+      audioClip: []
+      goBackToDefaultCamera: 0
       cameraToEnable: {fileID: 0}
       duration: 5
       delay: 0
@@ -7828,6 +7839,7 @@ MonoBehaviour:
     tutorialId: 3
     tutorialSteps:
     - type: 0
+      stepId: 0
       stepTitle: Sun
       description: This is sun it will cast Raycaset
       imageSprite: {fileID: 21300000, guid: 1be4afb9e85094b3d9fd9be3c0af227d, type: 3}
@@ -7838,12 +7850,15 @@ MonoBehaviour:
       - controls_jump
       - controls_mirror
       controlObjectPos: {x: 0, y: 0, z: 0}
+      audioClip: []
+      goBackToDefaultCamera: 0
       cameraToEnable: {fileID: 0}
       duration: 5
       delay: 0
       requiresEvent: 1
       eventName: event_sun_info
     - type: 0
+      stepId: 0
       stepTitle: Mirror
       description: Use Mirror to reflect the sunlight
       imageSprite: {fileID: 21300000, guid: 26c570efbb3be408b97cf1ac7da9694d, type: 3}
@@ -7851,12 +7866,15 @@ MonoBehaviour:
       enableControlsId: []
       disableControlsId: []
       controlObjectPos: {x: 0, y: 0, z: 0}
+      audioClip: []
+      goBackToDefaultCamera: 0
       cameraToEnable: {fileID: 0}
       duration: 5
       delay: 0
       requiresEvent: 1
       eventName: event_mirror_info
     - type: 1
+      stepId: 0
       stepTitle: Mirror Rotation
       description: Use this slider to rotate the mirrors
       imageSprite: {fileID: 0}
@@ -7865,12 +7883,15 @@ MonoBehaviour:
       - controls_mirror
       disableControlsId: []
       controlObjectPos: {x: 0, y: 0, z: 0}
+      audioClip: []
+      goBackToDefaultCamera: 0
       cameraToEnable: {fileID: 0}
       duration: 3
       delay: 0
       requiresEvent: 0
       eventName: 
     - type: 0
+      stepId: 0
       stepTitle: Fragment Collector
       description: Make Sure the ray falls on this to complete the level
       imageSprite: {fileID: 21300000, guid: 14ba826571be248ecaf13c6e0296c26a, type: 3}
@@ -7881,6 +7902,8 @@ MonoBehaviour:
       - controls_movement
       - controls_jump
       controlObjectPos: {x: 0, y: 0, z: 0}
+      audioClip: []
+      goBackToDefaultCamera: 0
       cameraToEnable: {fileID: 0}
       duration: 3
       delay: 0
