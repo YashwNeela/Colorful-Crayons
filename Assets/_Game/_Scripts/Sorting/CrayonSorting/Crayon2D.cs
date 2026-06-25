@@ -11,28 +11,7 @@ public class Crayon2D : Crayon
 
     protected override void SetCrayonColor(CrayonColor crayonColor)
     {
-        if (crayonColor.HasFlag(CrayonColor.CrayonRed) || crayonColor.HasFlag(CrayonColor.SketchpenRed))
-        {
-            m_CrayonColorSprite.color = Color.red;
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonYellow) || crayonColor.HasFlag(CrayonColor.SketchpenYellow))
-        {
-            m_CrayonColorSprite.color = Color.yellow;
-
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonGreen) || crayonColor.HasFlag(CrayonColor.SketchpenGreen))
-        {
-            m_CrayonColorSprite.color = Color.green;
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonBlue) || crayonColor.HasFlag(CrayonColor.SketchpenBlue))
-        {
-            m_CrayonColorSprite.color = Color.blue;
-
-        }
-
+        m_CrayonColorSprite.sprite = CrayonSpriteManager.Instance.CrayonSpriteSO.CrayonSprites[crayonColor];
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)

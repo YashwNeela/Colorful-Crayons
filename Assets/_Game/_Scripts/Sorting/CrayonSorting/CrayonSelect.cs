@@ -32,30 +32,9 @@ namespace TMKOC.Sorting.ColorfulCrayons
         }
 
         protected override void SetCrayonColor(CrayonColor crayonColor)
-    {
-        if (crayonColor.HasFlag(CrayonColor.CrayonRed) || crayonColor.HasFlag(CrayonColor.SketchpenRed))
         {
-            m_CrayonColorSprite.color = Color.red;
-
+            m_CrayonColorSprite.sprite = CrayonSpriteManager.Instance.CrayonSpriteSO.CrayonSprites[crayonColor];
         }
-        if (crayonColor.HasFlag(CrayonColor.CrayonYellow) || crayonColor.HasFlag(CrayonColor.SketchpenYellow))
-        {
-            m_CrayonColorSprite.color = Color.yellow;
-
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonGreen) || crayonColor.HasFlag(CrayonColor.SketchpenGreen))
-        {
-            m_CrayonColorSprite.color = Color.green;
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonBlue) || crayonColor.HasFlag(CrayonColor.SketchpenBlue))
-        {
-            m_CrayonColorSprite.color = Color.blue;
-
-        }
-
-    }
 
         protected override void OnEnable()
         {
