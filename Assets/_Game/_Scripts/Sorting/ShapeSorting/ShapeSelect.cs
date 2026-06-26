@@ -64,7 +64,7 @@ public class ShapeSelect : Collectible
         {
           //  m_SelectedSequence.Play();
           m_HighLightGameobject.SetActive(true);
-            transform.DOScale(110f, 0.25f);
+            transform.DOScale(80f, 0.25f);
             OnShapeSelected?.Invoke(m_ShapeType);
         }
 
@@ -73,7 +73,7 @@ public class ShapeSelect : Collectible
           m_HighLightGameobject.SetActive(false);
 
          //   m_SelectedSequence.PlayBackwards();
-            transform.DOScale(100f, 0.25f);
+            transform.DOScale(68f, 0.25f);
             OnShapeDeselected?.Invoke(m_ShapeType);
         }
 
