@@ -76,7 +76,7 @@ namespace TMKOC.Sorting.FruitSorting2D
                 draggable.ResetToStartDraggingValues();
                 return;
             }
-            this.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            this.GetComponent<SpriteRenderer>().sortingOrder = 1;
 
             if (m_IsPlacedInsideCollector)
             {
