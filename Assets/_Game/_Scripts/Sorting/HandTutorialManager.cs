@@ -55,7 +55,7 @@ namespace TMKOC.Sorting
                 transform.position = startPosition;
 
                 // Step 1: Scale down to 0 quickly
-                transform.DOScale(0f, 0.25f).OnComplete(() =>
+                transform.DOScale(1f, 0.25f).OnComplete(() =>
                 {
                     // Step 2: Set the position back to the start and scale back up while moving to the end
                     transform.position = startPosition;
