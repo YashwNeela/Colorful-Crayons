@@ -1,6 +1,8 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TMKOC.Sorting
 {
@@ -8,6 +10,8 @@ namespace TMKOC.Sorting
     {
         [SerializeField] private Transform[] _items;
         [SerializeField, Tooltip("Only for dragging")] private Transform _endPosition;
+
+        private Vector3 defaultSize;
 
         [SerializeField] private int tapCount = 2;          // Number of taps
         [SerializeField] private float tapDistance = 0.2f;  // Distance the hand moves (Y-axis)
@@ -34,11 +38,23 @@ namespace TMKOC.Sorting
         private bool _isIdlePlaying = false;
         private bool _canPlayIdel = false;
 
+        private Coroutine _currentTutorialCoroutine;
+
+        public UnityEvent OnStartAnimationFinished;
+
+        public bool isIdleHandAnimationAvaliable = true;
+
+        public void SetIdleAnimationAvailable(bool value)
+        {
+            isIdleHandAnimationAvaliable = value;
+        }
+
         // ---------------- Screen Tap Check ----------------
         private float _lastTapTime;
 
         private void OnEnable()
         {
+            defaultSize = transform.localScale;
             _handRenderer = GetComponent<SpriteRenderer>();
             // Start the countdown fresh whenever this becomes active
             _lastTapTime = Time.time;
@@ -48,7 +64,8 @@ namespace TMKOC.Sorting
         private void Update()
         {
             CheckForUserTap();
-            CheckForIdleTrigger();
+            if (isIdleHandAnimationAvaliable)
+                CheckForIdleTrigger();
         }
 
         private void CheckForUserTap()
@@ -76,6 +93,33 @@ namespace TMKOC.Sorting
             {
                 StopIdleAnimation();
             }
+
+            // If a tap/drag tutorial animation is currently playing, interrupt it —
+            // user has already tapped, no need to keep demonstrating
+            if (_isPlaying)
+            {
+                InterruptTutorialAnimation();
+            }
+        }
+
+        private void InterruptTutorialAnimation()
+        {
+            if (_currentTutorialCoroutine != null)
+            {
+                StopCoroutine(_currentTutorialCoroutine);
+                OnStartAnimationFinished?.Invoke();
+
+                _currentTutorialCoroutine = null;
+            }
+
+            transform.DOKill(); // stop any move/scale tweens currently running on this transform
+
+            _isPlaying = false;
+            HideHand();
+
+            // Treat this the same as a normal finish, so idle countdown behavior applies
+            _lastTapTime = Time.time;
+            _canPlayIdel = true;
         }
 
         private void CheckForIdleTrigger()
@@ -183,9 +227,11 @@ namespace TMKOC.Sorting
             transform.DOScale(0f, 0.25f)
                 .OnComplete(() =>
                 {
+                    OnStartAnimationFinished?.Invoke();
                     HideHand(); // not visible while waiting for idle countdown
                     _lastTapTime = Time.time; // start the 5-sec countdown from now
                     _canPlayIdel = true;
+                    _currentTutorialCoroutine = null;
                 });
         }
 
@@ -204,9 +250,11 @@ namespace TMKOC.Sorting
                 .OnComplete(
                 () =>
                 {
+                    OnStartAnimationFinished?.Invoke();
                     HideHand(); // not visible while waiting for idle countdown
                     _lastTapTime = Time.time; // start the 5-sec countdown from now
                     _canPlayIdel = true;
+                    _currentTutorialCoroutine = null;
                 });
         }
 
@@ -218,7 +266,7 @@ namespace TMKOC.Sorting
             ShowHand();
 
             // Make sure the hand is centered before starting the idle loop
-            transform.localScale = Vector3.one;
+            transform.localScale = defaultSize;
             _idleCenterTween = transform.DOMove(_centerPosition.position, moveToCenterDuration)
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() =>
@@ -262,14 +310,14 @@ namespace TMKOC.Sorting
         {
             StopIdleAnimation();
             _lastTapTime = Time.time;
-            StartCoroutine(PlayTappingActionCoroutine());
+            _currentTutorialCoroutine = StartCoroutine(PlayTappingActionCoroutine());
         }
 
         public void PlayHandTutorial_Dragging()
         {
             StopIdleAnimation();
             _lastTapTime = Time.time;
-            StartCoroutine(PlayDraggingActionCoroutine());
+            _currentTutorialCoroutine = StartCoroutine(PlayDraggingActionCoroutine());
         }
     }
 }
