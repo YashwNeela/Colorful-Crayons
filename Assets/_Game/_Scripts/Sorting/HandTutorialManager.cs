@@ -158,7 +158,7 @@ namespace TMKOC.Sorting
                 ShowHand();
                 _isPlaying = true;
 
-                transform.DOScale(1f, 0.25f);
+                transform.DOScale(defaultSize, 0.25f);
                 // move to fruit position
                 transform.DOMove(movePosition, 0.25f).SetDelay(0.35f).OnComplete(() =>
                 {
@@ -192,11 +192,11 @@ namespace TMKOC.Sorting
                 transform.position = startPosition;
 
                 // Step 1: Scale down to 0 quickly
-                transform.DOScale(1f, 0.25f).OnComplete(() =>
+                transform.DOScale(defaultSize, 0.25f).OnComplete(() =>
                 {
                     // Step 2: Set the position back to the start and scale back up while moving to the end
                     transform.position = startPosition;
-                    transform.DOScale(1f, 0.5f).OnStart(() =>
+                    transform.DOScale(defaultSize, 0.5f).OnStart(() =>
                     {
                         // Move to the end position while scaling up
                         transform.DOMove(_endPosition.position, 0.75f);
@@ -224,7 +224,7 @@ namespace TMKOC.Sorting
                 yield return waitTime;
             }
 
-            transform.DOScale(0f, 0.25f)
+            transform.DOScale(defaultSize, 0.25f)
                 .OnComplete(() =>
                 {
                     OnStartAnimationFinished?.Invoke();
@@ -246,7 +246,7 @@ namespace TMKOC.Sorting
                 yield return waitTime;
             }
 
-            transform.DOScale(0f, 0.25f)
+            transform.DOScale(defaultSize, 0.25f)
                 .OnComplete(
                 () =>
                 {

@@ -1,7 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using TMKOC.Sorting.FruitSorting2D;
 using UnityEngine;
 
 namespace TMKOC.Sorting.ColorfulCrayons
@@ -87,8 +88,18 @@ namespace TMKOC.Sorting.ColorfulCrayons
         {
             m_SelectedSequence.PlayForward();
             OnCrayonSelected?.Invoke(m_CrayonColor);
+
+            LevelCrayonSelect crayonSelectionLevel = SortingLevelManager.Instance.GetCurrentLevel() as LevelCrayonSelect;
+
+            if (crayonSelectionLevel.m_CurrentScore == crayonSelectionLevel.ScoreRequiredToCompleteTheLevel())
+                Invoke(nameof(CheckForLevelComplete), 1);
         }
 
+        public void CheckForLevelComplete()
+        {
+
+            SortingGameManager.Instance.LevelCompleteCheck();
+        }
         private void CrayonDeselected()
         {
             m_SelectedSequence.PlayBackwards();

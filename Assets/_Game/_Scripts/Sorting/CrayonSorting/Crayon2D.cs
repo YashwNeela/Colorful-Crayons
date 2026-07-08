@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMKOC;
 using TMKOC.Sorting;
 using TMKOC.Sorting.ColorfulCrayons;
+using TMKOC.Sorting.FruitSorting2D;
 using UnityEngine;
-using TMKOC;
 public class Crayon2D : Crayon
 {
 
@@ -46,6 +47,17 @@ public class Crayon2D : Crayon
     protected override void OnPlacedCorrectly()
     {
         BaseOnPlacedCorrectly();
+
+        SortingLevel crayonLevel = SortingLevelManager.Instance.GetCurrentLevel() as SortingLevel;
+
+        if (crayonLevel.m_CurrentScore == crayonLevel.ScoreRequiredToCompleteTheLevel())
+            Invoke(nameof(CheckForLevelComplete), 1);
+    }
+
+    public void CheckForLevelComplete()
+    {
+
+        SortingGameManager.Instance.LevelCompleteCheck();
     }
 
     protected override void PlaceInCorrectly(Collector collector)
