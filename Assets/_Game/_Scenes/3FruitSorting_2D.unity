@@ -5474,7 +5474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &395001474
 Transform:
   m_ObjectHideFlags: 0
@@ -13390,6 +13390,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1009593764 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1682900415086571774, guid: 4029eb771ce6746368afa6b25671a64d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1009593762}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ad57f9ac1614946a2b9d179aa3d767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1033244709
 GameObject:
   m_ObjectHideFlags: 0
@@ -13421,8 +13433,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShouldDestroyOnLoad: 1
   GAMEID: 54
-  testLevel: 1
-  levelNumber: 7
+  testLevel: 0
+  levelNumber: 0
   m_CurrentGameState: 0
   m_PlayCloudTransition: 1
   m_LevelCheckButton: {fileID: 1895424055}
@@ -25931,7 +25943,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hudUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1009593764}
     - target: {fileID: 7591038236117835668, guid: 4de38fdd2aa54ce44acc2ef6f34b221d,
         type: 3}
       propertyPath: serializationData.Prefab
