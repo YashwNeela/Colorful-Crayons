@@ -59,8 +59,21 @@ namespace TMKOC.Sorting.FruitSorting2D
         private void FruitSelected()
         {
             _highlightSelected.DOFade(1f, 0.25f);
+
             //transform.DOScale(1.25f, 0.25f);
             OnFruitSelected?.Invoke(m_FruitType);
+
+            FruitSelectionLevel fruitSelectionLevel = SortingLevelManager.Instance.GetCurrentLevel() as FruitSelectionLevel;
+
+            if (fruitSelectionLevel.m_CurrentScore == fruitSelectionLevel.ScoreRequiredToCompleteTheLevel())
+                Invoke(nameof(CheckForLevelComplete),1) ;
+
+        }
+
+        public void CheckForLevelComplete() 
+        {
+          
+                SortingGameManager.Instance.LevelCompleteCheck();
         }
 
         private void FruitDeselected()

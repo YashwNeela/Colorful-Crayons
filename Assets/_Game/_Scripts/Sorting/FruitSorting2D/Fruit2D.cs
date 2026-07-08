@@ -45,6 +45,18 @@ namespace TMKOC.Sorting.FruitSorting2D
         {
             base.OnPlacedCorrectly();
 
+
+            FruitLevel fruitLevel = SortingLevelManager.Instance.GetCurrentLevel() as FruitLevel;
+
+            if (fruitLevel.m_CurrentScore == fruitLevel.ScoreRequiredToCompleteTheLevel())
+                Invoke(nameof(CheckForLevelComplete), 1);
+
+        }
+
+        public void CheckForLevelComplete()
+        {
+
+            SortingGameManager.Instance.LevelCompleteCheck();
         }
         protected virtual void OnTriggerStay2D(Collider2D other)
         {

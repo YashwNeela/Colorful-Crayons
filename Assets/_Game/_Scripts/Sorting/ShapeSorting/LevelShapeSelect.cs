@@ -9,6 +9,8 @@ public class LevelShapeSelect : SortingLevel
         [SerializeField] private ShapeType m_ShapeType; 
         [SerializeField] private new int m_ScoreRequiredToCompleteTheLevel;
 
+        public int ScoreRequiredToCompleteTheLevel() => m_ScoreRequiredToCompleteTheLevel;
+
         [SerializeField] List<ShapeSelect> m_ShapeSelectList;
 
         public List<ShapeSelect> ShapeSelectList => m_ShapeSelectList;

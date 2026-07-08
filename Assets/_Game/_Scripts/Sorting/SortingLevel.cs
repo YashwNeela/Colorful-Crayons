@@ -13,6 +13,8 @@ namespace TMKOC.Sorting
     {
         protected int m_ScoreRequiredToCompleteTheLevel;
 
+        public int ScoreRequiredToCompleteTheLevel() => m_ScoreRequiredToCompleteTheLevel;
+
         public float m_CurrentScore;
 
         [SerializeField] int m_LevelTimer;
