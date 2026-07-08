@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMKOC.Sorting;
+using TMKOC.Sorting.FruitSorting2D;
 using UnityEngine;
 
 namespace TMKOC.Sorting.CarSorting
@@ -89,13 +90,26 @@ namespace TMKOC.Sorting.CarSorting
         protected override void OnPlacedCorrectly()
         {
             base.OnPlacedCorrectly();
-            ParticleEffectManager.Instance.PlayParticleEffect(0,transform.position,new Vector3(100,100,100),null);
+            ParticleEffectManager.Instance.PlayParticleEffect(0,transform.position,new Vector3(5,5,5),null);
 
+            CarLevel carLevel = SortingLevelManager.Instance.GetCurrentLevel() as CarLevel;
+
+            if (carLevel.m_CurrentScore == carLevel.ScoreRequiredToCompleteTheLevel())
+                Invoke(nameof(CheckForLevelComplete), 1);
+
+        }
+
+        public void CheckForLevelComplete()
+        {
+
+            SortingGameManager.Instance.LevelCompleteCheck();
         }
 
         protected override void PlaceInCorrectly(Collector collector)
         {
             base.PlaceInCorrectly(collector);
+
+            Invoke(nameof(OnCrossButtonPressed), 2);
 
         }
         protected override void HandleDragStart()
@@ -121,28 +135,29 @@ namespace TMKOC.Sorting.CarSorting
             {
                 if (m_ValidCollector != null)
                 {
-
-                    if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType)){
+                    if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
+                    {
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
                         PlayTirePlacedAudio();
                     }
-                    else{
+                    else
+                    {
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
                         PlayTirePlacedAudio();
+                        PlaceInCorrectly(m_CurrentCollector);
                     }
-                    PlaceInCorrectly(m_CurrentCollector);
-
                 }
 
 
-            }else
+            }
+            else
             {
-                // m_CanDestroy = true;
-                // CanDestoryRef = StartCoroutine(Co_Destroy());
-                
+                m_CanDestroy = true;
+                CanDestoryRef = StartCoroutine(Co_Destroy());
             }
         }
 
+       
         private void PlayTirePlacedAudio()
         {
             // if(m_CarType == CarType.BlueTire || m_CarType == CarType.GreenTire || m_CarType == CarType.YellowTire
@@ -157,9 +172,9 @@ namespace TMKOC.Sorting.CarSorting
 
        protected IEnumerator Co_Destroy()
         {
-            yield return new WaitForSeconds(2);
-            gameObject.SetActive(false);
-           // Destroy(gameObject);
+            yield return new WaitForSeconds(2f);
+            if (m_CanDestroy)
+                Destroy(gameObject);
         }
 
 
@@ -190,14 +205,15 @@ namespace TMKOC.Sorting.CarSorting
             //m_CurrentSnapPoint.ResetSnapPoint();
             if(m_CurrentCollector != null)
                 m_CurrentCollector.OnCollectibleExited(this);
-            ParticleEffectManager.Instance.PlayParticleEffect(1,transform.position,new Vector3(200,200,200),null);
+            ParticleEffectManager.Instance.PlayParticleEffect(1,transform.position,new Vector3(5,5,5),null);
             Destroy(gameObject);
         }
 
         protected override void OnLevelCompleteCheck()
         {
             base.OnLevelCompleteCheck();
-            GetComponentInChildren<Canvas>().gameObject.SetActive(false);
+            if(GetComponentInChildren<Canvas>() != null)
+                GetComponentInChildren<Canvas>().gameObject.SetActive(false);
 
             if(m_CurrentSnapPoint == null)
                 Destroy(gameObject);
