@@ -38,7 +38,7 @@ public class Collectible : MonoBehaviour
         // gentle bob + the target item pulses so it reads as "collect me"
         float t = Time.time * 2f + bobPhase;
         Vector3 p = transform.position;
-        p.y = baseY + Mathf.Sin(t) * 0.12f;
+        p.y = baseY + Mathf.Sin(t) * 0.05f;
         transform.position = p;
 
         if (isTarget && glow != null)

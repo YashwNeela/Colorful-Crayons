@@ -12,6 +12,8 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] private float groundTopY = -3.6f;
     [SerializeField] private int segmentsAhead = 4;
     [SerializeField] private int firstHazardSegment = 3;
+    [Tooltip("How high a pickup sits above the surface it rests on.")]
+    [SerializeField] private float restHeight = 0.52f;
 
     [Header("Sprites")]
     [SerializeField] private Sprite squareSprite;
@@ -117,8 +119,10 @@ public class LevelBuilder : MonoBehaviour
         BuildGround(root, x0, water);
         BuildClouds(root, x0);
 
-        if (!water || Random.value < 0.6f) BuildPlatforms(root, x0);
-        BuildProduce(root, x0);
+        List<Surface> surfaces = new List<Surface>();
+        if (!water || Random.value < 0.85f) BuildPlatforms(root, x0, surfaces);
+        if (!water) surfaces.Add(new Surface(x0 + 0.8f, x0 + segmentWidth - 0.8f, groundTopY));
+        BuildProduce(root, surfaces);
 
         Random.state = prev;
     }
@@ -132,6 +136,14 @@ public class LevelBuilder : MonoBehaviour
             h ^= h >> 13;
             return (h % 1000u) < 300u;
         }
+    }
+
+    /// <summary>A flat top face produce can be placed on.</summary>
+    private class Surface
+    {
+        public float left, right, top;
+        public Surface(float l, float r, float t) { left = l; right = r; top = t; }
+        public float Width { get { return right - left; } }
     }
 
     private void BuildGround(GameObject root, float x0, bool water)
@@ -194,7 +206,7 @@ public class LevelBuilder : MonoBehaviour
         }
     }
 
-    private void BuildPlatforms(GameObject root, float x0)
+    private void BuildPlatforms(GameObject root, float x0, List<Surface> surfaces)
     {
         int count = Random.Range(1, 3);
         for (int i = 0; i < count; i++)
@@ -220,6 +232,8 @@ public class LevelBuilder : MonoBehaviour
             box.offset = Vector2.zero;
             p.AddComponent<Platform>();
 
+            surfaces.Add(new Surface(px - w * 0.5f + 0.35f, px + w * 0.5f - 0.35f, py + 0.24f));
+
             int flowers = Random.Range(1, 4);
             for (int f = 0; f < flowers; f++)
             {
@@ -243,20 +257,33 @@ public class LevelBuilder : MonoBehaviour
         }
     }
 
-    private void BuildProduce(GameObject root, float x0)
+    private void BuildProduce(GameObject root, List<Surface> surfaces)
     {
-        if (flow == null) return;
+        if (flow == null || surfaces.Count == 0) return;
 
-        int count = Random.Range(1, 3);
+        // one pickup per surface at most, so nothing ever hangs in empty air
+        int count = Mathf.Min(Random.Range(1, 3), surfaces.Count);
+
+        // shuffle so we don't always favour the first ledge
+        List<Surface> pool = new List<Surface>(surfaces);
+        for (int i = pool.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            Surface tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+        }
+
         for (int i = 0; i < count; i++)
         {
+            Surface s = pool[i];
+            if (s.Width < 0.5f) continue;
+
             // 70% of pickups are the item the player is currently hunting
             bool isTarget = Random.value < 0.7f;
             string name = isTarget ? flow.CurrentTarget : GameDefs.Names[Random.Range(0, GameDefs.Names.Length)];
             if (name == flow.CurrentTarget) isTarget = true;
 
-            float px = x0 + Random.Range(0.8f, segmentWidth - 0.8f);
-            float py = Random.Range(-2.4f, 5.4f);
+            float px = Random.Range(s.left, s.right);
+            float py = s.top + restHeight;   // sitting on the surface
 
             GameObject c = new GameObject("Pickup_" + name);
             c.transform.SetParent(root.transform);
