@@ -810,7 +810,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1023
 --- !u!114 &322264846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,6 +1203,8 @@ MonoBehaviour:
   trail: {fileID: 132654125}
   maxTiltDegrees: 42
   flow: {fileID: 1723321370}
+  bodyRadius: 0.42
+  snapTolerance: 0.35
 --- !u!4 &621268921
 Transform:
   m_ObjectHideFlags: 0

@@ -24,13 +24,20 @@ public class RocketPlayer : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private GameFlow flow;
 
+    [Header("Landing")]
+    [SerializeField] private float bodyRadius = 0.42f;
+    [SerializeField] private float snapTolerance = 0.35f;
+
     private float verticalSpeed;
     private bool thrusting;
     private bool alive = true;
     private float flameBaseScale = 1f;
+    private bool grounded;
+    private readonly Collider2D[] overlapBuffer = new Collider2D[12];
 
     public float ForwardSpeed { get { return forwardSpeed; } }
     public bool Alive { get { return alive; } }
+    public bool Grounded { get { return grounded; } }
 
     private void Awake()
     {
@@ -48,6 +55,7 @@ public class RocketPlayer : MonoBehaviour
         verticalSpeed = Mathf.Clamp(verticalSpeed, maxFallSpeed, maxRiseSpeed);
 
         Vector3 pos = transform.position;
+        float previousFoot = pos.y - bodyRadius;
         pos.x += forwardSpeed * Time.deltaTime;
         pos.y += verticalSpeed * Time.deltaTime;
 
@@ -57,9 +65,43 @@ public class RocketPlayer : MonoBehaviour
             if (verticalSpeed > 0f) verticalSpeed = 0f;
         }
 
+        TryLandOnPlatform(ref pos, previousFoot);
+
         transform.position = pos;
 
         UpdateVisual();
+    }
+
+    /// <summary>
+    /// One-way platform landing: only catches the player when they were above
+    /// the surface last frame, so you can still fly up through a ledge.
+    /// </summary>
+    private void TryLandOnPlatform(ref Vector3 pos, float previousFoot)
+    {
+        grounded = false;
+        if (verticalSpeed > 0f) return;
+
+        int count = Physics2D.OverlapCircleNonAlloc(pos, bodyRadius, overlapBuffer);
+        for (int i = 0; i < count; i++)
+        {
+            Collider2D c = overlapBuffer[i];
+            if (c == null) continue;
+
+            Platform plat = c.GetComponent<Platform>();
+            if (plat == null) continue;
+
+            float top = plat.TopY;
+            float foot = pos.y - bodyRadius;
+
+            // must have been at or above the surface a frame ago
+            if (previousFoot < top - snapTolerance) continue;
+            if (foot > top) continue;
+
+            pos.y = top + bodyRadius;
+            verticalSpeed = 0f;
+            grounded = true;
+            return;
+        }
     }
 
     private bool ReadInput()

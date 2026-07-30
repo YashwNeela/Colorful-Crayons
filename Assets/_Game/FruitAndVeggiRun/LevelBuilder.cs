@@ -213,6 +213,13 @@ public class LevelBuilder : MonoBehaviour
             sr.size = new Vector2(w, 0.48f);
             sr.sortingOrder = -1;
 
+            // solid top face so the rocket can land on it
+            BoxCollider2D box = p.AddComponent<BoxCollider2D>();
+            box.isTrigger = true;
+            box.size = new Vector2(w, 0.48f);
+            box.offset = Vector2.zero;
+            p.AddComponent<Platform>();
+
             int flowers = Random.Range(1, 4);
             for (int f = 0; f < flowers; f++)
             {
