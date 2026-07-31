@@ -22,6 +22,15 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] private Sprite cloudSprite;
     [SerializeField] private Sprite reedSprite;
     [SerializeField] private Sprite glowSprite;
+    [SerializeField] private Sprite groundSprite;
+    [SerializeField] private Sprite waterSprite;
+    [SerializeField] private Sprite skySprite;
+    [SerializeField] private Sprite marketSprite;
+
+    [Header("Background")]
+    [Tooltip("0 = pinned to the camera, 1 = fixed in the world.")]
+    [SerializeField] private float marketParallax = 0.55f;
+    [SerializeField] private float marketBaseY = -1.75f;
     [SerializeField] private Sprite[] produceSprites; // matches GameDefs.Names order
 
     [Header("Refs")]
@@ -31,6 +40,14 @@ public class LevelBuilder : MonoBehaviour
     private readonly Dictionary<int, GameObject> segments = new Dictionary<int, GameObject>();
     private readonly HashSet<int> waterSegments = new HashSet<int>();
     private int nextSegment;
+
+    private Transform skyLayer;
+    private Transform marketLayer;
+
+    // colours sampled from the bottom edge of the new ground / water art so the
+    // fill below each band joins it seamlessly
+    private static readonly Color DirtFill  = new Color(0.541f, 0.224f, 0.055f);
+    private static readonly Color WaterFill = new Color(0.659f, 0.902f, 0.957f);
 
     public float GroundTopY { get { return groundTopY; } }
 
@@ -42,6 +59,8 @@ public class LevelBuilder : MonoBehaviour
 
     private void Start()
     {
+        BuildBackground();
+
         for (int i = -1; i < segmentsAhead; i++) BuildSegment(i);
         nextSegment = segmentsAhead;
     }
@@ -49,6 +68,8 @@ public class LevelBuilder : MonoBehaviour
     private void Update()
     {
         if (cameraTransform == null) return;
+
+        UpdateBackground();
 
         int camSeg = Mathf.FloorToInt(cameraTransform.position.x / segmentWidth);
 
@@ -150,40 +171,33 @@ public class LevelBuilder : MonoBehaviour
     {
         float h = 5f;
         float topY = water ? groundTopY - 0.25f : groundTopY;
-
-        GameObject g = MakeSprite("Ground", root.transform, squareSprite,
-            new Vector3(x0 + segmentWidth * 0.5f, topY - h * 0.5f, 0f),
-            new Vector3(segmentWidth + 0.02f, h, 1f),
-            water ? new Color(0.18f, 0.24f, 0.90f) : new Color(0.16f, 0.66f, 0.16f), -5);
+        float cx = x0 + segmentWidth * 0.5f;
+        float w = segmentWidth;          // exact whole tiles for the art bands
+        float wf = segmentWidth + 0.02f; // slight overlap for the solid fills
 
         if (!water)
         {
-            // lighter grass cap
-            MakeSprite("GrassCap", root.transform, squareSprite,
-                new Vector3(x0 + segmentWidth * 0.5f, topY - 0.18f, 0f),
-                new Vector3(segmentWidth + 0.02f, 0.36f, 1f),
-                new Color(0.26f, 0.78f, 0.24f), -4);
+            // grass/dirt band from the art, with flat dirt continuing below it
+            float band = groundSprite != null ? groundSprite.bounds.size.y : 1.73f;
+            MakeTiled("Ground", root.transform, groundSprite,
+                new Vector3(cx, topY - band * 0.5f, 0f),
+                new Vector2(w, band), Color.white, -5);
 
-            // speckles
-            int dots = Random.Range(4, 8);
-            for (int i = 0; i < dots; i++)
-            {
-                MakeSprite("Dot", root.transform, squareSprite,
-                    new Vector3(x0 + Random.Range(0.4f, segmentWidth - 0.4f), topY - Random.Range(0.6f, 2.4f), 0f),
-                    new Vector3(0.12f, 0.12f, 1f),
-                    new Color(0.13f, 0.56f, 0.13f), -3);
-            }
+            MakeSprite("GroundFill", root.transform, squareSprite,
+                new Vector3(cx, topY - band - (h - band) * 0.5f, 0f),
+                new Vector3(wf, h - band, 1f), DirtFill, -6);
         }
         else
         {
-            // water stripes
-            for (int i = 0; i < 4; i++)
-            {
-                MakeSprite("Ripple", root.transform, squareSprite,
-                    new Vector3(x0 + Random.Range(0.6f, segmentWidth - 1.2f), topY - Random.Range(0.4f, 2.2f), 0f),
-                    new Vector3(Random.Range(0.7f, 1.5f), 0.1f, 1f),
-                    new Color(0.32f, 0.42f, 1.00f), -4);
-            }
+            // water surface from the art, with matching fill beneath
+            float band = waterSprite != null ? waterSprite.bounds.size.y : 2.44f;
+            MakeTiled("Water", root.transform, waterSprite,
+                new Vector3(cx, topY - band * 0.5f, 0f),
+                new Vector2(w, band), Color.white, -5);
+
+            MakeSprite("WaterFill", root.transform, squareSprite,
+                new Vector3(cx, topY - band - (h - band) * 0.5f, 0f),
+                new Vector3(wf, h - band, 1f), WaterFill, -6);
 
             // reeds poking out of the water
             int reeds = Random.Range(3, 6);
@@ -195,7 +209,7 @@ public class LevelBuilder : MonoBehaviour
                 r.transform.position += new Vector3(0f, Random.Range(-0.1f, 0.25f), 0f);
             }
 
-            // hazard volume covering the water
+            // hazard volume covering the water -- unchanged
             GameObject hz = new GameObject("WaterHazard");
             hz.transform.SetParent(root.transform);
             hz.transform.position = new Vector3(x0 + segmentWidth * 0.5f, topY - 1f, 0f);
@@ -203,6 +217,57 @@ public class LevelBuilder : MonoBehaviour
             bc.isTrigger = true;
             bc.size = new Vector2(segmentWidth, 2f);
             hz.AddComponent<Hazard>();
+        }
+    }
+
+    /// <summary>Sky pinned to the camera, market stalls scrolling behind at a slower rate.</summary>
+    private void BuildBackground()
+    {
+        if (cameraTransform == null) return;
+
+        if (skySprite != null)
+        {
+            GameObject sky = MakeSprite("Sky", transform, skySprite, Vector3.zero, Vector3.one, Color.white, -30);
+            skyLayer = sky.transform;
+        }
+
+        if (marketSprite != null)
+        {
+            GameObject mk = new GameObject("MarketBackdrop");
+            mk.transform.SetParent(transform);
+            SpriteRenderer sr = mk.AddComponent<SpriteRenderer>();
+            sr.sprite = marketSprite;
+            sr.drawMode = SpriteDrawMode.Tiled;
+            sr.size = new Vector2(marketSprite.bounds.size.x * 4f, marketSprite.bounds.size.y);
+            sr.sortingOrder = -20;
+            marketLayer = mk.transform;
+            mk.transform.localScale = new Vector3(3f, 3f, 1f);
+        }
+
+        UpdateBackground();
+    }
+
+    private void UpdateBackground()
+    {
+        Camera cam = Camera.main;
+        Vector3 camPos = cameraTransform.position;
+
+        if (skyLayer != null && cam != null && skySprite != null)
+        {
+            float camH = cam.orthographicSize * 2f;
+            float camW = camH * cam.aspect;
+            float s = Mathf.Max(camW / skySprite.bounds.size.x, camH / skySprite.bounds.size.y);
+            skyLayer.localScale = new Vector3(s, s, 1f);
+            skyLayer.position = new Vector3(camPos.x, camPos.y, 0f);
+        }
+
+        if (marketLayer != null && marketSprite != null)
+        {
+            // slower-moving layer, nudged by whole tiles so the repeat never shows a seam
+            float tile = marketSprite.bounds.size.x;
+            float lx = camPos.x * (1f - marketParallax);
+            lx += Mathf.Round((camPos.x - lx) / tile) * tile;
+            marketLayer.position = new Vector3(lx, marketBaseY + camPos.y * 0.12f, 0f);
         }
     }
 
@@ -319,6 +384,24 @@ public class LevelBuilder : MonoBehaviour
         for (int i = 0; i < GameDefs.Names.Length && i < produceSprites.Length; i++)
             if (GameDefs.Names[i] == name) return produceSprites[i];
         return produceSprites.Length > 0 ? produceSprites[0] : null;
+    }
+
+    private GameObject MakeTiled(string name, Transform parent, Sprite sprite, Vector3 pos, Vector2 size, Color color, int order)
+    {
+        // fall back to a tinted square if the artwork slot is empty
+        if (sprite == null)
+            return MakeSprite(name, parent, squareSprite, pos, new Vector3(size.x, size.y, 1f), color, order);
+
+        GameObject g = new GameObject(name);
+        g.transform.SetParent(parent);
+        g.transform.position = pos;
+        SpriteRenderer sr = g.AddComponent<SpriteRenderer>();
+        sr.sprite = sprite;
+        sr.drawMode = SpriteDrawMode.Tiled;
+        sr.size = size;
+        sr.color = color;
+        sr.sortingOrder = order;
+        return g;
     }
 
     private GameObject MakeSprite(string name, Transform parent, Sprite sprite, Vector3 pos, Vector3 scale, Color color, int order)

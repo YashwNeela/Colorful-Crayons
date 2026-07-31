@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &10870783
 Transform:
   m_ObjectHideFlags: 0
@@ -236,6 +236,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 10870783}
+  - {fileID: 81486667}
   - {fileID: 1105204034}
   - {fileID: 782939670}
   - {fileID: 1287641434}
@@ -246,6 +247,93 @@ Transform:
   - {fileID: 1314884562}
   m_Father: {fileID: 621268921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &81486666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 81486667}
+  - component: {fileID: 81486668}
+  m_Layer: 0
+  m_Name: Pinku
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &81486667
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81486666}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.37090185, y: 0.9286721, z: 0.000000016212633, w: -0.000000040593545}
+  m_LocalPosition: {x: -0.31, y: -0.12, z: -0}
+  m_LocalScale: {x: 0.12, y: 0.107999995, z: 0.12}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 75736818}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: -43.542}
+--- !u!212 &81486668
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81486666}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 8
+  m_Sprite: {fileID: 21300000, guid: 28b9fdf1363f64b0e95fed8d91646989, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.64, y: 0.4}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &91647581
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &91647582
 Transform:
   m_ObjectHideFlags: 0
@@ -444,7 +532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &142430555
 Transform:
   m_ObjectHideFlags: 0
@@ -531,7 +619,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &203335701
 Transform:
   m_ObjectHideFlags: 0
@@ -873,7 +961,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &339358600
 Transform:
   m_ObjectHideFlags: 0
@@ -1066,17 +1154,23 @@ MonoBehaviour:
   firstHazardSegment: 3
   restHeight: 0.52
   squareSprite: {fileID: 21300000, guid: 3a32f5bb827544e7598abf030c824b1d, type: 3}
-  platformSprite: {fileID: 21300000, guid: a3a7baef0b9b24c55acdb4c9f05a9464, type: 3}
+  platformSprite: {fileID: 21300000, guid: 79d2ab01383d64b54a58d3f641796a0f, type: 3}
   flowerSprite: {fileID: 21300000, guid: 0e631f42dee2a4b38b9749d709415c27, type: 3}
   cloudSprite: {fileID: 21300000, guid: cd38f5ac0d5924d748d18e99b2fbe4fb, type: 3}
   reedSprite: {fileID: 21300000, guid: 947fdc3f4c24f468baf56b7f84fed5a9, type: 3}
   glowSprite: {fileID: 21300000, guid: 199a9905d0d4d497bb2f8964064b846e, type: 3}
+  groundSprite: {fileID: 21300000, guid: a228952d41283481ea1fc04db94b07e8, type: 3}
+  waterSprite: {fileID: 21300000, guid: 00174ead8f4a64cd1be78ab7baeff793, type: 3}
+  skySprite: {fileID: 21300000, guid: bf887e672798a463883ece9280f310bc, type: 3}
+  marketSprite: {fileID: 21300000, guid: 184fd97092f5d4666a7902134e83f9ce, type: 3}
+  marketParallax: 0.55
+  marketBaseY: -1.75
   produceSprites:
-  - {fileID: 21300000, guid: 1b23df0fd36bd4f14b1f0d64cabb93df, type: 3}
-  - {fileID: 21300000, guid: c5f6b0fe0a04e449897897e125c6f9e3, type: 3}
-  - {fileID: 21300000, guid: 59e653f57c770454f93cc649eb45a63f, type: 3}
-  - {fileID: 21300000, guid: c0b78b75bdbb047d68cbd6f4d4d17b8c, type: 3}
-  - {fileID: 21300000, guid: 8bbd2d04e81bd46d98e0c18b35b7c2db, type: 3}
+  - {fileID: 21300000, guid: 2a6d1d267357c4ffda7c3b814cea8ed0, type: 3}
+  - {fileID: 21300000, guid: 5d4f3b67e6a5f45bbae1537be6ebff45, type: 3}
+  - {fileID: 21300000, guid: 30cfa459afcb54014844e1cd9a27cc18, type: 3}
+  - {fileID: 21300000, guid: ae61738b8c2bd4e94ae348a819f35984, type: 3}
+  - {fileID: 21300000, guid: 92f08810b0436464abd9314f58186b27, type: 3}
   cameraTransform: {fileID: 2106066955}
   flow: {fileID: 1723321370}
 --- !u!4 &525986767
@@ -1302,7 +1396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &646522245
 Transform:
   m_ObjectHideFlags: 0
@@ -1389,7 +1483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &782939670
 Transform:
   m_ObjectHideFlags: 0
@@ -1748,7 +1842,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1105204034
 Transform:
   m_ObjectHideFlags: 0
@@ -1903,7 +1997,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1287641434
 Transform:
   m_ObjectHideFlags: 0
@@ -2077,7 +2171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1314884562
 Transform:
   m_ObjectHideFlags: 0
@@ -2164,7 +2258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1324537325
 Transform:
   m_ObjectHideFlags: 0
@@ -2368,6 +2462,7 @@ GameObject:
   - component: {fileID: 2106066958}
   - component: {fileID: 2106066957}
   - component: {fileID: 2106066956}
+  - component: {fileID: 2106066959}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2467,6 +2562,50 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &2106066959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106066954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!21 &2138449995
 Material:
   serializedVersion: 8

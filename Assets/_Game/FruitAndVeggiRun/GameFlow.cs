@@ -50,11 +50,11 @@ public class GameFlow : MonoBehaviour
     {
         if (targets.Count == 0)
         {
-            targets.Add(NewTarget("tomato", 3));
-            targets.Add(NewTarget("carrot", 2));
-            targets.Add(NewTarget("potato", 2));
-            targets.Add(NewTarget("apple", 2));
-            targets.Add(NewTarget("banana", 3));
+            targets.Add(NewTarget("apple", 3));
+            targets.Add(NewTarget("banana", 2));
+            targets.Add(NewTarget("mango", 2));
+            targets.Add(NewTarget("orange", 2));
+            targets.Add(NewTarget("watermelon", 3));
         }
 
         if (player == null) player = FindObjectOfType<RocketPlayer>();
