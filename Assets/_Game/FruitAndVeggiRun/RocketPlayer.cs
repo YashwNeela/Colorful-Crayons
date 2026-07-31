@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// Tap / hold to thrust upward, release to fall. The kid rides a rocket and
@@ -21,8 +22,16 @@ public class RocketPlayer : MonoBehaviour
     [SerializeField] private TrailRenderer trail;
     [SerializeField] private float maxTiltDegrees = 42f;
 
+    [Header("Ground Bounce")]
+    [Tooltip("How high the little hop rises, in world units.")]
+    [SerializeField] private float bounceHeight = 0.3f;
+    [Tooltip("Total time for one up-down hop, in seconds.")]
+    [SerializeField] private float bounceDuration = 0.25f;
+
     [Header("Refs")]
     [SerializeField] private GameFlow flow;
+    [Tooltip("Optional. Only needed so the rocket can land on flat ground/grass, not just floating platforms. Auto-found if left empty.")]
+    [SerializeField] private LevelBuilder level;
 
     [Header("Landing")]
     [SerializeField] private float bodyRadius = 0.42f;
@@ -33,6 +42,12 @@ public class RocketPlayer : MonoBehaviour
     private bool alive = true;
     private float flameBaseScale = 1f;
     private bool grounded;
+
+    private Vector3 logicalPos;
+
+    private float bounceOffsetY;
+    private Tween bounceTween;
+
     private readonly Collider2D[] overlapBuffer = new Collider2D[12];
 
     public float ForwardSpeed { get { return forwardSpeed; } }
@@ -42,19 +57,23 @@ public class RocketPlayer : MonoBehaviour
     private void Awake()
     {
         if (flow == null) flow = FindObjectOfType<GameFlow>();
+        if (level == null) level = FindObjectOfType<LevelBuilder>();
         if (flame != null) flameBaseScale = flame.localScale.x;
+        logicalPos = transform.position;
     }
 
     private void Update()
     {
         if (!alive) return;
 
+        bool wasGrounded = grounded;
+
         thrusting = ReadInput();
 
         verticalSpeed += (thrusting ? thrustAccel : -gravityAccel) * Time.deltaTime;
         verticalSpeed = Mathf.Clamp(verticalSpeed, maxFallSpeed, maxRiseSpeed);
 
-        Vector3 pos = transform.position;
+        Vector3 pos = logicalPos;
         float previousFoot = pos.y - bodyRadius;
         pos.x += forwardSpeed * Time.deltaTime;
         pos.y += verticalSpeed * Time.deltaTime;
@@ -65,18 +84,23 @@ public class RocketPlayer : MonoBehaviour
             if (verticalSpeed > 0f) verticalSpeed = 0f;
         }
 
-        TryLandOnPlatform(ref pos, previousFoot);
+        TryLand(ref pos, previousFoot);
 
-        transform.position = pos;
+        logicalPos = pos;
+
+        if (grounded && !wasGrounded)
+        {
+            PlayBounce();
+        }
+
+        Vector3 visualPos = pos;
+        visualPos.y += bounceOffsetY;
+        transform.position = visualPos;
 
         UpdateVisual();
     }
 
-    /// <summary>
-    /// One-way platform landing: only catches the player when they were above
-    /// the surface last frame, so you can still fly up through a ledge.
-    /// </summary>
-    private void TryLandOnPlatform(ref Vector3 pos, float previousFoot)
+    private void TryLand(ref Vector3 pos, float previousFoot)
     {
         grounded = false;
         if (verticalSpeed > 0f) return;
@@ -93,7 +117,6 @@ public class RocketPlayer : MonoBehaviour
             float top = plat.TopY;
             float foot = pos.y - bodyRadius;
 
-            // must have been at or above the surface a frame ago
             if (previousFoot < top - snapTolerance) continue;
             if (foot > top) continue;
 
@@ -102,6 +125,30 @@ public class RocketPlayer : MonoBehaviour
             grounded = true;
             return;
         }
+
+        if (level != null && !level.IsWaterAt(pos.x))
+        {
+            float top = level.GroundTopY;
+            float foot = pos.y - bodyRadius;
+
+            if (previousFoot >= top - snapTolerance && foot <= top)
+            {
+                pos.y = top + bodyRadius;
+                verticalSpeed = 0f;
+                grounded = true;
+            }
+        }
+    }
+
+    private void PlayBounce()
+    {
+        if (bounceTween != null && bounceTween.IsActive()) bounceTween.Kill();
+
+        bounceOffsetY = 0f;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(DOTween.To(() => bounceOffsetY, v => bounceOffsetY = v, bounceHeight, bounceDuration * 0.5f).SetEase(Ease.OutQuad));
+        seq.Append(DOTween.To(() => bounceOffsetY, v => bounceOffsetY = v, 0f, bounceDuration * 0.5f).SetEase(Ease.InQuad));
+        bounceTween = seq;
     }
 
     private bool ReadInput()
@@ -143,21 +190,24 @@ public class RocketPlayer : MonoBehaviour
         trail.colorGradient = grad;
     }
 
-    /// <summary>Called when the player flies into a hazard or off the bottom.</summary>
     public void Crash()
     {
         if (!alive) return;
         alive = false;
         if (trail != null) trail.emitting = false;
+        if (bounceTween != null && bounceTween.IsActive()) bounceTween.Kill();
         if (flow != null) flow.OnPlayerCrashed(transform.position);
     }
 
-    /// <summary>Put the player back in the air after a crash.</summary>
     public void Respawn(Vector3 pos)
     {
+        logicalPos = pos;
         transform.position = pos;
         verticalSpeed = 0f;
         alive = true;
+        grounded = false;
+        bounceOffsetY = 0f;
+        if (bounceTween != null && bounceTween.IsActive()) bounceTween.Kill();
         if (trail != null)
         {
             trail.Clear();

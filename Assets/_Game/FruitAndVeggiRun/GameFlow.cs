@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using TMKOC;
 
 [System.Serializable]
 public class TargetEntry
@@ -72,6 +73,7 @@ public class GameFlow : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.GameStart(0);
         ApplyCurrentTarget();
         UpdateBasket();
         if (bannerText != null) bannerText.text = "Hold anywhere to fly \u2014 grab every " + CurrentTarget + "!";
@@ -116,6 +118,9 @@ public class GameFlow : MonoBehaviour
         bool correct = (itemName == CurrentTarget);
         SpawnPuff(at, correct ? GameDefs.ColorOf(itemName) : Color.white, correct ? 1f : 0.7f);
 
+        if (correct) RocketRunGameManager.RaiseCorrectPickup();
+        else RocketRunGameManager.RaiseIncorrectPickup();
+
         if (!correct) return;
 
         collectedForTarget++;
@@ -138,6 +143,7 @@ public class GameFlow : MonoBehaviour
     public void OnPlayerCrashed(Vector3 at)
     {
         SpawnPuff(at, Color.white, 1.8f);
+        RocketRunGameManager.RaisePlayerCrashed();
         StartCoroutine(RespawnRoutine());
     }
 
@@ -154,6 +160,7 @@ public class GameFlow : MonoBehaviour
     {
         finished = true;
         if (bannerText != null) bannerText.text = "Anjali has everything for dinner!";
+        GameManager.Instance.GameWin();
     }
 
     private void UpdateBasket()

@@ -15,6 +15,8 @@ public class LevelBuilder : MonoBehaviour
     [Tooltip("How high a pickup sits above the surface it rests on.")]
     [SerializeField] private float restHeight = 0.52f;
 
+    [SerializeField] private float marketScale = 3f;
+
     [Header("Sprites")]
     [SerializeField] private Sprite squareSprite;
     [SerializeField] private Sprite platformSprite;
@@ -46,7 +48,7 @@ public class LevelBuilder : MonoBehaviour
 
     // colours sampled from the bottom edge of the new ground / water art so the
     // fill below each band joins it seamlessly
-    private static readonly Color DirtFill  = new Color(0.541f, 0.224f, 0.055f);
+    private static readonly Color DirtFill = new Color(0.541f, 0.224f, 0.055f);
     private static readonly Color WaterFill = new Color(0.659f, 0.902f, 0.957f);
 
     public float GroundTopY { get { return groundTopY; } }
@@ -241,7 +243,7 @@ public class LevelBuilder : MonoBehaviour
             sr.size = new Vector2(marketSprite.bounds.size.x * 4f, marketSprite.bounds.size.y);
             sr.sortingOrder = -20;
             marketLayer = mk.transform;
-            mk.transform.localScale = new Vector3(3f, 3f, 1f);
+            mk.transform.localScale = new Vector3(marketScale, marketScale, 1f);
         }
 
         UpdateBackground();
@@ -264,7 +266,7 @@ public class LevelBuilder : MonoBehaviour
         if (marketLayer != null && marketSprite != null)
         {
             // slower-moving layer, nudged by whole tiles so the repeat never shows a seam
-            float tile = marketSprite.bounds.size.x;
+            float tile = marketSprite.bounds.size.x * marketScale;  // Account for scale
             float lx = camPos.x * (1f - marketParallax);
             lx += Mathf.Round((camPos.x - lx) / tile) * tile;
             marketLayer.position = new Vector3(lx, marketBaseY + camPos.y * 0.12f, 0f);
