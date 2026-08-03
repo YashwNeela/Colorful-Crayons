@@ -381,6 +381,12 @@ public class LevelBuilder : MonoBehaviour
         c.Setup(name, SpriteFor(name), isTarget);
     }
 
+    /// <summary>Public lookup so other scripts (e.g. the item-complete popup) can grab the same produce art.</summary>
+    public Sprite GetProduceSprite(string name)
+    {
+        return SpriteFor(name);
+    }
+
     private Sprite SpriteFor(string name)
     {
         for (int i = 0; i < GameDefs.Names.Length && i < produceSprites.Length; i++)

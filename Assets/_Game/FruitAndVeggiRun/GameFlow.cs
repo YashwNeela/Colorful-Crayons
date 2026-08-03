@@ -28,6 +28,7 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI basketText;
     [SerializeField] private TextMeshProUGUI bannerText;
     [SerializeField] private Sprite puffSprite;
+    [SerializeField] private ItemCompletePopup itemCompletePopup;
 
     [Header("Tuning")]
     [SerializeField] private float respawnDelay = 0.9f;
@@ -61,6 +62,7 @@ public class GameFlow : MonoBehaviour
         if (player == null) player = FindObjectOfType<RocketPlayer>();
         if (level == null) level = FindObjectOfType<LevelBuilder>();
         if (wordUI == null) wordUI = FindObjectOfType<TargetWordUI>();
+        if (itemCompletePopup == null) itemCompletePopup = FindObjectOfType<ItemCompletePopup>();
     }
 
     private static TargetEntry NewTarget(string n, int c)
@@ -132,12 +134,27 @@ public class GameFlow : MonoBehaviour
         if (collectedForTarget >= targets[targetIndex].count)
         {
             if (wordUI != null) wordUI.Celebrate();
-            if (bannerText != null) bannerText.text = "Nice! " + targets[targetIndex].itemName + " done!";
-            targetIndex++;
+            string completedItem = targets[targetIndex].itemName;
+            if (bannerText != null) bannerText.text = "Nice! " + completedItem + " done!";
 
-            if (targetIndex >= targets.Count) Finish();
-            else ApplyCurrentTarget();
+            if (itemCompletePopup != null)
+            {
+                Sprite icon = level != null ? level.GetProduceSprite(completedItem) : null;
+                itemCompletePopup.Show(completedItem, icon, AdvanceTarget);
+            }
+            else
+            {
+                AdvanceTarget();
+            }
         }
+    }
+
+    private void AdvanceTarget()
+    {
+        targetIndex++;
+
+        if (targetIndex >= targets.Count) Finish();
+        else ApplyCurrentTarget();
     }
 
     public void OnPlayerCrashed(Vector3 at)
