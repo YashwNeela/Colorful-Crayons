@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using TMKOC;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class TargetEntry
@@ -29,6 +30,12 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bannerText;
     [SerializeField] private Sprite puffSprite;
     [SerializeField] private ItemCompletePopup itemCompletePopup;
+    [SerializeField] private Image[] heartIcons;
+    [SerializeField] private Color fullHeartColor = Color.white;
+    [SerializeField] private Color emptyHeartColor = new Color(1f, 1f, 1f, 0.25f);
+
+    [Header("Lives")]
+    [SerializeField] private int maxLives = 5;
 
     [Header("Tuning")]
     [SerializeField] private float respawnDelay = 0.9f;
@@ -38,6 +45,7 @@ public class GameFlow : MonoBehaviour
     private int collectedForTarget;
     private int basket;
     private bool finished;
+    private int lives;
 
     public string CurrentTarget
     {
@@ -76,6 +84,8 @@ public class GameFlow : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.GameStart(0);
+        lives = maxLives;
+        UpdateLives();
         ApplyCurrentTarget();
         UpdateBasket();
         if (bannerText != null) bannerText.text = "Hold anywhere to fly \u2014 grab every " + CurrentTarget + "!";
@@ -118,12 +128,17 @@ public class GameFlow : MonoBehaviour
         if (finished) return;
 
         bool correct = (itemName == CurrentTarget);
-        SpawnPuff(at, correct ? GameDefs.ColorOf(itemName) : Color.white, correct ? 1f : 0.7f);
 
-        if (correct) RocketRunGameManager.RaiseCorrectPickup();
-        else RocketRunGameManager.RaiseIncorrectPickup();
+        if (!correct)
+        {
+            RocketRunGameManager.RaiseIncorrectPickup();
+            // same restarting treatment as a water crash: puff, lose a life, respawn
+            if (player != null) player.Crash();
+            return;
+        }
 
-        if (!correct) return;
+        SpawnPuff(at, GameDefs.ColorOf(itemName), 1f);
+        RocketRunGameManager.RaiseCorrectPickup();
 
         collectedForTarget++;
         basket++;
@@ -161,6 +176,7 @@ public class GameFlow : MonoBehaviour
     {
         SpawnPuff(at, Color.white, 1.8f);
         RocketRunGameManager.RaisePlayerCrashed();
+        LoseLife();
         StartCoroutine(RespawnRoutine());
     }
 
@@ -169,8 +185,47 @@ public class GameFlow : MonoBehaviour
         yield return new WaitForSeconds(respawnDelay);
         if (player == null || level == null) yield break;
 
+        if (lives <= 0)
+        {
+            RestartRun();
+            yield break;
+        }
+
         float safeX = level.FindSafeX(player.transform.position.x - 2f);
         player.Respawn(new Vector3(safeX, 2.5f, 0f));
+    }
+
+    private void LoseLife()
+    {
+        lives = Mathf.Max(0, lives - 1);
+        UpdateLives();
+    }
+
+    private void UpdateLives()
+    {
+        if (heartIcons == null) return;
+        for (int i = 0; i < heartIcons.Length; i++)
+        {
+            if (heartIcons[i] == null) continue;
+            heartIcons[i].color = i < lives ? fullHeartColor : emptyHeartColor;
+        }
+    }
+
+    /// <summary>Out of lives -- reset the whole run: lives, mission progress, basket, player position.</summary>
+    private void RestartRun()
+    {
+        lives = maxLives;
+        UpdateLives();
+
+        targetIndex = 0;
+        basket = 0;
+        finished = false;
+        UpdateBasket();
+        ApplyCurrentTarget();
+
+        if (bannerText != null) bannerText.text = "Hold anywhere to fly \u2014 grab every " + CurrentTarget + "!";
+
+        if (player != null) player.Respawn(new Vector3(0f, 2.5f, 0f));
     }
 
     private void Finish()
