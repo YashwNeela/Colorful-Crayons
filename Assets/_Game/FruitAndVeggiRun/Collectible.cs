@@ -33,6 +33,13 @@ public class Collectible : MonoBehaviour
         }
     }
 
+public void SetVisible(bool visible)
+    {
+        if (icon != null) icon.enabled = visible;
+        if (glow != null) glow.enabled = visible && isTarget;
+    }
+
+
     private void Update()
     {
         // gentle bob + the target item pulses so it reads as "collect me"

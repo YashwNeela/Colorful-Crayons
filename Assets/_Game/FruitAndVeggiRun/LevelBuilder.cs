@@ -51,7 +51,21 @@ public class LevelBuilder : MonoBehaviour
     private static readonly Color DirtFill = new Color(0.541f, 0.224f, 0.055f);
     private static readonly Color WaterFill = new Color(0.659f, 0.902f, 0.957f);
 
-    public float GroundTopY { get { return groundTopY; } }
+    
+
+    /// <summary>While true, BuildProduce skips spawning pickups (used by the tutorial).</summary>
+    public bool SuppressProduce { get; set; }
+
+    /// <summary>Destroys every pickup currently in the level.</summary>
+    public void ClearProduce()
+    {
+        Collectible[] all = FindObjectsOfType<Collectible>();
+        for (int i = 0; i < all.Length; i++)
+        {
+            if (all[i] != null) Destroy(all[i].gameObject);
+        }
+    }
+public float GroundTopY { get { return groundTopY; } }
 
     private void Awake()
     {
@@ -140,7 +154,7 @@ public class LevelBuilder : MonoBehaviour
         if (water) waterSegments.Add(index);
 
         BuildGround(root, x0, water);
-        BuildClouds(root, x0);
+    //    BuildClouds(root, x0);
 
         List<Surface> surfaces = new List<Surface>();
         if (!water || Random.value < 0.85f) BuildPlatforms(root, x0, surfaces);
@@ -327,6 +341,7 @@ public class LevelBuilder : MonoBehaviour
     private void BuildProduce(GameObject root, List<Surface> surfaces)
     {
         if (flow == null || surfaces.Count == 0) return;
+        if (SuppressProduce) return;
 
         // one pickup per surface at most, so nothing ever hangs in empty air
         int count = Mathf.Min(Random.Range(1, 3), surfaces.Count);
@@ -386,6 +401,31 @@ public class LevelBuilder : MonoBehaviour
     {
         return SpriteFor(name);
     }
+
+public Collectible SpawnTutorialCollectible(Vector3 position, string itemName, bool isTarget = true)
+    {
+        GameObject c = new GameObject("TutorialPickup_" + itemName);
+        c.transform.SetParent(transform);
+        c.transform.position = position;
+
+        GameObject glow = MakeSprite("Glow", c.transform, glowSprite,
+            position, Vector3.one * 1.5f, new Color(1f, 1f, 1f, 0.85f), 1);
+
+        GameObject icon = MakeSprite("Icon", c.transform, SpriteFor(itemName),
+            position, Vector3.one * 0.85f, Color.white, 3);
+
+        CircleCollider2D col = c.AddComponent<CircleCollider2D>();
+        col.isTrigger = true;
+        col.radius = 0.55f;
+
+        Collectible cc = c.AddComponent<Collectible>();
+        SerializeCollectible(cc, itemName, icon.GetComponent<SpriteRenderer>(), glow.GetComponent<SpriteRenderer>(), isTarget);
+        return cc;
+    }
+
+
+    /// <summary>Exposes the water sprite so other scripts (e.g. the tutorial) can reference the same art.</summary>
+    public Sprite WaterSprite { get { return waterSprite; } }
 
     private Sprite SpriteFor(string name)
     {

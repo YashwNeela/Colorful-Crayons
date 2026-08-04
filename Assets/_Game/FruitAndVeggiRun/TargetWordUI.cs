@@ -1,66 +1,63 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary>
-/// The word at the top of the screen. Letters fill in with the produce colour
-/// as the player collects that item — the "picture + word" teaching moment.
+/// The target-item indicator at the top of the screen. Shows the produce's own
+/// icon: a dim "outline" copy always visible so the player knows what they're
+/// hunting, with a full-colour radial fill sweeping in smoothly as they collect
+/// the right item.
 /// </summary>
 public class TargetWordUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI wordText;
-    [SerializeField] private string emptyHex = "#FFFFFF";
+    [SerializeField] private RectTransform iconContainer;
+    [SerializeField] private Image outlineIcon;
+    [SerializeField] private Image fillIcon;
+    [SerializeField] private float fillTweenDuration = 0.35f;
 
-    private string word = "";
-    private int filled;
     private int total = 1;
+    private Tween fillTween;
 
-    public void SetWord(string newWord, int targetCount)
+    public void SetWord(string newWord, int targetCount, Sprite icon)
     {
-        word = newWord == null ? "" : newWord;
         total = Mathf.Max(1, targetCount);
-        filled = 0;
-        Redraw();
+
+        if (outlineIcon != null) outlineIcon.sprite = icon;
+        if (fillIcon != null) fillIcon.sprite = icon;
+
+        if (fillTween != null && fillTween.IsActive()) fillTween.Kill();
+        if (fillIcon != null) fillIcon.fillAmount = 0f;
     }
 
     public void SetProgress(int collected)
     {
-        filled = collected;
-        Redraw();
-    }
+        if (fillIcon == null) return;
 
-    private void Redraw()
-    {
-        if (wordText == null || string.IsNullOrEmpty(word)) return;
+        float pct = Mathf.Clamp01((float)collected / total);
 
-        float pct = Mathf.Clamp01((float)filled / total);
-        int litLetters = Mathf.RoundToInt(pct * word.Length);
-
-        string hex = ColorUtility.ToHtmlStringRGB(GameDefs.ColorOf(word));
-        string s = "";
-        for (int i = 0; i < word.Length; i++)
-        {
-            string c = (i < litLetters) ? ("#" + hex) : emptyHex;
-            s += "<color=" + c + ">" + word[i] + "</color>";
-        }
-        wordText.text = s;
+        if (fillTween != null && fillTween.IsActive()) fillTween.Kill();
+        // unscaled time so the fill still visibly completes even if something (e.g. the
+        // item-complete popup) pauses the game the instant the final pickup lands
+        fillTween = fillIcon.DOFillAmount(pct, fillTweenDuration).SetEase(Ease.OutQuad).SetUpdate(true);
     }
 
     public void Celebrate()
     {
-        if (wordText != null) StartCoroutine(Pop());
+        if (iconContainer == null) return;
+        iconContainer.DOKill();
+        iconContainer.localScale = Vector3.one;
+        iconContainer.DOPunchScale(Vector3.one * 0.35f, 0.45f, 6, 0.6f).SetUpdate(true);
     }
 
-    private System.Collections.IEnumerator Pop()
+public void SetFillVisible(bool visible)
     {
-        float t = 0f;
-        Vector3 baseScale = Vector3.one;
-        while (t < 0.45f)
-        {
-            t += Time.deltaTime;
-            float k = 1f + Mathf.Sin(Mathf.Clamp01(t / 0.45f) * Mathf.PI) * 0.35f;
-            wordText.transform.localScale = baseScale * k;
-            yield return null;
-        }
-        wordText.transform.localScale = baseScale;
+        if (fillIcon != null) fillIcon.enabled = visible;
     }
+
+public void SetIconContainerVisible(bool visible)
+    {
+        if (iconContainer != null) iconContainer.gameObject.SetActive(visible);
+    }
+
+
 }

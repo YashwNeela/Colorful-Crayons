@@ -119,9 +119,20 @@ public class GameFlow : MonoBehaviour
 
         collectedForTarget = 0;
         TargetEntry t = targets[targetIndex];
-        if (wordUI != null) wordUI.SetWord(t.itemName, t.count);
+        Sprite icon = level != null ? level.GetProduceSprite(t.itemName) : null;
+        if (wordUI != null) wordUI.SetWord(t.itemName, t.count, icon);
         if (player != null) player.SetTrailColor(GameDefs.ColorOf(t.itemName));
     }
+
+private void SetCollectiblesVisible(bool visible)
+    {
+        Collectible[] collectibles = FindObjectsOfType<Collectible>();
+        for (int i = 0; i < collectibles.Length; i++)
+        {
+            collectibles[i].SetVisible(visible);
+        }
+    }
+
 
     public void OnCollected(string itemName, Vector3 at)
     {
@@ -152,6 +163,8 @@ public class GameFlow : MonoBehaviour
             string completedItem = targets[targetIndex].itemName;
             if (bannerText != null) bannerText.text = "Nice! " + completedItem + " done!";
 
+            SetCollectiblesVisible(false);
+            if (wordUI != null) wordUI.SetIconContainerVisible(false);
             if (itemCompletePopup != null)
             {
                 Sprite icon = level != null ? level.GetProduceSprite(completedItem) : null;
@@ -163,9 +176,10 @@ public class GameFlow : MonoBehaviour
             }
         }
     }
-
     private void AdvanceTarget()
     {
+        SetCollectiblesVisible(true);
+        if (wordUI != null) wordUI.SetIconContainerVisible(true);
         targetIndex++;
 
         if (targetIndex >= targets.Count) Finish();
@@ -240,7 +254,7 @@ public class GameFlow : MonoBehaviour
         if (basketText == null) return;
         int total = 0;
         for (int i = 0; i < targets.Count; i++) total += targets[i].count;
-        basketText.text = "Basket " + basket + "/" + total;
+        basketText.text = /*"Basket "*/ + basket + "/" + total;
     }
 
     private void SpawnPuff(Vector3 at, Color c, float size)
