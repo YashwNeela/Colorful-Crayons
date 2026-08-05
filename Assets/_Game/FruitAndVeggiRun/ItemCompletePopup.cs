@@ -13,6 +13,8 @@ public class ItemCompletePopup : MonoBehaviour
 {
     [SerializeField] private GameObject root;       // whole popup, inactive by default
     [SerializeField] private RectTransform bubble;   // the round card, scaled in on show
+    [Tooltip("Shine rays behind the icon, same sprite as the win and lose panels. Turns slowly while the card is up.")]
+    [SerializeField] private RectTransform shine;
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI label;
 
@@ -20,10 +22,14 @@ public class ItemCompletePopup : MonoBehaviour
     [Tooltip("Pop-in duration and minimum time before a tap can dismiss the card, in unscaled seconds.")]
     [SerializeField] private float popInDuration = 0.3f;
 
+    [Tooltip("Degrees per second the shine rays turn. Negative to spin the other way.")]
+    [SerializeField] private float shineSpinSpeed = 10f;
+
     [Tooltip("How long the card stays up before auto-resuming, in unscaled seconds. A tap dismisses it sooner.")]
     [SerializeField] private float autoDismissDelay = 3f;
 
     private Action onDismissed;
+    private bool showing;
 
     private void Awake()
     {
@@ -42,6 +48,7 @@ public class ItemCompletePopup : MonoBehaviour
         }
 
         if (root != null) root.SetActive(true);
+        showing = true;
         Time.timeScale = 0f;
 
         StopAllCoroutines();
@@ -81,9 +88,20 @@ private IEnumerator PlayInThenWaitForTap()
         return false;
     }
 
+private void Update()
+    {
+        // unscaled: the world is frozen for as long as this card is up
+        if (showing && shine != null)
+        {
+            shine.Rotate(0f, 0f, -shineSpinSpeed * Time.unscaledDeltaTime);
+        }
+    }
+
+
     private void Hide()
     {
         if (root != null) root.SetActive(false);
+        showing = false;
         Time.timeScale = 1f;
 
         Action cb = onDismissed;

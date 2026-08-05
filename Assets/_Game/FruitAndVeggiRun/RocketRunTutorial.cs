@@ -63,6 +63,7 @@ public class RocketRunTutorial : MonoBehaviour
         public string message;
         public Sprite primary;
         public Sprite secondary;
+        public string voiceKey;
     }
 
     private void Awake()
@@ -111,7 +112,8 @@ public class RocketRunTutorial : MonoBehaviour
         {
             message = "Hold anywhere on the screen to fly up. Let go to fall!",
             primary = handIcon,
-            secondary = null
+            secondary = null,
+            voiceKey = VoiceKeys != null ? VoiceKeys.TutorialFly : null
         });
 
         // let them actually fly for a few seconds with an empty sky
@@ -127,7 +129,8 @@ public class RocketRunTutorial : MonoBehaviour
         {
             message = "Now collect the " + (string.IsNullOrEmpty(targetName) ? "fruit" : targetName) + "!",
             primary = targetIcon,
-            secondary = null
+            secondary = null,
+            voiceKey = VoiceKeys != null ? VoiceKeys.TutorialCollect : null
         });
 
         // keep dropping a fresh apple every time one is missed, so the step can
@@ -168,7 +171,8 @@ public class RocketRunTutorial : MonoBehaviour
         {
             message = "Careful! Grabbing the wrong fruit costs you a life.",
             primary = wrongFruitIcon != null ? wrongFruitIcon : wrongIcon,
-            secondary = heartIcon
+            secondary = heartIcon,
+            voiceKey = VoiceKeys != null ? VoiceKeys.TutorialWrongFruit : null
         });
 
         // ---- 4. water costs a life ----
@@ -179,7 +183,8 @@ public class RocketRunTutorial : MonoBehaviour
         {
             message = "Splashing into the water costs a life too!",
             primary = level != null ? level.WaterSprite : null,
-            secondary = heartIcon
+            secondary = heartIcon,
+            voiceKey = VoiceKeys != null ? VoiceKeys.TutorialWater : null
         });
 
         // ---- done: hand the level back to normal ----
@@ -187,6 +192,9 @@ public class RocketRunTutorial : MonoBehaviour
         if (targetUI != null) targetUI.SetFillVisible(true);
         if (root != null) root.SetActive(false);
         Time.timeScale = 1f;
+
+        // nothing else is speaking now -- good moment for the "ready, set, fly" line
+        if (flow != null) flow.AnnounceRunStart();
     }
 
     /// <summary>
@@ -217,6 +225,8 @@ public class RocketRunTutorial : MonoBehaviour
     private IEnumerator PresentStep(Step step)
     {
         if (messageText != null) messageText.text = step.message;
+
+        TMKOC.RocketRunVoice.Play(step.voiceKey);
 
         if (primaryIcon != null)
         {
@@ -306,5 +316,12 @@ private IEnumerator WaitForWaterAhead()
             if (Input.GetTouch(i).phase == TouchPhase.Began) return true;
         }
         return false;
+    }
+
+
+/// <summary>Voice-over keys for the four instruction steps, or null if no mapper is in the scene.</summary>
+    private TMKOC.RocketRunAudioMapper VoiceKeys
+    {
+        get { return TMKOC.RocketRunVoice.Mapper; }
     }
 }

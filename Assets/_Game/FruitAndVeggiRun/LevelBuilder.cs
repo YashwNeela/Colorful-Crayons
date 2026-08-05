@@ -52,6 +52,13 @@ public class LevelBuilder : MonoBehaviour
     private static readonly Color DirtFill = new Color(0.541f, 0.224f, 0.055f);
     private static readonly Color WaterFill = new Color(0.659f, 0.902f, 0.957f);
 
+    // platform placement: how tall one is, and how much clear air to keep around it
+    // so two in the same segment never stack up into one unreadable blob
+    private const float PlatformHeight = 0.8f;
+    private const float PlatformGapX = 0.7f;
+    private const float PlatformGapY = 1.1f;
+    private const int PlatformPlaceAttempts = 12;
+
     
 
     /// <summary>While true, BuildProduce skips spawning pickups (used by the tutorial).</summary>
@@ -320,7 +327,9 @@ public float GroundTopY { get { return groundTopY; } }
             float tile = marketSprite.bounds.size.x * marketScale;  // Account for scale
             float lx = camPos.x * (1f - marketParallax);
             lx += Mathf.Round((camPos.x - lx) / tile) * tile;
-            marketLayer.position = new Vector3(lx, marketBaseY + camPos.y * 0.12f, 0f);
+            // fixed height: the stalls are meant to sit on the horizon, and letting
+            // them track the camera's Y made the whole market bob as the rocket flew
+            marketLayer.position = new Vector3(lx, marketBaseY, 0f);
         }
     }
 
@@ -328,14 +337,33 @@ public float GroundTopY { get { return groundTopY; } }
         {
             RocketRunGameManager.Instance.GoBackToPlayschool();
         }
-    private void BuildPlatforms(GameObject root, float x0, List<Surface> surfaces)
+private void BuildPlatforms(GameObject root, float x0, List<Surface> surfaces)
     {
         int count = Random.Range(1, 3);
+
+        // what has already gone down in this segment, so the next one can avoid it
+        List<Rect> placed = new List<Rect>();
+
         for (int i = 0; i < count; i++)
         {
-            float w = Random.Range(2.2f, 4.4f);
-            float px = x0 + Random.Range(0.6f, segmentWidth - w - 0.3f) + w * 0.5f;
-            float py = Random.Range(-1.9f, 4.4f);
+            float w = 0f;
+            float px = 0f;
+            float py = 0f;
+            bool found = false;
+
+            for (int attempt = 0; attempt < PlatformPlaceAttempts && !found; attempt++)
+            {
+                w = Random.Range(2.2f, 4.4f);
+                px = x0 + Random.Range(0.6f, segmentWidth - w - 0.3f) + w * 0.5f;
+                py = Random.Range(-1.9f, 4.4f);
+
+                found = !ClashesWithPlaced(placed, px, py, w);
+            }
+
+            // every try clashed -- better one platform than two stacked on each other
+            if (!found) continue;
+
+            placed.Add(new Rect(px - w * 0.5f, py - PlatformHeight * 0.5f, w, PlatformHeight));
 
             GameObject p = new GameObject("Platform");
             p.transform.SetParent(root.transform);
@@ -344,7 +372,7 @@ public float GroundTopY { get { return groundTopY; } }
             SpriteRenderer sr = p.AddComponent<SpriteRenderer>();
             sr.sprite = platformSprite;
             sr.drawMode = SpriteDrawMode.Sliced;
-            sr.size = new Vector2(w, 0.8f);
+            sr.size = new Vector2(w, PlatformHeight);
             sr.sortingOrder = -1;
 
             // solid top face so the rocket can land on it
@@ -365,6 +393,30 @@ public float GroundTopY { get { return groundTopY; } }
                     Vector3.one * Random.Range(0.6f, 0.9f), Color.white, 0);
             }
         }
+    }
+
+    /// <summary>
+    /// True when a candidate platform would sit on, under, or inside one already
+    /// placed. Only counts as a clash when the two overlap horizontally *and* sit at
+    /// similar heights -- platforms directly above each other with clear air between
+    /// are fine, and make for more interesting flying.
+    /// </summary>
+    private static bool ClashesWithPlaced(List<Rect> placed, float px, float py, float w)
+    {
+        float left = px - w * 0.5f - PlatformGapX;
+        float right = px + w * 0.5f + PlatformGapX;
+
+        for (int i = 0; i < placed.Count; i++)
+        {
+            Rect r = placed[i];
+
+            bool overlapsInX = right > r.xMin && left < r.xMax;
+            bool tooCloseInY = Mathf.Abs(py - r.center.y) < PlatformGapY;
+
+            if (overlapsInX && tooCloseInY) return true;
+        }
+
+        return false;
     }
 
     private void BuildClouds(GameObject root, float x0)

@@ -71,6 +71,21 @@ public class RuntimeAudioLoader : MonoBehaviour
         StartCoroutine(LoadAllAudio(isCommon));
     }
 
+/// <summary>
+    /// Loads a category only if it is not already the one in memory. Lets a game
+    /// scene make sure its own voice-over is present when it was opened directly
+    /// rather than through the Playschool menu, without re-downloading and
+    /// re-decoding every clip on a normal launch.
+    /// </summary>
+    public void EnsureCategoryLoaded(string category)
+    {
+        if (string.IsNullOrEmpty(category)) return;
+        if (CurrentCategoryName == category && audioDict.Count > 0) return;
+
+        StartCoroutine(CategoryAudioDownlaodAndLoader(category));
+    }
+
+
     void Start()
     {
         StartCoroutine(CategoryAudioDownlaodAndLoader("common", true));

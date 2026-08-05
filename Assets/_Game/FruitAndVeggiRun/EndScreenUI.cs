@@ -6,14 +6,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// The out-of-lives screen. Freezes the world, drops a "TRY AGAIN!" badge over
-/// slowly turning shine rays, and offers two ways out: play again, or back to
-/// Playschool.
+/// End-of-run screen. Freezes the world, drops a badge over slowly turning shine
+/// rays, and offers two ways out: play again, or back to Playschool.
 ///
-/// Restarting is a straight in-place reset of the run (GameFlow.RestartRun) --
+/// One component, two instances: the lose screen (TRY AGAIN! badge, shown when the
+/// last life goes) and the win screen (YOU WIN! badge, shown after the closing
+/// cut-scene). Only the badge sprite and the spoken line differ.
+///
+/// Playing again is a straight in-place reset of the run (GameFlow.RestartRun) --
 /// nothing reloads -- so the opening cut-scene and the tutorial never replay.
 /// </summary>
-public class RetryScreenUI : MonoBehaviour
+public class EndScreenUI : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private GameObject root;
@@ -23,6 +26,10 @@ public class RetryScreenUI : MonoBehaviour
     [SerializeField] private RectTransform shine;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button playschoolButton;
+
+    [Header("Voice-over")]
+    [Tooltip("voiceover_title from the VO sheet -- retry_screen on the lose panel, win_screen on the win panel. Blank for silence.")]
+    [SerializeField] private string voiceKey = "retry_screen";
 
     [Header("Tuning")]
     [SerializeField] private float popInDuration = 0.45f;
@@ -36,7 +43,7 @@ public class RetryScreenUI : MonoBehaviour
     private bool visible;
     private float previousTimeScale = 1f;
 
-    /// <summary>True while the retry screen is up and waiting on the player.</summary>
+    /// <summary>True while this screen is up and waiting on the player.</summary>
     public bool IsShowing { get { return visible; } }
 
     private void Awake()
@@ -71,6 +78,8 @@ public class RetryScreenUI : MonoBehaviour
         Time.timeScale = 0f;
 
         if (root != null) root.SetActive(true);
+
+        RocketRunVoice.Play(voiceKey);
 
         StopAllCoroutines();
         StartCoroutine(PopIn());

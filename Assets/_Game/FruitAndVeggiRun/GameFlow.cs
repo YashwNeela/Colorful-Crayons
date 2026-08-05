@@ -35,8 +35,10 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI livesText;
     [Tooltip("The 'fridge is full again' card shown once the whole shopping list is done.")]
     [SerializeField] private StoryCutsceneUI closingStory;
-    [Tooltip("Shown when the last life is gone; restarting from it resets the run in place, so no cut-scene replays.")]
-    [SerializeField] private RetryScreenUI retryScreen;
+    [Tooltip("TRY AGAIN! panel, shown when the last life is gone.")]
+    [SerializeField] private EndScreenUI loseScreen;
+    [Tooltip("YOU WIN! panel, shown once the closing cut-scene has played out.")]
+    [SerializeField] private EndScreenUI winScreen;
     [SerializeField] private Color fullHeartColor = Color.white;
     [SerializeField] private Color emptyHeartColor = new Color(1f, 1f, 1f, 0.25f);
 
@@ -93,6 +95,18 @@ public class GameFlow : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.GameStart(0);
+
+        // make sure this game's voice-over bundle is in memory even when the scene
+        // is opened directly rather than through the Playschool menu
+        if (Voice != null && RuntimeAudioLoader.Instance != null)
+        {
+            RuntimeAudioLoader.Instance.EnsureCategoryLoaded(Voice.CategoryName);
+        }
+
+        // NB: no target call-out here. Start() runs underneath the opening cut-scene,
+        // so anything spoken now would be talked over. The first "go" line is
+        // AnnounceRunStart(), which the tutorial fires when it hands control back.
+
         lives = maxLives;
         UpdateLives();
         ApplyCurrentTarget();
@@ -152,6 +166,7 @@ private void SetCollectiblesVisible(bool visible)
         if (!correct)
         {
             RocketRunGameManager.RaiseIncorrectPickup();
+            if (Voice != null) RocketRunVoice.Play(Voice.GetRandomWrongPickup());
             // same restarting treatment as a water crash: puff, lose a life, respawn
             if (player != null) player.Crash();
             return;
@@ -166,11 +181,20 @@ private void SetCollectiblesVisible(bool visible)
 
         if (wordUI != null) wordUI.SetProgress(collectedForTarget);
 
+        // praise every pickup except the one that finishes the item -- that gets its
+        // own "all the apples are in the basket!" line a few lines down
+        bool completesItem = collectedForTarget >= targets[targetIndex].count;
+        if (!completesItem && Voice != null) RocketRunVoice.Play(Voice.GetRandomCorrectPickup());
+
         if (collectedForTarget >= targets[targetIndex].count)
         {
             if (wordUI != null) wordUI.Celebrate();
             string completedItem = targets[targetIndex].itemName;
             if (bannerText != null) bannerText.text = "Nice! " + completedItem + " done!";
+
+            // the item-complete line replaces the per-pickup praise, so the two
+            // never talk over each other on the final fruit of an item
+            if (Voice != null) RocketRunVoice.Play(Voice.GetDoneAudio(completedItem));
 
             SetCollectiblesVisible(false);
             if (wordUI != null) wordUI.SetIconContainerVisible(false);
@@ -185,20 +209,41 @@ private void SetCollectiblesVisible(bool visible)
             }
         }
     }
-    private void AdvanceTarget()
+private void AdvanceTarget()
     {
         SetCollectiblesVisible(true);
         if (wordUI != null) wordUI.SetIconContainerVisible(true);
         targetIndex++;
 
-        if (targetIndex >= targets.Count) Finish();
-        else ApplyCurrentTarget();
+        if (targetIndex >= targets.Count)
+        {
+            Finish();
+            return;
+        }
+
+        ApplyCurrentTarget();
+
+        // "Now find the bananas!" -- safe to speak here because the item-complete
+        // popup has already finished its own line and dismissed itself
+        if (Voice != null) RocketRunVoice.Play(Voice.GetFindAudio(CurrentTarget));
     }
+
+/// <summary>
+    /// The "ready, set, fly" line. Called by RocketRunTutorial the moment it stops
+    /// interrupting and real play begins, which is the first point in the whole
+    /// opening sequence where nothing else is speaking.
+    /// </summary>
+    public void AnnounceRunStart()
+    {
+        if (Voice != null) RocketRunVoice.Play(Voice.GameStart);
+    }
+
 
     public void OnPlayerCrashed(Vector3 at)
     {
         SpawnPuff(at, Color.white, 1.8f);
         RocketRunGameManager.RaisePlayerCrashed();
+        if (Voice != null) RocketRunVoice.Play(Voice.GetRandomCrash());
         LoseLife();
         StartCoroutine(RespawnRoutine());
     }
@@ -212,7 +257,7 @@ private IEnumerator RespawnRoutine()
         {
             // hand over to the retry screen; it freezes the game and calls
             // RestartRun only if the player chooses to play again
-            if (retryScreen != null) retryScreen.Show(RestartRun);
+            if (loseScreen != null) loseScreen.Show(RestartRun);
             else RestartRun();
             yield break;
         }
@@ -270,6 +315,7 @@ private void Finish()
     {
         finished = true;
         if (bannerText != null) bannerText.text = "Anjali has everything for dinner!";
+        if (Voice != null) RocketRunVoice.Play(Voice.GameComplete);
         StartCoroutine(FinishRoutine());
     }
 
@@ -277,7 +323,7 @@ private void Finish()
     /// Lets the player fly on for a short victory lap, then plays the closing
     /// story card before handing over to the usual win flow.
     /// </summary>
-    private IEnumerator FinishRoutine()
+private IEnumerator FinishRoutine()
     {
         yield return new WaitForSeconds(closingStoryDelay);
 
@@ -289,6 +335,10 @@ private void Finish()
         }
 
         GameManager.Instance.GameWin();
+
+        // same panel as the lose screen, different badge -- play again resets the run
+        // in place exactly as it does after running out of lives
+        if (winScreen != null) winScreen.Show(RestartRun);
     }
 
     private void UpdateBasket()
@@ -310,5 +360,12 @@ private void Finish()
         sr.sortingOrder = 20;
         Puff p = g.AddComponent<Puff>();
         p.Play(c, size);
+    }
+
+
+/// <summary>RocketRun's voice-over key table, or null when no mapper is in the scene.</summary>
+    private RocketRunAudioMapper Voice
+    {
+        get { return RocketRunVoice.Mapper; }
     }
 }

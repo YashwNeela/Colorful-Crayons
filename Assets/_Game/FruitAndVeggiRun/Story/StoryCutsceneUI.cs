@@ -32,6 +32,8 @@ public class StoryCutsceneUI : MonoBehaviour
     {
         public Sprite art;
         [TextArea(1, 2)] public string caption;
+        [Tooltip("voiceover_title from the VO sheet, e.g. story_open_1. Left blank, the panel is silent.")]
+        public string voiceKey;
 
         [Header("Resting pose (anchored position / rotation / scale)")]
         public Vector2 restPosition;
@@ -227,6 +229,9 @@ private void Start()
         rt.anchoredPosition = p.restPosition + p.fromOffset;
         rt.localRotation = Quaternion.Euler(0f, 0f, p.fromRotation);
         rt.localScale = Vector3.one * (p.restScale * 0.8f);
+
+        // the line is spoken as the card flies in, so the narration lands with the picture
+        TMKOC.RocketRunVoice.Play(p.voiceKey);
 
         // caption swaps while the panel is still in flight
         if (captionText != null)
