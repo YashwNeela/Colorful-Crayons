@@ -20,6 +20,9 @@ public class ItemCompletePopup : MonoBehaviour
     [Tooltip("Pop-in duration and minimum time before a tap can dismiss the card, in unscaled seconds.")]
     [SerializeField] private float popInDuration = 0.3f;
 
+    [Tooltip("How long the card stays up before auto-resuming, in unscaled seconds. A tap dismisses it sooner.")]
+    [SerializeField] private float autoDismissDelay = 3f;
+
     private Action onDismissed;
 
     private void Awake()
@@ -45,7 +48,7 @@ public class ItemCompletePopup : MonoBehaviour
         StartCoroutine(PlayInThenWaitForTap());
     }
 
-    private IEnumerator PlayInThenWaitForTap()
+private IEnumerator PlayInThenWaitForTap()
     {
         // Unscaled-time pop-in so it still animates while the world is paused.
         float t = 0f;
@@ -59,8 +62,11 @@ public class ItemCompletePopup : MonoBehaviour
         }
         if (bubble != null) bubble.localScale = Vector3.one;
 
-        while (!TapDetected())
+        // Auto-resume after autoDismissDelay, or as soon as the player taps.
+        float waited = 0f;
+        while (waited < autoDismissDelay && !TapDetected())
         {
+            waited += Time.unscaledDeltaTime;
             yield return null;
         }
 

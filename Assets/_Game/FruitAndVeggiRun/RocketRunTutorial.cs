@@ -89,6 +89,16 @@ public class RocketRunTutorial : MonoBehaviour
         // included) has run before we read CurrentTarget or touch the level
         yield return null;
 
+        // the opening story cut-scene owns the screen first -- sit tight (still
+        // frozen) until it has played out or the player skipped it
+        while (StoryCutsceneUI.IsPlaying)
+        {
+            yield return null;
+        }
+
+        // the cut-scene may have unfrozen on its way out; take the freeze back
+        Time.timeScale = 0f;
+
         // no pickups at all during the opening fly lesson
         if (level != null)
         {

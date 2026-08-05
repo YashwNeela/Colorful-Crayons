@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMKOC;
 
 /// <summary>
 /// Streams the world in fixed-width segments ahead of the camera and recycles
@@ -65,6 +66,42 @@ public class LevelBuilder : MonoBehaviour
             if (all[i] != null) Destroy(all[i].gameObject);
         }
     }
+
+/// <summary>
+    /// Tears the level down and rebuilds it from the beginning.
+    ///
+    /// Needed after a restart: segments are streamed forwards only and anything
+    /// more than two behind the camera is destroyed, so by the time the player is
+    /// sent back to x = 0 the world there is long gone. Without this the rocket
+    /// respawns into empty sky -- no ground, no platforms, no produce.
+    /// </summary>
+public void ResetLevel()
+    {
+        foreach (KeyValuePair<int, GameObject> kv in segments)
+        {
+            if (kv.Value == null) continue;
+            // deactivate as well as destroy: Destroy is deferred to end of frame,
+            // and we are about to rebuild segments at overlapping indices
+            kv.Value.SetActive(false);
+            Destroy(kv.Value);
+        }
+        segments.Clear();
+        waterSegments.Clear();
+
+        // tutorial drops and anything else parented outside a segment
+        ClearProduce();
+
+        // rebuild around wherever the camera actually is, and leave nextSegment
+        // consistent with it -- otherwise the very next Update() recycles
+        // everything we just built as "behind the camera"
+        int camSeg = cameraTransform != null
+            ? Mathf.FloorToInt(cameraTransform.position.x / segmentWidth)
+            : 0;
+
+        for (int i = camSeg - 1; i <= camSeg + segmentsAhead; i++) BuildSegment(i);
+        nextSegment = camSeg + segmentsAhead + 1;
+    }
+
 public float GroundTopY { get { return groundTopY; } }
 
     private void Awake()
@@ -287,6 +324,10 @@ public float GroundTopY { get { return groundTopY; } }
         }
     }
 
+    public void OnBackButtonClicked()
+        {
+            RocketRunGameManager.Instance.GoBackToPlayschool();
+        }
     private void BuildPlatforms(GameObject root, float x0, List<Surface> surfaces)
     {
         int count = Random.Range(1, 3);
@@ -303,7 +344,7 @@ public float GroundTopY { get { return groundTopY; } }
             SpriteRenderer sr = p.AddComponent<SpriteRenderer>();
             sr.sprite = platformSprite;
             sr.drawMode = SpriteDrawMode.Sliced;
-            sr.size = new Vector2(w, 0.48f);
+            sr.size = new Vector2(w, 0.8f);
             sr.sortingOrder = -1;
 
             // solid top face so the rocket can land on it

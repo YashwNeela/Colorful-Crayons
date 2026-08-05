@@ -25,12 +25,18 @@ public class GameFlow : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private RocketPlayer player;
     [SerializeField] private LevelBuilder level;
+    [SerializeField] private CameraRig cameraRig;
     [SerializeField] private TargetWordUI wordUI;
     [SerializeField] private TextMeshProUGUI basketText;
     [SerializeField] private TextMeshProUGUI bannerText;
     [SerializeField] private Sprite puffSprite;
     [SerializeField] private ItemCompletePopup itemCompletePopup;
     [SerializeField] private Image[] heartIcons;
+    [SerializeField] private TextMeshProUGUI livesText;
+    [Tooltip("The 'fridge is full again' card shown once the whole shopping list is done.")]
+    [SerializeField] private StoryCutsceneUI closingStory;
+    [Tooltip("Shown when the last life is gone; restarting from it resets the run in place, so no cut-scene replays.")]
+    [SerializeField] private RetryScreenUI retryScreen;
     [SerializeField] private Color fullHeartColor = Color.white;
     [SerializeField] private Color emptyHeartColor = new Color(1f, 1f, 1f, 0.25f);
 
@@ -39,6 +45,8 @@ public class GameFlow : MonoBehaviour
 
     [Header("Tuning")]
     [SerializeField] private float respawnDelay = 0.9f;
+    [Tooltip("Victory lap: seconds of free flying after the last fruit before the closing story plays.")]
+    [SerializeField] private float closingStoryDelay = 3.5f;
     [SerializeField] private float floorMargin = 0.35f;
 
     private int targetIndex;
@@ -69,6 +77,7 @@ public class GameFlow : MonoBehaviour
 
         if (player == null) player = FindObjectOfType<RocketPlayer>();
         if (level == null) level = FindObjectOfType<LevelBuilder>();
+        if (cameraRig == null) cameraRig = FindObjectOfType<CameraRig>();
         if (wordUI == null) wordUI = FindObjectOfType<TargetWordUI>();
         if (itemCompletePopup == null) itemCompletePopup = FindObjectOfType<ItemCompletePopup>();
     }
@@ -194,14 +203,17 @@ private void SetCollectiblesVisible(bool visible)
         StartCoroutine(RespawnRoutine());
     }
 
-    private IEnumerator RespawnRoutine()
+private IEnumerator RespawnRoutine()
     {
         yield return new WaitForSeconds(respawnDelay);
         if (player == null || level == null) yield break;
 
         if (lives <= 0)
         {
-            RestartRun();
+            // hand over to the retry screen; it freezes the game and calls
+            // RestartRun only if the player chooses to play again
+            if (retryScreen != null) retryScreen.Show(RestartRun);
+            else RestartRun();
             yield break;
         }
 
@@ -215,13 +227,18 @@ private void SetCollectiblesVisible(bool visible)
         UpdateLives();
     }
 
-    private void UpdateLives()
+private void UpdateLives()
     {
+        if (livesText != null) livesText.text = lives.ToString();
+
         if (heartIcons == null) return;
         for (int i = 0; i < heartIcons.Length; i++)
         {
             if (heartIcons[i] == null) continue;
-            heartIcons[i].color = i < lives ? fullHeartColor : emptyHeartColor;
+            // single-heart HUD: the heart stays lit and the number carries the count
+            heartIcons[i].color = (heartIcons.Length == 1)
+                ? (lives > 0 ? fullHeartColor : emptyHeartColor)
+                : (i < lives ? fullHeartColor : emptyHeartColor);
         }
     }
 
@@ -239,13 +256,38 @@ private void SetCollectiblesVisible(bool visible)
 
         if (bannerText != null) bannerText.text = "Hold anywhere to fly \u2014 grab every " + CurrentTarget + "!";
 
+        // Order matters. Put the rocket back first, then drag the camera to it in
+        // the same breath -- CameraRig only catches up in LateUpdate, so without
+        // the snap the level streamer still thinks we are out at the crash site
+        // and recycles the freshly built world as "behind the camera". Only then
+        // is it safe to rebuild, because ResetLevel keys off the camera position.
         if (player != null) player.Respawn(new Vector3(0f, 2.5f, 0f));
+        if (cameraRig != null) cameraRig.SnapToTarget();
+        if (level != null) level.ResetLevel();
     }
 
-    private void Finish()
+private void Finish()
     {
         finished = true;
         if (bannerText != null) bannerText.text = "Anjali has everything for dinner!";
+        StartCoroutine(FinishRoutine());
+    }
+
+    /// <summary>
+    /// Lets the player fly on for a short victory lap, then plays the closing
+    /// story card before handing over to the usual win flow.
+    /// </summary>
+    private IEnumerator FinishRoutine()
+    {
+        yield return new WaitForSeconds(closingStoryDelay);
+
+        if (closingStory != null)
+        {
+            bool done = false;
+            closingStory.Play(delegate { done = true; });
+            while (!done) yield return null;
+        }
+
         GameManager.Instance.GameWin();
     }
 

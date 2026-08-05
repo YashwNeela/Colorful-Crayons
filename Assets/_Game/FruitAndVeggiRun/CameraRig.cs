@@ -22,6 +22,22 @@ public class CameraRig : MonoBehaviour
         transform.position = p;
     }
 
+/// <summary>
+    /// Jumps straight to the target, no easing. Used on restart: the camera
+    /// normally only catches up in LateUpdate, and a level streamer that runs
+    /// before then would see the camera still parked where the player crashed.
+    /// </summary>
+    public void SnapToTarget()
+    {
+        if (target == null) return;
+
+        Vector3 p = transform.position;
+        p.x = target.position.x + xOffset;
+        p.y = Mathf.Clamp(target.position.y * 0.45f, minY, maxY);
+        transform.position = p;
+    }
+
+
     public void SetTarget(Transform t)
     {
         target = t;
