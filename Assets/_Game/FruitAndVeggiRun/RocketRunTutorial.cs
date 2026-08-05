@@ -29,6 +29,12 @@ public class RocketRunTutorial : MonoBehaviour
     [SerializeField] private TextMeshProUGUI messageText;
     [SerializeField] private TextMeshProUGUI tapHintText;
 
+    [Header("Step Extras")]
+    [Tooltip("Animated hand over the middle of the screen. Only shown on the 'hold to fly' step.")]
+    [SerializeField] private GameObject tapHand;
+    [Tooltip("Ring that pulses on the target-item icon. Only shown on the 'collect the fruit' step.")]
+    [SerializeField] private GameObject targetHighlight;
+
     [Header("Step Icons")]
     [Tooltip("Pointing-finger tap icon, used on the 'hold to fly' step.")]
     [SerializeField] private Sprite handIcon;
@@ -64,6 +70,10 @@ public class RocketRunTutorial : MonoBehaviour
         public Sprite primary;
         public Sprite secondary;
         public string voiceKey;
+        /// <summary>Show the animated hand over the screen for this step.</summary>
+        public bool showHand;
+        /// <summary>Pulse a ring on the target-item icon for this step.</summary>
+        public bool highlightTarget;
     }
 
     private void Awake()
@@ -81,6 +91,9 @@ public class RocketRunTutorial : MonoBehaviour
         Time.timeScale = 0f;
         if (targetUI != null) targetUI.SetFillVisible(false);
         if (root != null) root.SetActive(false);
+        // these two live outside the bubble, so they need hiding by hand
+        if (tapHand != null) tapHand.SetActive(false);
+        if (targetHighlight != null) targetHighlight.SetActive(false);
         StartCoroutine(RunTutorial());
     }
 
@@ -110,9 +123,10 @@ public class RocketRunTutorial : MonoBehaviour
         // ---- 1. hold to fly ----
         yield return ShowInstruction(new Step
         {
-            message = "Hold anywhere on the screen to fly up. Let go to fall!",
+            message = "Hold anywhere on the screen to fly up. \n Let go to fall!",
             primary = handIcon,
             secondary = null,
+            showHand = true,
             voiceKey = VoiceKeys != null ? VoiceKeys.TutorialFly : null
         });
 
@@ -130,6 +144,7 @@ public class RocketRunTutorial : MonoBehaviour
             message = "Now collect the " + (string.IsNullOrEmpty(targetName) ? "fruit" : targetName) + "!",
             primary = targetIcon,
             secondary = null,
+            highlightTarget = true,
             voiceKey = VoiceKeys != null ? VoiceKeys.TutorialCollect : null
         });
 
@@ -191,6 +206,8 @@ public class RocketRunTutorial : MonoBehaviour
         if (level != null) level.SuppressProduce = false;
         if (targetUI != null) targetUI.SetFillVisible(true);
         if (root != null) root.SetActive(false);
+        if (tapHand != null) tapHand.SetActive(false);
+        if (targetHighlight != null) targetHighlight.SetActive(false);
         Time.timeScale = 1f;
 
         // nothing else is speaking now -- good moment for the "ready, set, fly" line
@@ -218,6 +235,9 @@ public class RocketRunTutorial : MonoBehaviour
         }
 
         if (root != null) root.SetActive(false);
+        // the target-icon ring is parented to the HUD, not the bubble, so it does
+        // not go away with the popup
+        if (targetHighlight != null) targetHighlight.SetActive(false);
         Time.timeScale = 1f;
     }
 
@@ -239,6 +259,11 @@ public class RocketRunTutorial : MonoBehaviour
             secondaryIcon.gameObject.SetActive(step.secondary != null);
         }
         if (tapHintText != null) tapHintText.gameObject.SetActive(true);
+
+        // the hand only belongs on the step that asks for a screen press; the
+        // target ring only on the step that asks for a pickup
+        if (tapHand != null) tapHand.SetActive(step.showHand);
+        if (targetHighlight != null) targetHighlight.SetActive(step.highlightTarget);
 
         if (bubble != null)
         {
