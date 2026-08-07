@@ -18,9 +18,14 @@ public class RocketPlayer : MonoBehaviour
 
     [Header("Look")]
     [SerializeField] private Transform visual;
+    [SerializeField] private Animator visualAnimator;
     [SerializeField] private Transform flame;
     [SerializeField] private TrailRenderer trail;
-    [SerializeField] private float maxTiltDegrees = 42f;
+    [SerializeField] private float maxTiltDegrees = 45f;
+    [Tooltip("Z angle the artwork's head/forward axis already points at when unrotated. Tappu's flying pose is authored standing upright, so his 'nose' points straight up (+90).")]
+    [SerializeField] private float poseUprightOffset = 90f;
+    [Tooltip("How fast the body swings to match the flight direction.")]
+    [SerializeField] private float tiltLerpSpeed = 14f;
 
     [Header("Ground Bounce")]
     [Tooltip("How high the little hop rises, in world units.")]
@@ -41,6 +46,7 @@ public class RocketPlayer : MonoBehaviour
     private bool thrusting;
     private bool alive = true;
     private float flameBaseScale = 1f;
+    private static readonly int GroundedHash = Animator.StringToHash("Grounded");
     private bool grounded;
 
     private Vector3 logicalPos;
@@ -163,12 +169,27 @@ public class RocketPlayer : MonoBehaviour
         return false;
     }
 
-    private void UpdateVisual()
+private void UpdateVisual()
     {
         if (visual != null)
         {
-            float tilt = Mathf.Clamp(Mathf.Atan2(verticalSpeed, forwardSpeed) * Mathf.Rad2Deg, -maxTiltDegrees, maxTiltDegrees);
-            visual.rotation = Quaternion.Lerp(visual.rotation, Quaternion.Euler(0f, 0f, tilt), 14f * Time.deltaTime);
+            // The artwork is authored standing upright, so its head already points at
+            // poseUprightOffset (+90 = straight up). Aim that axis along the actual
+            // velocity vector so the head leads wherever the player is travelling:
+            // rising -> head tips up-forward, diving -> head tips down-forward.
+            float targetZ;
+            if (grounded)
+            {
+                targetZ = 0f; // running on ground: stand upright
+            }
+            else
+            {
+                float flightAngle = Mathf.Atan2(verticalSpeed, forwardSpeed) * Mathf.Rad2Deg;
+                flightAngle = Mathf.Clamp(flightAngle, -maxTiltDegrees, maxTiltDegrees);
+                targetZ = flightAngle - poseUprightOffset;
+            }
+
+            visual.rotation = Quaternion.Lerp(visual.rotation, Quaternion.Euler(0f, 0f, targetZ), tiltLerpSpeed * Time.deltaTime);
         }
 
         if (flame != null)
@@ -177,6 +198,11 @@ public class RocketPlayer : MonoBehaviour
             Vector3 s = flame.localScale;
             s.x = Mathf.Lerp(s.x, target, 22f * Time.deltaTime);
             flame.localScale = s;
+        }
+
+        if (visualAnimator != null)
+        {
+            visualAnimator.SetBool(GroundedHash, grounded);
         }
     }
 
