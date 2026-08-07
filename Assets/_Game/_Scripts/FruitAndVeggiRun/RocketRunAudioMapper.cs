@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TMKOC
+namespace TMKOC.FruitAndVeggiRun
 {
     /// <summary>
     /// Every voice-over key RocketRun asks RuntimeAudioLoader for. The strings here

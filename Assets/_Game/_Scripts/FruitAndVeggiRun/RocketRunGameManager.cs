@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TMKOC
+namespace TMKOC.FruitAndVeggiRun
 {
     /// <summary>
     /// RocketRun's GameManager. Shares the same lifecycle/event bus as the rest of the

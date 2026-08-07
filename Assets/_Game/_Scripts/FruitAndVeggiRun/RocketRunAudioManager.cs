@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TMKOC
+namespace TMKOC.FruitAndVeggiRun
 {
     /// <summary>
     /// RocketRun's AudioManager. Follows the same base-class event pattern as
@@ -32,6 +32,22 @@ namespace TMKOC
             RocketRunGameManager.OnIncorrectPickup -= HandleIncorrectPickup;
             RocketRunGameManager.OnPlayerCrashed -= HandlePlayerCrashed;
         }
+
+        /// <summary>
+        /// RocketRun has no AudioLocalizationSO entry, so the base implementation's
+        /// audioSO[audioLanguage] lookup throws a NullReferenceException and aborts
+        /// AudioManager.Awake -- which silently kills the background music and stops
+        /// OnEnable from ever subscribing the SFX handlers. Record the language and
+        /// start the music directly; the localized-clip table is unused here because
+        /// every RocketRun cue is a direct AudioClip reference.
+        /// </summary>
+        protected override void SetAudioLanguage(AudioLanguage audioLanguage)
+        {
+            if (audioLanguage == AudioLanguage.None) return;
+            m_CurretAudioLanguage = audioLanguage;
+            PlayBackgroundAudio();
+        }
+
 
         private void HandleCorrectPickup()
         {
