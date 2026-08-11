@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using System.Collections.Generic;
 using TMKOC;
 
@@ -39,6 +39,17 @@ namespace TMKOC.FruitAndVeggiRun
         [Tooltip("0 = pinned to the camera, 1 = fixed in the world.")]
         [SerializeField] private float marketParallax = 0.55f;
         [SerializeField] private float marketBaseY = -1.75f;
+
+        [Header("Background - second band")]
+        [Tooltip("Second backdrop strip. Give it a SMALLER parallax than the first so it scrolls faster and reads as closer to the player.")]
+        [SerializeField] private Sprite marketSprite2;
+        [Tooltip("0 = pinned to the camera, 1 = fixed in the world.")]
+        [SerializeField] private float marketParallax2 = 0.35f;
+        [SerializeField] private float marketBaseY2 = -2.4f;
+        [SerializeField] private float marketScale2 = 3f;
+        [Tooltip("Draws in front of the first band (-20). Keep it below the ground's -5.")]
+        [SerializeField] private int marketOrder2 = -18;
+
         [SerializeField] private Sprite[] produceSprites; // matches GameDefs.Names order
 
         [Header("Refs")]
@@ -104,6 +115,7 @@ namespace TMKOC.FruitAndVeggiRun
 
         private Transform skyLayer;
         private Transform marketLayer;
+        private Transform marketLayer2;
 
         // colours sampled from the bottom edge of the new ground / water art so the
         // fill below each band joins it seamlessly
@@ -182,12 +194,6 @@ namespace TMKOC.FruitAndVeggiRun
         /// Fills in a sensible ramp when nothing has been authored in the inspector, so
         /// the game is playable straight out of the box. Anything set in the scene wins.
         /// </summary>
-        // Fills in a sensible ramp when nothing has been authored in the inspector, so
-        // the game is playable straight out of the box. Anything set in the scene wins.
-        // Fills in a sensible ramp when nothing has been authored in the inspector, so
-        // the game is playable straight out of the box. Anything set in the scene wins.
-        // Fills in a sensible ramp when nothing has been authored in the inspector, so
-        // the game is playable straight out of the box. Anything set in the scene wins.
         private void EnsureStages()
         {
             if (stages != null && stages.Count > 0) return;
@@ -219,12 +225,9 @@ namespace TMKOC.FruitAndVeggiRun
         }
 
         /// <summary>
-        /// The difficulty band covering a given segment. The bands are cumulative --
-        /// the last one the player has flown past is the one in force -- so there is no
-        /// boundary to cross and nothing to reset between them.
+        /// The band currently in force. Nothing here looks at distance -- GameFlow
+        /// moves the world on when the shopping list says so.
         /// </summary>
-        // The band currently in force. Nothing here looks at distance -- GameFlow
-        // moves the world on when the shopping list says so.
         public StageConfig CurrentStage
         {
             get
@@ -258,16 +261,6 @@ namespace TMKOC.FruitAndVeggiRun
         /// first segment that has NOT been built yet -- everything already streamed in
         /// still holds the old rules, so anchoring to the player would put the birds
         /// in terrain that was laid down before they existed.
-        /// </summary>
-        /// <summary>
-        /// Opens a difficulty band. Called by GameFlow the moment enough of the
-        /// shopping list is done, so the world ahead of the player starts building
-        /// itself to the new rules.
-        /// </summary>
-        /// <summary>
-        /// Opens a difficulty band. Called by GameFlow the moment enough of the
-        /// shopping list is done, so the world ahead of the player starts building
-        /// itself to the new rules.
         /// </summary>
         public void BeginStage(int index)
         {
@@ -304,11 +297,6 @@ namespace TMKOC.FruitAndVeggiRun
             StartBirds();
         }
 
-        /// <summary>
-        /// Switches birds on, and -- the first time round -- opens the fruit-free
-        /// stretch that lets the player learn to dodge before being asked to collect
-        /// anything again.
-        /// </summary>
         /// <summary>
         /// Birds are due. The first time round they are held at the gate until the
         /// player has been told what they are -- nothing should be able to cost a life
@@ -445,11 +433,8 @@ namespace TMKOC.FruitAndVeggiRun
             return x0 + segmentWidth > birdIntroStartX && x0 < birdIntroEndX;
         }
 
-        /// <summary>1-based band number, handy for the HUD or for debugging.</summary>
         /// <summary>1-based band number, for the HUD or for debugging.</summary>
         public int StageNumber { get { return stageIndex + 1; } }
-
-        /// <summary>Band under a world X, for anything that tracks the player rather than segments.</summary>
 
 
 
@@ -459,23 +444,11 @@ namespace TMKOC.FruitAndVeggiRun
         /// bobs, so it sweeps through the airspace rather than sitting there waiting to
         /// be flown around. Touching one costs a life, exactly like the water.
         ///
-        /// Parented to the segment so it is recycled along with everything else; the
-        /// Bird component also self-destructs if it somehow ends up far behind.
+        /// The mover, the collider and the despawn logic all live on a plain wrapper at
+        /// scale 1, with the artwork parented underneath and scaled to fit. Keeping the
+        /// two apart means the collider stays honest in world units and nothing the
+        /// prefab's Animator does to its own transform can interfere.
         /// </summary>
-        // A bird crossing the flight path. It drifts back towards the player as it
-        // bobs, so it sweeps through the airspace rather than sitting there waiting to
-        // be flown around. Touching one costs a life, exactly like the water.
-        //
-        // Parented to the segment so it is recycled along with everything else; the
-        // Bird component also self-destructs if it somehow ends up far behind.
-        // A bird crossing the flight path. It drifts back towards the player as it
-        // bobs, so it sweeps through the airspace rather than sitting there waiting to
-        // be flown around. Touching one costs a life, exactly like the water.
-        //
-        // The mover, the collider and the despawn logic all live on a plain wrapper at
-        // scale 1, with the artwork parented underneath and scaled to fit. Keeping the
-        // two apart means the collider stays honest in world units and nothing the
-        // prefab's Animator does to its own transform can interfere.
         private void BuildBird(GameObject root, float x0)
         {
             GameObject b = new GameObject("Bird");
@@ -500,7 +473,7 @@ namespace TMKOC.FruitAndVeggiRun
 
         // Drops the prefab in, sizes it to birdWidth and centres its art on the wrapper
         // so the collider actually sits on the bird rather than on its pivot.
-private void BuildBirdArt(Transform parent)
+        private void BuildBirdArt(Transform parent)
         {
             GameObject art = Instantiate(birdPrefab, parent);
             art.name = "Art";
@@ -696,15 +669,11 @@ private void BuildBirdArt(Transform parent)
             Random.state = prev;
         }
 
-        /// <summary>Deterministic, so a gap never sits next to another gap.</summary>
         /// <summary>
-        /// Deterministic, so a gap never sits next to another gap. The odds come from
-        /// the difficulty band the segment falls in, which is how the opening stretch
-        /// stays completely dry without needing a special case for it.
+        /// Deterministic per segment, so a gap never sits next to another gap. The odds
+        /// come from whichever band is open, which is how the opening stretch stays
+        /// completely dry without needing a special case for it.
         /// </summary>
-        // Deterministic per segment, so a gap never sits next to another gap. The odds
-        // come from whichever band is open, which is how the opening stretch stays
-        // completely dry without needing a special case for it.
         private bool RawWater(int index)
         {
             StageConfig s = CurrentStage;
@@ -781,7 +750,12 @@ private void BuildBirdArt(Transform parent)
             }
         }
 
-        /// <summary>Sky pinned to the camera, market stalls scrolling behind at a slower rate.</summary>
+        /// <summary>
+        /// Sky pinned to the camera, with two market bands scrolling behind it at their
+        /// own rates. The second band should be given a smaller parallax and a higher
+        /// sorting order than the first, so it moves faster and draws in front -- that
+        /// difference in speed is the whole illusion of depth.
+        /// </summary>
         private void BuildBackground()
         {
             if (cameraTransform == null) return;
@@ -793,19 +767,54 @@ private void BuildBirdArt(Transform parent)
             }
 
             if (marketSprite != null)
-            {
-                GameObject mk = new GameObject("MarketBackdrop");
-                mk.transform.SetParent(transform);
-                SpriteRenderer sr = mk.AddComponent<SpriteRenderer>();
-                sr.sprite = marketSprite;
-                sr.drawMode = SpriteDrawMode.Tiled;
-                sr.size = new Vector2(marketSprite.bounds.size.x * 4f, marketSprite.bounds.size.y);
-                sr.sortingOrder = -20;
-                marketLayer = mk.transform;
-                mk.transform.localScale = new Vector3(marketScale, marketScale, 1f);
-            }
+                marketLayer = MakeParallaxStrip("MarketBackdrop", marketSprite, marketScale, -20);
+
+            if (marketSprite2 != null)
+                marketLayer2 = MakeParallaxStrip("MarketBackdrop2", marketSprite2, marketScale2, marketOrder2);
 
             UpdateBackground();
+        }
+
+        /// <summary>
+        /// A tiled, horizontally repeating backdrop strip. Four tiles wide is plenty:
+        /// the strip is re-centred on the camera every frame in whole-tile steps, so it
+        /// only ever has to cover one screen plus a margin.
+        /// </summary>
+        private Transform MakeParallaxStrip(string name, Sprite sprite, float scale, int order)
+        {
+            GameObject g = new GameObject(name);
+            g.transform.SetParent(transform);
+            g.transform.localScale = new Vector3(scale, scale, 1f);
+
+            SpriteRenderer sr = g.AddComponent<SpriteRenderer>();
+            sr.sprite = sprite;
+            sr.drawMode = SpriteDrawMode.Tiled;
+            
+            sr.size = new Vector2(sprite.bounds.size.x * 4f, 12);
+            
+            sr.sortingOrder = order;
+
+            return g.transform;
+        }
+
+        /// <summary>
+        /// Slides one strip to its parallax position, then nudges it by whole tiles so
+        /// the repeat lands back under the camera and the seam never comes into view.
+        /// </summary>
+        private void ScrollParallaxStrip(Transform layer, Sprite sprite, float parallax,
+            float baseY, float scale, float camX)
+        {
+            if (layer == null || sprite == null) return;
+
+            float tile = sprite.bounds.size.x * scale;
+            if (tile <= 0.0001f) return;
+
+            float lx = camX * (1f - parallax);
+            lx += Mathf.Round((camX - lx) / tile) * tile;
+
+            // fixed height: the stalls are meant to sit on the horizon, and letting
+            // them track the camera's Y made the whole market bob as the rocket flew
+            layer.position = new Vector3(lx, baseY, 0f);
         }
 
         private void UpdateBackground()
@@ -822,24 +831,15 @@ private void BuildBirdArt(Transform parent)
                 skyLayer.position = new Vector3(camPos.x, camPos.y, 0f);
             }
 
-            if (marketLayer != null && marketSprite != null)
-            {
-                // slower-moving layer, nudged by whole tiles so the repeat never shows a seam
-                float tile = marketSprite.bounds.size.x * marketScale;  // Account for scale
-                float lx = camPos.x * (1f - marketParallax);
-                lx += Mathf.Round((camPos.x - lx) / tile) * tile;
-                // fixed height: the stalls are meant to sit on the horizon, and letting
-                // them track the camera's Y made the whole market bob as the rocket flew
-                marketLayer.position = new Vector3(lx, marketBaseY, 0f);
-            }
+            ScrollParallaxStrip(marketLayer,  marketSprite,  marketParallax,  marketBaseY,  marketScale,  camPos.x);
+            ScrollParallaxStrip(marketLayer2, marketSprite2, marketParallax2, marketBaseY2, marketScale2, camPos.x);
         }
 
         public void OnBackButtonClicked()
             {
                 RocketRunGameManager.Instance.GoBackToPlayschool();
             }
-        // How many segments apart platforms have to be. Derived from what the camera
-        // can actually see, so the next one only comes into view as the last leaves.
+
         // How many segments apart platforms have to be. Derived from what the camera
         // can actually see, so the next one only comes into view as the last leaves.
         private int SegmentsPerPlatform()
@@ -901,14 +901,6 @@ private void BuildBirdArt(Transform parent)
                     Vector3.one * Random.Range(0.6f, 0.9f), Color.white, 0);
             }
         }
-
-        /// <summary>
-        /// True when a candidate platform would sit on, under, or inside one already
-        /// placed. Only counts as a clash when the two overlap horizontally *and* sit at
-        /// similar heights -- platforms directly above each other with clear air between
-        /// are fine, and make for more interesting flying.
-        /// </summary>
-
 
         private void BuildClouds(GameObject root, float x0)
         {
