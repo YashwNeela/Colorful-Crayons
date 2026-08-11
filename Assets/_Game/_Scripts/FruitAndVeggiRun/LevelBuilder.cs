@@ -500,7 +500,7 @@ namespace TMKOC.FruitAndVeggiRun
 
         // Drops the prefab in, sizes it to birdWidth and centres its art on the wrapper
         // so the collider actually sits on the bird rather than on its pivot.
-        private void BuildBirdArt(Transform parent)
+private void BuildBirdArt(Transform parent)
         {
             GameObject art = Instantiate(birdPrefab, parent);
             art.name = "Art";
@@ -508,6 +508,10 @@ namespace TMKOC.FruitAndVeggiRun
             art.transform.localPosition = Vector3.zero;
             art.transform.localScale = Vector3.one;
 
+            // Measure at scale 1 so the fit factor is exact -- measuring after an
+            // arbitrary placeholder scale and then overwriting localScale with the
+            // fit factor (instead of compounding it) silently threw the placeholder
+            // away and left birds ~25% oversized.
             Bounds bounds;
             if (TryMeasure(art, out bounds) && bounds.size.x > 0.0001f)
             {

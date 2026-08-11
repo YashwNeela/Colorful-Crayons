@@ -27,8 +27,8 @@ namespace TMKOC.FruitAndVeggiRun
         [SerializeField] private float maxTiltDegrees = 45f;
         [Tooltip("Z angle the artwork's head/forward axis already points at when unrotated. Tappu's flying pose is authored standing upright, so his 'nose' points straight up (+90).")]
         [SerializeField] private float poseUprightOffset = 90f;
-        [Tooltip("How fast the body swings to match the flight direction.")]
-        [SerializeField] private float tiltLerpSpeed = 14f;
+        [Tooltip("Max degrees/second the body can rotate. A fixed angular speed (instead of an exponential lerp) keeps pose changes -- e.g. releasing thrust at the ceiling -- smooth instead of popping/snapping.")]
+        [SerializeField] private float tiltMaxDegreesPerSecond = 420f;
 
         [Header("Ground Bounce")]
         [Tooltip("How high the little hop rises, in world units.")]
@@ -45,6 +45,15 @@ namespace TMKOC.FruitAndVeggiRun
         [SerializeField] private float bodyRadius = 0.42f;
         [SerializeField] private float snapTolerance = 0.35f;
 
+        [Header("Bird Immunity")]
+        [Tooltip("Seconds of immunity to birds after respawning, so a bird sitting right on the respawn point can't kill the player again instantly.")]
+        [SerializeField] private float birdImmunityDuration = 3f;
+        private float birdImmuneUntil;
+
+        /// <summary>True for a few seconds after respawning -- birds pass through harmlessly during this window.</summary>
+        public bool ImmuneToBirds { get { return Time.time < birdImmuneUntil; } }
+
+
         private float verticalSpeed;
         private bool thrusting;
         private bool alive = true;
@@ -53,6 +62,7 @@ namespace TMKOC.FruitAndVeggiRun
         private bool grounded;
 
         private Vector3 logicalPos;
+        private float currentTiltZ;
 
         private float bounceOffsetY;
         private Tween bounceTween;
@@ -179,20 +189,34 @@ namespace TMKOC.FruitAndVeggiRun
                 // The artwork is authored standing upright, so its head already points at
                 // poseUprightOffset (+90 = straight up). Aim that axis along the actual
                 // velocity vector so the head leads wherever the player is travelling:
-                // rising -> head tips up-forward, diving -> head tips down-forward.
+                // rising -> head tips up-forward, falling -> stays upright (no nose-dive).
                 float targetZ;
                 if (grounded)
                 {
                     targetZ = 0f; // running on ground: stand upright
                 }
+                else if (!thrusting)
+                {
+                    // Falling (not thrusting): stay upright so the head/Y-axis
+                    // keeps pointing straight up instead of nose-diving.
+                    targetZ = 0f;
+                }
                 else
                 {
+                    // Thrusting/rising. Note verticalSpeed gets clamped to 0 while
+                    // pinned at the ceiling, so this naturally levels out to facing
+                    // forward (flightAngle 0) instead of straight up once maxed out.
                     float flightAngle = Mathf.Atan2(verticalSpeed, forwardSpeed) * Mathf.Rad2Deg;
-                    flightAngle = Mathf.Clamp(flightAngle, -maxTiltDegrees, maxTiltDegrees);
+                    flightAngle = Mathf.Clamp(flightAngle, 0f, maxTiltDegrees);
                     targetZ = flightAngle - poseUprightOffset;
                 }
 
-                visual.rotation = Quaternion.Lerp(visual.rotation, Quaternion.Euler(0f, 0f, targetZ), tiltLerpSpeed * Time.deltaTime);
+                // Constant angular speed instead of an exponential Lerp: no matter how
+                // big the target jump is (e.g. thrust released right at the ceiling),
+                // the body turns at a fixed, predictable rate instead of snapping fast
+                // then trailing off, which is what reads as a "pop"/glitch.
+                currentTiltZ = Mathf.MoveTowardsAngle(currentTiltZ, targetZ, tiltMaxDegreesPerSecond * Time.deltaTime);
+                visual.rotation = Quaternion.Euler(0f, 0f, currentTiltZ);
             }
 
             if (flame != null)
@@ -228,7 +252,7 @@ namespace TMKOC.FruitAndVeggiRun
             if (flow != null) flow.OnPlayerCrashed(transform.position);
         }
 
-        public void Respawn(Vector3 pos)
+public void Respawn(Vector3 pos)
         {
             logicalPos = pos;
             transform.position = pos;
@@ -242,7 +266,12 @@ namespace TMKOC.FruitAndVeggiRun
                 trail.Clear();
                 trail.emitting = true;
             }
+            currentTiltZ = 0f;
             if (visual != null) visual.rotation = Quaternion.identity;
+
+            // grace window: a bird camped right on the respawn point should not be
+            // able to kill the player again the instant they reappear
+            birdImmuneUntil = Time.time + birdImmunityDuration;
         }
     }
 }

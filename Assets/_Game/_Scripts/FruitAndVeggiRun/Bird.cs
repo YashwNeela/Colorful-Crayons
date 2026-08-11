@@ -75,10 +75,10 @@ namespace TMKOC.FruitAndVeggiRun
             if (cam != null && p.x < cam.position.x - despawnBehindCamera) Destroy(gameObject);
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+private void OnTriggerEnter2D(Collider2D other)
         {
             RocketPlayer p = other.GetComponentInParent<RocketPlayer>();
-            if (p != null && p.Alive) p.Crash();
+            if (p != null && p.Alive && !p.ImmuneToBirds) p.Crash();
         }
     }
 }
