@@ -62,6 +62,23 @@ namespace TMKOC.FruitAndVeggiRun
         private int basket;
         private bool finished;
         private int lives;
+        // Later bands put two fruits in play at the same time, so the hunt is a small
+        // list rather than a single index. `active` holds indices into `targets`;
+        // `activeProgress` mirrors it with how many of each have been collected.
+        // `targetIndex` is kept pointing at the first of them purely so CurrentTarget
+        // still means something to older callers.
+        private readonly List<int> active = new List<int>();
+        private readonly List<int> activeProgress = new List<int>();
+        private int nextTarget;
+
+        // How many shopping-list items are fully in the basket. This -- not distance
+        // flown -- is what moves the game from one difficulty band to the next.
+        private int itemsCompleted;
+        private int stageIndex;
+
+        // Held up while the opening cut-scene owns the screen, so the first fruit lands
+        // on the HUD without a voice line talking over the story.
+        private bool suppressTargetAnnounce;
 
         public string CurrentTarget
         {
@@ -111,19 +128,38 @@ namespace TMKOC.FruitAndVeggiRun
             }
 
             // NB: no target call-out here. Start() runs underneath the opening cut-scene,
-            // so anything spoken now would be talked over. The first "go" line is
-            // AnnounceRunStart(), which the tutorial fires when it hands control back.
+            // so anything spoken now would be talked over -- hence the suppress flag
+            // below. The first 'go' line is AnnounceRunStart(), which the tutorial fires
+            // when it hands control back.
 
             lives = maxLives;
             UpdateLives();
-            ApplyCurrentTarget();
+
+            active.Clear();
+            activeProgress.Clear();
+            nextTarget = 0;
+            itemsCompleted = 0;
+            stageIndex = 0;
+            finished = false;
+            if (level != null) level.BeginStage(0);
+
+            suppressTargetAnnounce = true;
+            SyncActiveTargets();
+            suppressTargetAnnounce = false;
+
             UpdateBasket();
             if (bannerText != null) bannerText.text = "Hold anywhere to fly \u2014 grab every " + CurrentTarget + "!";
         }
 
         private void Update()
         {
-            if (player == null || level == null || !player.Alive) return;
+            if (player == null || level == null) return;
+
+            // which fruits are being hunted follows the shopping list, and the bird
+            // interlude can pause the hunt outright -- so keep the list in step here
+            SyncActiveTargets();
+
+            if (!player.Alive) return;
 
             // fell below the world over water -> crash
             float floorY = level.GroundTopY + floorMargin;
@@ -143,15 +179,45 @@ namespace TMKOC.FruitAndVeggiRun
             }
         }
 
+        // Pushes the whole active list into the HUD and re-tags any pickups already
+        // lying in the world, so a fruit that has only just joined the hunt starts
+        // glowing rather than staying a decoy.
         private void ApplyCurrentTarget()
         {
-            if (targetIndex >= targets.Count) return;
+            targetIndex = active.Count > 0 ? active[0] : targets.Count;
+            collectedForTarget = active.Count > 0 ? activeProgress[0] : 0;
 
-            collectedForTarget = 0;
-            TargetEntry t = targets[targetIndex];
-            Sprite icon = level != null ? level.GetProduceSprite(t.itemName) : null;
-            if (wordUI != null) wordUI.SetWord(t.itemName, t.count, icon);
-            if (player != null) player.SetTrailColor(GameDefs.ColorOf(t.itemName));
+            if (wordUI != null)
+            {
+                List<string> names = new List<string>();
+                List<int> counts = new List<int>();
+                List<Sprite> icons = new List<Sprite>();
+
+                for (int i = 0; i < active.Count; i++)
+                {
+                    TargetEntry t = targets[active[i]];
+                    names.Add(t.itemName);
+                    counts.Add(t.count);
+                    icons.Add(level != null ? level.GetProduceSprite(t.itemName) : null);
+                }
+
+                wordUI.SetTargets(names, counts, icons);
+
+                // SetTargets zeroes every fill, so put progress back afterwards -- a
+                // second fruit joining must not wipe the first one's ring
+                for (int i = 0; i < active.Count; i++) wordUI.SetSlotProgress(i, activeProgress[i]);
+            }
+
+            if (player != null && active.Count > 0)
+            {
+                player.SetTrailColor(GameDefs.ColorOf(targets[active[0]].itemName));
+            }
+
+            Collectible[] all = FindObjectsOfType<Collectible>();
+            for (int i = 0; i < all.Length; i++)
+            {
+                if (all[i] != null) all[i].SetIsTarget(IsActiveTarget(all[i].ItemName));
+            }
         }
 
     private void SetCollectiblesVisible(bool visible)
@@ -168,9 +234,26 @@ namespace TMKOC.FruitAndVeggiRun
         {
             if (finished) return;
 
-            bool correct = (itemName == CurrentTarget);
+            if (PracticeMode)
+            {
+                // all of the feel, none of the bookkeeping. No voice line either: the
+                // tutorial is talking, and praise on top of instructions is a mess.
+                if (IsActiveTarget(itemName))
+                {
+                    SpawnPuff(at, GameDefs.ColorOf(itemName), 1f);
+                    RocketRunGameManager.RaiseCorrectPickup();
+                }
+                else
+                {
+                    RocketRunGameManager.RaiseIncorrectPickup();
+                    PlayCrashFeedback(at, false);
+                }
+                return;
+            }
 
-            if (!correct)
+            int slot = ActiveSlotOf(itemName);
+
+            if (slot < 0)
             {
                 RocketRunGameManager.RaiseIncorrectPickup();
                 // a wrong pickup is a free mistake: SFX and puff only -- no voice line,
@@ -182,57 +265,214 @@ namespace TMKOC.FruitAndVeggiRun
             SpawnPuff(at, GameDefs.ColorOf(itemName), 1f);
             RocketRunGameManager.RaiseCorrectPickup();
 
-            collectedForTarget++;
+            activeProgress[slot]++;
             basket++;
             UpdateBasket();
 
-            if (wordUI != null) wordUI.SetProgress(collectedForTarget);
+            if (slot == 0) collectedForTarget = activeProgress[0];
+            if (wordUI != null) wordUI.SetSlotProgress(slot, activeProgress[slot]);
+
+            int entry = active[slot];
 
             // praise every pickup except the one that finishes the item -- that gets its
-            // own "all the apples are in the basket!" line a few lines down
-            bool completesItem = collectedForTarget >= targets[targetIndex].count;
-            if (!completesItem && Voice != null) RocketRunVoice.Play(Voice.GetRandomCorrectPickup());
-
-            if (collectedForTarget >= targets[targetIndex].count)
+            // own 'all the apples are in the basket!' line a few lines down
+            if (activeProgress[slot] < targets[entry].count)
             {
-                if (wordUI != null) wordUI.Celebrate();
-                string completedItem = targets[targetIndex].itemName;
-                if (bannerText != null) bannerText.text = "Nice! " + completedItem + " done!";
+                if (Voice != null) RocketRunVoice.Play(Voice.GetRandomCorrectPickup());
+                return;
+            }
 
-                // the item-complete line replaces the per-pickup praise, so the two
-                // never talk over each other on the final fruit of an item
-                if (Voice != null) RocketRunVoice.Play(Voice.GetDoneAudio(completedItem));
+            if (wordUI != null) wordUI.CelebrateSlot(slot);
 
-                SetCollectiblesVisible(false);
-                if (wordUI != null) wordUI.SetIconContainerVisible(false);
-                if (itemCompletePopup != null)
-                {
-                    Sprite icon = level != null ? level.GetProduceSprite(completedItem) : null;
-                    itemCompletePopup.Show(completedItem, icon, AdvanceTarget);
-                }
-                else
-                {
-                    AdvanceTarget();
-                }
+            string completedItem = targets[entry].itemName;
+            if (bannerText != null) bannerText.text = "Nice! " + completedItem + " done!";
+
+            // the item-complete line replaces the per-pickup praise, so the two
+            // never talk over each other on the final fruit of an item
+            if (Voice != null) RocketRunVoice.Play(Voice.GetDoneAudio(completedItem));
+
+            // retire just this fruit -- anything hunted alongside it carries on
+            itemsCompleted++;
+            active.RemoveAt(slot);
+            activeProgress.RemoveAt(slot);
+
+            SetCollectiblesVisible(false);
+            if (wordUI != null) wordUI.SetIconContainerVisible(false);
+
+            if (itemCompletePopup != null)
+            {
+                Sprite icon = level != null ? level.GetProduceSprite(completedItem) : null;
+                itemCompletePopup.Show(completedItem, icon, AdvanceTarget);
+            }
+            else
+            {
+                AdvanceTarget();
             }
         }
     private void AdvanceTarget()
         {
             SetCollectiblesVisible(true);
             if (wordUI != null) wordUI.SetIconContainerVisible(true);
-            targetIndex++;
 
-            if (targetIndex >= targets.Count)
+            // the item that just landed in the basket may have opened the next band.
+            // If that band starts with a bird interlude, SyncActiveTargets deliberately
+            // hands back nothing until the player has flown through it -- which is also
+            // what keeps the world fruit-free for the length of the dodging stretch.
+            UpdateStage();
+            SyncActiveTargets();
+
+            if (active.Count == 0 && nextTarget >= targets.Count)
             {
                 Finish();
                 return;
             }
 
+            // whatever joined the hunt was called out by SyncActiveTargets as it was
+            // added -- safe to speak there because the item-complete popup has already
+            // finished its own line and dismissed itself
             ApplyCurrentTarget();
+        }
 
-            // "Now find the bananas!" -- safe to speak here because the item-complete
-            // popup has already finished its own line and dismissed itself
-            if (Voice != null) RocketRunVoice.Play(Voice.GetFindAudio(CurrentTarget));
+        // ---- active-target bookkeeping ---------------------------------------
+
+        /// <summary>True when this fruit is one of the ones currently being hunted.</summary>
+        public bool IsActiveTarget(string itemName)
+        {
+            return ActiveSlotOf(itemName) >= 0;
+        }
+
+        /// <summary>
+        /// One of the fruits currently being hunted, picked at random. LevelBuilder
+        /// calls this when deciding what to drop, so the later bands scatter both
+        /// targets rather than only ever the first one.
+        /// </summary>
+        public string RandomActiveTarget()
+        {
+            if (active.Count == 0) return CurrentTarget;
+            return targets[active[Random.Range(0, active.Count)]].itemName;
+        }
+
+        private int ActiveSlotOf(string itemName)
+        {
+            for (int i = 0; i < active.Count; i++)
+            {
+                if (targets[active[i]].itemName == itemName) return i;
+            }
+            return -1;
+        }
+
+        // How many fruits the open band wants on the HUD at once.
+        private int DesiredActiveCount()
+        {
+            StageConfig s = level != null ? level.StageAt(stageIndex) : null;
+            return s != null ? Mathf.Max(1, s.activeTargets) : 1;
+        }
+
+        /// <summary>True while at least one fruit is being hunted. False during the bird interlude.</summary>
+        public bool HasActiveTarget { get { return active.Count > 0; } }
+
+        /// <summary>
+        /// While true a pickup looks and sounds exactly as it does in the real run but
+        /// adds nothing to the basket. The opening tutorial holds this on so the sky is
+        /// never empty while the player is still learning to fly, without letting a
+        /// lucky first flight finish the whole item before the lesson is over.
+        /// </summary>
+        public bool PracticeMode { get; set; }
+
+        // Which band a given number of finished items falls in. Each band swallows its
+        // own itemCount worth of the list; the last one takes whatever is left over.
+        private int StageIndexFor(int itemsDone)
+        {
+            if (level == null) return 0;
+
+            int remaining = itemsDone;
+            int count = level.StageCount;
+
+            for (int i = 0; i < count; i++)
+            {
+                StageConfig s = level.StageAt(i);
+                int take = s != null ? Mathf.Max(1, s.itemCount) : 1;
+                if (remaining < take) return i;
+                remaining -= take;
+            }
+            return Mathf.Max(0, count - 1);
+        }
+
+        // First list item belonging to a band.
+        private int StageItemStart(int index)
+        {
+            if (level == null) return 0;
+
+            int n = 0;
+            for (int i = 0; i < index && i < level.StageCount; i++)
+            {
+                StageConfig s = level.StageAt(i);
+                n += s != null ? Mathf.Max(1, s.itemCount) : 1;
+            }
+            return n;
+        }
+
+        // One past the last list item belonging to a band. The final band absorbs any
+        // remainder, so a mis-typed itemCount can never strand a fruit unreachable.
+        private int StageItemEnd(int index)
+        {
+            if (level == null || index >= level.StageCount - 1) return targets.Count;
+
+            StageConfig s = level.StageAt(index);
+            int take = s != null ? Mathf.Max(1, s.itemCount) : 1;
+            return Mathf.Min(targets.Count, StageItemStart(index) + take);
+        }
+
+        // Opens the band the current progress calls for, and tells the world about it.
+        private void UpdateStage()
+        {
+            int idx = StageIndexFor(itemsCompleted);
+            if (idx == stageIndex && level != null && level.CurrentStageIndex == idx) return;
+
+            stageIndex = idx;
+            if (level == null) return;
+
+            level.BeginStage(stageIndex);
+
+            if (level.BirdIntroActive && bannerText != null)
+            {
+                bannerText.text = "Look out \u2014 birds! Fly around them!";
+            }
+        }
+
+        // Tops the hunt up to whatever the open band wants, never reaching past the end
+        // of that band's slice of the list. Only ever adds: a fruit the player has
+        // already part-collected is never taken away.
+        private void SyncActiveTargets()
+        {
+            if (finished) return;
+
+            // birds first. Nothing is hunted while the player learns to dodge, and that
+            // empty hunt is also what stops LevelBuilder dropping fruit through it.
+            if (level != null && level.BirdIntroActive) return;
+
+            int end = Mathf.Min(StageItemEnd(stageIndex), targets.Count);
+            int want = DesiredActiveCount();
+            int firstAdded = -1;
+
+            while (active.Count < want && nextTarget < end)
+            {
+                if (firstAdded < 0) firstAdded = nextTarget;
+                active.Add(nextTarget);
+                activeProgress.Add(0);
+                nextTarget++;
+            }
+
+            if (firstAdded < 0) return;
+
+            ApplyCurrentTarget();
+            if (suppressTargetAnnounce) return;
+
+            // whatever just joined the hunt gets called out. Coming off the bird stretch
+            // the HUD was empty, so an icon appearing unannounced would read as a bug.
+            string announced = targets[firstAdded].itemName;
+            if (bannerText != null) bannerText.text = "Now grab every " + announced + "!";
+            if (Voice != null) RocketRunVoice.Play(Voice.GetFindAudio(announced));
         }
 
     /// <summary>
@@ -309,13 +549,16 @@ namespace TMKOC.FruitAndVeggiRun
             lives = maxLives;
             UpdateLives();
 
+            active.Clear();
+            activeProgress.Clear();
+            nextTarget = 0;
             targetIndex = 0;
+            collectedForTarget = 0;
+            itemsCompleted = 0;
+            stageIndex = 0;
             basket = 0;
             finished = false;
             UpdateBasket();
-            ApplyCurrentTarget();
-
-            if (bannerText != null) bannerText.text = "Hold anywhere to fly \u2014 grab every " + CurrentTarget + "!";
 
             // Order matters. Put the rocket back first, then drag the camera to it in
             // the same breath -- CameraRig only catches up in LateUpdate, so without
@@ -325,6 +568,17 @@ namespace TMKOC.FruitAndVeggiRun
             if (player != null) player.Respawn(new Vector3(0f, 2.5f, 0f));
             if (cameraRig != null) cameraRig.SnapToTarget();
             if (level != null) level.ResetLevel();
+
+            // back to band one -- apples only, dry ground, no birds. Has to come after
+            // ResetLevel, which is what re-seeds the segment counter BeginStage reads.
+            if (level != null) level.BeginStage(0);
+
+            suppressTargetAnnounce = true;
+            SyncActiveTargets();
+            suppressTargetAnnounce = false;
+            ApplyCurrentTarget();
+
+            if (bannerText != null) bannerText.text = "Hold anywhere to fly — grab every " + CurrentTarget + "!";
         }
 
         private void Finish()

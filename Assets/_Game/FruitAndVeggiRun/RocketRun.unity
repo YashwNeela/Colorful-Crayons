@@ -580,8 +580,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.79, g: 0.14, b: 0.13, a: 1}
+      key1: {r: 0.79, g: 0.14, b: 0.13, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1489,6 +1489,7 @@ MonoBehaviour:
   outlineIcon: {fileID: 605968435}
   fillIcon: {fileID: 628911949}
   fillTweenDuration: 0.35
+  extraSlotOffset: {x: 150, y: 0}
 --- !u!114 &322264845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2515,6 +2516,7 @@ MonoBehaviour:
   segmentsAhead: 4
   firstHazardSegment: 3
   restHeight: 0.52
+  platformSpacing: 0
   marketScale: 1
   squareSprite: {fileID: 21300000, guid: 3a32f5bb827544e7598abf030c824b1d, type: 3}
   platformSprite: {fileID: 21300000, guid: 79d2ab01383d64b54a58d3f641796a0f, type: 3}
@@ -2534,8 +2536,64 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 30cfa459afcb54014844e1cd9a27cc18, type: 3}
   - {fileID: 21300000, guid: ae61738b8c2bd4e94ae348a819f35984, type: 3}
   - {fileID: 21300000, guid: 92f08810b0436464abd9314f58186b27, type: 3}
+  - {fileID: 21300000, guid: 38bc905ca18c74c8d8fe999a1824ff16, type: 3}
+  - {fileID: 21300000, guid: c4dc45dd2152f408e8290e87c55a558b, type: 3}
   cameraTransform: {fileID: 2106066955}
   flow: {fileID: 1723321370}
+  stages:
+  - label: 1 - Apples only
+    itemCount: 1
+    activeTargets: 1
+    decoys: 0
+    waterChance: 0
+    platformChance: 1
+    maxPickupsOnScreen: 1
+    birds: 0
+    birdChance: 0
+    birdIntroSeconds: 0
+    birdsAfterSeconds: 0
+  - label: 2 - Water
+    itemCount: 1
+    activeTargets: 1
+    decoys: 0
+    waterChance: 0.28
+    platformChance: 1
+    maxPickupsOnScreen: 1
+    birds: 0
+    birdChance: 0
+    birdIntroSeconds: 0
+    birdsAfterSeconds: 0
+  - label: 3 - Two fruits, then birds
+    itemCount: 2
+    activeTargets: 2
+    decoys: 1
+    waterChance: 0.3
+    platformChance: 1
+    maxPickupsOnScreen: 2
+    birds: 1
+    birdChance: 0.4
+    birdIntroSeconds: 8
+    birdsAfterSeconds: 14
+  - label: 4 - Everything
+    itemCount: 3
+    activeTargets: 2
+    decoys: 1
+    waterChance: 0.38
+    platformChance: 1
+    maxPickupsOnScreen: 2
+    birds: 1
+    birdChance: 0.55
+    birdIntroSeconds: 0
+    birdsAfterSeconds: 0
+  birdPrefab: {fileID: 68079379713090673, guid: 22b5f924a94544ce18ba7ea88c4480c3,
+    type: 3}
+  birdWidth: 1.6
+  birdFacesRight: 0
+  birdSprite: {fileID: 0}
+  birdSpeed: 2.4
+  birdTint: {r: 0.16, g: 0.17, b: 0.24, a: 1}
+  player: {fileID: 621268920}
+  birdBriefingTimeout: 5
 --- !u!4 &525986767
 Transform:
   m_ObjectHideFlags: 0
@@ -5708,12 +5766,12 @@ PrefabInstance:
     - target: {fileID: 453127660894978231, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.008804197
+      value: 0.008795162
       objectReference: {fileID: 0}
     - target: {fileID: 453127660894978231, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.99996126
+      value: -0.9999613
       objectReference: {fileID: 0}
     - target: {fileID: 1160882624134564021, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
@@ -5728,17 +5786,17 @@ PrefabInstance:
     - target: {fileID: 1198398431941543772, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6884949
+      value: 0.6884883
       objectReference: {fileID: 0}
     - target: {fileID: 1198398431941543772, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.72524124
+      value: 0.7252475
       objectReference: {fileID: 0}
     - target: {fileID: 1723472541713649677, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000080507474
+      value: -0.000066590015
       objectReference: {fileID: 0}
     - target: {fileID: 2697158962909182517, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
@@ -5813,27 +5871,37 @@ PrefabInstance:
     - target: {fileID: 2755799906884257913, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000018399673
+      value: 0.000025641635
       objectReference: {fileID: 0}
     - target: {fileID: 4025941612948448723, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.2837857
+      value: 0.28379905
       objectReference: {fileID: 0}
     - target: {fileID: 4025941612948448723, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.95888776
+      value: 0.9588838
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594781565049954720, guid: 0adc6713a84a7fc41a3860a351ef11c2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999918
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594781565049954720, guid: 0adc6713a84a7fc41a3860a351ef11c2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0040613282
       objectReference: {fileID: 0}
     - target: {fileID: 5256198329156804259, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.009249264
+      value: 0.009344005
       objectReference: {fileID: 0}
     - target: {fileID: 5256198329156804259, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.99995726
+      value: 0.99995637
       objectReference: {fileID: 0}
     - target: {fileID: 7340382887348271203, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
@@ -5853,22 +5921,22 @@ PrefabInstance:
     - target: {fileID: 8973252098554648300, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.69493073
+      value: 0.69503814
       objectReference: {fileID: 0}
     - target: {fileID: 8973252098554648300, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7190768
+      value: 0.718973
       objectReference: {fileID: 0}
     - target: {fileID: 8984687353279219989, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.28663018
+      value: 0.28663716
       objectReference: {fileID: 0}
     - target: {fileID: 8984687353279219989, guid: 0adc6713a84a7fc41a3860a351ef11c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.9580413
+      value: 0.9580392
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6356,7 +6424,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 12/12
+  m_text: 2/20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 750ab65be0bbb8a478a9ecc86c511c46, type: 2}
   m_sharedMaterial: {fileID: 8916785536254011360, guid: 750ab65be0bbb8a478a9ecc86c511c46,
@@ -10174,7 +10242,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9d323d058ca4a0285d8319baa7c578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
+  targets:
+  - itemName: apple
+    count: 3
+  - itemName: banana
+    count: 3
+  - itemName: mango
+    count: 3
+  - itemName: orange
+    count: 3
+  - itemName: watermelon
+    count: 3
+  - itemName: grapes
+    count: 3
+  - itemName: lemon
+    count: 2
   player: {fileID: 621268920}
   level: {fileID: 525986766}
   cameraRig: {fileID: 2106066956}
@@ -11684,13 +11766,14 @@ MonoBehaviour:
   targetHighlight: {fileID: 292872763}
   handIcon: {fileID: 21300000, guid: 46c76cc56b78f004e9d08f7daec21e5d, type: 3}
   heartIcon: {fileID: 21300000, guid: 7a4b9747029a44f2b81f175670fa2df0, type: 3}
+  birdIcon: {fileID: 0}
   popInDuration: 0.3
   freeFlyDuration: 3
   waterWarnDelay: 2
   targetFruitLeadTime: 1.5
   waterSpareTime: 1.5
   missedMargin: 2
-  waterWaitTimeout: 25
+  waterWaitTimeout: 120
 --- !u!1 &2023149835
 GameObject:
   m_ObjectHideFlags: 0
@@ -11836,7 +11919,7 @@ MonoBehaviour:
   _width: 100
   _height: 100
   _angle: 45
-  _length: 1130.774
+  _length: 2118.0984
   _fitRect: 1
   _emitOnSurface: 1
   _emitterThickness: 0
@@ -13309,6 +13392,7 @@ MonoBehaviour:
   TutorialCollect: tut_collect
   TutorialWrongFruit: tut_wrong_fruit
   TutorialWater: tut_water
+  TutorialBird: tut_bird
   CorrectPickup:
   - pickup_correct_1
   - pickup_correct_2
@@ -13627,7 +13711,7 @@ Transform:
   m_GameObject: {fileID: 2106066954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.2, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

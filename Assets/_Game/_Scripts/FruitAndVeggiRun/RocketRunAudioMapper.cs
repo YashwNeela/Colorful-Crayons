@@ -23,6 +23,7 @@ namespace TMKOC.FruitAndVeggiRun
         public string TutorialCollect = "tut_collect";
         public string TutorialWrongFruit = "tut_wrong_fruit";
         public string TutorialWater = "tut_water";
+        public string TutorialBird = "tut_bird";
 
         [Header("Pickups (one is picked at random)")]
         public string[] CorrectPickup = { "pickup_correct_1", "pickup_correct_2", "pickup_correct_3" };

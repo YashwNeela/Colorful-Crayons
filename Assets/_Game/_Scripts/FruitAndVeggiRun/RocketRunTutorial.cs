@@ -43,6 +43,9 @@ namespace TMKOC.FruitAndVeggiRun
         [Tooltip("Same heart sprite as the lives UI, used as a secondary icon on the life-cost steps.")]
         [SerializeField] private Sprite heartIcon;
 
+        [Tooltip("Bird art for the 'birds cost a life' step. Left empty, the bird prefab's own sprite is used.")]
+        [SerializeField] private Sprite birdIcon;
+
         [Header("Tuning")]
         [SerializeField] private float popInDuration = 0.3f;
         [Tooltip("Seconds of free flying after the first instruction, before the collect step.")]
@@ -57,8 +60,11 @@ namespace TMKOC.FruitAndVeggiRun
         [Header("Safety Timeouts")]
         [Tooltip("How far behind the rocket a tutorial fruit must fall before it counts as missed and respawns.")]
         [SerializeField] private float missedMargin = 2f;
-        [Tooltip("Give up waiting for water to appear after this long.")]
-        [SerializeField] private float waterWaitTimeout = 25f;
+        [Tooltip("Safety net: stop waiting for water after this long, so a dry setup cannot stall the steps that follow. If water never appears the warning is simply skipped.")]
+        [SerializeField] private float waterWaitTimeout = 120f;
+
+        // set by WaitForWaterAhead, so the warning is only given if water really turned up
+        private bool waterSeen;
 
         private class Step
         {
@@ -109,12 +115,10 @@ namespace TMKOC.FruitAndVeggiRun
             // the cut-scene may have unfrozen on its way out; take the freeze back
             Time.timeScale = 0f;
 
-            // no pickups at all during the opening fly lesson
-            if (level != null)
-            {
-                level.SuppressProduce = true;
-                level.ClearProduce();
-            }
+            // Fruit keeps falling all through the lesson so the sky is never empty, but
+            // none of it counts yet -- a lucky first flight should not finish the whole
+            // item before the player has been told what they are doing.
+            if (flow != null) flow.PracticeMode = true;
 
             // ---- 1. hold to fly ----
             yield return ShowInstruction(new Step
@@ -126,7 +130,7 @@ namespace TMKOC.FruitAndVeggiRun
                 voiceKey = VoiceKeys != null ? VoiceKeys.TutorialFly : null
             });
 
-            // let them actually fly for a few seconds with an empty sky
+            // let them actually fly for a few seconds, grabbing practice fruit
             yield return new WaitForSeconds(freeFlyDuration);
 
             // ---- 2. collect the fruit ----
@@ -168,19 +172,12 @@ namespace TMKOC.FruitAndVeggiRun
                 targetFruit = null;
             }
 
-            // ---- 3. water costs a life ----
-            yield return WaitForWaterAhead();
-            yield return new WaitForSeconds(waterWarnDelay);
-
-            yield return ShowInstruction(new Step
-            {
-                message = "Splashing into the water costs a life!",
-                primary = level != null ? level.WaterSprite : null,
-                secondary = heartIcon,
-                voiceKey = VoiceKeys != null ? VoiceKeys.TutorialWater : null
-            });
-
             // ---- done: hand the level back to normal ----
+            // Counting starts HERE, before the hazard warnings below. Those wait on
+            // things that only exist deeper into the run, so holding practice mode open
+            // until then would stop the player ever finishing an item -- and so stop
+            // them ever reaching the water or the birds in the first place.
+            if (flow != null) flow.PracticeMode = false;
             if (level != null) level.SuppressProduce = false;
             if (targetUI != null) targetUI.SetFillVisible(true);
             if (root != null) root.SetActive(false);
@@ -190,6 +187,43 @@ namespace TMKOC.FruitAndVeggiRun
 
             // nothing else is speaking now -- good moment for the "ready, set, fly" line
             if (flow != null) flow.AnnounceRunStart();
+
+            // ---- 3. water costs a life ----
+            // Deferred. The opening stretch is dry by design, so this sits quiet in the
+            // background and interrupts the moment real water first comes into view.
+            yield return WaitForWaterAhead();
+
+            if (waterSeen && level != null)
+            {
+                yield return new WaitForSeconds(waterWarnDelay);
+
+                yield return ShowInstruction(new Step
+                {
+                    message = "Splashing into the water costs a life!",
+                    primary = level.WaterSprite,
+                    secondary = heartIcon,
+                    voiceKey = VoiceKeys != null ? VoiceKeys.TutorialWater : null
+                });
+            }
+
+            // ---- 4. birds cost a life ----
+            // Same idea, much later. Birds only turn up once a few items are in the
+            // basket, and a warning given back at the start would be long forgotten.
+            yield return WaitForBirdsAhead();
+
+            if (level != null)
+            {
+                yield return ShowInstruction(new Step
+                {
+                    message = "Watch out for the birds! \n Bumping into one costs a life too!",
+                    primary = birdIcon != null ? birdIcon : level.BirdIcon,
+                    secondary = heartIcon,
+                    voiceKey = VoiceKeys != null ? VoiceKeys.TutorialBird : null
+                });
+
+                // only now are birds allowed into the world
+                level.ConfirmBirdBriefing();
+            }
         }
 
         /// <summary>
@@ -286,6 +320,7 @@ namespace TMKOC.FruitAndVeggiRun
         /// <summary>Polls until a water stretch is coming up in front of the player.</summary>
     private IEnumerator WaitForWaterAhead()
         {
+            waterSeen = false;
             if (level == null || player == null) yield break;
 
             // look far enough ahead that the water is still in front of the rocket
@@ -293,12 +328,32 @@ namespace TMKOC.FruitAndVeggiRun
             float lookahead = LeadDistance(waterWarnDelay + waterSpareTime);
 
             float waited = 0f;
-            while (waited < waterWaitTimeout)
+            while (waterWaitTimeout <= 0f || waited < waterWaitTimeout)
             {
-                if (level.IsWaterAt(player.transform.position.x + lookahead)) yield break;
+                if (level.IsWaterAt(player.transform.position.x + lookahead))
+                {
+                    waterSeen = true;
+                    yield break;
+                }
                 waited += Time.deltaTime;
                 yield return null;
             }
+        }
+
+        /// <summary>
+        /// Polls until the level opens its bird stretch. That flag flips the instant the
+        /// band changes, a second or two before the first bird is actually within reach,
+        /// which is exactly when the warning is worth giving.
+        /// </summary>
+        /// <summary>
+        /// Polls until the level says birds are ready but the player has not been warned.
+        /// The level holds them at the gate until ConfirmBirdBriefing() is called, so
+        /// nothing can be hit by a bird it has not been told about.
+        /// </summary>
+        private IEnumerator WaitForBirdsAhead()
+        {
+            if (level == null) yield break;
+            while (!level.BirdsAwaitingBriefing) yield return null;
         }
 
         private bool TapDetected()

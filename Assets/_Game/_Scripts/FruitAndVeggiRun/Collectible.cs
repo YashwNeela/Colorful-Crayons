@@ -36,6 +36,23 @@ namespace TMKOC.FruitAndVeggiRun
             }
         }
 
+        /// <summary>
+        /// Re-tags a pickup that is already lying in the world. Needed because the
+        /// difficulty ramp can add a second fruit to the hunt mid-flight, and anything
+        /// spawned before that happened would otherwise keep the wrong glow.
+        /// </summary>
+        public void SetIsTarget(bool target)
+        {
+            if (isTarget == target) return;
+            isTarget = target;
+            if (glow != null)
+            {
+                glow.gameObject.SetActive(target);
+                glow.color = new Color(1f, 1f, 1f, target ? 0.85f : 0f);
+            }
+        }
+
+
     public void SetVisible(bool visible)
         {
             if (icon != null) icon.enabled = visible;
