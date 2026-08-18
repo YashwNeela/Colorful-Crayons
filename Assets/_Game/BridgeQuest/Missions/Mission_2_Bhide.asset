@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501418a5dbfa143da8f4c469dbd42a68, type: 3}
+  m_Name: Mission_2_Bhide
+  m_EditorClassIdentifier: 
+  missionNumber: 2
+  characterName: Bhide
+  destinationName: School
+  characterPortrait: {fileID: 0}
+  backgroundArt: {fileID: 0}
+  plankSprite: {fileID: 21300000, guid: 90a9a3592459240849843f9488abd1d4, type: 3}
+  openingPanels:
+  - art: {fileID: 0}
+    caption: Bhide is carrying his books to school.
+    voiceKey: m2_story_open_1
+    restPosition: {x: -430, y: 170}
+    restRotation: -4
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: But a stream has washed the road away!
+    voiceKey: m2_story_open_2
+    restPosition: {x: 150, y: 235}
+    restRotation: 5
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Help Bhide build a new bridge!
+    voiceKey: m2_story_open_3
+    restPosition: {x: -190, y: -190}
+    restRotation: 3
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  endingPanels:
+  - art: {fileID: 0}
+    caption: The bridge is finished!
+    voiceKey: m2_story_end_1
+    restPosition: {x: -430, y: 170}
+    restRotation: -4
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Bhide crosses the stream with his books.
+    voiceKey: m2_story_end_2
+    restPosition: {x: 150, y: 235}
+    restRotation: 5
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Bhide reaches school and rings the bell!
+    voiceKey: m2_story_end_3
+    restPosition: {x: -190, y: -190}
+    restRotation: 3
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  questions:
+  - type: 0
+    prompt: Find the letter A
+    promptVoiceKey: m2_q1
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: A
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: E
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: H
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  - type: 3
+    prompt: Which one is a pencil?
+    promptVoiceKey: m2_q2
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 21300000, guid: a5ec2bc5e70254e9890567a088c7a24e, type: 3}
+      label: crayon
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: 14552bda4d5a8405891a7f488ab6a557, type: 3}
+      label: ruler
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: 0675f0b80b28542ee8d9b61a19cb044f, type: 3}
+      label: pencil
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 2
+  - type: 5
+    prompt: Find the triangle
+    promptVoiceKey: m2_q3
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 21300000, guid: a7bb06886014a4bfdadc593b8b0146f3, type: 3}
+      label: square
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: db1ab11f0e6424642abb5053b421d363, type: 3}
+      label: triangle
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: 76e5143efb910410c9244f7dba687159, type: 3}
+      label: circle
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 2
+    prompt: How many books?
+    promptVoiceKey: m2_q4
+    promptArt: {fileID: 21300000, guid: 1174c3d087e91409b85c901ea4b804f0, type: 3}
+    options:
+    - art: {fileID: 0}
+      label: 3
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 4
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 6
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 4
+    prompt: Which colour is yellow?
+    promptVoiceKey: m2_q5
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: Yellow
+      useColour: 1
+      colour: {r: 0.98, g: 0.83, b: 0.2, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: Orange
+      useColour: 1
+      colour: {r: 0.96, g: 0.55, b: 0.15, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: Green
+      useColour: 1
+      colour: {r: 0.25, g: 0.72, b: 0.3, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  missionIntroVoiceKey: m2_mission_intro
+  missionCompleteVoiceKey: m2_mission_complete

@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501418a5dbfa143da8f4c469dbd42a68, type: 3}
+  m_Name: Mission_3_Abdul
+  m_EditorClassIdentifier: 
+  missionNumber: 3
+  characterName: Abdul
+  destinationName: Gokuldham Society
+  characterPortrait: {fileID: 0}
+  backgroundArt: {fileID: 0}
+  plankSprite: {fileID: 21300000, guid: 90a9a3592459240849843f9488abd1d4, type: 3}
+  openingPanels:
+  - art: {fileID: 0}
+    caption: Abdul has groceries to deliver to Gokuldham Society.
+    voiceKey: m3_story_open_1
+    restPosition: {x: -430, y: 170}
+    restRotation: -4
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: But the path across the canal is broken!
+    voiceKey: m3_story_open_2
+    restPosition: {x: 150, y: 235}
+    restRotation: 5
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Help Abdul build a bridge for his delivery!
+    voiceKey: m3_story_open_3
+    restPosition: {x: -190, y: -190}
+    restRotation: 3
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  endingPanels:
+  - art: {fileID: 0}
+    caption: The bridge is finished!
+    voiceKey: m3_story_end_1
+    restPosition: {x: -430, y: 170}
+    restRotation: -4
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Abdul carries the groceries across.
+    voiceKey: m3_story_end_2
+    restPosition: {x: 150, y: 235}
+    restRotation: 5
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: The groceries reach Gokuldham Society!
+    voiceKey: m3_story_end_3
+    restPosition: {x: -190, y: -190}
+    restRotation: 3
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  questions:
+  - type: 2
+    prompt: How many milk bottles?
+    promptVoiceKey: m3_q1
+    promptArt: {fileID: 21300000, guid: f5002cfb5f44041119eea3df796c1a49, type: 3}
+    options:
+    - art: {fileID: 0}
+      label: 2
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 3
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 4
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  - type: 1
+    prompt: Find the number 5
+    promptVoiceKey: m3_q2
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 3
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 5
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 8
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 3
+    prompt: Find the banana
+    promptVoiceKey: m3_q3
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 21300000, guid: 325cde1ce0ef540b7baea10428ab9e96, type: 3}
+      label: mango
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: 86ee2a5f2fca34222bb40b17f0cb1d40, type: 3}
+      label: banana
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: c58e0f5a583784ad782dc9cb48b0eece, type: 3}
+      label: corn
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 3
+    prompt: Find the carrot
+    promptVoiceKey: m3_q4
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 21300000, guid: 897e7ed07161d439ba20eaa7e32b3db9, type: 3}
+      label: potato
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: 7a31d9f5d489c4b7a88efc22aa0f700f, type: 3}
+      label: tomato
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: ec4755cf87d1f4cb7b5d57c2895aa48b, type: 3}
+      label: carrot
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 2
+  - type: 4
+    prompt: Which colour is red?
+    promptVoiceKey: m3_q5
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: Pink
+      useColour: 1
+      colour: {r: 0.95, g: 0.55, b: 0.7, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: Red
+      useColour: 1
+      colour: {r: 0.9, g: 0.22, b: 0.2, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: Orange
+      useColour: 1
+      colour: {r: 0.96, g: 0.55, b: 0.15, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  missionIntroVoiceKey: m3_mission_intro
+  missionCompleteVoiceKey: m3_mission_complete

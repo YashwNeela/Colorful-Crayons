@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501418a5dbfa143da8f4c469dbd42a68, type: 3}
+  m_Name: Mission_4_Goli
+  m_EditorClassIdentifier: 
+  missionNumber: 4
+  characterName: Goli
+  destinationName: Picnic Spot
+  characterPortrait: {fileID: 0}
+  backgroundArt: {fileID: 0}
+  plankSprite: {fileID: 21300000, guid: 90a9a3592459240849843f9488abd1d4, type: 3}
+  openingPanels:
+  - art: {fileID: 0}
+    caption: Goli spots his friends having a picnic across the pond.
+    voiceKey: m4_story_open_1
+    restPosition: {x: -430, y: 170}
+    restRotation: -4
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: But there is no path around the pond!
+    voiceKey: m4_story_open_2
+    restPosition: {x: 150, y: 235}
+    restRotation: 5
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Help Goli build a bridge to the picnic!
+    voiceKey: m4_story_open_3
+    restPosition: {x: -190, y: -190}
+    restRotation: 3
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  endingPanels:
+  - art: {fileID: 0}
+    caption: The bridge is finished!
+    voiceKey: m4_story_end_1
+    restPosition: {x: -430, y: 170}
+    restRotation: -4
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Goli hurries across to the picnic.
+    voiceKey: m4_story_end_2
+    restPosition: {x: 150, y: 235}
+    restRotation: 5
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Goli opens the picnic basket. Hooray!
+    voiceKey: m4_story_end_3
+    restPosition: {x: -190, y: -190}
+    restRotation: 3
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  questions:
+  - type: 3
+    prompt: Find the sandwich
+    promptVoiceKey: m4_q1
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 21300000, guid: c269eb37e0b2e4b8fa6986771d5a10b2, type: 3}
+      label: sandwich
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: 806750f5466fb41cd8ab2e9a152a3948, type: 3}
+      label: cake
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: 34350ad0db5014b49ab9b1fd86c80658, type: 3}
+      label: burger
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  - type: 2
+    prompt: How many cupcakes?
+    promptVoiceKey: m4_q2
+    promptArt: {fileID: 21300000, guid: 9556cb603814c4bc2bc6d70b43771e15, type: 3}
+    options:
+    - art: {fileID: 0}
+      label: 4
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 5
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 6
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 5
+    prompt: Find the circle
+    promptVoiceKey: m4_q3
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 21300000, guid: 76e5143efb910410c9244f7dba687159, type: 3}
+      label: circle
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: a7bb06886014a4bfdadc593b8b0146f3, type: 3}
+      label: square
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: db1ab11f0e6424642abb5053b421d363, type: 3}
+      label: triangle
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  - type: 1
+    prompt: Find the number 7
+    promptVoiceKey: m4_q4
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 1
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 7
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 9
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 4
+    prompt: Which colour is blue?
+    promptVoiceKey: m4_q5
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: Purple
+      useColour: 1
+      colour: {r: 0.55, g: 0.35, b: 0.8, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: Green
+      useColour: 1
+      colour: {r: 0.25, g: 0.72, b: 0.3, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: Blue
+      useColour: 1
+      colour: {r: 0.2, g: 0.45, b: 0.9, a: 1}
+      voiceKey: 
+    correctIndex: 2
+  missionIntroVoiceKey: m4_mission_intro
+  missionCompleteVoiceKey: m4_mission_complete

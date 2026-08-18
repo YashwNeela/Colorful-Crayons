@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501418a5dbfa143da8f4c469dbd42a68, type: 3}
+  m_Name: Mission_5_Sonu
+  m_EditorClassIdentifier: 
+  missionNumber: 5
+  characterName: Sonu
+  destinationName: Library
+  characterPortrait: {fileID: 0}
+  backgroundArt: {fileID: 0}
+  plankSprite: {fileID: 21300000, guid: 90a9a3592459240849843f9488abd1d4, type: 3}
+  openingPanels:
+  - art: {fileID: 0}
+    caption: Sonu must return her books before the library closes.
+    voiceKey: m5_story_open_1
+    restPosition: {x: -430, y: 170}
+    restRotation: -4
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: But the little bridge has broken!
+    voiceKey: m5_story_open_2
+    restPosition: {x: 150, y: 235}
+    restRotation: 5
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Help Sonu build a bridge to the library!
+    voiceKey: m5_story_open_3
+    restPosition: {x: -190, y: -190}
+    restRotation: 3
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  endingPanels:
+  - art: {fileID: 0}
+    caption: The bridge is finished!
+    voiceKey: m5_story_end_1
+    restPosition: {x: -430, y: 170}
+    restRotation: -4
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Sonu crosses with her books.
+    voiceKey: m5_story_end_2
+    restPosition: {x: 150, y: 235}
+    restRotation: 5
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  - art: {fileID: 0}
+    caption: Sonu returns her books just in time!
+    voiceKey: m5_story_end_3
+    restPosition: {x: -190, y: -190}
+    restRotation: 3
+    restScale: 0.55
+    fromOffset: {x: 0, y: 900}
+    fromRotation: -18
+    hold: 2.5
+  questions:
+  - type: 0
+    prompt: Find the letter S
+    promptVoiceKey: m5_q1
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: Z
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: S
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: C
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 3
+    prompt: Find the book
+    promptVoiceKey: m5_q2
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 21300000, guid: 64af1863e069c405fb044a9a77441701, type: 3}
+      label: bag
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: f52eb28346b714c0eb146b6663c18518, type: 3}
+      label: book
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: ee332ceea3cfb464088998cc6257bbc7, type: 3}
+      label: box
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 1
+    prompt: Find the number 6
+    promptVoiceKey: m5_q3
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 6
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 9
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 8
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  - type: 5
+    prompt: Find the square
+    promptVoiceKey: m5_q4
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 21300000, guid: db1ab11f0e6424642abb5053b421d363, type: 3}
+      label: triangle
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: a7bb06886014a4bfdadc593b8b0146f3, type: 3}
+      label: square
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 21300000, guid: 6e07a795f184048d589b8189cbe1709f, type: 3}
+      label: rectangle
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 2
+    prompt: How many pencils?
+    promptVoiceKey: m5_q5
+    promptArt: {fileID: 21300000, guid: d9b850f26eaa54ed0ba0a3894fc28b3c, type: 3}
+    options:
+    - art: {fileID: 0}
+      label: 3
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 4
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 5
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  missionIntroVoiceKey: m5_mission_intro
+  missionCompleteVoiceKey: m5_mission_complete
