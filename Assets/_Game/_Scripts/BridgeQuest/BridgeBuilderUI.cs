@@ -53,6 +53,22 @@ namespace TMKOC.BridgeQuest
         /// </summary>
         public void ResetBridge(Sprite plankSprite)
         {
+            ResetBridge(plankSprite, null);
+        }
+
+        /// <summary>
+        /// Empties the span, ready for a mission.
+        ///
+        /// <paramref name="perSlotSprites"/> lets a mission draw its planks in
+        /// perspective -- one sprite per slot, left to right across the span. Any
+        /// slot the array does not cover (or leaves null) falls back to
+        /// <paramref name="plankSprite"/>, so a mission that only wants a single
+        /// themed plank (a stone, a log) still works by passing that alone.
+        ///
+        /// If both are null the slot keeps whatever sprite the scene gave it.
+        /// </summary>
+        public void ResetBridge(Sprite plankSprite, Sprite[] perSlotSprites)
+        {
             placed = 0;
 
             if (plankSlots != null)
@@ -63,7 +79,12 @@ namespace TMKOC.BridgeQuest
                     if (slot == null) continue;
 
                     slot.rectTransform.DOKill();
-                    if (plankSprite != null) slot.sprite = plankSprite;
+
+                    Sprite art = null;
+                    if (perSlotSprites != null && i < perSlotSprites.Length) art = perSlotSprites[i];
+                    if (art == null) art = plankSprite;
+                    if (art != null) slot.sprite = art;
+
                     slot.gameObject.SetActive(false);
                 }
             }

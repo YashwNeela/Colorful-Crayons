@@ -110,7 +110,7 @@ namespace TMKOC.BridgeQuest
             finished = false;
 
             if (questionCard != null) questionCard.Hide();
-            if (bridge != null) bridge.ResetBridge(data.plankSprite);
+            if (bridge != null) bridge.ResetBridge(data.plankSprite, data.plankSprites);
 
             SetBanner("Help " + data.characterName + " reach the " + data.destinationName + "!");
 
@@ -298,7 +298,7 @@ namespace TMKOC.BridgeQuest
             finished = false;
 
             if (questionCard != null) questionCard.Hide();
-            if (bridge != null) bridge.ResetBridge(mission.plankSprite);
+            if (bridge != null) bridge.ResetBridge(mission.plankSprite, mission.plankSprites);
 
             SetBanner("Help " + mission.characterName + " reach the " + mission.destinationName + "!");
 

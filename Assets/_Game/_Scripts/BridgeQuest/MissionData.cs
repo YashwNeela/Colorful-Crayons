@@ -35,6 +35,10 @@ namespace TMKOC.BridgeQuest
 
         [Tooltip("One plank sprite, repeated five times as the bridge builds.")]
         public Sprite plankSprite;
+        [Tooltip("Optional -- one sprite per bridge slot, for planks drawn in perspective.\n" +
+                 "Any slot left empty here falls back to plankSprite above.")]
+        public Sprite[] plankSprites;
+
 
         [Header("Storyboards")]
         [Tooltip("Plays before the questions -- the character's problem.")]
