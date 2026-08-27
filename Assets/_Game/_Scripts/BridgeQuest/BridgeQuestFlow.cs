@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using TMPro;
 using TMKOC.Sorting;
-using UnityEngine;
+using UnityEngine;using UnityEngine.UI;
+
 
 namespace TMKOC.BridgeQuest
 {
@@ -42,6 +43,20 @@ namespace TMKOC.BridgeQuest
 
         [Tooltip("Adult-facing status line. The child is served by the voice-over, not by this.")]
         [SerializeField] private TextMeshProUGUI bannerText;
+        [Header("Lives")]
+        [Tooltip("Bridge Quest has no hazards, so a wrong answer is the only thing that costs a life.")]
+        [SerializeField] private int maxLives = 5;
+
+        [Tooltip("One entry = RocketRun's single-heart HUD (heart stays lit, the number carries the count). Several entries = one heart per life.")]
+        [SerializeField] private Image[] heartIcons;
+
+        [SerializeField] private TextMeshProUGUI livesText;
+        [SerializeField] private Color fullHeartColor = Color.white;
+        [SerializeField] private Color emptyHeartColor = new Color(1f, 1f, 1f, 0.25f);
+
+        [Tooltip("TRY AGAIN! panel, shown when the last life is gone. A second BridgeQuestEndScreenUI instance, exactly as RocketRun does it.")]
+        [SerializeField] private BridgeQuestEndScreenUI loseScreen;
+
 
         [Header("Tuning")]
         [Tooltip("Beat between the plank landing and the next question, so the bridge growing is actually watched.")]
@@ -59,7 +74,8 @@ namespace TMKOC.BridgeQuest
 
         private int questionIndex;
         private bool finished;
-        private bool tutorialShown;        private bool missionStarted;
+        private bool tutorialShown;        private bool missionStarted;        private int lives;
+
 
 
         /// <summary>The mission being played. Set by BridgeMission on level load.</summary>
@@ -70,6 +86,68 @@ namespace TMKOC.BridgeQuest
             if (winConfetti == null) winConfetti = FindObjectOfType<ConfettiUI>();
             if (tutorial == null) tutorial = FindObjectOfType<BridgeQuestTutorial>();
         }
+
+        private void OnEnable()
+        {
+            BridgeQuestGameManager.OnWrongAnswer += HandleWrongAnswer;
+        }
+
+        private void OnDisable()
+        {
+            BridgeQuestGameManager.OnWrongAnswer -= HandleWrongAnswer;
+        }
+
+        /// <summary>
+        /// Bridge Quest has no hazards, so a wrong tap is the only thing that can cost
+        /// anything. Losing a life does not end the question -- QuestionCardUI still
+        /// shakes, speaks the retry line and re-arms. Only the last life stops play.
+        /// </summary>
+        private void HandleWrongAnswer(QuestionType type)
+        {
+            if (finished) return;
+            if (loseScreen != null && loseScreen.IsShowing) return;
+
+            lives = Mathf.Max(0, lives - 1);
+            UpdateLives();
+
+            if (lives > 0) return;
+
+            // Out of lives. Take the card away first so a mashing child cannot fire
+            // another wrong answer underneath the badge, then freeze behind TRY AGAIN.
+            // Passing null for the next-mission callback hides that button, leaving
+            // replay and Playschool -- the same shape as RocketRun's lose screen.
+            if (questionCard != null) questionCard.Hide();
+            if (tutorial != null) tutorial.DisarmHint();
+            StopAllCoroutines();
+
+            if (loseScreen != null) loseScreen.Show(null, RestartMission);
+            else RestartMission();
+        }
+
+        /// <summary>Back to a full row of hearts. Called on every mission start and replay.</summary>
+        private void ResetLives()
+        {
+            lives = Mathf.Max(1, maxLives);
+            UpdateLives();
+        }
+
+        private void UpdateLives()
+        {
+            if (livesText != null) livesText.text = lives.ToString();
+
+            if (heartIcons == null) return;
+            for (int i = 0; i < heartIcons.Length; i++)
+            {
+                if (heartIcons[i] == null) continue;
+
+                // single-heart HUD: the heart stays lit and the number carries the
+                // count. Same rule as RocketRun's GameFlow.UpdateLives.
+                heartIcons[i].color = (heartIcons.Length == 1)
+                    ? (lives > 0 ? fullHeartColor : emptyHeartColor)
+                    : (i < lives ? fullHeartColor : emptyHeartColor);
+            }
+        }
+
 
         private void Start()
         {
@@ -106,6 +184,8 @@ namespace TMKOC.BridgeQuest
 
             mission = data;
             missionStarted = true;
+            ResetLives();
+
             questionIndex = 0;
             finished = false;
 
@@ -294,6 +374,7 @@ namespace TMKOC.BridgeQuest
         {
             if (mission == null) return;
 
+            ResetLives();
             questionIndex = 0;
             finished = false;
 
