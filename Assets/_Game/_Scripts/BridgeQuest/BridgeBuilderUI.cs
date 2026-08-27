@@ -28,6 +28,10 @@ namespace TMKOC.BridgeQuest
         [SerializeField] private RectTransform walkStart;
         [SerializeField] private RectTransform walkEnd;
 
+        [Tooltip("Optional -- the character rig displayed in the walker. Idle while the bridge is\n" +
+                 "being built, walk for the crossing. Left empty, the walker just slides.")]
+        [SerializeField] private BridgeQuestPlayerView playerView;
+
         [Header("Drop-in")]
         [SerializeField] private float dropDuration = 0.5f;
         [SerializeField] private float dropHeight = 320f;
@@ -94,6 +98,9 @@ namespace TMKOC.BridgeQuest
                 walker.DOKill();
                 walker.anchoredPosition = walkStart.anchoredPosition;
             }
+
+            // standing at the near bank while the questions are answered
+            if (playerView != null) playerView.PlayIdle();
         }
 
         /// <summary>
@@ -161,12 +168,19 @@ namespace TMKOC.BridgeQuest
             }
 
             walker.DOKill();
+
+            // feet move for exactly as long as the slot slides
+            if (playerView != null) playerView.PlayWalk();
+
             walker
                 .DOAnchorPos(walkEnd.anchoredPosition, walkDuration)
                 .SetEase(Ease.Linear)
                 .SetUpdate(true)
                 .OnComplete(delegate
                 {
+                    // arrived -- stand still again before the closing storyboard
+                    if (playerView != null) playerView.PlayIdle();
+
                     if (onArrived != null) onArrived();
                 });
         }

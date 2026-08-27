@@ -48,8 +48,13 @@ namespace TMKOC.BridgeQuest
         public StoryPanel[] endingPanels;
 
         [Header("Questions")]
-        [Tooltip("Five, per the GDD. One correct answer lays one plank.")]
+        [Tooltip("The POOL this mission draws from -- not the run itself.\n" +
+                 "Author as many as you like; each run takes questionsPerRun of them at random.")]
         public QuestionData[] questions = new QuestionData[5];
+
+        [Tooltip("How many questions one run asks -- one plank each, so this is the bridge length.\n" +
+                 "Clamped to the pool size, so a short pool simply asks everything it has.")]
+        public int questionsPerRun = 5;
 
         [Header("Voice-over")]
         [Tooltip("Spoken as the mission opens, after the storyboard. e.g. m1_mission_intro")]
@@ -58,10 +63,56 @@ namespace TMKOC.BridgeQuest
         [Tooltip("Spoken over the final crossing. e.g. m1_mission_complete")]
         public string missionCompleteVoiceKey;
 
-        /// <summary>How many planks this mission's bridge needs. Always the question count.</summary>
+        /// <summary>
+        /// How many planks this mission's bridge needs -- the length of one run, not
+        /// the size of the pool. Reading the pool here would build a ten-plank bridge
+        /// for a five-question run.
+        /// </summary>
         public int PlankCount
         {
-            get { return questions != null ? questions.Length : 0; }
+            get
+            {
+                if (questions == null) return 0;
+                return Mathf.Clamp(questionsPerRun, 0, questions.Length);
+            }
+        }
+
+        /// <summary>
+        /// Draws one run's worth of questions from the pool, in random order and
+        /// without repeats. Called once when a mission begins (and again on replay),
+        /// never per question -- re-rolling mid-run would change the bridge length
+        /// underneath a run already in progress.
+        ///
+        /// Nulls are filtered first so a half-filled inspector array cannot hand the
+        /// flow a null question, which would read as a frozen card to the child.
+        /// </summary>
+        public QuestionData[] BuildRun()
+        {
+            if (questions == null || questions.Length == 0) return new QuestionData[0];
+
+            System.Collections.Generic.List<QuestionData> pool =
+                new System.Collections.Generic.List<QuestionData>(questions.Length);
+
+            for (int i = 0; i < questions.Length; i++)
+                if (questions[i] != null) pool.Add(questions[i]);
+
+            if (pool.Count == 0) return new QuestionData[0];
+
+            int take = Mathf.Clamp(questionsPerRun, 0, pool.Count);
+            if (take == 0) return new QuestionData[0];
+
+            // partial Fisher-Yates: shuffle only the first 'take' slots
+            for (int i = 0; i < take; i++)
+            {
+                int j = Random.Range(i, pool.Count);
+                QuestionData tmp = pool[i];
+                pool[i] = pool[j];
+                pool[j] = tmp;
+            }
+
+            QuestionData[] run = new QuestionData[take];
+            for (int i = 0; i < take; i++) run[i] = pool[i];
+            return run;
         }
 
         /// <summary>

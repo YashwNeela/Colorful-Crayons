@@ -81,18 +81,13 @@ MonoBehaviour:
     fromRotation: -20
     hold: 3
   questions:
-  - type: 2
-    prompt: How many milk bottles?
-    promptVoiceKey: m3_q1
-    promptArt: {fileID: 21300000, guid: f5002cfb5f44041119eea3df796c1a49, type: 3}
+  - type: 1
+    prompt: Find the number 1
+    promptVoiceKey: q_number_1
+    promptArt: {fileID: 0}
     options:
     - art: {fileID: 0}
-      label: 2
-      useColour: 0
-      colour: {r: 1, g: 1, b: 1, a: 1}
-      voiceKey: 
-    - art: {fileID: 0}
-      label: 3
+      label: 1
       useColour: 0
       colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
@@ -101,14 +96,82 @@ MonoBehaviour:
       useColour: 0
       colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
+    - art: {fileID: 0}
+      label: 7
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
     correctIndex: 0
   - type: 1
-    prompt: Find the number 5
-    promptVoiceKey: m3_q2
+    prompt: Find the number 2
+    promptVoiceKey: q_number_2
     promptArt: {fileID: 0}
     options:
     - art: {fileID: 0}
+      label: 5
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 2
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 9
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 1
+    prompt: Find the number 3
+    promptVoiceKey: q_number_3
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 8
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 1
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
       label: 3
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 2
+  - type: 1
+    prompt: Find the number 4
+    promptVoiceKey: q_number_4
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 4
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 2
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 10
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  - type: 1
+    prompt: Find the number 5
+    promptVoiceKey: q_number_5
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 7
       useColour: 0
       colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
@@ -118,73 +181,116 @@ MonoBehaviour:
       colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
     - art: {fileID: 0}
+      label: 3
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 1
+  - type: 1
+    prompt: Find the number 6
+    promptVoiceKey: q_number_6
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 1
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
       label: 8
       useColour: 0
       colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
-    correctIndex: 1
-  - type: 3
-    prompt: Find the banana
-    promptVoiceKey: m3_q3
-    promptArt: {fileID: 0}
-    options:
-    - art: {fileID: 21300000, guid: 325cde1ce0ef540b7baea10428ab9e96, type: 3}
-      label: mango
-      useColour: 0
-      colour: {r: 1, g: 1, b: 1, a: 1}
-      voiceKey: 
-    - art: {fileID: 21300000, guid: 86ee2a5f2fca34222bb40b17f0cb1d40, type: 3}
-      label: banana
-      useColour: 0
-      colour: {r: 1, g: 1, b: 1, a: 1}
-      voiceKey: 
-    - art: {fileID: 21300000, guid: c58e0f5a583784ad782dc9cb48b0eece, type: 3}
-      label: corn
-      useColour: 0
-      colour: {r: 1, g: 1, b: 1, a: 1}
-      voiceKey: 
-    correctIndex: 1
-  - type: 3
-    prompt: Find the carrot
-    promptVoiceKey: m3_q4
-    promptArt: {fileID: 0}
-    options:
-    - art: {fileID: 21300000, guid: 897e7ed07161d439ba20eaa7e32b3db9, type: 3}
-      label: potato
-      useColour: 0
-      colour: {r: 1, g: 1, b: 1, a: 1}
-      voiceKey: 
-    - art: {fileID: 21300000, guid: 7a31d9f5d489c4b7a88efc22aa0f700f, type: 3}
-      label: tomato
-      useColour: 0
-      colour: {r: 1, g: 1, b: 1, a: 1}
-      voiceKey: 
-    - art: {fileID: 21300000, guid: ec4755cf87d1f4cb7b5d57c2895aa48b, type: 3}
-      label: carrot
+    - art: {fileID: 0}
+      label: 6
       useColour: 0
       colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
     correctIndex: 2
-  - type: 4
-    prompt: Which colour is red?
-    promptVoiceKey: m3_q5
+  - type: 1
+    prompt: Find the number 7
+    promptVoiceKey: q_number_7
     promptArt: {fileID: 0}
     options:
     - art: {fileID: 0}
-      label: Pink
-      useColour: 1
-      colour: {r: 0.95, g: 0.55, b: 0.7, a: 1}
+      label: 7
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
     - art: {fileID: 0}
-      label: Red
-      useColour: 1
-      colour: {r: 0.9, g: 0.22, b: 0.2, a: 1}
+      label: 10
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
     - art: {fileID: 0}
-      label: Orange
-      useColour: 1
-      colour: {r: 0.96, g: 0.55, b: 0.15, a: 1}
+      label: 2
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  - type: 1
+    prompt: Find the number 8
+    promptVoiceKey: q_number_8
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 3
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 8
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 5
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
       voiceKey: 
     correctIndex: 1
+  - type: 1
+    prompt: Find the number 9
+    promptVoiceKey: q_number_9
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 4
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 2
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 9
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 2
+  - type: 1
+    prompt: Find the number 10
+    promptVoiceKey: q_number_10
+    promptArt: {fileID: 0}
+    options:
+    - art: {fileID: 0}
+      label: 10
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 6
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    - art: {fileID: 0}
+      label: 1
+      useColour: 0
+      colour: {r: 1, g: 1, b: 1, a: 1}
+      voiceKey: 
+    correctIndex: 0
+  questionsPerRun: 5
   missionIntroVoiceKey: m3_mission_intro
   missionCompleteVoiceKey: m3_mission_complete

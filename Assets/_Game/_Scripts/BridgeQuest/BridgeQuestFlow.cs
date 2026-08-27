@@ -73,6 +73,10 @@ namespace TMKOC.BridgeQuest
         [SerializeField] private bool tutorialOnFirstMissionOnly = true;
 
         private int questionIndex;
+
+        // this run's draw from mission.questions -- fixed for the whole mission, so
+        // the bridge length and the questions asked cannot disagree
+        private QuestionData[] runQuestions;
         private bool finished;
         private bool tutorialShown;        private bool missionStarted;        private int lives;
 
@@ -188,6 +192,7 @@ namespace TMKOC.BridgeQuest
 
             questionIndex = 0;
             finished = false;
+            runQuestions = data.BuildRun();
 
             if (questionCard != null) questionCard.Hide();
             if (bridge != null) bridge.ResetBridge(data.plankSprite, data.plankSprites);
@@ -237,13 +242,13 @@ namespace TMKOC.BridgeQuest
         {
             if (finished || mission == null) return;
 
-            if (mission.questions == null || questionIndex >= mission.questions.Length)
+            if (runQuestions == null || questionIndex >= runQuestions.Length)
             {
                 StartCoroutine(FinishRoutine());
                 return;
             }
 
-            QuestionData q = mission.questions[questionIndex];
+            QuestionData q = runQuestions[questionIndex];
 
             if (questionCard == null)
             {
@@ -278,8 +283,8 @@ namespace TMKOC.BridgeQuest
         private IEnumerator AfterPlank()
         {
             bool lastPlank = mission != null
-                && mission.questions != null
-                && questionIndex >= mission.questions.Length;
+                && runQuestions != null
+                && questionIndex >= runQuestions.Length;
 
             // the plank card is skipped on the last plank -- the confetti, the
             // crossing and the closing storyboard are the payoff there, and a card
@@ -377,6 +382,7 @@ namespace TMKOC.BridgeQuest
             ResetLives();
             questionIndex = 0;
             finished = false;
+            runQuestions = mission.BuildRun();   // a replay draws a fresh five
 
             if (questionCard != null) questionCard.Hide();
             if (bridge != null) bridge.ResetBridge(mission.plankSprite, mission.plankSprites);
