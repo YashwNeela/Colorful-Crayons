@@ -99,7 +99,7 @@ namespace TMKOC.BridgeQuest
         [Header("Resting pose (anchored position / rotation / scale)")]
         public Vector2 restPosition;
         public float restRotation = -3f;
-        public float restScale = 0.55f;
+        public float restScale = 1f;
 
         [Header("Fly-in start offset from the resting pose")]
         public Vector2 fromOffset = new Vector2(0f, 900f);
