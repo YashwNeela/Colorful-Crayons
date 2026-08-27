@@ -198,7 +198,11 @@ namespace TMKOC.BridgeQuest
             if (img == null) yield break;
 
             RectTransform rt = img.rectTransform;
-            img.sprite = p.art;
+            // Only paint when the data actually carries art. Assigning unconditionally
+            // wiped whatever the scene had authored on the panel Image the moment a
+            // mission left StoryPanel.art empty -- which every mission currently does.
+            // Same fallback shape as BridgeBuilderUI.ResetBridge: data wins, scene holds.
+            if (p.art != null) img.sprite = p.art;
             img.gameObject.SetActive(true);
             img.transform.SetAsLastSibling(); // newest card sits on top of the pile
 
