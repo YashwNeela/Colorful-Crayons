@@ -325,7 +325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &37942095
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7041,7 +7041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 655, y: 116.20001}
+  m_AnchoredPosition: {x: -540.3, y: 116.2}
   m_SizeDelta: {x: 207.9985, y: 287.9994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &833194851
@@ -7630,16 +7630,19 @@ MonoBehaviour:
     art: {fileID: 1419179327}
     label: {fileID: 1991461292}
     swatch: {fileID: 422588888}
+    fillFlash: {fileID: 1813064970}
   - button: {fileID: 919556645}
     rect: {fileID: 919556644}
     art: {fileID: 1177326966}
     label: {fileID: 2104994163}
     swatch: {fileID: 1195464014}
+    fillFlash: {fileID: 1828623559}
   - button: {fileID: 331106425}
     rect: {fileID: 331106424}
     art: {fileID: 1132397546}
     label: {fileID: 1305767465}
     swatch: {fileID: 1376419019}
+    fillFlash: {fileID: 1421297961}
   popInDuration: 0.35
   shakeDuration: 0.4
   shakeStrength: 24
@@ -7647,6 +7650,9 @@ MonoBehaviour:
   replayPromptOnWrong: 1
   promptReplayGap: 0.15
   correctHold: 0.6
+  wrongFlashColor: {r: 0.93, g: 0.2, b: 0.2, a: 1}
+  wrongFlashHoldDuration: 0.45
+  wrongFlashFadeDuration: 0.3
   labelColourOptions: 1
 --- !u!1 &919556643
 GameObject:
@@ -10549,7 +10555,8 @@ MonoBehaviour:
   minCrossingDuration: 0.45
   stepDuration: 0.8
   scaleStepByDistance: 0
-  walkerPlankOffset: {x: 0, y: 0}
+  walkerPlankOffset: {x: -43.5, y: 126}
+  useSlotHeightForWalk: 1
 --- !u!1 &1410255669
 GameObject:
   m_ObjectHideFlags: 0

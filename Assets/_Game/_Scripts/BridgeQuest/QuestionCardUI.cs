@@ -33,6 +33,10 @@ namespace TMKOC.BridgeQuest
 
             [Tooltip("Plain colour swatch, used by Colour questions.")]
             public Image swatch;
+
+            [Tooltip("Background fill flashed red on a wrong answer. Usually the option's " +
+                     "own 'Fill' image. Left empty, the wrong tap still shakes but does not flash.")]
+            public Image fillFlash;
         }
 
         [Header("Refs")]
@@ -64,6 +68,16 @@ namespace TMKOC.BridgeQuest
         [Tooltip("Beat between the correct tap and handing control back, so the praise line is not cut off by the plank card.")]
         [SerializeField] private float correctHold = 0.6f;
 
+        [Header("Wrong Answer Flash")]
+        [Tooltip("Colour the tapped option's fill snaps to on a wrong answer.")]
+        [SerializeField] private Color wrongFlashColor = new Color(0.93f, 0.20f, 0.20f, 1f);
+
+        [Tooltip("Seconds the option stays fully red before it starts fading back -- 'for sometime', not an instant blink.")]
+        [SerializeField] private float wrongFlashHoldDuration = 0.45f;
+
+        [Tooltip("Seconds the red takes to fade back to the option's normal colour once the hold ends.")]
+        [SerializeField] private float wrongFlashFadeDuration = 0.3f;
+
         [Header("Accessibility")]
         [Tooltip("Colour questions must not rely on hue alone -- red/green is the most common deficiency. Leave on to show the colour's name under the swatch.")]
         [SerializeField] private bool labelColourOptions = true;
@@ -74,9 +88,75 @@ namespace TMKOC.BridgeQuest
         private bool accepting;
         private bool answered;
 
+        // each option's authored fill colour, captured once before anything flashes it --
+        // so the flash always fades back to what the scene actually authored rather than
+        // a hardcoded guess
+        private Color[] optionFillDefaultColors;
+
+        // the graphic actually tinted on a wrong tap, resolved once per slot -- see
+        // ResolveFlashGraphic for why it is not always the option's Fill
+        private Image[] optionFlashGraphics;
+
         private void Awake()
         {
             if (root != null) root.SetActive(false);
+            CacheFillColors();
+        }
+
+        private void CacheFillColors()
+        {
+            if (options == null) return;
+
+            optionFlashGraphics = new Image[options.Length];
+            optionFillDefaultColors = new Color[options.Length];
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                Image g = ResolveFlashGraphic(options[i]);
+                optionFlashGraphics[i] = g;
+                if (g != null) optionFillDefaultColors[i] = g.color;
+            }
+        }
+
+        /// <summary>
+        /// The image a wrong tap turns red.
+        ///
+        /// Normally the option's own 'Fill' -- but a scene is free to switch Fill off
+        /// and let the tile's plain rounded rect show instead, which is what this one
+        /// does. Tinting a deactivated object costs nothing and shows nothing, so the
+        /// wrong answer would read as a shake and no colour at all. So: Fill when it is
+        /// actually on screen, otherwise the tile's own Image, which always is.
+        ///
+        /// Resolved once in Awake rather than per tap. Nothing toggles Fill at runtime,
+        /// and the cached default colour has to belong to the same graphic that gets
+        /// tinted or the fade-back would land on another object's colour.
+        /// </summary>
+        private Image ResolveFlashGraphic(OptionView view)
+        {
+            if (view == null) return null;
+
+            if (view.fillFlash != null && view.fillFlash.gameObject.activeSelf)
+                return view.fillFlash;
+
+            if (view.rect != null)
+            {
+                Image own = view.rect.GetComponent<Image>();
+                if (own != null && own.enabled) return own;
+            }
+
+            return view.fillFlash;
+        }
+
+        /// <summary>Kills any in-flight flash on one slot and puts its colour back.</summary>
+        private void RestoreFlashGraphic(int slot)
+        {
+            if (optionFlashGraphics == null || slot < 0 || slot >= optionFlashGraphics.Length) return;
+
+            Image g = optionFlashGraphics[slot];
+            if (g == null) return;
+
+            g.DOKill();
+            g.color = optionFillDefaultColors[slot];
         }
 
         private void OnEnable()
@@ -141,7 +221,16 @@ namespace TMKOC.BridgeQuest
             wrongVoiceRoutine = null;
             accepting = false;
             if (card != null) card.DOKill();
+            ResetFillFlashes();
             if (root != null) root.SetActive(false);
+        }
+
+        /// <summary>Stops any in-flight red flash and puts every option's fill back to its authored colour.</summary>
+        private void ResetFillFlashes()
+        {
+            if (optionFlashGraphics == null) return;
+
+            for (int i = 0; i < optionFlashGraphics.Length; i++) RestoreFlashGraphic(i);
         }
 
         /// <summary>Fisher-Yates. Re-rolled per presentation, so a replayed mission never repeats the layout.</summary>
@@ -188,6 +277,17 @@ namespace TMKOC.BridgeQuest
                     view.rect.localRotation = Quaternion.identity;
                     view.rect.localScale = Vector3.one;
                 }
+
+                // a fresh question starts with every fill back at its authored colour --
+                // a wrong tap from the previous question must never bleed into this one
+                if (view.fillFlash != null)
+                {
+                    view.fillFlash.DOKill();
+                    if (optionFillDefaultColors != null && slot < optionFillDefaultColors.Length)
+                        view.fillFlash.color = optionFillDefaultColors[slot];
+                }
+
+                RestoreFlashGraphic(slot);
 
                 bool isColour = opt.useColour;
 
@@ -335,6 +435,8 @@ namespace TMKOC.BridgeQuest
                 // rest of the FX layer. Nothing else in this method depended on it.
             }
 
+            FlashWrong(view, slot);
+
             // the retry line, and then the question again. Not fired from here: the two
             // clips have to be sequenced, and this routine must not be the thing that
             // waits for them -- see WrongVoiceRoutine.
@@ -388,6 +490,29 @@ namespace TMKOC.BridgeQuest
 
             BridgeQuestVoice.Play(current.promptVoiceKey);
             wrongVoiceRoutine = null;
+        }
+
+        /// <summary>
+        /// Snaps the tapped option's fill to <see cref="wrongFlashColor"/> and holds it
+        /// there for <see cref="wrongFlashHoldDuration"/> before fading back to whatever
+        /// colour the scene authored for it -- a plain swatch option keeps its own
+        /// colour once the flash clears. Runs on unscaled time like the rest of the
+        /// card's feedback, since the world is frozen behind it.
+        /// </summary>
+        private void FlashWrong(OptionView view, int slot)
+        {
+            if (optionFlashGraphics == null || slot < 0 || slot >= optionFlashGraphics.Length) return;
+
+            Image g = optionFlashGraphics[slot];
+            if (g == null) return;
+
+            Color original = optionFillDefaultColors[slot];
+
+            g.DOKill();
+            g.color = wrongFlashColor;
+            g.DOColor(original, wrongFlashFadeDuration)
+             .SetDelay(wrongFlashHoldDuration)
+             .SetUpdate(true);
         }
 
 

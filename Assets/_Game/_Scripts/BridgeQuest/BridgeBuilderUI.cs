@@ -79,6 +79,14 @@ namespace TMKOC.BridgeQuest
         [Tooltip("Nudges where the character stands relative to the plank's centre. X shifts along the span, Y off the walk line.")]
         [SerializeField] private Vector2 walkerPlankOffset = Vector2.zero;
 
+        [Tooltip("On, the walker's height while stepping across the deck comes from each plank's own\n" +
+                 "anchored Y (plus walkerPlankOffset.y) instead of being interpolated between WalkStart\n" +
+                 "and WalkEnd. Turn this on for a flat, fanned deck where every plank sits at the same\n" +
+                 "height -- interpolating from the bank heights there floats or sinks the character on\n" +
+                 "the planks nearest each bank. Off (default) keeps the old bank-to-bank lerp, which is\n" +
+                 "still correct for a deck that genuinely rises or falls from one bank to the other.")]
+        [SerializeField] private bool useSlotHeightForWalk = false;
+
         private int placed;
         private int placedGroups;
 
@@ -358,33 +366,46 @@ namespace TMKOC.BridgeQuest
             StepToPlank(placed - 1, onArrived);
         }
 
-        /// <summary>
+/// <summary>
         /// Where the character stands to be on slot <paramref name="slotIndex"/>.
         ///
         /// X comes from the plank, converted into the walker's own parent space rather
         /// than read straight off anchoredPosition -- the planks sit under their own
         /// container, and that container is free to move.
         ///
-        /// Y does NOT come from the plank. The walker is a 208x288 slot whose centre
-        /// rides well above the deck, and its line is defined by WalkStart/WalkEnd, so
-        /// the height is interpolated between those two and the plank only decides how
-        /// far along the span the character is.
+        /// Y depends on <see cref="useSlotHeightForWalk"/>. On, it comes from the SAME
+        /// transformed point as X -- the plank's own height, plus walkerPlankOffset.y --
+        /// so a flat deck (every plank at the same anchored Y, just fanned or sheared for
+        /// perspective) keeps the character at a constant, correct height the whole
+        /// crossing. Off, Y is interpolated between WalkStart and WalkEnd instead, which
+        /// is the original behaviour and still right for a deck that actually rises or
+        /// falls from one bank to the other.
         /// </summary>
         private Vector2 WalkPositionForSlot(int slotIndex)
         {
             RectTransform slot = plankSlots[slotIndex].rectTransform;
             RectTransform parent = walker.parent as RectTransform;
 
-            float x = parent != null
-                ? parent.InverseTransformPoint(slot.position).x
-                : slot.anchoredPosition.x;
+            Vector3 local = parent != null
+                ? parent.InverseTransformPoint(slot.position)
+                : (Vector3)slot.anchoredPosition;
 
-            float y = walker.anchoredPosition.y;
-            if (walkStart != null && walkEnd != null)
+            float x = local.x;
+            float y;
+
+            if (useSlotHeightForWalk)
             {
-                int last = plankSlots.Length - 1;
-                float t = last > 0 ? (float)slotIndex / last : 1f;
-                y = Mathf.Lerp(walkStart.anchoredPosition.y, walkEnd.anchoredPosition.y, t);
+                y = local.y;
+            }
+            else
+            {
+                y = walker.anchoredPosition.y;
+                if (walkStart != null && walkEnd != null)
+                {
+                    int last = plankSlots.Length - 1;
+                    float t = last > 0 ? (float)slotIndex / last : 1f;
+                    y = Mathf.Lerp(walkStart.anchoredPosition.y, walkEnd.anchoredPosition.y, t);
+                }
             }
 
             return new Vector2(x, y) + walkerPlankOffset;
