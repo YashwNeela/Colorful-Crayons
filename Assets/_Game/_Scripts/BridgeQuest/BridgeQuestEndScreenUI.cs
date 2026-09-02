@@ -137,6 +137,7 @@ namespace TMKOC.BridgeQuest
         private void OnNextPressed()
         {
             if (!visible) return;
+            BridgeQuestSfx.Tap();
             Hide();
 
             Action cb = onNext;
@@ -147,6 +148,7 @@ namespace TMKOC.BridgeQuest
         private void OnReplayPressed()
         {
             if (!visible) return;
+            BridgeQuestSfx.Tap();
             Hide();
 
             Action cb = onReplay;
@@ -157,6 +159,7 @@ namespace TMKOC.BridgeQuest
         private void OnPlayschoolPressed()
         {
             if (!visible) return;
+            BridgeQuestSfx.Tap();
 
             // whatever happens next, don't hand the app on with a frozen clock
             Time.timeScale = 1f;

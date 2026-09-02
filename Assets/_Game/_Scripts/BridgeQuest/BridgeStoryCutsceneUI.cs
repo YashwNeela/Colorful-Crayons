@@ -50,13 +50,25 @@ namespace TMKOC.BridgeQuest
         [SerializeField] private float tapGrace = 0.25f;
 
         [SerializeField] private float outroDuration = 0.4f;
+        [Tooltip("Breath left after a panel's narration finishes before the next panel flies in. Keeps the last word from running straight into the next line.")]
+        [SerializeField] private float postVoicePause = 0.2f;
+
+        [Tooltip("Safety cap on how long a panel may be held waiting for its narration. Zero disables the cap.")]
+        [SerializeField] private float maxVoiceWait = 20f;
+
 
         [Header("Layout")]
         [Tooltip("The design space the panel poses were authored in. The collage is scaled down uniformly so this box always fits inside the real canvas, on any aspect ratio.")]
         [SerializeField] private Vector2 designSize = new Vector2(1920f, 1080f);
 
         private StoryPanel[] panels;
-        private bool skipRequested;
+        private bool skipRequested;        // unscaled timestamp at which this panel's narration finishes. The panel is
+        // never taken away before this, however short its authored hold is: every
+        // line is played through RuntimeAudioLoader's ONE shared AudioSource, which
+        // Stop()s whatever is playing, so an early advance does not overlap the
+        // narration -- it truncates it mid-word.
+        private float voiceEndsAt;
+
         private bool running;
         private Action onComplete;
         private float previousTimeScale = 1f;
@@ -105,6 +117,7 @@ namespace TMKOC.BridgeQuest
 
             panels = storyPanels;
             onComplete = onCompleteCallback;
+            voiceEndsAt = 0f;
             skipRequested = false;
             running = true;
             activeCount++;
@@ -211,7 +224,11 @@ namespace TMKOC.BridgeQuest
             rt.localScale = Vector3.one * (p.restScale * 0.8f);
 
             // the line is spoken as the card flies in, so narration lands with the picture
-            BridgeQuestVoice.Play(p.voiceKey);
+            float voiceLength = BridgeQuestVoice.PlayAndGetLength(p.voiceKey);
+            if (maxVoiceWait > 0f) voiceLength = Mathf.Min(voiceLength, maxVoiceWait);
+            voiceEndsAt = voiceLength > 0f
+                ? Time.unscaledTime + voiceLength + postVoicePause
+                : 0f;
 
             if (captionText != null)
             {
@@ -243,13 +260,28 @@ namespace TMKOC.BridgeQuest
             if (captionText != null) captionText.alpha = 1f;
         }
 
+        /// <summary>
+        /// Holds the panel for its authored time AND until its narration has finished,
+        /// whichever is longer. A short hold on a long line used to cut the voice off:
+        /// the next panel's Play() goes through the same shared AudioSource, which
+        /// Stop()s the line in flight. The tap-to-hurry shortcut is disabled while the
+        /// line is still speaking for the same reason -- only the Skip button, which is
+        /// a deliberate "I do not want the story", still cuts through.
+        /// </summary>
         private IEnumerator WaitOrTap(float seconds)
         {
             float t = 0f;
-            while (t < seconds && !skipRequested)
+            while (!skipRequested)
             {
                 t += Time.unscaledDeltaTime;
-                if (t >= tapGrace && TapDetected()) yield break;
+
+                bool voiceDone = Time.unscaledTime >= voiceEndsAt;
+                if (voiceDone)
+                {
+                    if (t >= seconds) yield break;
+                    if (t >= tapGrace && TapDetected()) yield break;
+                }
+
                 yield return null;
             }
         }

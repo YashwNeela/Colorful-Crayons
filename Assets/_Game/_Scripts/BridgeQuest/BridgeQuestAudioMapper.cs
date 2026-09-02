@@ -39,6 +39,9 @@ namespace TMKOC.BridgeQuest
         [Header("Screens")]
         public string WinScreen = "win_screen";
 
+        [Tooltip("Spoken on the retry screen. Never a failure line -- Bridge Quest is no-fail, so this is a 'let us build it again' invitation.")]
+        public string TryAgainScreen = "tryagain_screen";
+
         [Header("Replay")]
         [Tooltip("Spoken when the child taps the replay button on a question card.")]
         public string RepeatQuestion = "repeat_question";
@@ -75,6 +78,26 @@ namespace TMKOC.BridgeQuest
             if (loader.GetClip(key) == null) return;
 
             loader.PlayRuntimeAudio(key);
+        }
+
+        /// <summary>
+        /// Plays a line and reports how long it runs, so a caller can chain a second
+        /// line behind it. RuntimeAudioLoader.PlayRuntimeAudio returns 0 in the editor
+        /// (and dereferences a possibly-null clip off-editor), so the length is read
+        /// off the clip directly here. Returns 0 when nothing was played.
+        /// </summary>
+        public static float PlayAndGetLength(string key)
+        {
+            if (string.IsNullOrEmpty(key)) return 0f;
+
+            RuntimeAudioLoader loader = RuntimeAudioLoader.Instance;
+            if (loader == null || loader._commonAudioSource == null) return 0f;
+
+            AudioClip clip = loader.GetClip(key);
+            if (clip == null) return 0f;
+
+            loader.PlayRuntimeAudio(key);
+            return clip.length;
         }
 
         /// <summary>
@@ -129,6 +152,7 @@ namespace TMKOC.BridgeQuest
             BridgeQuestAudioMapper mapper = Mapper;
             if (mapper == null || RuntimeAudioLoader.Instance == null) return;
 
+        
             RuntimeAudioLoader.Instance.EnsureCategoryLoaded(mapper.CategoryName);
         }
     }

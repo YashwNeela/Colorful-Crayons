@@ -1,5 +1,6 @@
 using System;
-using System.Collections;
+using System.Collections;using DG.Tweening;
+
 using TMPro;
 using TMKOC.Sorting;
 using UnityEngine;using UnityEngine.UI;
@@ -43,6 +44,20 @@ namespace TMKOC.BridgeQuest
 
         [Tooltip("Adult-facing status line. The child is served by the voice-over, not by this.")]
         [SerializeField] private TextMeshProUGUI bannerText;
+        [Tooltip("The white pill behind the banner text. Left empty, the text's parent is used. This is what slides, not the text, so the pill leaves with its label.")]
+        [SerializeField] private RectTransform bannerPanel;
+
+        [Tooltip("Seconds the 'Help X reach the Y' banner stays on screen once play starts. It has already been read by then; the bridge is what matters.")]
+        [SerializeField] private float bannerAutoHideDelay = 3f;
+
+        [SerializeField] private float bannerSlideDuration = 0.45f;
+
+        // authored resting Y, captured before anything moves it, and the offscreen Y
+        // derived from it -- so retuning the banner's position in the scene needs no
+        // code change
+        private float bannerShownY;
+        private float bannerHiddenY;
+
         [Header("Lives")]
         [Tooltip("Bridge Quest has no hazards, so a wrong answer is the only thing that costs a life.")]
         [SerializeField] private int maxLives = 5;
@@ -67,6 +82,16 @@ namespace TMKOC.BridgeQuest
 
         [Tooltip("Breath after the character arrives, before the closing storyboard takes over.")]
         [SerializeField] private float preClosingStoryDelay = 0.6f;
+        [Tooltip("How long Tappu celebrates at the far bank. TappuFrontCelebration is a 1s looping clip with no exit transition, so this is what decides the length -- roughly two loops.")]
+                [SerializeField] private float celebrationDuration = 2.2f;
+
+        [Header("Crossing")]
+        [Tooltip("On, the character walks onto each plank the moment it lands, and the next question is asked from there -- so the bridge and the journey grow together instead of the whole crossing being saved for the end. Off, nothing moves until the last plank is down and the old single crossing plays.")]
+        [SerializeField] private bool walkAfterEachPlank = true;
+
+        [Tooltip("The 'N more planks!' card between questions. Off now that stepping onto the plank is the between-question beat -- a card on top of that is one beat too many before every question.")]
+        [SerializeField] private bool showPlankPopup = false;
+
 
         [Header("Tutorial")]
         [Tooltip("Runs the opening lesson only on the first mission. Later missions go straight from storyboard to questions.")]
@@ -89,6 +114,24 @@ namespace TMKOC.BridgeQuest
         {
             if (winConfetti == null) winConfetti = FindObjectOfType<ConfettiUI>();
             if (tutorial == null) tutorial = FindObjectOfType<BridgeQuestTutorial>();
+
+            // the pill, not the label -- sliding the text alone would leave the white
+            // rounded rect sitting there empty
+            if (bannerPanel == null && bannerText != null)
+            {
+                bannerPanel = bannerText.transform.parent as RectTransform;
+            }
+
+            if (bannerPanel != null)
+            {
+                bannerShownY = bannerPanel.anchoredPosition.y;
+
+                // far enough up that the pill clears the top of the canvas whatever its
+                // pivot: its own height, plus however far down it was authored, plus a
+                // margin for the OutBack/InBack overshoot
+                bannerHiddenY = bannerShownY + bannerPanel.rect.height
+                    + Mathf.Abs(bannerShownY) + 40f;
+            }
         }
 
         private void OnEnable()
@@ -225,6 +268,10 @@ namespace TMKOC.BridgeQuest
             // speaking -- first moment in the whole opening where a line is safe
             BridgeQuestVoice.Play(mission.missionIntroVoiceKey);
 
+            // the banner has done its job by now -- three seconds of play and it goes,
+            // so the bridge and the question card have the screen to themselves
+            ShowBannerThenAutoHide();
+
             // ---- 3. the five questions ----
             AskNext();
         }
@@ -265,6 +312,13 @@ namespace TMKOC.BridgeQuest
             if (tutorial != null) tutorial.ArmHint(questionCard);
         }
 
+        /// <summary>
+        /// A question has been answered correctly. The plank lands, then the character
+        /// walks onto it, and only then is the next question asked.
+        ///
+        /// The two are chained rather than played together on purpose: a plank arriving
+        /// underneath a moving character reads as the character stepping into thin air.
+        /// </summary>
         private void OnQuestionAnswered()
         {
             if (tutorial != null) tutorial.DisarmHint();
@@ -277,7 +331,28 @@ namespace TMKOC.BridgeQuest
                 return;
             }
 
-            bridge.PlaceNextPlank(delegate { StartCoroutine(AfterPlank()); });
+            bridge.PlaceNextPlank(delegate
+            {
+                // these callbacks come off DOTween, not off a coroutine, so the
+                // out-of-lives path's StopAllCoroutines cannot cancel them -- check
+                // for ourselves before carrying the mission forward
+                if (finished) return;
+                if (loseScreen != null && loseScreen.IsShowing) return;
+
+                if (!walkAfterEachPlank)
+                {
+                    StartCoroutine(AfterPlank());
+                    return;
+                }
+
+                bridge.StepToLastPlacedPlank(delegate
+                {
+                    if (finished) return;
+                    if (loseScreen != null && loseScreen.IsShowing) return;
+
+                    StartCoroutine(AfterPlank());
+                });
+            });
         }
 
         private IEnumerator AfterPlank()
@@ -289,7 +364,7 @@ namespace TMKOC.BridgeQuest
             // the plank card is skipped on the last plank -- the confetti, the
             // crossing and the closing storyboard are the payoff there, and a card
             // in front of them just delays it
-            if (!lastPlank && plankPopup != null)
+            if (showPlankPopup && !lastPlank && plankPopup != null)
             {
                 bool dismissed = false;
                 string msg = BuildPlankMessage();
@@ -324,12 +399,18 @@ namespace TMKOC.BridgeQuest
 
             SetBanner(mission.characterName + " can cross!");
 
-            if (winConfetti != null) winConfetti.PlayParticle();
-            BridgeQuestVoice.Play(mission.missionCompleteVoiceKey);
+            // back down it comes, in step with the mission-complete line
+            SlideBannerIn();
+
+            // remember when this line ends. Everything below runs on one shared
+            // AudioSource, so the closing storyboard's first panel would otherwise
+            // Stop() it mid-word -- the same trap the storyboard itself had.
+            float completeLine = BridgeQuestVoice.PlayAndGetLength(mission.missionCompleteVoiceKey);
+            float lineEndsAt = Time.unscaledTime + completeLine;
 
             yield return new WaitForSecondsRealtime(preCrossingDelay);
 
-            // ---- the crossing: the thing the whole mission was for ----
+            // ---- the last leg: the final plank to the far bank ----
             if (bridge != null)
             {
                 bool arrived = false;
@@ -337,7 +418,24 @@ namespace TMKOC.BridgeQuest
                 while (!arrived) yield return null;
             }
 
+            // ---- he made it. Confetti fires on arrival, not before ----
+            // Deliberately here rather than at the top of this routine: the confetti
+            // is the reward for reaching the far bank, and firing it while the
+            // character is still walking spends the moment early.
+            if (winConfetti != null) winConfetti.PlayParticle();
+
+            // ---- the side rig steps aside and Tappu_Front celebrates ----
+            if (bridge != null && bridge.HasCelebration)
+            {
+                bridge.PlayCelebration();
+                yield return new WaitForSecondsRealtime(celebrationDuration);
+            }
+
             yield return new WaitForSecondsRealtime(preClosingStoryDelay);
+
+            // the celebration usually outlasts the line anyway; this only bites when
+            // the clip is long or the celebration is tuned short
+            while (Time.unscaledTime < lineEndsAt) yield return null;
 
             // ---- closing storyboard ----
             yield return PlayStoryboard(mission.endingPanels);
@@ -390,6 +488,7 @@ namespace TMKOC.BridgeQuest
             SetBanner("Help " + mission.characterName + " reach the " + mission.destinationName + "!");
 
             StopAllCoroutines();
+            ShowBannerThenAutoHide();
             AskNext();
         }
 
@@ -397,5 +496,50 @@ namespace TMKOC.BridgeQuest
         {
             if (bannerText != null) bannerText.text = text;
         }
+
+        /// <summary>
+        /// Drops the banner in (or leaves it where it is), holds it for
+        /// <see cref="bannerAutoHideDelay"/>, then slides it up out of frame. Called at
+        /// the first moment of actual play -- the storyboard and the tutorial cover the
+        /// HUD, so counting the three seconds from BeginMission would spend them behind
+        /// a full-screen card.
+        ///
+        /// This is a DOTween sequence rather than a coroutine on purpose: BeginMission,
+        /// RestartMission and the out-of-lives path all call StopAllCoroutines, which
+        /// would strand the banner half-way up.
+        /// </summary>
+        private void ShowBannerThenAutoHide()
+        {
+            if (bannerPanel == null) return;
+
+            bannerPanel.DOKill();
+
+            Sequence seq = DOTween.Sequence().SetUpdate(true).SetTarget(bannerPanel);
+            seq.Append(bannerPanel.DOAnchorPosY(bannerShownY, bannerSlideDuration).SetEase(Ease.OutBack));
+            seq.AppendInterval(bannerAutoHideDelay);
+            seq.Append(bannerPanel.DOAnchorPosY(bannerHiddenY, bannerSlideDuration).SetEase(Ease.InBack));
+        }
+
+        /// <summary>
+        /// Slides the banner back down and leaves it there. Used for the "X can cross!"
+        /// line at the end, which arrives with the mission-complete voice-over and is
+        /// meant to be read, not glanced at.
+        /// </summary>
+        private void SlideBannerIn()
+        {
+            if (bannerPanel == null) return;
+
+            bannerPanel.DOKill();
+            bannerPanel.DOAnchorPosY(bannerShownY, bannerSlideDuration)
+                .SetEase(Ease.OutBack)
+                .SetUpdate(true)
+                .SetTarget(bannerPanel);
+        }
+
+        private void OnDestroy()
+        {
+            if (bannerPanel != null) bannerPanel.DOKill();
+        }
+
     }
 }

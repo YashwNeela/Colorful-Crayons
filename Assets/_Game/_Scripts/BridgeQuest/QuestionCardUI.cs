@@ -229,10 +229,35 @@ namespace TMKOC.BridgeQuest
             accepting = true;
         }
 
+        private Coroutine repeatRoutine;
+
         private void RepeatPrompt()
         {
             if (current == null || answered) return;
+
+            BridgeQuestSfx.Tap();
+
+            if (repeatRoutine != null) StopCoroutine(repeatRoutine);
+            repeatRoutine = StartCoroutine(RepeatRoutine());
+        }
+
+        /// <summary>
+        /// Speaks 'Listen again.' and then the question itself. The two cannot be
+        /// fired back to back: RuntimeAudioLoader plays every line through one shared
+        /// AudioSource and calls Stop() first, so the second call would swallow the
+        /// first. Realtime waits, because the card is up while Time.timeScale is 0.
+        /// </summary>
+        private IEnumerator RepeatRoutine()
+        {
+            BridgeQuestAudioMapper voice = BridgeQuestVoice.Mapper;
+            float lead = voice != null ? BridgeQuestVoice.PlayAndGetLength(voice.RepeatQuestion) : 0f;
+            if (lead > 0f) yield return new WaitForSecondsRealtime(lead);
+
+            // the child may have answered while 'Listen again.' was still speaking
+            if (current == null || answered) { repeatRoutine = null; yield break; }
+
             BridgeQuestVoice.Play(current.promptVoiceKey);
+            repeatRoutine = null;
         }
 
         private void OnOptionTapped(int slot)

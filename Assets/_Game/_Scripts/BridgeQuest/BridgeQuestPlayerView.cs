@@ -42,6 +42,13 @@ namespace TMKOC.BridgeQuest
         [Tooltip("Seconds to blend between idle and walk. 0 cuts straight to the state.")]
         [SerializeField] private float blendDuration = 0.15f;
 
+        [Header("Celebration")]
+        [Tooltip("Optional front-facing rig (Tappu_Front). Swapped in for the walking rig once the crossing is done and filmed by the SAME camera onto the SAME texture -- the scene does not gain a second camera or a second RawImage. Left empty, the crossing just ends on the idle pose.")]
+        [SerializeField] private Animator celebrationAnimator;
+
+        [Tooltip("Tappu_Front's controller has no parameters and no transitions either, so the state is played by name.")]
+        [SerializeField] private string celebrationState = "TappuFrontCelebration";
+
         [Header("Framing")]
         [Tooltip("Headroom around the rig, as a multiplier on its height. 1 = tight crop.")]
         [SerializeField] private float verticalMargin = 1.10f;
@@ -53,11 +60,16 @@ namespace TMKOC.BridgeQuest
         [SerializeField] private bool animateUnscaled = true;
 
         private RenderTexture owned;   // only textures created here are destroyed here
-        private bool warned;
+        private bool warned;        private bool celebrating;
+
 
         private void Awake()
         {
             if (animator == null) animator = GetComponentInChildren<Animator>(true);
+
+            // parked scenery until the crossing is over. It is on the rig layer, so a
+            // stray active frame would film it instead of the walker.
+            if (celebrationAnimator != null) celebrationAnimator.gameObject.SetActive(false);
 
             EnsureTexture();
             FrameRig();
@@ -106,27 +118,82 @@ namespace TMKOC.BridgeQuest
         /// <summary>Crossing the bridge.</summary>
         public void PlayWalk() { Play(walkState); }
 
+        /// <summary>True when a celebration rig is wired and there is something to play.</summary>
+        public bool HasCelebration { get { return celebrationAnimator != null; } }
+
+        /// <summary>
+        /// Arrived, and pleased about it. The walking rig steps aside and the
+        /// front-facing rig takes the camera -- one camera, one render texture, so
+        /// the walker slot simply shows a different character without the canvas or
+        /// BridgeBuilderUI knowing anything changed.
+        ///
+        /// Loops until <see cref="StopCelebration"/>: TappuFrontCelebration is a
+        /// looping clip and the controller has no exit transition, so the caller owns
+        /// how long the moment lasts.
+        /// </summary>
+        public void PlayCelebration()
+        {
+            if (celebrationAnimator == null) return;
+
+            celebrating = true;
+
+            if (animator != null) animator.gameObject.SetActive(false);
+
+            GameObject rig = celebrationAnimator.gameObject;
+            if (!rig.activeSelf) rig.SetActive(true);
+
+            // the rig ships with its Animator switched off -- it is scenery until now
+            if (!celebrationAnimator.enabled) celebrationAnimator.enabled = true;
+
+            // frame before playing: the camera has to travel to the front rig, which
+            // lives nowhere near the walking one
+            FrameRig(celebrationAnimator.transform);
+            PlayOn(celebrationAnimator, celebrationState);
+        }
+
+        /// <summary>
+        /// Puts the walking rig back and re-frames the camera on it. Called on replay,
+        /// so a second run of the mission does not start with Tappu still cheering.
+        /// </summary>
+        public void StopCelebration()
+        {
+            if (!celebrating) return;
+            celebrating = false;
+
+            if (celebrationAnimator != null) celebrationAnimator.gameObject.SetActive(false);
+            if (animator != null) animator.gameObject.SetActive(true);
+
+            FrameRig();
+        }
+
+
         private void Play(string state)
         {
-            if (animator == null || string.IsNullOrEmpty(state)) return;
+            PlayOn(animator, state);
+        }
+
+        private void PlayOn(Animator target, string state)
+        {
+            if (target == null || string.IsNullOrEmpty(state)) return;
 
             // a name that is not in the controller silently does nothing, which reads
             // as "the character froze" -- say so once instead
-            if (!animator.HasState(0, Animator.StringToHash(state)))
+            if (!target.HasState(0, Animator.StringToHash(state)))
             {
                 if (!warned)
                 {
                     warned = true;
-                    Debug.LogWarning("[BridgeQuest] Animator has no state '" + state
+                    Debug.LogWarning("[BridgeQuest] Animator '" + target.name + "' has no state '" + state
                         + "' on layer 0 -- the character will not animate.", this);
                 }
                 return;
             }
 
-            ApplyUpdateMode();
+            if (animateUnscaled && target.updateMode != AnimatorUpdateMode.UnscaledTime)
+                target.updateMode = AnimatorUpdateMode.UnscaledTime;
 
-            if (blendDuration > 0f) animator.CrossFadeInFixedTime(state, blendDuration, 0);
-            else animator.Play(state, 0, 0f);
+            if (blendDuration > 0f) target.CrossFadeInFixedTime(state, blendDuration, 0);
+            else target.Play(state, 0, 0f);
         }
 
         // ---- render texture --------------------------------------------------
@@ -173,14 +240,30 @@ namespace TMKOC.BridgeQuest
         /// renderers rather than authored, so a taller character (Bhide, Gogi) drops
         /// in without re-tuning the camera by hand.
         /// </summary>
+        /// <summary>Frames whichever rig is currently on show.</summary>
         private void FrameRig()
         {
-            if (rigCamera == null) return;
+            Transform current = celebrating && celebrationAnimator != null
+                ? celebrationAnimator.transform
+                : (animator != null ? animator.transform : transform);
+
+            FrameRig(current);
+        }
+
+        /// <summary>
+        /// Points the camera at a rig and zooms it to fit. Measured from the
+        /// renderers rather than authored, so a taller character (Bhide, Gogi) drops
+        /// in without re-tuning the camera by hand -- and so the front rig, which is
+        /// eight times the walking rig's size and parked a thousand units up the
+        /// world, needs no repositioning either.
+        /// </summary>
+        private void FrameRig(Transform rigRoot)
+        {
+            if (rigCamera == null || rigRoot == null) return;
 
             // measure the animated rig only, and only what is actually drawn. Measuring
             // the whole object would fold in anything else parked under it -- leftover
             // art from another game, a spare rig -- and zoom the camera out to nothing.
-            Transform rigRoot = animator != null ? animator.transform : transform;
             SpriteRenderer[] parts = rigRoot.GetComponentsInChildren<SpriteRenderer>(false);
             if (parts == null || parts.Length == 0) return;
 

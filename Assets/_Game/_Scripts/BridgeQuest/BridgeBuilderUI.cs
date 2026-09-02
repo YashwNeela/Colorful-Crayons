@@ -38,7 +38,24 @@ namespace TMKOC.BridgeQuest
         [SerializeField] private float dropRotation = 25f;
 
         [Header("Crossing")]
+                [Tooltip("Full-span crossing time, near bank to far bank. When the character has already stepped part of the way across, only the remaining fraction of this is spent -- see scaleCrossingByRemainingDistance.")]
         [SerializeField] private float walkDuration = 2.2f;
+
+        [Tooltip("Scales the crossing to the distance still to cover. With per-plank stepping on, the last leg is only the final plank to the far bank, and spending the whole walkDuration on it would be a crawl. Off, the crossing always takes walkDuration whatever the start point.")]
+        [SerializeField] private bool scaleCrossingByRemainingDistance = true;
+
+        [Tooltip("Floor for the scaled crossing, so the last hop is never instant.")]
+        [SerializeField] private float minCrossingDuration = 0.45f;
+
+        [Header("Stepping")]
+        [Tooltip("Time for one step onto a freshly placed plank. Fixed per step by default, so every plank reads the same however uneven the spacing is.")]
+        [SerializeField] private float stepDuration = 0.8f;
+
+        [Tooltip("On, stepDuration becomes the time for an AVERAGE step and each one is scaled by how far it actually is -- honest, but it makes the uneven plank spacing visible.")]
+        [SerializeField] private bool scaleStepByDistance = false;
+
+        [Tooltip("Nudges where the character stands relative to the plank's centre. X shifts along the span, Y off the walk line.")]
+        [SerializeField] private Vector2 walkerPlankOffset = Vector2.zero;
 
         private int placed;
 
@@ -99,8 +116,13 @@ namespace TMKOC.BridgeQuest
                 walker.anchoredPosition = walkStart.anchoredPosition;
             }
 
-            // standing at the near bank while the questions are answered
-            if (playerView != null) playerView.PlayIdle();
+            // standing at the near bank while the questions are answered -- and facing
+            // sideways again, in case the last run ended mid-celebration
+            if (playerView != null)
+            {
+                playerView.StopCelebration();
+                playerView.PlayIdle();
+            }
         }
 
         /// <summary>
@@ -156,6 +178,108 @@ namespace TMKOC.BridgeQuest
         }
 
         /// <summary>
+        /// Walks the character onto the plank at <paramref name="slotIndex"/> and leaves
+        /// them standing there. This is the per-question beat: answer, the plank lands,
+        /// the child sees the character actually gain ground, then the next question.
+        ///
+        /// Steps are NOT reset between calls -- each one starts from wherever the last
+        /// ended, so the walk accumulates across the mission and PlayCrossing is left
+        /// with only the final plank to the far bank.
+        ///
+        /// Unscaled, like everything else here: the caller usually has the world frozen.
+        /// </summary>
+        public void StepToPlank(int slotIndex, Action onArrived)
+        {
+            if (walker == null || plankSlots == null
+                || slotIndex < 0 || slotIndex >= plankSlots.Length
+                || plankSlots[slotIndex] == null)
+            {
+                if (onArrived != null) onArrived();
+                return;
+            }
+
+            Vector2 target = WalkPositionForSlot(slotIndex);
+            float distance = Vector2.Distance(walker.anchoredPosition, target);
+
+            // already standing there -- do not play a walk cycle on the spot
+            if (distance < 1f)
+            {
+                if (onArrived != null) onArrived();
+                return;
+            }
+
+            float duration = stepDuration;
+            if (scaleStepByDistance)
+            {
+                float average = AverageStepDistance();
+                if (average > 0.01f) duration = stepDuration * (distance / average);
+            }
+            duration = Mathf.Max(0.05f, duration);
+
+            walker.DOKill();
+            if (playerView != null) playerView.PlayWalk();
+
+            walker
+                .DOAnchorPos(target, duration)
+                .SetEase(Ease.Linear)
+                .SetUpdate(true)
+                .OnComplete(delegate
+                {
+                    walker.anchoredPosition = target;
+                    if (playerView != null) playerView.PlayIdle();
+                    if (onArrived != null) onArrived();
+                });
+        }
+
+        /// <summary>Steps onto the plank <see cref="PlaceNextPlank"/> has just dropped.</summary>
+        public void StepToLastPlacedPlank(Action onArrived)
+        {
+            StepToPlank(placed - 1, onArrived);
+        }
+
+        /// <summary>
+        /// Where the character stands to be on slot <paramref name="slotIndex"/>.
+        ///
+        /// X comes from the plank, converted into the walker's own parent space rather
+        /// than read straight off anchoredPosition -- the planks sit under their own
+        /// container, and that container is free to move.
+        ///
+        /// Y does NOT come from the plank. The walker is a 208x288 slot whose centre
+        /// rides well above the deck, and its line is defined by WalkStart/WalkEnd, so
+        /// the height is interpolated between those two and the plank only decides how
+        /// far along the span the character is.
+        /// </summary>
+        private Vector2 WalkPositionForSlot(int slotIndex)
+        {
+            RectTransform slot = plankSlots[slotIndex].rectTransform;
+            RectTransform parent = walker.parent as RectTransform;
+
+            float x = parent != null
+                ? parent.InverseTransformPoint(slot.position).x
+                : slot.anchoredPosition.x;
+
+            float y = walker.anchoredPosition.y;
+            if (walkStart != null && walkEnd != null)
+            {
+                int last = plankSlots.Length - 1;
+                float t = last > 0 ? (float)slotIndex / last : 1f;
+                y = Mathf.Lerp(walkStart.anchoredPosition.y, walkEnd.anchoredPosition.y, t);
+            }
+
+            return new Vector2(x, y) + walkerPlankOffset;
+        }
+
+        /// <summary>Mean gap between consecutive walk positions. Only scaleStepByDistance reads it.</summary>
+        private float AverageStepDistance()
+        {
+            if (walkStart == null || walkEnd == null || plankSlots == null || plankSlots.Length == 0) return 0f;
+
+            float span = Vector2.Distance(walkStart.anchoredPosition, walkEnd.anchoredPosition);
+            return span / (plankSlots.Length + 1);
+        }
+
+
+        /// <summary>
         /// Walks the character across the finished span. The payoff the whole mission
         /// has been building to -- give it room before the closing storyboard starts.
         /// </summary>
@@ -169,21 +293,64 @@ namespace TMKOC.BridgeQuest
 
             walker.DOKill();
 
+            Vector2 target = walkEnd.anchoredPosition;
+
+            // already on the far bank -- nothing left to walk
+            if (Vector2.Distance(walker.anchoredPosition, target) < 1f)
+            {
+                if (playerView != null) playerView.PlayIdle();
+                if (onArrived != null) onArrived();
+                return;
+            }
+
+            float duration = walkDuration;
+
+            // With per-plank stepping the character is already standing on the last
+            // plank, so this leg is a short hop onto the bank. Spend the same fraction
+            // of walkDuration as the distance left is of the whole span, so the pace
+            // matches the steps instead of crawling.
+            if (scaleCrossingByRemainingDistance && walkStart != null)
+            {
+                float span = Vector2.Distance(walkStart.anchoredPosition, target);
+                float remaining = Vector2.Distance(walker.anchoredPosition, target);
+
+                if (span > 0.01f)
+                {
+                    duration = Mathf.Max(minCrossingDuration, walkDuration * (remaining / span));
+                }
+            }
+
             // feet move for exactly as long as the slot slides
             if (playerView != null) playerView.PlayWalk();
 
             walker
-                .DOAnchorPos(walkEnd.anchoredPosition, walkDuration)
+                .DOAnchorPos(target, duration)
                 .SetEase(Ease.Linear)
                 .SetUpdate(true)
                 .OnComplete(delegate
                 {
+                    walker.anchoredPosition = target;
+
                     // arrived -- stand still again before the closing storyboard
                     if (playerView != null) playerView.PlayIdle();
 
                     if (onArrived != null) onArrived();
                 });
         }
+
+        /// <summary>True when the view has a celebration rig to swap in.</summary>
+        public bool HasCelebration { get { return playerView != null && playerView.HasCelebration; } }
+
+        /// <summary>
+        /// The little dance at the far bank. Loops until something else moves the
+        /// story on, so the caller decides how long it runs -- see
+        /// BridgeQuestFlow.celebrationDuration.
+        /// </summary>
+        public void PlayCelebration()
+        {
+            if (playerView != null) playerView.PlayCelebration();
+        }
+
 
         private void OnDestroy()
         {
