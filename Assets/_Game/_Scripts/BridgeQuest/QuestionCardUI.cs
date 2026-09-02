@@ -55,6 +55,12 @@ namespace TMKOC.BridgeQuest
         [Tooltip("Taps ignored for this long after a wrong answer, so a mashing child cannot fire the retry line five times.")]
         [SerializeField] private float wrongLockout = 0.5f;
 
+        [Tooltip("After the retry line, speak the question again. A pre-reader who guessed wrong has no way to re-read the prompt, and the alternative is guessing at silence.")]
+        [SerializeField] private bool replayPromptOnWrong = true;
+
+        [Tooltip("Beat between the retry line ending and the question starting. One shared AudioSource, so this is a pause between two clips, not a crossfade.")]
+        [SerializeField] private float promptReplayGap = 0.15f;
+
         [Tooltip("Beat between the correct tap and handing control back, so the praise line is not cut off by the plank card.")]
         [SerializeField] private float correctHold = 0.6f;
 
@@ -123,12 +129,16 @@ namespace TMKOC.BridgeQuest
             if (root != null) root.SetActive(true);
 
             StopAllCoroutines();
+            repeatRoutine = null;
+            wrongVoiceRoutine = null;
             StartCoroutine(PopInThenAccept());
         }
 
         public void Hide()
         {
             StopAllCoroutines();
+            repeatRoutine = null;
+            wrongVoiceRoutine = null;
             accepting = false;
             if (card != null) card.DOKill();
             if (root != null) root.SetActive(false);
@@ -230,6 +240,7 @@ namespace TMKOC.BridgeQuest
         }
 
         private Coroutine repeatRoutine;
+        private Coroutine wrongVoiceRoutine;
 
         private void RepeatPrompt()
         {
@@ -237,6 +248,9 @@ namespace TMKOC.BridgeQuest
 
             BridgeQuestSfx.Tap();
 
+            // a deliberate tap on the replay button outranks anything a wrong answer
+            // queued -- otherwise the two would fight over the one AudioSource
+            if (wrongVoiceRoutine != null) { StopCoroutine(wrongVoiceRoutine); wrongVoiceRoutine = null; }
             if (repeatRoutine != null) StopCoroutine(repeatRoutine);
             repeatRoutine = StartCoroutine(RepeatRoutine());
         }
@@ -316,19 +330,66 @@ namespace TMKOC.BridgeQuest
                 view.rect
                     .DOShakeAnchorPos(shakeDuration, new Vector2(shakeStrength, 0f), 12, 90f, false, true)
                     .SetUpdate(true);
+
+                // NB: the particle puff that used to fire here was removed with the
+                // rest of the FX layer. Nothing else in this method depended on it.
             }
 
-            BridgeQuestAudioMapper voice = BridgeQuestVoice.Mapper;
-            if (voice != null) BridgeQuestVoice.Play(voice.GetRandomWrong());
+            // the retry line, and then the question again. Not fired from here: the two
+            // clips have to be sequenced, and this routine must not be the thing that
+            // waits for them -- see WrongVoiceRoutine.
+            if (repeatRoutine != null) { StopCoroutine(repeatRoutine); repeatRoutine = null; }
+            if (wrongVoiceRoutine != null) StopCoroutine(wrongVoiceRoutine);
+            wrongVoiceRoutine = StartCoroutine(WrongVoiceRoutine());
 
             BridgeQuestGameManager.RaiseWrongAnswer(current.type);
 
             yield return new WaitForSecondsRealtime(wrongLockout);
 
             // no penalty, no attempt counter, nothing removed from the board --
-            // the child simply gets to try again
+            // the child simply gets to try again. Deliberately re-armed on the short
+            // lockout rather than when the voice finishes: a child who has already
+            // spotted the answer should not have to sit through the question again.
             if (!answered) accepting = true;
         }
+
+        /// <summary>
+        /// 'Try again' and then the question itself.
+        ///
+        /// The two cannot be fired back to back. RuntimeAudioLoader plays every line
+        /// through one shared AudioSource and calls Stop() first, so a second call
+        /// swallows the first and the child would hear only the question -- the same
+        /// trap RepeatRoutine and the closing storyboard both had. So the retry line's
+        /// length is measured and waited out before the prompt starts.
+        ///
+        /// This runs beside WrongRoutine rather than inside it, because WrongRoutine
+        /// owns the tap lockout and must re-arm on its own short timer whatever the
+        /// audio is doing.
+        ///
+        /// Realtime waits, because a card is up whenever this runs.
+        /// </summary>
+        private IEnumerator WrongVoiceRoutine()
+        {
+            BridgeQuestAudioMapper voice = BridgeQuestVoice.Mapper;
+
+            float lead = voice != null
+                ? BridgeQuestVoice.PlayAndGetLength(voice.GetRandomWrong())
+                : 0f;
+
+            if (!replayPromptOnWrong) { wrongVoiceRoutine = null; yield break; }
+
+            if (lead > 0f) yield return new WaitForSecondsRealtime(lead);
+            if (promptReplayGap > 0f) yield return new WaitForSecondsRealtime(promptReplayGap);
+
+            // The child may have found the answer while the retry line was still
+            // speaking -- taps re-arm after wrongLockout, long before the audio ends.
+            // The praise line is already in flight by then and must not be talked over.
+            if (current == null || answered) { wrongVoiceRoutine = null; yield break; }
+
+            BridgeQuestVoice.Play(current.promptVoiceKey);
+            wrongVoiceRoutine = null;
+        }
+
 
         private void LockAll()
         {
