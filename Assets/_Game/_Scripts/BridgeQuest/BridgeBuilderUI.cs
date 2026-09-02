@@ -14,12 +14,20 @@ namespace TMKOC.BridgeQuest
     /// counter, and there should not be one.
     ///
     /// Planks are pre-placed in the scene along the span and start hidden. A correct
-    /// answer drops the next one in, in order, left to right.
+    /// answer drops in the next GROUP of planks, in order, left to right.
+    ///
+    /// Planks and questions are deliberately decoupled. The deck art is a fan of 11
+    /// narrow planks, but a mission only asks 5 questions, so one answer has to be
+    /// worth more than one plank -- see <see cref="plankGroupSizes"/>. Sizing the
+    /// groups 3,2,2,2,2 closes an 11-plank span over 5 questions and still lands the
+    /// final plank on the final answer.
     /// </summary>
     public class BridgeBuilderUI : MonoBehaviour
     {
         [Header("Refs")]
-        [Tooltip("One per question, laid out along the gap left to right. Hidden at mission start.")]
+        [Tooltip("Every plank across the span, laid out left to right. Hidden at mission start.\n" +
+                 "This is the whole deck, NOT one per question -- plankGroupSizes decides how many\n" +
+                 "of these each correct answer is worth.")]
         [SerializeField] private Image[] plankSlots;
 
         [Tooltip("Optional -- the character walks across this once the span is closed.")]
@@ -31,6 +39,20 @@ namespace TMKOC.BridgeQuest
         [Tooltip("Optional -- the character rig displayed in the walker. Idle while the bridge is\n" +
                  "being built, walk for the crossing. Left empty, the walker just slides.")]
         [SerializeField] private BridgeQuestPlayerView playerView;
+
+        [Header("Grouping")]
+        [Tooltip("How many planks each correct answer drops, in question order.\n" +
+                 "3,2,2,2,2 lays an 11-plank deck over 5 questions -- a bigger first group so the\n" +
+                 "child sees real ground gained on the very first answer.\n\n" +
+                 "Ideally this sums to plankSlots.Length, but it does not have to: the LAST entry\n" +
+                 "always takes whatever planks are left, so the span still finishes closed on the\n" +
+                 "final answer even if the deck art or the question count changes later. Leave the\n" +
+                 "array empty for the old behaviour of one plank per answer.")]
+                [SerializeField] private int[] plankGroupSizes = new int[0];
+
+        [Tooltip("Seconds between planks within one group, so a group reads as a quick run of\n" +
+                 "planks landing rather than one thud. 0 drops the whole group together.")]
+        [SerializeField] private float withinGroupDelay = 0.12f;
 
         [Header("Drop-in")]
         [SerializeField] private float dropDuration = 0.5f;
@@ -58,12 +80,30 @@ namespace TMKOC.BridgeQuest
         [SerializeField] private Vector2 walkerPlankOffset = Vector2.zero;
 
         private int placed;
+        private int placedGroups;
 
         /// <summary>How many planks are down.</summary>
         public int Placed { get { return placed; } }
 
         /// <summary>How many the span needs.</summary>
         public int Total { get { return plankSlots != null ? plankSlots.Length : 0; } }
+
+        /// <summary>How many answers' worth of planks are down.</summary>
+        public int PlacedGroups { get { return placedGroups; } }
+
+        /// <summary>
+        /// How many answers it takes to close the span -- the number of configured
+        /// groups, or one per plank when no grouping is set.
+        /// </summary>
+        public int GroupCount
+        {
+            get
+            {
+                if (plankSlots == null || plankSlots.Length == 0) return 0;
+                if (plankGroupSizes == null || plankGroupSizes.Length == 0) return plankSlots.Length;
+                return plankGroupSizes.Length;
+            }
+        }
 
         public bool IsComplete { get { return Total > 0 && placed >= Total; } }
 
@@ -86,11 +126,21 @@ namespace TMKOC.BridgeQuest
         /// <paramref name="plankSprite"/>, so a mission that only wants a single
         /// themed plank (a stone, a log) still works by passing that alone.
         ///
-        /// If both are null the slot keeps whatever sprite the scene gave it.
+        /// If both are null the slot keeps whatever sprite the scene gave it -- the
+        /// normal case for the fanned deck, where each slot's perspective art is wired
+        /// up in the scene and no mission should be overriding it.
         /// </summary>
         public void ResetBridge(Sprite plankSprite, Sprite[] perSlotSprites)
         {
             placed = 0;
+            placedGroups = 0;
+
+            // A per-slot override that does not cover the whole deck is stale data --
+            // a 5-entry mission array against an 11-plank span, say. Half-applying it
+            // would repaint the first few planks and leave the rest mismatched, so it
+            // is ignored outright and the scene's own per-slot art stands.
+            bool usePerSlot = perSlotSprites != null && plankSlots != null
+                              && perSlotSprites.Length == plankSlots.Length;
 
             if (plankSlots != null)
             {
@@ -102,7 +152,7 @@ namespace TMKOC.BridgeQuest
                     slot.rectTransform.DOKill();
 
                     Sprite art = null;
-                    if (perSlotSprites != null && i < perSlotSprites.Length) art = perSlotSprites[i];
+                    if (usePerSlot) art = perSlotSprites[i];
                     if (art == null) art = plankSprite;
                     if (art != null) slot.sprite = art;
 
@@ -126,10 +176,23 @@ namespace TMKOC.BridgeQuest
         }
 
         /// <summary>
-        /// Drops the next plank into the span. Runs on unscaled time because the
-        /// caller may well have the world frozen behind a card.
+        /// Drops the next answer's worth of planks into the span -- one plank in the
+        /// ungrouped case, otherwise the whole group. <paramref name="onLanded"/> fires
+        /// once, after the LAST plank of the group has settled.
+        ///
+        /// Kept under the old name because this is what one correct answer buys, and
+        /// every caller thinks in answers rather than planks.
         /// </summary>
         public void PlaceNextPlank(Action onLanded)
+        {
+            PlaceNextGroup(onLanded);
+        }
+
+        /// <summary>
+        /// Drops the next group of planks. Runs on unscaled time because the caller may
+        /// well have the world frozen behind a card.
+        /// </summary>
+        public void PlaceNextGroup(Action onLanded)
         {
             if (plankSlots == null || placed >= plankSlots.Length)
             {
@@ -137,29 +200,81 @@ namespace TMKOC.BridgeQuest
                 return;
             }
 
-            Image slot = plankSlots[placed];
-            placed++;
+            int first = placed;
+            int count = ResolveGroupSize();
 
+            placed += count;
+            placedGroups++;
+
+            // one progress beat and one voice line per ANSWER, not per plank -- three
+            // plank lines fired at once is just noise
             BridgeQuestGameManager.RaisePlankPlaced(placed, Total);
 
             BridgeQuestAudioMapper voice = BridgeQuestVoice.Mapper;
             if (voice != null) BridgeQuestVoice.Play(voice.GetRandomPlank());
 
-            if (slot == null)
+            int pending = 0;
+            for (int i = first; i < first + count; i++)
             {
+                if (plankSlots[i] != null) pending++;
+            }
+
+            // nothing actually wired in this group -- do not strand the caller
+            if (pending == 0)
+            {
+                AnnounceIfComplete(voice);
                 if (onLanded != null) onLanded();
                 return;
             }
 
+            int landed = 0;
+            for (int i = first; i < first + count; i++)
+            {
+                Image slot = plankSlots[i];
+                if (slot == null) continue;
+
+                DropSlot(slot, withinGroupDelay * (i - first), delegate
+                {
+                    landed++;
+                    if (landed < pending) return;
+
+                    AnnounceIfComplete(voice);
+                    if (onLanded != null) onLanded();
+                });
+            }
+        }
+
+        /// <summary>
+        /// How many planks this answer is worth.
+        ///
+        /// The last configured group always takes every plank still standing, so the
+        /// span finishes closed on the final answer even when the group sizes and the
+        /// deck length have drifted apart.
+        /// </summary>
+        private int ResolveGroupSize()
+        {
+            int remaining = plankSlots.Length - placed;
+
+            if (plankGroupSizes == null || plankGroupSizes.Length == 0) return 1;
+            if (placedGroups >= plankGroupSizes.Length - 1) return remaining;
+
+            return Mathf.Clamp(plankGroupSizes[placedGroups], 1, remaining);
+        }
+
+        /// <summary>One plank falling in, with an optional stagger inside its group.</summary>
+        private void DropSlot(Image slot, float delay, Action onLanded)
+        {
             RectTransform rt = slot.rectTransform;
+
+            rt.DOKill();
             Vector2 rest = rt.anchoredPosition;
 
             slot.gameObject.SetActive(true);
-            rt.DOKill();
             rt.anchoredPosition = rest + new Vector2(0f, dropHeight);
             rt.localRotation = Quaternion.Euler(0f, 0f, dropRotation);
 
             Sequence seq = DOTween.Sequence().SetUpdate(true);
+            if (delay > 0f) seq.AppendInterval(delay);
             seq.Append(rt.DOAnchorPos(rest, dropDuration).SetEase(Ease.OutBounce));
             seq.Join(rt.DOLocalRotate(Vector3.zero, dropDuration).SetEase(Ease.OutBack));
             seq.OnComplete(delegate
@@ -167,19 +282,21 @@ namespace TMKOC.BridgeQuest
                 rt.anchoredPosition = rest;
                 rt.localRotation = Quaternion.identity;
 
-                if (IsComplete)
-                {
-                    BridgeQuestGameManager.RaiseBridgeComplete();
-                    if (voice != null) BridgeQuestVoice.Play(voice.BridgeComplete);
-                }
-
                 if (onLanded != null) onLanded();
             });
         }
 
+        private void AnnounceIfComplete(BridgeQuestAudioMapper voice)
+        {
+            if (!IsComplete) return;
+
+            BridgeQuestGameManager.RaiseBridgeComplete();
+            if (voice != null) BridgeQuestVoice.Play(voice.BridgeComplete);
+        }
+
         /// <summary>
         /// Walks the character onto the plank at <paramref name="slotIndex"/> and leaves
-        /// them standing there. This is the per-question beat: answer, the plank lands,
+        /// them standing there. This is the per-question beat: answer, the planks land,
         /// the child sees the character actually gain ground, then the next question.
         ///
         /// Steps are NOT reset between calls -- each one starts from wherever the last
@@ -231,7 +348,11 @@ namespace TMKOC.BridgeQuest
                 });
         }
 
-        /// <summary>Steps onto the plank <see cref="PlaceNextPlank"/> has just dropped.</summary>
+        /// <summary>
+        /// Steps onto the last plank <see cref="PlaceNextGroup"/> has just dropped --
+        /// the far end of the group, so one answer moves the character by the whole run
+        /// of planks it just earned.
+        /// </summary>
         public void StepToLastPlacedPlank(Action onArrived)
         {
             StepToPlank(placed - 1, onArrived);
