@@ -71,7 +71,8 @@ namespace TMKOC.FruitAndVeggiRun
 
         public float ForwardSpeed { get { return forwardSpeed; } }
         public bool Alive { get { return alive; } }
-        public bool Grounded { get { return grounded; } }
+                public bool Grounded { get { return grounded; } }
+        public float BodyRadius { get { return bodyRadius; } }
 
         private void Awake()
         {
@@ -252,13 +253,23 @@ namespace TMKOC.FruitAndVeggiRun
             if (flow != null) flow.OnPlayerCrashed(transform.position);
         }
 
-public void Respawn(Vector3 pos)
+        public void Respawn(Vector3 pos)
+        {
+            Respawn(pos, false);
+        }
+
+        /// <summary>
+        /// Puts the player back in play. <paramref name="startGrounded"/> is for coming
+        /// back onto solid ground: it stops the landing hop and the airborne pose from
+        /// firing on the very first frame, which otherwise reads as a stumble.
+        /// </summary>
+        public void Respawn(Vector3 pos, bool startGrounded)
         {
             logicalPos = pos;
             transform.position = pos;
             verticalSpeed = 0f;
             alive = true;
-            grounded = false;
+            grounded = startGrounded;
             bounceOffsetY = 0f;
             if (bounceTween != null && bounceTween.IsActive()) bounceTween.Kill();
             if (trail != null)
@@ -268,10 +279,24 @@ public void Respawn(Vector3 pos)
             }
             currentTiltZ = 0f;
             if (visual != null) visual.rotation = Quaternion.identity;
+            if (visualAnimator != null) visualAnimator.SetBool(GroundedHash, grounded);
 
             // grace window: a bird camped right on the respawn point should not be
             // able to kill the player again the instant they reappear
             birdImmuneUntil = Time.time + birdImmunityDuration;
+        }
+
+        /// <summary>
+        /// Comes back standing on the grass at this X, feet on the surface, instead of
+        /// being dropped in mid-air. Used after a water crash so the player always
+        /// restarts on solid dry land with a beat to get their thumb back down.
+        /// </summary>
+        public void RespawnOnGround(float x)
+        {
+            if (level == null) level = FindObjectOfType<LevelBuilder>();
+
+            float groundTop = level != null ? level.GroundTopY : transform.position.y - bodyRadius;
+            Respawn(new Vector3(x, groundTop + bodyRadius, 0f), true);
         }
     }
 }

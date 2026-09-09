@@ -504,7 +504,7 @@ namespace TMKOC.FruitAndVeggiRun
             StartCoroutine(RespawnRoutine());
         }
 
-    private IEnumerator RespawnRoutine()
+        private IEnumerator RespawnRoutine()
         {
             yield return new WaitForSeconds(respawnDelay);
             if (player == null || level == null) yield break;
@@ -517,9 +517,17 @@ namespace TMKOC.FruitAndVeggiRun
                 else RestartRun();
                 yield break;
             }
+            // Back on dry land after a dunking, not hovering over the water that just
+            // ended the run. PrepareRespawn picks a segment that is grass AND still
+            // streamed in, then forces the next few seconds of flight out of it to be
+            // dry too. RespawnOnGround stands the rocket on that grass
+            // rather than dropping it from mid-air.
+            float safeX = level.PrepareRespawn(player.transform.position.x - 2f);
+            player.RespawnOnGround(safeX);
 
-            float safeX = level.FindSafeX(player.transform.position.x - 2f);
-            player.Respawn(new Vector3(safeX, 2.5f, 0f));
+            // the camera only catches up in LateUpdate, so snap it or the world visibly
+            // slides back into place around a player who is already running again
+            if (cameraRig != null) cameraRig.SnapToTarget();
         }
 
         private void LoseLife()

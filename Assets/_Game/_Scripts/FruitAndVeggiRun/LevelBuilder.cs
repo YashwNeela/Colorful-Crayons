@@ -79,6 +79,14 @@ namespace TMKOC.FruitAndVeggiRun
         // through -- the world does not decide for itself.
         private int stageIndex;
 
+        [Header("Respawn")]
+        [Tooltip("Seconds of guaranteed dry ground ahead of a respawn point. The player should never come back and fly straight into the water that just killed them.")]
+        [SerializeField] private float respawnSafeSeconds = 3f;
+
+        // World-space window in which water is never generated, opened by a respawn.
+        // Empty the rest of the time.
+        private float dryWindowStartX = float.PositiveInfinity;
+        private float dryWindowEndX = float.NegativeInfinity;
         // World-space window in which birds fly and no fruit is dropped at all. Set
         // when a band with a birdIntroSeconds opens; empty the rest of the time.
         private float birdIntroStartX = float.PositiveInfinity;
@@ -166,6 +174,9 @@ namespace TMKOC.FruitAndVeggiRun
             segments.Clear();
             waterSegments.Clear();
 
+            // a respawn's dry window belongs to the run that just ended
+            dryWindowStartX = float.PositiveInfinity;
+            dryWindowEndX = float.NegativeInfinity;
             // tutorial drops and anything else parented outside a segment
             ClearProduce();
 
@@ -607,17 +618,116 @@ namespace TMKOC.FruitAndVeggiRun
         }
 
         /// <summary>Nearest X to the left that has safe ground, for respawns.</summary>
+        /// <summary>
+        /// Where the player can safely be put back after a crash: the middle of the
+        /// nearest stretch of dry ground that is ALSO still built.
+        ///
+        /// Both halves matter. Water obviously kills on contact, but a segment that has
+        /// already been recycled is just as bad -- there is no ground object there at
+        /// all, so the rocket would come back over empty sky. Segments more than a
+        /// couple behind the camera are destroyed as the level streams, so the search
+        /// only steps back a short way and then works forwards through the world that
+        /// has already been laid down ahead.
+        /// </summary>
         public float FindSafeX(float fromX)
         {
             int seg = Mathf.FloorToInt(fromX / segmentWidth);
-            for (int i = seg; i >= seg - 6; i--)
+
+            // a little way back, but only into terrain that still exists
+            for (int i = seg; i >= seg - 2; i--)
             {
-                if (!waterSegments.Contains(i)) return (i + 0.5f) * segmentWidth;
+                if (IsSafeSegment(i)) return SegmentCenterX(i);
             }
-            return (seg + 1.5f) * segmentWidth;
+
+            // nothing usable behind: take the first dry segment ahead, building it if
+            // the streamer has not got there yet (BuildSegment is a no-op if it has).
+            // Water is never generated in two neighbouring segments, so this always
+            // finds ground within a step or two.
+            for (int i = seg + 1; i <= seg + segmentsAhead + 4; i++)
+            {
+                BuildSegment(i);
+                if (!waterSegments.Contains(i)) return SegmentCenterX(i);
+            }
+
+            return SegmentCenterX(seg + 1);
+        }
+
+        /// <summary>Dry ground that is currently streamed in -- somewhere to stand.</summary>
+        private bool IsSafeSegment(int index)
+        {
+            return segments.ContainsKey(index) && !waterSegments.Contains(index);
+        }
+
+        private float SegmentCenterX(int index)
+        {
+            return (index + 0.5f) * segmentWidth;
         }
 
         // ------------------------------------------------------------------
+        /// <summary>
+        /// Picks where the player comes back AND guarantees the flight out of it is
+        /// dry: no water under the respawn point, and none for the next few seconds of
+        /// flying either. Landing in the middle of a dry segment is not enough on its
+        /// own -- the next segment along can be water, which at full forward speed is
+        /// less than a second away. Water already streamed into that stretch is re-laid
+        /// as grass; anything built later inside it comes out dry by construction.
+        /// Returns the X to respawn at.
+        /// </summary>
+        public float PrepareRespawn(float fromX)
+        {
+            // drop the previous window first -- a stale one from an earlier crash would
+            // keep forcing terrain the player is long past
+            dryWindowStartX = float.PositiveInfinity;
+            dryWindowEndX = float.NegativeInfinity;
+
+            float safeX = FindSafeX(fromX);
+
+            // the whole segment the player lands in, plus however far they fly in the
+            // grace period -- measured in seconds so it holds if forwardSpeed is tuned
+            dryWindowStartX = Mathf.Floor(safeX / segmentWidth) * segmentWidth;
+            dryWindowEndX = safeX + PlayerSpeed() * Mathf.Max(0f, respawnSafeSeconds);
+
+            RebuildRange(dryWindowStartX, dryWindowEndX);
+            return safeX;
+        }
+
+        /// <summary>True inside the guaranteed-dry stretch a respawn opens.</summary>
+        private bool IsInDryWindow(float x0)
+        {
+            return x0 + segmentWidth > dryWindowStartX && x0 < dryWindowEndX;
+        }
+
+        /// <summary>
+        /// Throws away and immediately re-lays every segment overlapping a world-X
+        /// range. Needed when a respawn window opens over terrain that is already on
+        /// screen: those segments were built before the window existed, so they still
+        /// carry whatever the water roll originally gave them.
+        /// </summary>
+        private void RebuildRange(float startX, float endX)
+        {
+            int first = Mathf.FloorToInt(startX / segmentWidth);
+            int last = Mathf.FloorToInt(endX / segmentWidth);
+
+            for (int i = first; i <= last; i++)
+            {
+                GameObject g;
+                if (segments.TryGetValue(i, out g))
+                {
+                    if (g != null)
+                    {
+                        // Destroy is deferred to end of frame; deactivate now so the
+                        // old segment cannot be seen on top of the one replacing it
+                        g.SetActive(false);
+                        Destroy(g);
+                    }
+                    segments.Remove(i);
+                }
+                waterSegments.Remove(i);
+                BuildSegment(i);
+            }
+
+            if (nextSegment <= last) nextSegment = last + 1;
+        }
 
         private void BuildSegment(int index)
         {
@@ -648,6 +758,7 @@ namespace TMKOC.FruitAndVeggiRun
             bool prevWasWater = waterSegments.Contains(index - 1);
 
             bool water = !intro
+                      && !IsInDryWindow(x0)
                       && index >= firstHazardSegment
                       && RawWater(index)
                       && !prevWasWater;
