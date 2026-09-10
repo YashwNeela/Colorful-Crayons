@@ -8,6 +8,7 @@ namespace TMKOC
 {
     public class LevelManager : Singleton<LevelManager>
     {
+        
         public TextMeshProUGUI m_LevelText;
         public TextMeshProUGUI m_TipText;
 
@@ -34,6 +35,7 @@ namespace TMKOC
         {
             levels[currentLevelIndex].gameObject.SetActive(false);
 
+            Debug.Log("Level incrementing here");
 
             // Increment level index
             currentLevelIndex++;
@@ -86,6 +88,8 @@ namespace TMKOC
             if(currentLevelIndex < MaxLevels-1)
             {
                 LoadLevel(currentLevelIndex + 1);
+                Debug.Log("Level incrementing here");
+
             }
         }
 

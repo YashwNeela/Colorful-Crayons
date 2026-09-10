@@ -55,9 +55,11 @@ namespace TMKOC
                         WorldElementStep(step);
                         break;
                 }
-                AudioLanguage language = AudioManager.Instance.CurrentAudioLanguage;
-                AudioClip clip = step.audioClip.Find(clip => clip.language == language).clip;
-                    AudioManager.Instance.PlayAudio(clip,AudioManager.Instance.ExtraAudioSource,true,true);
+                RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GetTutorialAudio(step.stepId));
+           
+                //AudioLanguage language = AudioManager.Instance.CurrentAudioLanguage;
+                //AudioClip clip = step.audioClip.Find(clip => clip.language == language).clip;
+                    //AudioManager.Instance.PlayAudio(clip,AudioManager.Instance.ExtraAudioSource,true,true);
             
                 //AudioManager.Instance.play
                 //AudioManager.Instance.PlayAudio(step.audioClip,AudioManager.Instance.SFXAudioSource);

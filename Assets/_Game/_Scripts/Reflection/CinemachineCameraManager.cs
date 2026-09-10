@@ -55,7 +55,7 @@ namespace TMKOC
             // Invoke the callback when the transition is complete
             transitionCompleted?.Invoke();
 
-            Debug.Log("Cineachine Camera Transtion Completed");
+            //Debug.Log("Cineachine Camera Transtion Completed");
         }
 
 

@@ -5,6 +5,8 @@ namespace TMKOC.Sorting.FruitSorting2D
     public class FruitLevel : SortingLevel
     {
         [SerializeField] private new int m_ScoreRequiredToCompleteTheLevel;
+
+        public int ScoreRequiredToCompleteTheLevel() => m_ScoreRequiredToCompleteTheLevel;
         [SerializeField] private FruitType m_FruitType;
 
         protected override void OnGameStart()

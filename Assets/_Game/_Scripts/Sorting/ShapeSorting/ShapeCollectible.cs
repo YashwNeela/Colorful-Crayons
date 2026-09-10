@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMKOC.Sorting.FruitSorting2D;
 using UnityEngine;
 
 namespace TMKOC.Sorting.ShapeSorting
@@ -92,7 +93,19 @@ namespace TMKOC.Sorting.ShapeSorting
         protected override void OnPlacedCorrectly()
         {
             base.OnPlacedCorrectly();
-            ParticleEffectManager.Instance.PlayParticleEffect(0, transform.position, new Vector3(100, 100, 100), null);
+            ParticleEffectManager.Instance.PlayParticleEffect(0, transform.position, new Vector3(5, 5, 5), null);
+
+
+            SortingLevel sortingLevel = SortingLevelManager.Instance.GetCurrentLevel() as SortingLevel;
+
+            if (sortingLevel.m_CurrentScore == sortingLevel.ScoreRequiredToCompleteTheLevel())
+                Invoke(nameof(CheckForLevelComplete), 1);
+        }
+
+        public void CheckForLevelComplete()
+        {
+
+            SortingGameManager.Instance.LevelCompleteCheck();
         }
 
         protected override void PlaceInCorrectly(Collector collector)

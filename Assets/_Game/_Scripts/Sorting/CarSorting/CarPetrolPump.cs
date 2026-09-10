@@ -31,7 +31,7 @@ namespace TMKOC.Sorting.CarSorting
 
         protected override void HandleDragEnd()
         {
-             if (m_IsPlacedInsideCollector)
+            if (m_IsPlacedInsideCollector)
             {
                 draggable.ResetToStartDraggingValues();
                 return;
@@ -40,27 +40,21 @@ namespace TMKOC.Sorting.CarSorting
             {
                 if (m_ValidCollector != null)
                 {
-
-                    // if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
-                    //     m_CurrentCollector.SnapCollectibleToCollector(this,m_ValidCollector.GetValidSnapPoint(this), () => OnPlacedCorrectly());
-                    // else{
-                    //     m_CurrentCollector.SnapCollectibleToCollector(this,m_ValidCollector.GetValidSnapPoint(this), () => {});
-                    //     PlaceInCorrectly(m_CurrentCollector);
-                    // }
-                                        if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
+                    if ((m_CurrentCollector as Car).CarType.HasFlag(m_CarType))
+                    {
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => OnPlacedCorrectly());
+                    }
                     else
+                    {
                         m_CurrentCollector.SnapCollectibleToCollector(this, () => { });
-                    PlaceInCorrectly(m_CurrentCollector);
-
+                        PlaceInCorrectly(m_CurrentCollector);
+                    }
                 }
-
-
-            }else
+            }
+            else
             {
-                // m_CanDestroy = true;
-                // CanDestoryRef = StartCoroutine(Co_Destroy());
-                
+                m_CanDestroy = true;
+                CanDestoryRef = StartCoroutine(Co_Destroy());
             }
         }
     }

@@ -40,7 +40,7 @@ namespace TMKOC.Sorting.ColorfulCrayons
            // m_OnCrayonEnteredAnimation = GetComponent<DOTweenAnimation>();
 
             // Set the colors of the box based on the selected CrayonColor flags
-            SetBoxColorsBasedOnEnum(m_CrayonColor);
+          //  SetBoxColorsBasedOnEnum(m_CrayonColor);
         }
 
         protected override void OnEnable()

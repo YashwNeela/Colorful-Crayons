@@ -9,6 +9,10 @@ namespace TMKOC.Sorting
 {
     public class SortingAudioManager : AudioManager
     {
+        public AudioClip _correctMusic;
+        public AudioClip _incorrectMusic;
+
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -45,7 +49,13 @@ namespace TMKOC.Sorting
             else if (overridePreviousClips && m_ExtraAudioSource.isPlaying)
                 m_ExtraAudioSource.Stop();
 
-            m_ExtraAudioSource.clip = m_CurrentLocalizedAudio.rightAnswer[Random.Range(0, m_CurrentLocalizedAudio.rightAnswer.Count)];
+            //m_ExtraAudioSource.clip = m_CurrentLocalizedAudio.rightAnswer[Random.Range(0, m_CurrentLocalizedAudio.rightAnswer.Count)];
+
+            if (_correctMusic != null)
+            {
+                m_ExtraAudioSource.clip = _correctMusic;
+            }
+
             m_ExtraAudioSource.Play();
         }
 
@@ -56,26 +66,38 @@ namespace TMKOC.Sorting
             else if (overridePreviousClips && m_ExtraAudioSource.isPlaying)
                 m_ExtraAudioSource.Stop();
 
-            m_ExtraAudioSource.clip = m_CurrentLocalizedAudio.wrongAnswer[Random.Range(0, m_CurrentLocalizedAudio.wrongAnswer.Count)];
+            //m_ExtraAudioSource.clip = m_CurrentLocalizedAudio.wrongAnswer[Random.Range(0, m_CurrentLocalizedAudio.wrongAnswer.Count)];
+
+            if (_incorrectMusic != null)
+            {
+                m_ExtraAudioSource.clip = _incorrectMusic;
+            }
             m_ExtraAudioSource.Play();
         }
 
         public override void PlayLevelStartSfx(bool overridePreviousClips = false)
         {
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
-            m_SFXAudioSource.Play();
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.LevelIntro[LevelManager.Instance.CurrentLevelIndex]);
+            //Debug.Log($"len: {len}");
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex];
+            //m_SFXAudioSource.Play();
         }
 
         public override void PlayLevelFailSfx(bool overridePreviousClips = false)
         {
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[LevelManager.Instance.CurrentLevelIndex];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.levelFail[LevelManager.Instance.CurrentLevelIndex];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.LevelFail[LevelManager.Instance.CurrentLevelIndex]);
         }
 
         public override void PlayGameCompleteSfx(bool overridePreviousClips = false)
         {
-            m_SFXAudioSource.clip = m_CurrentLocalizedAudio.gameComplete[Random.Range(0, m_CurrentLocalizedAudio.gameComplete.Count)];
-            m_SFXAudioSource.Play();
+            //m_SFXAudioSource.clip = m_CurrentLocalizedAudio.gameComplete[Random.Range(0, m_CurrentLocalizedAudio.gameComplete.Count)];
+            //m_SFXAudioSource.Play();
+
+            RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GameComplete);
+
         }
 
 

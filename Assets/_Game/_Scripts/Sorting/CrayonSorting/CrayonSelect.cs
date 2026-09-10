@@ -1,7 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using TMKOC.Sorting.FruitSorting2D;
 using UnityEngine;
 
 namespace TMKOC.Sorting.ColorfulCrayons
@@ -32,30 +33,9 @@ namespace TMKOC.Sorting.ColorfulCrayons
         }
 
         protected override void SetCrayonColor(CrayonColor crayonColor)
-    {
-        if (crayonColor.HasFlag(CrayonColor.CrayonRed) || crayonColor.HasFlag(CrayonColor.SketchpenRed))
         {
-            m_CrayonColorSprite.color = Color.red;
-
+            m_CrayonColorSprite.sprite = CrayonSpriteManager.Instance.CrayonSpriteSO.CrayonSprites[crayonColor];
         }
-        if (crayonColor.HasFlag(CrayonColor.CrayonYellow) || crayonColor.HasFlag(CrayonColor.SketchpenYellow))
-        {
-            m_CrayonColorSprite.color = Color.yellow;
-
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonGreen) || crayonColor.HasFlag(CrayonColor.SketchpenGreen))
-        {
-            m_CrayonColorSprite.color = Color.green;
-
-        }
-        if (crayonColor.HasFlag(CrayonColor.CrayonBlue) || crayonColor.HasFlag(CrayonColor.SketchpenBlue))
-        {
-            m_CrayonColorSprite.color = Color.blue;
-
-        }
-
-    }
 
         protected override void OnEnable()
         {
@@ -90,6 +70,9 @@ namespace TMKOC.Sorting.ColorfulCrayons
 
         private void OnMouseDown() 
         {
+            if (SortingGameManager.Instance.CurrentGameState != GameState.Playing)
+                return;
+
             if(!m_CanSelect)
                 return;
         
@@ -105,8 +88,18 @@ namespace TMKOC.Sorting.ColorfulCrayons
         {
             m_SelectedSequence.PlayForward();
             OnCrayonSelected?.Invoke(m_CrayonColor);
+
+            LevelCrayonSelect crayonSelectionLevel = SortingLevelManager.Instance.GetCurrentLevel() as LevelCrayonSelect;
+
+            if (crayonSelectionLevel.m_CurrentScore == crayonSelectionLevel.ScoreRequiredToCompleteTheLevel())
+                Invoke(nameof(CheckForLevelComplete), 1);
         }
 
+        public void CheckForLevelComplete()
+        {
+
+            SortingGameManager.Instance.LevelCompleteCheck();
+        }
         private void CrayonDeselected()
         {
             m_SelectedSequence.PlayBackwards();

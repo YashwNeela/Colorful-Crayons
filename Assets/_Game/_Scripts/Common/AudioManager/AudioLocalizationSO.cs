@@ -10,8 +10,12 @@ namespace TMKOC
 
     public class AudioLocalizationSO : SerializedScriptableObject
     {
-         public AudioLanguage audioLanguage;
 
-        public List<AudioClip> intro, background,levelStart, levelComplete, levelFail,levelIntro, gameComplete, retry, rightAnswer, wrongAnswer;
+        //Level start, retry and Right answer nnot using
+
+
+        public AudioLanguage audioLanguage;
+
+        public List<AudioClip> intro, background, levelStart, levelComplete, levelFail, levelIntro, gameComplete, retry, rightAnswer, wrongAnswer;
     }
 }

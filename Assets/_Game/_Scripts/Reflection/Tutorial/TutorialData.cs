@@ -25,6 +25,7 @@ public class TutorialData
 public class TutorialStep
 {
     public TutorialType type;
+        public int stepId;
     public string stepTitle;          // Title of the step
     [TextArea] public string description; // Description or instructions
 

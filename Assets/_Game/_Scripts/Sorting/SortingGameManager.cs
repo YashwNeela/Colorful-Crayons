@@ -121,7 +121,7 @@ namespace TMKOC.Sorting
             // {
 
             // });
-            m_CatergoryDataManager.SaveLevel(SortingLevelManager.Instance.CurrentLevelIndex,SortingLevelManager.Instance.MaxLevels);
+            //m_CatergoryDataManager.SaveLevel(SortingLevelManager.Instance.CurrentLevelIndex,SortingLevelManager.Instance.MaxLevels);
         }
 
         

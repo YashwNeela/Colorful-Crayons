@@ -10,6 +10,9 @@ public class LevelWinUI : MonoBehaviour
     void OnEnable()
     {
         m_NextLevelButton.interactable = false;
+        m_NextLevelButton.onClick.RemoveAllListeners();
+        m_NextLevelButton.onClick.AddListener(()=> { m_NextLevelButton.interactable = false; });
+        
         StartCoroutine(StaticCoroutine.Co_GenericCoroutine(3,()=>
         {
             m_NextLevelButton.interactable = true;

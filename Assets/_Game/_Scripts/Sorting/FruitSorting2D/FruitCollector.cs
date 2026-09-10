@@ -137,6 +137,25 @@ namespace TMKOC.Sorting.FruitSorting2D
 
         public override void OnCollectibleExited(Collectible collectible)
         {
+           bool belongsToBox = false;
+
+            if (collectible.CurrentSnapPoint != null)
+            {
+                foreach (var sp in snapPoints)
+                {
+                    if (sp == collectible.CurrentSnapPoint)
+                    {
+                        belongsToBox = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!belongsToBox)
+            {
+                return;
+            }
+
             collectible.RemoveFromSnapPoint();
             if (m_FruitType.HasFlag((collectible as Fruit2D).FruitType))
             {

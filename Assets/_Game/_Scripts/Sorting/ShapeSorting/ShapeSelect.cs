@@ -1,7 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using TMKOC.Sorting.FruitSorting2D;
 using UnityEngine;
 
 namespace TMKOC.Sorting.ShapeSorting{
@@ -49,6 +50,9 @@ public class ShapeSelect : Collectible
         }
         private void OnMouseDown()
         {
+            if (SortingGameManager.Instance.CurrentGameState != GameState.Playing)
+                return;
+
             m_IsSelected = m_IsSelected ? false : true;
 
             if (m_IsSelected)
@@ -61,8 +65,19 @@ public class ShapeSelect : Collectible
         {
           //  m_SelectedSequence.Play();
           m_HighLightGameobject.SetActive(true);
-            transform.DOScale(110f, 0.25f);
+            transform.DOScale(transform.localScale * 1.1f, 0.25f);
             OnShapeSelected?.Invoke(m_ShapeType);
+
+            LevelShapeSelect fruitSelectionLevel = SortingLevelManager.Instance.GetCurrentLevel() as LevelShapeSelect;
+
+            if (fruitSelectionLevel.m_CurrentScore == fruitSelectionLevel.ScoreRequiredToCompleteTheLevel())
+                Invoke(nameof(CheckForLevelComplete), 1);
+        }
+
+        public void CheckForLevelComplete()
+        {
+
+            SortingGameManager.Instance.LevelCompleteCheck();
         }
 
         private void ShapeDeselected()
@@ -70,7 +85,7 @@ public class ShapeSelect : Collectible
           m_HighLightGameobject.SetActive(false);
 
          //   m_SelectedSequence.PlayBackwards();
-            transform.DOScale(100f, 0.25f);
+            transform.DOScale(transform.localScale / 1.1f, 0.25f);
             OnShapeDeselected?.Invoke(m_ShapeType);
         }
 

@@ -21,7 +21,7 @@ namespace TMKOC.Reflection
         public Action OnReflectionLevelLoaded;
         public Action OnRelectionLevelUnloaded;
 
-      [SerializeField]  private CinemachineVirtualCameraBase levelCamera;
+        [SerializeField] private CinemachineVirtualCameraBase levelCamera;
 
         public CinemachineVirtualCameraBase LevelCamera => levelCamera;
 
@@ -52,11 +52,11 @@ namespace TMKOC.Reflection
         private void FetchCameraTransform()
         {
             ReflectionTags[] reflectionTags = gameObject.GetComponentsInChildren<ReflectionTags>();
-            foreach(ReflectionTags t in reflectionTags)
+            foreach (ReflectionTags t in reflectionTags)
             {
-                if(t.m_Tag == ReflectionTagsEnum.CameraTransform)
+                if (t.m_Tag == ReflectionTagsEnum.CameraTransform)
                 {
-                 //   m_CameraPosition = t.transform;
+                    //   m_CameraPosition = t.transform;
                     break;
                 }
             }
@@ -67,42 +67,46 @@ namespace TMKOC.Reflection
             base.OnLevelLoaded();
             OnReflectionLevelLoaded?.Invoke();
 
-            
+
         }
         public bool canTriggerLeveIntro;
         public void TriggerLevelIntro()
         {
-            
-            if(!TutorialManager.Instance.IsTutorialActive && canTriggerLeveIntro){
-                (ReflectionAudioManager.Instance as ReflectionAudioManager).PlayAudio
-                (AudioManager.Instance.CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex],AudioManager.Instance.SFXAudioSource);
+
+            if (!TutorialManager.Instance.IsTutorialActive && canTriggerLeveIntro)
+            {
+                //(ReflectionAudioManager.Instance as ReflectionAudioManager).PlayAudio
+                //(AudioManager.Instance.CurrentLocalizedAudio.levelIntro[LevelManager.Instance.CurrentLevelIndex], AudioManager.Instance.SFXAudioSource);
+
+                RuntimeAudioLoader.Instance.PlayRuntimeAudio(AudioMapper.Instance.GetLevelIntro(LevelManager.Instance.CurrentLevelIndex));
+
                 canTriggerLeveIntro = false;
-                 
+
                 ControlsUI.Instance.DisableAllControls();
                 FindAnyObjectByType<PlayerStateMachine>().HardCodePointUpOnMovementButton();
-                CinemachineCameraManager.Instance.ChangeCamera(levelIntroCam,()=>
+                CinemachineCameraManager.Instance.ChangeCamera(levelIntroCam, () =>
                 {
                     CinemachineSplineDolly dolly = levelIntroCam.GetComponent<CinemachineSplineDolly>();
-                    DOTween.To(()=> dolly.SplineSettings.Position, x=>dolly.SplineSettings.Position =x, 1,5f)
-                    .OnComplete(()=>
+                    DOTween.To(() => dolly.SplineSettings.Position, x => dolly.SplineSettings.Position = x, 1, 5f)
+                    .OnComplete(() =>
                     {
-                        Debug.Log("Musaaa bhai");
+                        Debug.Log("Muthwale Musaaa bhai");
 
-                        CinemachineCameraManager.Instance.RestoreToDefaultCamera(()=>
+                        CinemachineCameraManager.Instance.RestoreToDefaultCamera(() =>
                         {
                             dolly.SplineSettings.Position = 0;
-                            if(m_HasTutorial)
+                            if (m_HasTutorial)
                             {
-                                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1,()=>
+                                StartCoroutine(StaticCoroutine.Co_GenericCoroutine(1, () =>
                                 {
-                                TutorialManager.Instance.StartTutorial(m_TuorialId);
+                                    TutorialManager.Instance.StartTutorial(m_TuorialId);
 
                                 }));
                             }
                         });
 
                         ControlsUI.Instance.EnableAllControls();
-                        
+
 
                     });
                 });
@@ -124,7 +128,7 @@ namespace TMKOC.Reflection
 
         public void LevelFail()
         {
-            
+
             //m_DarkEnvironment.gameObject.SetActive(true);
             //m_LightEnvironment.gameObject.SetActive(false);
         }

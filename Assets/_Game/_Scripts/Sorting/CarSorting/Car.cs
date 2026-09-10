@@ -104,15 +104,15 @@ namespace TMKOC.Sorting.CarSorting
         {
             if(m_CarType.HasFlag(CarType.BlueCar))
             {
-                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).normalCarAudio,CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
+                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance as CarSortingAudioManager).normalCarAudioSFX, CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
 
             }
             else if(m_CarType.HasFlag(CarType.RedCar))
-                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).muscleCarAudio,CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
+                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance as CarSortingAudioManager).muscleCarAudioSFX, CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
              else if(m_CarType.HasFlag(CarType.YellowCar))
-                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).sportsCarAudio,CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
+                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance as CarSortingAudioManager).sportsCarAudioSFX, CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
                  else if(m_CarType.HasFlag(CarType.GreenCar))
-                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance.CurrentLocalizedAudio as CarSortingAudio).normalCarAudio,CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
+                CarSortingAudioManager.Instance.PlayAudio((CarSortingAudioManager.Instance as CarSortingAudioManager).normalCarAudioSFX, CarSortingAudioManager.Instance.ExtraAudioSource,isPlayOneShot: true);
 
         }
       

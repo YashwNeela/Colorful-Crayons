@@ -18,10 +18,14 @@ public class ReflectionLevelManager : LevelManager
 
                 }
 
+                Debug.Log($"Current Level: {levelIndex}");
+
                 // Activate the requested level
-                currentLevelIndex = levelIndex;
+                 currentLevelIndex = levelIndex;
                 levels[currentLevelIndex].gameObject.SetActive(true);
                 levels[currentLevelIndex].GetComponent<Level>().OnLevelLoaded();
+
+                HelperGameCategoryDataSaver.LevelCompleted(currentLevelIndex); // Save Current Level
 
                 m_LevelText.text =  (currentLevelIndex + 1).ToString() + "/" + MaxLevels.ToString();
                 m_TipText.text = levels[currentLevelIndex].GetComponent<Level>().m_Tip;

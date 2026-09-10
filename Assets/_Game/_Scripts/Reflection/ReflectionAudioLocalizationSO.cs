@@ -4,13 +4,14 @@ using UnityEngine;
 using TMKOC.Sorting;
 
 
-namespace TMKOC.Reflection{
-[CreateAssetMenu(fileName = "RelfectionAudio", menuName = "ScriptableObject/ReflectionAudio")]
-
-public class ReflectionAudioLocalizationSO : AudioLocalizationSO
+namespace TMKOC.Reflection
 {
-    public List<AudioClip> tutorialAudio;
+    [CreateAssetMenu(fileName = "RelfectionAudio", menuName = "ScriptableObject/ReflectionAudio")]
 
-    public List<AudioClip> gemCollection;
-}
+    public class ReflectionAudioLocalizationSO : AudioLocalizationSO
+    {
+        public List<AudioClip> tutorialAudio;
+
+        public List<AudioClip> gemCollection;
+    }
 }

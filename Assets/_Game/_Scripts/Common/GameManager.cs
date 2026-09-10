@@ -23,7 +23,9 @@ namespace TMKOC
 
         NotCompleted,
 
-        Replay
+        Replay,
+
+        Tutorial
     }
     public class GameManager : Singleton<GameManager>
     {
@@ -78,6 +80,11 @@ namespace TMKOC
         public static UnityAction OnGameReplay;
 
         public static UnityAction OnLevelCompleteCheck;
+
+        public static UnityAction<string> OnTutorialStarted;
+
+        public static UnityAction<string> OnTutorialFinished;
+
 
         public virtual void Start()
         {
@@ -134,28 +141,30 @@ namespace TMKOC
         }
         private void OnApplicationQuit()
         {
-            // dataManager.SendData(()=>
-            // {
+                      #if PLAYSCHOOL_MAIN
 
-            // });
             m_CatergoryDataManager.SaveLevel(LevelManager.Instance.CurrentLevelIndex, LevelManager.Instance.MaxLevels);
+            #endif
         }
         public virtual void GameStart(int level)
         {
             m_CurrentGameState = GameState.Start;
             LevelManager.Instance.LoadLevel(level);
+
+            #if PLAYSCHOOL_MAIN
+
             m_CatergoryDataManager.SaveLevel(level, LevelManager.Instance.MaxLevels);
 
             int star = m_CatergoryDataManager.Getstar;
             if (star >= 5)
             {
-                m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
+               m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
             }
             else
             {
-                m_UpdateCategoryApiManager.SetGameDataMore(level, LevelManager.Instance.MaxLevels, star);
+               m_UpdateCategoryApiManager.SetGameDataMore(level, LevelManager.Instance.MaxLevels, star);
             }
-
+            #endif
 
             OnGameStart?.Invoke();
 
@@ -171,6 +180,20 @@ namespace TMKOC
             m_CurrentGameState = GameState.Restart;
             OnGameRestart?.Invoke();
             GameStart(LevelManager.Instance.CurrentLevelIndex);
+        }
+
+        public virtual void StartTutorial(string id)
+        {
+            m_CurrentGameState = GameState.Tutorial;
+
+            OnTutorialStarted?.Invoke(id);
+        }
+
+         public virtual void EndTutorial(string id)
+        {
+            GamePlaying();
+
+            OnTutorialFinished?.Invoke(id);
         }
 
         public virtual void GamePlaying()
@@ -238,9 +261,11 @@ namespace TMKOC
         public virtual void GoBackToPlayschool()
         {
 
+
+            
 #if PLAYSCHOOL_MAIN
          UnityEngine.SceneManagement.SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
-            CollisionMatrixManager.Instance.LoadPlayschoolData();
+          //  CollisionMatrixManager.Instance.LoadPlayschoolData();
         
 
             // dataManager.SendData(()=>
@@ -248,7 +273,8 @@ namespace TMKOC
             UnityEngine.Debug.Log("Go back to playschool");
 #endif
             // {
-            //     LoadSceneToMainMenu();
+            //LoadSceneToMainMenu(); 
+            UnityEngine.SceneManagement.SceneManager.LoadScene(TMKOCPlaySchoolConstants.TMKOCPlayMainMenu);
             // });
         }
 
@@ -283,8 +309,7 @@ namespace TMKOC
         public virtual void GameCompleted()
         {
             m_CurrentGameState = GameState.Completed;
-            //    dataManager.SetCompletedLevel(dataManager.StudentGameData.data.totalLevel);
-            //     dataManager.OnGameCompleted();
+               
 
             m_UpdateCategoryApiManager.SetGameDataMore(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels, 5);
             m_CatergoryDataManager.SaveLevel(LevelManager.Instance.MaxLevels, LevelManager.Instance.MaxLevels);
