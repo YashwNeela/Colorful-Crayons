@@ -6968,7 +6968,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -730, y: -6}
-  m_SizeDelta: {x: 207.9985, y: 287.9994}
+  m_SizeDelta: {x: 288.64865, y: 288}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &833194851
 CanvasRenderer:
@@ -6998,7 +6998,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 4089927f0fa764ab489d09ca8a7d5a25, type: 2}
+  m_Texture: {fileID: 2800000, guid: daeb064ca147340fcbc870895a68639f, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -7155,7 +7155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d72c5cb94e3b47cc846a680958fdfee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mission: {fileID: 11400000, guid: 85b5576d2348643a287a95be765de4d4, type: 2}
+  mission: {fileID: 11400000, guid: 62a44b9172ab94b679f3916f85da766a, type: 2}
   storyboard: {fileID: 1684876944}
   questionCard: {fileID: 918481192}
   bridge: {fileID: 1399459180}
@@ -7244,7 +7244,7 @@ MonoBehaviour:
   onLevelCompleteCheck:
     m_PersistentCalls:
       m_Calls: []
-  missionData: {fileID: 11400000, guid: b21732bed244145e8a3ca532ed8c49a7, type: 2}
+  missionData: {fileID: 11400000, guid: 62a44b9172ab94b679f3916f85da766a, type: 2}
   flow: {fileID: 0}
 --- !u!1 &865353462
 GameObject:
@@ -7481,16 +7481,19 @@ MonoBehaviour:
     art: {fileID: 1419179327}
     label: {fileID: 1991461292}
     swatch: {fileID: 422588888}
+    fillFlash: {fileID: 0}
   - button: {fileID: 919556645}
     rect: {fileID: 919556644}
     art: {fileID: 1177326966}
     label: {fileID: 2104994163}
     swatch: {fileID: 1195464014}
+    fillFlash: {fileID: 0}
   - button: {fileID: 331106425}
     rect: {fileID: 331106424}
     art: {fileID: 1132397546}
     label: {fileID: 1305767465}
     swatch: {fileID: 1376419019}
+    fillFlash: {fileID: 0}
   popInDuration: 0.35
   shakeDuration: 0.4
   shakeStrength: 24
@@ -7498,6 +7501,9 @@ MonoBehaviour:
   replayPromptOnWrong: 1
   promptReplayGap: 0.15
   correctHold: 0.6
+  wrongFlashColor: {r: 0.93, g: 0.2, b: 0.2, a: 1}
+  wrongFlashHoldDuration: 0.45
+  wrongFlashFadeDuration: 0.3
   labelColourOptions: 1
 --- !u!1 &919556643
 GameObject:
@@ -10227,7 +10233,7 @@ MonoBehaviour:
   walker: {fileID: 833194849}
   walkStart: {fileID: 2001195399}
   walkEnd: {fileID: 1138189813}
-  playerView: {fileID: 1835770338}
+  playerView: {fileID: 0}
   plankGroupSizes: 
   withinGroupDelay: 0.12
   dropDuration: 0.5
@@ -10239,6 +10245,7 @@ MonoBehaviour:
   stepDuration: 0.8
   scaleStepByDistance: 0
   walkerPlankOffset: {x: 0, y: 0}
+  useSlotHeightForWalk: 0
 --- !u!1 &1410255669
 GameObject:
   m_ObjectHideFlags: 0
@@ -11501,7 +11508,7 @@ MonoBehaviour:
   _width: 100
   _height: 100
   _angle: 45
-  _length: 1920
+  _length: 1919.8242
   _fitRect: 1
   _emitOnSurface: 1
   _emitterThickness: 0
@@ -13459,12 +13466,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d85b9713f3120c1468c6a99c2a785240, type: 3}
---- !u!95 &1723308014 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7432144289087063705, guid: d85b9713f3120c1468c6a99c2a785240,
-    type: 3}
-  m_PrefabInstance: {fileID: 1723308013}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1724191446
 GameObject:
   m_ObjectHideFlags: 0
@@ -13888,14 +13889,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1835770337}
-  - component: {fileID: 1835770338}
   m_Layer: 10
   m_Name: Player_Tapu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1835770337
 Transform:
   m_ObjectHideFlags: 0
@@ -13913,29 +13913,6 @@ Transform:
   - {fileID: 935526382}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1835770338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835770333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f9f71c9a72a64d779b1405fb676ec04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TMKOC.BridgeQuest.BridgeQuestPlayerView
-  animator: {fileID: 3580740587201292675}
-  rigCamera: {fileID: 935526381}
-  target: {fileID: 833194852}
-  idleState: TappuIdle
-  walkState: TappuWalk
-  blendDuration: 0.15
-  celebrationAnimator: {fileID: 1723308014}
-  celebrationState: TappuFrontCelebration
-  verticalMargin: 1.1
-  supersample: 3
-  animateUnscaled: 1
 --- !u!1 &1844973005
 GameObject:
   m_ObjectHideFlags: 0
@@ -16518,9 +16495,9 @@ MonoBehaviour:
   m_LevelText: {fileID: 0}
   m_TipText: {fileID: 0}
   levels:
-  - {fileID: 1953611643}
-  - {fileID: 2189666}
   - {fileID: 850156516}
+  - {fileID: 2189666}
+  - {fileID: 1953611643}
   - {fileID: 2020966101}
   - {fileID: 1291258479}
   - {fileID: 954293192}
